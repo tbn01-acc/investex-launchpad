@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, TrendingUp, Users, Briefcase, Building } from "lucide-react";
 import heroImage from "@/assets/hero-image.jpg";
+import collaborationImage from "@/assets/collaboration-illustration.jpg";
 
 const HeroSection = () => {
   return (
@@ -65,11 +66,11 @@ const HeroSection = () => {
           <div className="relative">
             <div className="relative rounded-2xl overflow-hidden shadow-glow">
               <img 
-                src={heroImage} 
-                alt="InvestEx Platform" 
+                src={collaborationImage} 
+                alt="InvestEx Platform - Платформа для бизнес-коллабораций и инвестиций" 
                 className="w-full h-auto object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/40 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent" />
             </div>
             
             {/* Floating Cards */}

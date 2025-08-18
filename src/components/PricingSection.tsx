@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle, Star, Zap, Crown } from "lucide-react";
+import pricingImage from "@/assets/pricing-illustration.jpg";
 
 const PricingSection = () => {
   const plans = [
@@ -77,6 +78,13 @@ const PricingSection = () => {
     <section className="py-24 bg-background">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
+          <div className="mb-8">
+            <img
+              src={pricingImage}
+              alt="Тарифные планы и ценообразование InvestEx"
+              className="mx-auto rounded-2xl shadow-card max-w-2xl w-full h-64 object-cover"
+            />
+          </div>
           <h2 className="text-4xl lg:text-5xl font-bold text-foreground mb-4">
             Гибкие тарифы
           </h2>

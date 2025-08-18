@@ -12,6 +12,7 @@ import {
   CheckCircle,
   Target
 } from "lucide-react";
+import audienceImage from "@/assets/audience-illustration.jpg";
 
 const AudienceSection = () => {
   const audiences = [
@@ -81,6 +82,13 @@ const AudienceSection = () => {
     <section className="py-24 bg-background">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
+          <div className="mb-8">
+            <img
+              src={audienceImage}
+              alt="Четыре целевые аудитории InvestEx: фрилансеры, аутсорсеры, фаундеры и инвесторы"
+              className="mx-auto rounded-2xl shadow-card max-w-2xl w-full h-64 object-cover"
+            />
+          </div>
           <h2 className="text-4xl lg:text-5xl font-bold text-foreground mb-4">
             Решения для каждого
           </h2>

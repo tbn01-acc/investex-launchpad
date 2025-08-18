@@ -1,0 +1,164 @@
+import { useState } from "react";
+import { Menu, X, ChevronDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
+import { cn } from "@/lib/utils";
+
+const Navigation = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const navigationItems = [
+    {
+      title: "Для участников",
+      items: [
+        { title: "Фрилансеры", href: "/freelancers", description: "Найдите проекты и клиентов" },
+        { title: "Аутсорсеры", href: "/outsourcers", description: "Управляйте командой и проектами" },
+        { title: "Фаундеры", href: "/founders", description: "Создавайте стартапы и привлекайте инвестиции" },
+        { title: "Инвесторы", href: "/investors", description: "Инвестируйте в перспективные проекты" },
+      ]
+    },
+    { title: "Проекты", href: "/projects" },
+    { title: "Инвестиции", href: "/investments" },
+    { title: "Тарифы", href: "/pricing" },
+    { title: "О платформе", href: "/about" },
+  ];
+
+  return (
+    <nav className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border sticky top-0 z-50">
+      <div className="container mx-auto px-4">
+        <div className="flex justify-between items-center h-16">
+          {/* Логотип */}
+          <div className="flex items-center space-x-2">
+            <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-lg">I</span>
+            </div>
+            <span className="text-xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+              InvestEx
+            </span>
+          </div>
+
+          {/* Десктопное меню */}
+          <div className="hidden md:flex items-center space-x-6">
+            <NavigationMenu>
+              <NavigationMenuList>
+                {navigationItems.map((item) => (
+                  <NavigationMenuItem key={item.title}>
+                    {item.items ? (
+                      <>
+                        <NavigationMenuTrigger className="bg-transparent hover:bg-accent/10">
+                          {item.title}
+                        </NavigationMenuTrigger>
+                        <NavigationMenuContent>
+                          <div className="grid w-[600px] grid-cols-2 gap-3 p-4">
+                            {item.items.map((subItem) => (
+                              <NavigationMenuLink
+                                key={subItem.title}
+                                href={subItem.href}
+                                className={cn(
+                                  "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                                )}
+                              >
+                                <div className="text-sm font-medium leading-none">{subItem.title}</div>
+                                <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                                  {subItem.description}
+                                </p>
+                              </NavigationMenuLink>
+                            ))}
+                          </div>
+                        </NavigationMenuContent>
+                      </>
+                    ) : (
+                      <NavigationMenuLink
+                        href={item.href}
+                        className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium transition-colors hover:bg-accent/10 hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+                      >
+                        {item.title}
+                      </NavigationMenuLink>
+                    )}
+                  </NavigationMenuItem>
+                ))}
+              </NavigationMenuList>
+            </NavigationMenu>
+
+            <div className="flex items-center space-x-3">
+              <Button variant="ghost" className="hover:bg-accent/10">
+                Войти
+              </Button>
+              <Button className="bg-gradient-primary hover:opacity-90">
+                Регистрация
+              </Button>
+            </div>
+          </div>
+
+          {/* Мобильное меню кнопка */}
+          <div className="md:hidden">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setIsOpen(!isOpen)}
+              className="hover:bg-accent/10"
+            >
+              {isOpen ? <X size={24} /> : <Menu size={24} />}
+            </Button>
+          </div>
+        </div>
+
+        {/* Мобильное меню */}
+        {isOpen && (
+          <div className="md:hidden pb-4 border-t border-border mt-2">
+            <div className="flex flex-col space-y-2 pt-4">
+              {navigationItems.map((item) => (
+                <div key={item.title}>
+                  {item.items ? (
+                    <div>
+                      <div className="flex items-center justify-between px-4 py-2 text-sm font-medium text-muted-foreground">
+                        {item.title}
+                        <ChevronDown size={16} />
+                      </div>
+                      <div className="pl-4 space-y-1">
+                        {item.items.map((subItem) => (
+                          <a
+                            key={subItem.title}
+                            href={subItem.href}
+                            className="block px-4 py-2 text-sm hover:bg-accent/10 rounded-md transition-colors"
+                          >
+                            {subItem.title}
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <a
+                      href={item.href}
+                      className="block px-4 py-2 text-sm hover:bg-accent/10 rounded-md transition-colors"
+                    >
+                      {item.title}
+                    </a>
+                  )}
+                </div>
+              ))}
+              
+              <div className="pt-4 border-t border-border mt-4 space-y-2">
+                <Button variant="ghost" className="w-full justify-start">
+                  Войти
+                </Button>
+                <Button className="w-full bg-gradient-primary">
+                  Регистрация
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </nav>
+  );
+};
+
+export default Navigation;

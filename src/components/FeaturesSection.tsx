@@ -11,6 +11,7 @@ import {
   FileText,
   Brain
 } from "lucide-react";
+import featuresImage from "@/assets/features-illustration.jpg";
 
 const FeaturesSection = () => {
   const features = [
@@ -74,6 +75,13 @@ const FeaturesSection = () => {
     <section className="py-24 bg-gradient-accent">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
+          <div className="mb-8">
+            <img
+              src={featuresImage}
+              alt="Ключевые функции и возможности платформы InvestEx"
+              className="mx-auto rounded-2xl shadow-card max-w-2xl w-full h-64 object-cover"
+            />
+          </div>
           <h2 className="text-4xl lg:text-5xl font-bold text-foreground mb-4">
             Мощные возможности
           </h2>

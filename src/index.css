@@ -17,16 +17,16 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 220 39% 11%;
 
-    --primary: 262 83% 58%;
+    --primary: 217 91% 60%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 220 39% 11%;
+    --secondary: 142 76% 45%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 220 14% 96%;
-    --muted-foreground: 220 26% 46%;
+    --muted: 217 91% 95%;
+    --muted-foreground: 217 33% 17%;
 
-    --accent: 262 83% 58%;
+    --accent: 25 95% 53%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
@@ -38,16 +38,18 @@ All colors MUST be HSL.
 
     --radius: 0.75rem;
 
-    /* Custom InvestEx Design Tokens */
-    --gradient-primary: linear-gradient(135deg, 262 83% 58%, 252 86% 64%);
-    --gradient-secondary: linear-gradient(135deg, 220 26% 14%, 262 83% 58%);
-    --gradient-accent: linear-gradient(45deg, 34 100% 92%, 197 100% 94%);
-    --gradient-hero: linear-gradient(135deg, 262 83% 58% 0%, 252 86% 64% 50%, 197 100% 85% 100%);
+    /* Custom InvestEx Design Tokens - Business Success Theme */
+    --gradient-primary: linear-gradient(135deg, 217 91% 60%, 142 76% 45%);
+    --gradient-secondary: linear-gradient(135deg, 142 76% 45%, 25 95% 53%);
+    --gradient-accent: linear-gradient(45deg, 217 91% 95%, 142 76% 95%);
+    --gradient-hero: linear-gradient(135deg, 217 91% 60% 0%, 142 76% 45% 50%, 25 95% 53% 100%);
     
-    --investment-green: 142 76% 36%;
+    --investment-green: 142 76% 45%;
     --investment-red: 0 84% 60%;
     --fintech-blue: 217 91% 60%;
     --startup-orange: 25 95% 53%;
+    --success-emerald: 160 84% 39%;
+    --business-navy: 217 33% 17%;
     
     --shadow-elegant: 0 10px 40px -10px hsl(262 83% 58% / 0.2);
     --shadow-glow: 0 0 30px hsl(262 83% 58% / 0.3);
