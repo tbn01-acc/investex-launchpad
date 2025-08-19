@@ -14,7 +14,105 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          company: string | null
+          created_at: string
+          experience_level: string | null
+          first_name: string | null
+          id: string
+          last_name: string | null
+          phone: string | null
+          role: Database["public"]["Enums"]["user_role"]
+          skills: string[] | null
+          updated_at: string
+          user_id: string
+          website: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          company?: string | null
+          created_at?: string
+          experience_level?: string | null
+          first_name?: string | null
+          id?: string
+          last_name?: string | null
+          phone?: string | null
+          role?: Database["public"]["Enums"]["user_role"]
+          skills?: string[] | null
+          updated_at?: string
+          user_id: string
+          website?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          company?: string | null
+          created_at?: string
+          experience_level?: string | null
+          first_name?: string | null
+          id?: string
+          last_name?: string | null
+          phone?: string | null
+          role?: Database["public"]["Enums"]["user_role"]
+          skills?: string[] | null
+          updated_at?: string
+          user_id?: string
+          website?: string | null
+        }
+        Relationships: []
+      }
+      projects: {
+        Row: {
+          budget_max: number | null
+          budget_min: number | null
+          created_at: string
+          currency: string | null
+          deadline: string | null
+          description: string
+          id: string
+          owner_id: string
+          project_type: string
+          skills_required: string[] | null
+          status: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          budget_max?: number | null
+          budget_min?: number | null
+          created_at?: string
+          currency?: string | null
+          deadline?: string | null
+          description: string
+          id?: string
+          owner_id: string
+          project_type: string
+          skills_required?: string[] | null
+          status?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          budget_max?: number | null
+          budget_min?: number | null
+          created_at?: string
+          currency?: string | null
+          deadline?: string | null
+          description?: string
+          id?: string
+          owner_id?: string
+          project_type?: string
+          skills_required?: string[] | null
+          status?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +121,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      user_role: "freelancer" | "outsourcer" | "founder" | "investor"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +248,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      user_role: ["freelancer", "outsourcer", "founder", "investor"],
+    },
   },
 } as const
