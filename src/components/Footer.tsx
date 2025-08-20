@@ -10,6 +10,7 @@ import {
   FileText,
   HelpCircle
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -41,11 +42,11 @@ const Footer = () => {
           <div className="space-y-4">
             <h4 className="text-lg font-semibold">Для пользователей</h4>
             <ul className="space-y-2 text-white/80">
-              <li><a href="#" className="hover:text-white transition-colors">Фрилансеры</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Аутсорсеры</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Фаундеры</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Инвесторы</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Биржа проектов</a></li>
+              <li><Link to="/freelancers" className="hover:text-white transition-colors">Фрилансеры</Link></li>
+              <li><Link to="/outsourcers" className="hover:text-white transition-colors">Аутсорсеры</Link></li>
+              <li><Link to="/founders" className="hover:text-white transition-colors">Фаундеры</Link></li>
+              <li><Link to="/investors" className="hover:text-white transition-colors">Инвесторы</Link></li>
+              <li><Link to="/projects" className="hover:text-white transition-colors">Биржа проектов</Link></li>
             </ul>
           </div>
 
@@ -55,19 +56,19 @@ const Footer = () => {
             <ul className="space-y-2 text-white/80">
               <li className="flex items-center gap-2">
                 <FileText className="w-4 h-4" />
-                <a href="#" className="hover:text-white transition-colors">База знаний</a>
+                <Link to="/knowledge-base" className="hover:text-white transition-colors">База знаний</Link>
               </li>
               <li className="flex items-center gap-2">
                 <HelpCircle className="w-4 h-4" />
-                <a href="#" className="hover:text-white transition-colors">Поддержка</a>
+                <Link to="/contact" className="hover:text-white transition-colors">Поддержка</Link>
               </li>
               <li className="flex items-center gap-2">
                 <Globe className="w-4 h-4" />
-                <a href="#" className="hover:text-white transition-colors">API документация</a>
+                <Link to="/api-docs" className="hover:text-white transition-colors">API документация</Link>
               </li>
               <li className="flex items-center gap-2">
                 <Shield className="w-4 h-4" />
-                <a href="#" className="hover:text-white transition-colors">Безопасность</a>
+                <Link to="/security" className="hover:text-white transition-colors">Безопасность</Link>
               </li>
             </ul>
           </div>
@@ -94,7 +95,7 @@ const Footer = () => {
                   placeholder="Ваш email"
                   className="flex-1 px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder:text-white/60 focus:outline-none focus:border-white/40"
                 />
-                <Button variant="hero" size="sm">
+                <Button variant="secondary" size="sm">
                   <Mail className="w-4 h-4" />
                 </Button>
               </div>
@@ -109,9 +110,9 @@ const Footer = () => {
               © 2024 InvestEx. Все права защищены.
             </div>
             <div className="flex gap-6 text-sm text-white/60">
-              <a href="#" className="hover:text-white transition-colors">Пользовательское соглашение</a>
-              <a href="#" className="hover:text-white transition-colors">Политика конфиденциальности</a>
-              <a href="#" className="hover:text-white transition-colors">Cookies</a>
+              <Link to="/terms" className="hover:text-white transition-colors">Пользовательское соглашение</Link>
+              <Link to="/privacy" className="hover:text-white transition-colors">Политика конфиденциальности</Link>
+              <Link to="/cookies" className="hover:text-white transition-colors">Cookies</Link>
             </div>
           </div>
         </div>

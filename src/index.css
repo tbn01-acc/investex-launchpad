@@ -39,10 +39,10 @@ All colors MUST be HSL.
     --radius: 0.75rem;
 
     /* Custom InvestEx Design Tokens - Business Success Theme */
-    --gradient-primary: linear-gradient(135deg, 217 91% 60%, 142 76% 45%);
-    --gradient-secondary: linear-gradient(135deg, 142 76% 45%, 25 95% 53%);
-    --gradient-accent: linear-gradient(45deg, 217 91% 95%, 142 76% 95%);
-    --gradient-hero: linear-gradient(135deg, 217 91% 60% 0%, 142 76% 45% 50%, 25 95% 53% 100%);
+    --gradient-primary: linear-gradient(135deg, hsl(217 91% 60%), hsl(142 76% 45%));
+    --gradient-secondary: linear-gradient(135deg, hsl(142 76% 45%), hsl(25 95% 53%));
+    --gradient-accent: linear-gradient(45deg, hsl(217 91% 95%), hsl(142 76% 95%));
+    --gradient-hero: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(142 76% 45%) 50%, hsl(25 95% 53%) 100%);
     
     --investment-green: 142 76% 45%;
     --investment-red: 0 84% 60%;

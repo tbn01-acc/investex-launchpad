@@ -10,9 +10,13 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+  const { user, signOut } = useAuth();
 
   const navigationItems = [
     {
@@ -35,14 +39,14 @@ const Navigation = () => {
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           {/* Логотип */}
-          <div className="flex items-center space-x-2">
+          <Link to="/" className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-lg">I</span>
             </div>
             <span className="text-xl font-bold bg-gradient-primary bg-clip-text text-transparent">
               InvestEx
             </span>
-          </div>
+          </Link>
 
           {/* Десктопное меню */}
           <div className="hidden md:flex items-center space-x-6">
@@ -58,28 +62,31 @@ const Navigation = () => {
                         <NavigationMenuContent>
                           <div className="grid w-[600px] grid-cols-2 gap-3 p-4">
                             {item.items.map((subItem) => (
-                              <NavigationMenuLink
-                                key={subItem.title}
-                                href={subItem.href}
-                                className={cn(
-                                  "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                                )}
-                              >
-                                <div className="text-sm font-medium leading-none">{subItem.title}</div>
-                                <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                                  {subItem.description}
-                                </p>
+                              <NavigationMenuLink key={subItem.title} asChild>
+                                <Link
+                                  to={subItem.href}
+                                  className={cn(
+                                    "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                                  )}
+                                >
+                                  <div className="text-sm font-medium leading-none">{subItem.title}</div>
+                                  <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                                    {subItem.description}
+                                  </p>
+                                </Link>
                               </NavigationMenuLink>
                             ))}
                           </div>
                         </NavigationMenuContent>
                       </>
                     ) : (
-                      <NavigationMenuLink
-                        href={item.href}
-                        className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium transition-colors hover:bg-accent/10 hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-                      >
-                        {item.title}
+                      <NavigationMenuLink asChild>
+                        <Link
+                          to={item.href}
+                          className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium transition-colors hover:bg-accent/10 hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+                        >
+                          {item.title}
+                        </Link>
                       </NavigationMenuLink>
                     )}
                   </NavigationMenuItem>
@@ -88,12 +95,29 @@ const Navigation = () => {
             </NavigationMenu>
 
             <div className="flex items-center space-x-3">
-              <Button variant="ghost" className="hover:bg-accent/10">
-                Войти
-              </Button>
-              <Button className="bg-gradient-primary hover:opacity-90">
-                Регистрация
-              </Button>
+              {user ? (
+                <>
+                  <Button variant="ghost" className="hover:bg-accent/10" asChild>
+                    <Link to="/dashboard">Личный кабинет</Link>
+                  </Button>
+                  <Button 
+                    variant="ghost" 
+                    className="hover:bg-accent/10"
+                    onClick={() => signOut()}
+                  >
+                    Выйти
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button variant="ghost" className="hover:bg-accent/10" asChild>
+                    <Link to="/auth">Войти</Link>
+                  </Button>
+                  <Button className="bg-gradient-primary hover:opacity-90" asChild>
+                    <Link to="/auth?mode=signup">Регистрация</Link>
+                  </Button>
+                </>
+              )}
             </div>
           </div>
 
@@ -124,34 +148,56 @@ const Navigation = () => {
                       </div>
                       <div className="pl-4 space-y-1">
                         {item.items.map((subItem) => (
-                          <a
+                          <Link
                             key={subItem.title}
-                            href={subItem.href}
+                            to={subItem.href}
                             className="block px-4 py-2 text-sm hover:bg-accent/10 rounded-md transition-colors"
+                            onClick={() => setIsOpen(false)}
                           >
                             {subItem.title}
-                          </a>
+                          </Link>
                         ))}
                       </div>
                     </div>
                   ) : (
-                    <a
-                      href={item.href}
+                    <Link
+                      to={item.href}
                       className="block px-4 py-2 text-sm hover:bg-accent/10 rounded-md transition-colors"
+                      onClick={() => setIsOpen(false)}
                     >
                       {item.title}
-                    </a>
+                    </Link>
                   )}
                 </div>
               ))}
               
               <div className="pt-4 border-t border-border mt-4 space-y-2">
-                <Button variant="ghost" className="w-full justify-start">
-                  Войти
-                </Button>
-                <Button className="w-full bg-gradient-primary">
-                  Регистрация
-                </Button>
+                {user ? (
+                  <>
+                    <Button variant="ghost" className="w-full justify-start" asChild>
+                      <Link to="/dashboard" onClick={() => setIsOpen(false)}>Личный кабинет</Link>
+                    </Button>
+                    <Button 
+                      variant="ghost" 
+                      className="w-full justify-start"
+                      onClick={() => {
+                        setIsOpen(false);
+                        signOut();
+                      }}
+                    >
+                      Выйти
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button variant="ghost" className="w-full justify-start" asChild>
+                      <Link to="/auth" onClick={() => setIsOpen(false)}>Войти</Link>
+                    </Button>
+                    <Button className="w-full bg-gradient-primary" asChild>
+                      <Link to="/auth?mode=signup" onClick={() => setIsOpen(false)}>Регистрация</Link>
+                    </Button>
+                  </>
+                )}
               </div>
             </div>
           </div>
