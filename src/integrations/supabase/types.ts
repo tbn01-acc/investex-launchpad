@@ -14,6 +14,36 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_accounts: {
+        Row: {
+          created_at: string
+          id: string
+          is_active: boolean
+          last_login: string | null
+          password_hash: string
+          role: Database["public"]["Enums"]["user_role"]
+          username: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          last_login?: string | null
+          password_hash: string
+          role?: Database["public"]["Enums"]["user_role"]
+          username: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          last_login?: string | null
+          password_hash?: string
+          role?: Database["public"]["Enums"]["user_role"]
+          username?: string
+        }
+        Relationships: []
+      }
       investments: {
         Row: {
           amount: number
@@ -564,9 +594,22 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      authenticate_admin: {
+        Args: { p_password: string; p_username: string }
+        Returns: {
+          last_login: string
+          role: Database["public"]["Enums"]["user_role"]
+          user_id: string
+          username: string
+        }[]
+      }
       get_current_user_role: {
         Args: Record<PropertyKey, never>
         Returns: string
+      }
+      get_platform_stats: {
+        Args: Record<PropertyKey, never>
+        Returns: Json
       }
     }
     Enums: {

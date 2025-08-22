@@ -118,6 +118,9 @@ const Navigation = () => {
                   </Button>
                 </>
               )}
+              <Button variant="outline" size="sm" asChild>
+                <Link to="/admin">Админ</Link>
+              </Button>
             </div>
           </div>
 
