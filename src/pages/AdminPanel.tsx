@@ -143,6 +143,7 @@ export default function AdminPanel() {
                 value={loginForm.password}
                 onChange={(e) => setLoginForm(prev => ({ ...prev, password: e.target.value }))}
                 placeholder="••••••••"
+                autoComplete="current-password"
                 required
               />
             </div>
