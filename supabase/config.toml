@@ -38,6 +38,9 @@ enable_signup = true
 [functions.admin-auth]
 verify_jwt = false
 
+[functions.ai-chat]
+verify_jwt = true
+
 [edge_runtime]
 enabled = true
 ip_version = "dual"

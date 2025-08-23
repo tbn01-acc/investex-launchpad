@@ -251,12 +251,18 @@ export type Database = {
           bio: string | null
           company: string | null
           created_at: string
+          email: string | null
+          email_verified: boolean | null
           experience_level: string | null
           first_name: string | null
           id: string
           last_login: string | null
           last_name: string | null
+          onboarding_completed: boolean | null
           phone: string | null
+          preferred_language: string | null
+          provider: string | null
+          provider_id: string | null
           rating: number | null
           reviews_count: number | null
           role: Database["public"]["Enums"]["user_role"]
@@ -266,6 +272,7 @@ export type Database = {
           total_earnings: number | null
           total_projects: number | null
           two_factor_enabled: boolean | null
+          two_factor_secret: string | null
           updated_at: string
           user_id: string
           verification_status: string | null
@@ -276,12 +283,18 @@ export type Database = {
           bio?: string | null
           company?: string | null
           created_at?: string
+          email?: string | null
+          email_verified?: boolean | null
           experience_level?: string | null
           first_name?: string | null
           id?: string
           last_login?: string | null
           last_name?: string | null
+          onboarding_completed?: boolean | null
           phone?: string | null
+          preferred_language?: string | null
+          provider?: string | null
+          provider_id?: string | null
           rating?: number | null
           reviews_count?: number | null
           role?: Database["public"]["Enums"]["user_role"]
@@ -291,6 +304,7 @@ export type Database = {
           total_earnings?: number | null
           total_projects?: number | null
           two_factor_enabled?: boolean | null
+          two_factor_secret?: string | null
           updated_at?: string
           user_id: string
           verification_status?: string | null
@@ -301,12 +315,18 @@ export type Database = {
           bio?: string | null
           company?: string | null
           created_at?: string
+          email?: string | null
+          email_verified?: boolean | null
           experience_level?: string | null
           first_name?: string | null
           id?: string
           last_login?: string | null
           last_name?: string | null
+          onboarding_completed?: boolean | null
           phone?: string | null
+          preferred_language?: string | null
+          provider?: string | null
+          provider_id?: string | null
           rating?: number | null
           reviews_count?: number | null
           role?: Database["public"]["Enums"]["user_role"]
@@ -316,6 +336,7 @@ export type Database = {
           total_earnings?: number | null
           total_projects?: number | null
           two_factor_enabled?: boolean | null
+          two_factor_secret?: string | null
           updated_at?: string
           user_id?: string
           verification_status?: string | null
@@ -610,6 +631,14 @@ export type Database = {
       get_platform_stats: {
         Args: Record<PropertyKey, never>
         Returns: Json
+      }
+      get_user_api_config: {
+        Args: { p_user_id: string }
+        Returns: {
+          api_key: string
+          model: string
+          provider: string
+        }[]
       }
     }
     Enums: {

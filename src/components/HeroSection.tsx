@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, TrendingUp, Users, Briefcase, Building } from "lucide-react";
-import heroImage from "@/assets/hero-image.jpg";
-import collaborationImage from "@/assets/collaboration-illustration.jpg";
+import heroImage from "@/assets/hero-realistic.jpg";
+import collaborationImage from "@/assets/collaboration-realistic.jpg";
 
 const HeroSection = () => {
   return (

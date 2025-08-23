@@ -12,7 +12,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { useToast } from '@/hooks/use-toast';
 
 const Auth = () => {
-  const { signUp, signIn, signInWithGoogle, signInWithGithub, user } = useAuth();
+  const { signUp, signIn, signInWithGoogle, signInWithGithub, user, resetPassword } = useAuth();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { toast } = useToast();
@@ -35,7 +35,7 @@ const Auth = () => {
 
   useEffect(() => {
     if (user) {
-      navigate('/');
+      navigate('/dashboard');
     }
   }, [user, navigate]);
 
@@ -142,9 +142,10 @@ const Auth = () => {
         
         <CardContent>
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
+            <TabsList className="grid w-full grid-cols-3">
               <TabsTrigger value="login">Вход</TabsTrigger>
               <TabsTrigger value="signup">Регистрация</TabsTrigger>
+              <TabsTrigger value="reset">Восстановление</TabsTrigger>
             </TabsList>
             
             <TabsContent value="login" className="space-y-4">
@@ -253,6 +254,46 @@ const Auth = () => {
                 
                 <Button type="submit" className="w-full" disabled={loading}>
                   {loading ? "Регистрируемся..." : "Зарегистрироваться"}
+                </Button>
+              </form>
+            </TabsContent>
+
+            <TabsContent value="reset" className="space-y-4">
+              <form onSubmit={async (e) => {
+                e.preventDefault();
+                setLoading(true);
+                const formData = new FormData(e.currentTarget);
+                const email = formData.get('reset-email') as string;
+                
+                const { error } = await resetPassword(email);
+                
+                if (error) {
+                  toast({
+                    title: "Ошибка",
+                    description: error.message,
+                    variant: "destructive"
+                  });
+                } else {
+                  toast({
+                    title: "Письмо отправлено",
+                    description: "Проверьте email для сброса пароля"
+                  });
+                }
+                setLoading(false);
+              }} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="reset-email">Email</Label>
+                  <Input
+                    id="reset-email"
+                    name="reset-email"
+                    type="email"
+                    required
+                    placeholder="your@email.com"
+                  />
+                </div>
+                
+                <Button type="submit" className="w-full" disabled={loading}>
+                  {loading ? "Отправка..." : "Восстановить пароль"}
                 </Button>
               </form>
             </TabsContent>

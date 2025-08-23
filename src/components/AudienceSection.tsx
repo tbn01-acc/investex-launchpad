@@ -12,7 +12,7 @@ import {
   CheckCircle,
   Target
 } from "lucide-react";
-import audienceImage from "@/assets/audience-illustration.jpg";
+import audienceImage from "@/assets/audience-realistic.jpg";
 
 const AudienceSection = () => {
   const audiences = [

@@ -11,7 +11,7 @@ import {
   FileText,
   Brain
 } from "lucide-react";
-import featuresImage from "@/assets/features-illustration.jpg";
+import featuresImage from "@/assets/features-realistic.jpg";
 
 const FeaturesSection = () => {
   const features = [

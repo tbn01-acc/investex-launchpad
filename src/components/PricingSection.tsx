@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle, Star, Zap, Crown } from "lucide-react";
-import pricingImage from "@/assets/pricing-illustration.jpg";
+import pricingImage from "@/assets/pricing-realistic.jpg";
 
 const PricingSection = () => {
   const plans = [
