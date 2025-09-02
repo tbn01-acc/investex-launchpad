@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
@@ -12,11 +12,15 @@ import {
 import { cn } from "@/lib/utils";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { ApiConfigDialog } from "@/components/ApiConfigDialog";
+import { LanguageCurrencySelector } from "@/components/LanguageCurrencySelector";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
-  const { user, signOut } = useAuth();
+  const { user, signOut, profile } = useAuth();
+  const { t } = useLanguage();
 
   const navigationItems = [
     {
@@ -95,11 +99,23 @@ const Navigation = () => {
             </NavigationMenu>
 
             <div className="flex items-center space-x-3">
+              <LanguageCurrencySelector />
               {user ? (
                 <>
+                  <ApiConfigDialog>
+                    <Button variant="outline" size="sm">
+                      <Settings className="h-4 w-4 mr-2" />
+                      API
+                    </Button>
+                  </ApiConfigDialog>
                   <Button variant="ghost" className="hover:bg-accent/10" asChild>
-                    <Link to="/dashboard">Личный кабинет</Link>
+                    <Link to="/dashboard">{t('nav.dashboard')}</Link>
                   </Button>
+                  {profile?.role === 'superadmin' && (
+                    <Button variant="outline" size="sm" asChild>
+                      <Link to="/admin">{t('nav.admin')}</Link>
+                    </Button>
+                  )}
                   <Button 
                     variant="ghost" 
                     className="hover:bg-accent/10"
@@ -111,16 +127,13 @@ const Navigation = () => {
               ) : (
                 <>
                   <Button variant="ghost" className="hover:bg-accent/10" asChild>
-                    <Link to="/auth">Войти</Link>
+                    <Link to="/auth">{t('nav.login')}</Link>
                   </Button>
                   <Button className="bg-gradient-primary hover:opacity-90" asChild>
                     <Link to="/auth?mode=signup">Регистрация</Link>
                   </Button>
                 </>
               )}
-              <Button variant="outline" size="sm" asChild>
-                <Link to="/admin">Админ</Link>
-              </Button>
             </div>
           </div>
 
@@ -175,11 +188,23 @@ const Navigation = () => {
               ))}
               
               <div className="pt-4 border-t border-border mt-4 space-y-2">
+                <LanguageCurrencySelector />
                 {user ? (
                   <>
+                    <ApiConfigDialog>
+                      <Button variant="outline" size="sm" className="w-full">
+                        <Settings className="h-4 w-4 mr-2" />
+                        API Настройки
+                      </Button>
+                    </ApiConfigDialog>
                     <Button variant="ghost" className="w-full justify-start" asChild>
-                      <Link to="/dashboard" onClick={() => setIsOpen(false)}>Личный кабинет</Link>
+                      <Link to="/dashboard" onClick={() => setIsOpen(false)}>{t('nav.dashboard')}</Link>
                     </Button>
+                    {profile?.role === 'superadmin' && (
+                      <Button variant="outline" className="w-full" asChild>
+                        <Link to="/admin" onClick={() => setIsOpen(false)}>{t('nav.admin')}</Link>
+                      </Button>
+                    )}
                     <Button 
                       variant="ghost" 
                       className="w-full justify-start"
@@ -194,7 +219,7 @@ const Navigation = () => {
                 ) : (
                   <>
                     <Button variant="ghost" className="w-full justify-start" asChild>
-                      <Link to="/auth" onClick={() => setIsOpen(false)}>Войти</Link>
+                      <Link to="/auth" onClick={() => setIsOpen(false)}>{t('nav.login')}</Link>
                     </Button>
                     <Button className="w-full bg-gradient-primary" asChild>
                       <Link to="/auth?mode=signup" onClick={() => setIsOpen(false)}>Регистрация</Link>

@@ -3,16 +3,20 @@ import { useAuth } from '@/hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
+import SuperadminDashboard from '@/pages/dashboards/SuperadminDashboard';
+import InvestorDashboard from '@/pages/dashboards/InvestorDashboard';
+import FreelancerDashboard from '@/pages/dashboards/FreelancerDashboard';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { User, Briefcase, DollarSign, Users, Plus, Settings } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const Dashboard = () => {
-  const { user, loading } = useAuth();
+  const { user, loading, profile } = useAuth();
   const navigate = useNavigate();
-  const [profile, setProfile] = useState<any>(null);
+  const { t } = useLanguage();
   const [profileLoading, setProfileLoading] = useState(true);
 
   useEffect(() => {
@@ -22,30 +26,10 @@ const Dashboard = () => {
   }, [user, loading, navigate]);
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      if (!user) return;
-      
-      try {
-        const { data, error } = await supabase
-          .from('profiles')
-          .select('*')
-          .eq('user_id', user.id)
-          .single();
-          
-        if (error) {
-          console.error('Error fetching profile:', error);
-        } else {
-          setProfile(data);
-        }
-      } catch (error) {
-        console.error('Error fetching profile:', error);
-      } finally {
-        setProfileLoading(false);
-      }
-    };
-
-    fetchProfile();
-  }, [user]);
+    if (profile) {
+      setProfileLoading(false);
+    }
+  }, [profile]);
 
   if (loading || profileLoading) {
     return (
@@ -55,8 +39,45 @@ const Dashboard = () => {
     );
   }
 
-  if (!user) {
+  if (!user || !profile) {
     return null;
+  }
+
+  // Route to specialized dashboards based on role
+  if (profile.role === 'superadmin') {
+    return (
+      <div className="min-h-screen">
+        <Navigation />
+        <main className="pt-24">
+          <SuperadminDashboard />
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (profile.role === 'investor') {
+    return (
+      <div className="min-h-screen">
+        <Navigation />
+        <main className="pt-24">
+          <InvestorDashboard />
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (profile.role === 'freelancer' || profile.role === 'contractor') {
+    return (
+      <div className="min-h-screen">
+        <Navigation />
+        <main className="pt-24">
+          <FreelancerDashboard />
+        </main>
+        <Footer />
+      </div>
+    );
   }
 
   const getRoleDisplayName = (role: string) => {
