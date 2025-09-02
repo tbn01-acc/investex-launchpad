@@ -44,6 +44,30 @@ export type Database = {
         }
         Relationships: []
       }
+      currency_rates: {
+        Row: {
+          from_currency: string
+          id: string
+          rate: number
+          to_currency: string
+          updated_at: string
+        }
+        Insert: {
+          from_currency: string
+          id?: string
+          rate: number
+          to_currency: string
+          updated_at?: string
+        }
+        Update: {
+          from_currency?: string
+          id?: string
+          rate?: number
+          to_currency?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       investments: {
         Row: {
           amount: number
@@ -245,17 +269,55 @@ export type Database = {
         }
         Relationships: []
       }
+      platform_statistics: {
+        Row: {
+          active_freelancers: number | null
+          active_investors: number | null
+          id: string
+          successful_projects: number | null
+          total_funding_raised: number | null
+          total_investments: number | null
+          total_projects: number | null
+          total_users: number | null
+          updated_at: string
+        }
+        Insert: {
+          active_freelancers?: number | null
+          active_investors?: number | null
+          id?: string
+          successful_projects?: number | null
+          total_funding_raised?: number | null
+          total_investments?: number | null
+          total_projects?: number | null
+          total_users?: number | null
+          updated_at?: string
+        }
+        Update: {
+          active_freelancers?: number | null
+          active_investors?: number | null
+          id?: string
+          successful_projects?: number | null
+          total_funding_raised?: number | null
+          total_investments?: number | null
+          total_projects?: number | null
+          total_users?: number | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
           bio: string | null
           company: string | null
           created_at: string
+          currency: string | null
           email: string | null
           email_verified: boolean | null
           experience_level: string | null
           first_name: string | null
           id: string
+          language: string | null
           last_login: string | null
           last_name: string | null
           onboarding_completed: boolean | null
@@ -283,11 +345,13 @@ export type Database = {
           bio?: string | null
           company?: string | null
           created_at?: string
+          currency?: string | null
           email?: string | null
           email_verified?: boolean | null
           experience_level?: string | null
           first_name?: string | null
           id?: string
+          language?: string | null
           last_login?: string | null
           last_name?: string | null
           onboarding_completed?: boolean | null
@@ -315,11 +379,13 @@ export type Database = {
           bio?: string | null
           company?: string | null
           created_at?: string
+          currency?: string | null
           email?: string | null
           email_verified?: boolean | null
           experience_level?: string | null
           first_name?: string | null
           id?: string
+          language?: string | null
           last_login?: string | null
           last_name?: string | null
           onboarding_completed?: boolean | null
@@ -656,6 +722,7 @@ export type Database = {
         | "founder"
         | "investor"
         | "superadmin"
+        | "contractor"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -798,6 +865,7 @@ export const Constants = {
         "founder",
         "investor",
         "superadmin",
+        "contractor",
       ],
     },
   },
