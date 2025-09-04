@@ -192,6 +192,50 @@ export type Database = {
         }
         Relationships: []
       }
+      password_reset_requests: {
+        Row: {
+          created_at: string | null
+          email: string
+          expires_at: string
+          id: string
+          ip_address: unknown | null
+          token: string
+          used_at: string | null
+          user_agent: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          expires_at: string
+          id?: string
+          ip_address?: unknown | null
+          token: string
+          used_at?: string | null
+          user_agent?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          expires_at?: string
+          id?: string
+          ip_address?: unknown | null
+          token?: string
+          used_at?: string | null
+          user_agent?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "password_reset_requests_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
       payments: {
         Row: {
           amount: number
@@ -307,6 +351,8 @@ export type Database = {
       }
       profiles: {
         Row: {
+          added_by: string | null
+          allowed_projects: string[] | null
           avatar_url: string | null
           bio: string | null
           company: string | null
@@ -321,11 +367,18 @@ export type Database = {
           last_login: string | null
           last_name: string | null
           onboarding_completed: boolean | null
+          organization_type:
+            | Database["public"]["Enums"]["organization_type"]
+            | null
           phone: string | null
           preferred_language: string | null
+          project_restricted: boolean | null
           provider: string | null
           provider_id: string | null
           rating: number | null
+          registration_method:
+            | Database["public"]["Enums"]["registration_method"]
+            | null
           reviews_count: number | null
           role: Database["public"]["Enums"]["user_role"]
           skills: string[] | null
@@ -341,6 +394,8 @@ export type Database = {
           website: string | null
         }
         Insert: {
+          added_by?: string | null
+          allowed_projects?: string[] | null
           avatar_url?: string | null
           bio?: string | null
           company?: string | null
@@ -355,11 +410,18 @@ export type Database = {
           last_login?: string | null
           last_name?: string | null
           onboarding_completed?: boolean | null
+          organization_type?:
+            | Database["public"]["Enums"]["organization_type"]
+            | null
           phone?: string | null
           preferred_language?: string | null
+          project_restricted?: boolean | null
           provider?: string | null
           provider_id?: string | null
           rating?: number | null
+          registration_method?:
+            | Database["public"]["Enums"]["registration_method"]
+            | null
           reviews_count?: number | null
           role?: Database["public"]["Enums"]["user_role"]
           skills?: string[] | null
@@ -375,6 +437,8 @@ export type Database = {
           website?: string | null
         }
         Update: {
+          added_by?: string | null
+          allowed_projects?: string[] | null
           avatar_url?: string | null
           bio?: string | null
           company?: string | null
@@ -389,11 +453,18 @@ export type Database = {
           last_login?: string | null
           last_name?: string | null
           onboarding_completed?: boolean | null
+          organization_type?:
+            | Database["public"]["Enums"]["organization_type"]
+            | null
           phone?: string | null
           preferred_language?: string | null
+          project_restricted?: boolean | null
           provider?: string | null
           provider_id?: string | null
           rating?: number | null
+          registration_method?:
+            | Database["public"]["Enums"]["registration_method"]
+            | null
           reviews_count?: number | null
           role?: Database["public"]["Enums"]["user_role"]
           skills?: string[] | null
@@ -408,7 +479,15 @@ export type Database = {
           verification_status?: string | null
           website?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "profiles_added_by_fkey"
+            columns: ["added_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
+        ]
       }
       project_applications: {
         Row: {
@@ -676,6 +755,41 @@ export type Database = {
         }
         Relationships: []
       }
+      user_roles: {
+        Row: {
+          created_at: string | null
+          id: string
+          is_current: boolean | null
+          role: Database["public"]["Enums"]["user_role"]
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          is_current?: boolean | null
+          role: Database["public"]["Enums"]["user_role"]
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          is_current?: boolean | null
+          role?: Database["public"]["Enums"]["user_role"]
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_roles_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -709,6 +823,7 @@ export type Database = {
     }
     Enums: {
       investment_status: "pending" | "approved" | "rejected" | "funded"
+      organization_type: "individual" | "company" | "fund" | "organization"
       project_status:
         | "draft"
         | "active"
@@ -716,6 +831,10 @@ export type Database = {
         | "completed"
         | "cancelled"
         | "funded"
+      registration_method:
+        | "standard_form"
+        | "invitation_link"
+        | "direct_addition"
       user_role:
         | "freelancer"
         | "outsourcer"
@@ -723,6 +842,9 @@ export type Database = {
         | "investor"
         | "superadmin"
         | "contractor"
+        | "project_admin"
+        | "project_employee"
+        | "system_admin"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -851,6 +973,7 @@ export const Constants = {
   public: {
     Enums: {
       investment_status: ["pending", "approved", "rejected", "funded"],
+      organization_type: ["individual", "company", "fund", "organization"],
       project_status: [
         "draft",
         "active",
@@ -859,6 +982,11 @@ export const Constants = {
         "cancelled",
         "funded",
       ],
+      registration_method: [
+        "standard_form",
+        "invitation_link",
+        "direct_addition",
+      ],
       user_role: [
         "freelancer",
         "outsourcer",
@@ -866,6 +994,9 @@ export const Constants = {
         "investor",
         "superadmin",
         "contractor",
+        "project_admin",
+        "project_employee",
+        "system_admin",
       ],
     },
   },
