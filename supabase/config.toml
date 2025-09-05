@@ -44,6 +44,12 @@ verify_jwt = true
 [functions.password-reset-request]
 verify_jwt = false
 
+[functions.password-reset]
+verify_jwt = false
+
+[functions.password-reset-verify]
+verify_jwt = false
+
 [edge_runtime]
 enabled = true
 ip_version = "dual"
