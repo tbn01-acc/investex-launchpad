@@ -804,6 +804,10 @@ export type Database = {
           username: string
         }[]
       }
+      clean_expired_password_reset_tokens: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
       get_current_user_role: {
         Args: Record<PropertyKey, never>
         Returns: string
