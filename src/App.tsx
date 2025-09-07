@@ -20,6 +20,8 @@ import Projects from "./pages/Projects";
 import Investments from "./pages/Investments";
 import AdminPanel from "./pages/AdminPanel";
 import NotFound from "./pages/NotFound";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 const queryClient = new QueryClient();
 
@@ -50,6 +52,8 @@ const App = () => (
                 <Route path="/investments" element={<Investments />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/admin" element={<AdminPanel />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/reset-password/:token" element={<ResetPassword />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>

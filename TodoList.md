@@ -42,7 +42,7 @@
 
 ### Frontend для восстановления пароля
 - [x] 1.27 Создать страницу /forgot-password
-- [ ] 1.28 Создать страницу /reset-password/:token
+- [x] 1.28 Создать страницу /reset-password/:token
 - [ ] 1.29 Создать компонент ForgotPasswordForm
 - [ ] 1.30 Создать компонент ResetPasswordForm
 - [ ] 1.31 Создать компонент PasswordStrengthIndicator
