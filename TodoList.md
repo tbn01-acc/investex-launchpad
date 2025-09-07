@@ -37,11 +37,11 @@
 - [x] 1.22 Создать edge function для запроса восстановления пароля
 - [x] 1.23 Создать edge function для сброса пароля
 - [x] 1.24 Создать edge function для проверки токена
-- [ ] 1.25 Настроить rate limiting (3 запроса в 15 минут)
-- [ ] 1.26 Настроить email уведомления через Resend
+- [x] 1.25 Настроить rate limiting (3 запроса в 15 минут)
+- [x] 1.26 Настроить email уведомления через Resend
 
 ### Frontend для восстановления пароля
-- [ ] 1.27 Создать страницу /forgot-password
+- [x] 1.27 Создать страницу /forgot-password
 - [ ] 1.28 Создать страницу /reset-password/:token
 - [ ] 1.29 Создать компонент ForgotPasswordForm
 - [ ] 1.30 Создать компонент ResetPasswordForm

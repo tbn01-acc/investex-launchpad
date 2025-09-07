@@ -40,6 +40,38 @@ const handler = async (req: Request): Promise<Response> => {
     const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
+    // Rate limiting: проверяем количество запросов за последние 15 минут
+    const fifteenMinutesAgo = new Date(Date.now() - 15 * 60 * 1000);
+    const { data: recentRequests, error: rateLimitError } = await supabase
+      .from("password_reset_requests")
+      .select("id")
+      .eq("email", email)
+      .gt("created_at", fifteenMinutesAgo.toISOString());
+
+    if (rateLimitError) {
+      console.error("Rate limit check error:", rateLimitError);
+      return new Response(
+        JSON.stringify({ error: "Internal server error" }),
+        {
+          status: 500,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
+    }
+
+    if (recentRequests && recentRequests.length >= 3) {
+      console.log(`Rate limit exceeded for email: ${email}`);
+      return new Response(
+        JSON.stringify({ 
+          error: "Слишком много запросов на восстановление пароля. Подождите 15 минут перед повторной попыткой." 
+        }),
+        {
+          status: 429,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
+    }
+
     // Проверяем, существует ли пользователь с таким email
     const { data: profile, error: profileError } = await supabase
       .from("profiles")
