@@ -4,12 +4,16 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { supabase } from '@/integrations/supabase/client';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { 
   TrendingUp, DollarSign, PieChart, Target, 
-  Plus, Eye, BarChart3, Briefcase 
+  Plus, Eye, BarChart3, Briefcase, Search, Filter 
 } from 'lucide-react';
+import DueDiligenceTools from '@/components/DueDiligenceTools';
+import PortfolioAnalytics from '@/components/PortfolioAnalytics';
 
 export default function InvestorDashboard() {
   const { user, profile } = useAuth();
@@ -63,7 +67,9 @@ export default function InvestorDashboard() {
       investorsCount: 45,
       minInvestment: 50000,
       expectedReturn: '15-25%',
-      risk: 'medium'
+      risk: 'medium',
+      category: 'blockchain',
+      stage: 'growth'
     },
     {
       id: 2,
@@ -74,9 +80,41 @@ export default function InvestorDashboard() {
       investorsCount: 28,
       minInvestment: 25000,
       expectedReturn: '20-30%',
-      risk: 'high'
+      risk: 'high',
+      category: 'iot',
+      stage: 'seed'
+    },
+    {
+      id: 3,
+      title: 'AI-платформа для образования',
+      description: 'Персонализированное обучение с использованием ИИ',
+      fundingGoal: 500000,
+      fundingRaised: 180000,
+      investorsCount: 15,
+      minInvestment: 10000,
+      expectedReturn: '25-35%',
+      risk: 'medium',
+      category: 'ai',
+      stage: 'startup'
     }
   ]);
+
+  // Search and filter states
+  const [searchTerm, setSearchTerm] = useState('');
+  const [riskFilter, setRiskFilter] = useState('all');
+  const [categoryFilter, setCategoryFilter] = useState('all');
+  const [stageFilter, setStageFilter] = useState('all');
+
+  // Filtered projects
+  const filteredProjects = availableProjects.filter(project => {
+    const matchesSearch = project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         project.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesRisk = riskFilter === 'all' || project.risk === riskFilter;
+    const matchesCategory = categoryFilter === 'all' || project.category === categoryFilter;
+    const matchesStage = stageFilter === 'all' || project.stage === stageFilter;
+    
+    return matchesSearch && matchesRisk && matchesCategory && matchesStage;
+  });
 
   return (
     <div className="min-h-screen bg-background p-6">
@@ -154,7 +192,7 @@ export default function InvestorDashboard() {
 
         {/* Detailed Tabs */}
         <Tabs defaultValue="portfolio" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="portfolio">
               <PieChart className="h-4 w-4 mr-2" />
               Портфель
@@ -162,6 +200,10 @@ export default function InvestorDashboard() {
             <TabsTrigger value="opportunities">
               <Target className="h-4 w-4 mr-2" />
               Возможности
+            </TabsTrigger>
+            <TabsTrigger value="due-diligence">
+              <Eye className="h-4 w-4 mr-2" />
+              Due Diligence
             </TabsTrigger>
             <TabsTrigger value="analytics">
               <BarChart3 className="h-4 w-4 mr-2" />
@@ -207,8 +249,101 @@ export default function InvestorDashboard() {
           </TabsContent>
 
           <TabsContent value="opportunities">
-            <div className="grid gap-6">
-              {availableProjects.map((project) => (
+            <div className="space-y-6">
+              {/* Search and Filters */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Поиск инвестиционных возможностей</CardTitle>
+                  <CardDescription>Найдите проекты, соответствующие вашим критериям</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {/* Search */}
+                    <div className="relative">
+                      <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                      <Input
+                        placeholder="Поиск по названию или описанию проекта..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="pl-10"
+                      />
+                    </div>
+                    
+                    {/* Filters */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div>
+                        <label className="text-sm font-medium mb-2 block">Уровень риска</label>
+                        <Select value={riskFilter} onValueChange={setRiskFilter}>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Выберите риск" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="all">Все</SelectItem>
+                            <SelectItem value="low">Низкий</SelectItem>
+                            <SelectItem value="medium">Средний</SelectItem>
+                            <SelectItem value="high">Высокий</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      
+                      <div>
+                        <label className="text-sm font-medium mb-2 block">Категория</label>
+                        <Select value={categoryFilter} onValueChange={setCategoryFilter}>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Выберите категорию" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="all">Все</SelectItem>
+                            <SelectItem value="blockchain">Блокчейн</SelectItem>
+                            <SelectItem value="ai">ИИ</SelectItem>
+                            <SelectItem value="iot">IoT</SelectItem>
+                            <SelectItem value="fintech">Финтех</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      
+                      <div>
+                        <label className="text-sm font-medium mb-2 block">Стадия</label>
+                        <Select value={stageFilter} onValueChange={setStageFilter}>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Выберите стадию" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="all">Все</SelectItem>
+                            <SelectItem value="startup">Стартап</SelectItem>
+                            <SelectItem value="seed">Seed</SelectItem>
+                            <SelectItem value="growth">Рост</SelectItem>
+                            <SelectItem value="expansion">Расширение</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center justify-between">
+                      <p className="text-sm text-muted-foreground">
+                        Найдено проектов: {filteredProjects.length}
+                      </p>
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        onClick={() => {
+                          setSearchTerm('');
+                          setRiskFilter('all');
+                          setCategoryFilter('all');
+                          setStageFilter('all');
+                        }}
+                      >
+                        <Filter className="h-4 w-4 mr-2" />
+                        Сбросить фильтры
+                      </Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+              
+              {/* Projects List */}
+              <div className="grid gap-6">
+                {filteredProjects.map((project) => (
                 <Card key={project.id}>
                   <CardHeader>
                     <div className="flex items-start justify-between">
@@ -263,22 +398,20 @@ export default function InvestorDashboard() {
                     </div>
                   </CardContent>
                 </Card>
-              ))}
+                ))}
+              </div>
             </div>
           </TabsContent>
 
+          <TabsContent value="due-diligence">
+            <DueDiligenceTools 
+              projectId={1} 
+              projectTitle="Блокчейн-платформа для NFT" 
+            />
+          </TabsContent>
+
           <TabsContent value="analytics">
-            <Card>
-              <CardHeader>
-                <CardTitle>Аналитика портфеля</CardTitle>
-                <CardDescription>Детальный анализ эффективности ваших инвестиций</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Расширенная аналитика будет добавлена в следующих версиях.
-                </p>
-              </CardContent>
-            </Card>
+            <PortfolioAnalytics />
           </TabsContent>
         </Tabs>
       </div>
