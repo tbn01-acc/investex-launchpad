@@ -162,7 +162,16 @@ const Auth = () => {
                 </div>
                 
                 <div className="space-y-2">
-                  <Label htmlFor="password">Пароль</Label>
+                  <div className="flex items-center justify-between">
+                    <Label htmlFor="password">Пароль</Label>
+                    <button
+                      type="button"
+                      className="text-sm text-primary hover:underline"
+                      onClick={() => setActiveTab('reset')}
+                    >
+                      Забыли пароль?
+                    </button>
+                  </div>
                   <Input
                     id="password"
                     type="password"
