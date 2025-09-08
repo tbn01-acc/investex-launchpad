@@ -45,7 +45,7 @@
 - [x] 1.28 Создать страницу /reset-password/:token
 - [x] 1.29 Создать компонент ForgotPasswordForm
 - [x] 1.30 Создать компонент ResetPasswordForm
-- [ ] 1.31 Создать компонент PasswordStrengthIndicator
+- [x] 1.31 Создать компонент PasswordStrengthIndicator
 - [ ] 1.32 Добавить ссылку "Забыли пароль?" в форму входа
 - [ ] 1.33 Добавить обработку ошибок и валидацию
 
