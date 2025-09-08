@@ -3,9 +3,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { Eye, EyeOff, Lock, AlertCircle, CheckCircle } from "lucide-react";
+import { Eye, EyeOff, Lock, AlertCircle } from "lucide-react";
+import PasswordStrengthIndicator from './PasswordStrengthIndicator';
 
 interface ResetPasswordFormProps {
   token: string;
@@ -21,29 +21,13 @@ export default function ResetPasswordForm({ token, onSuccess }: ResetPasswordFor
   const [error, setError] = useState("");
   const { toast } = useToast();
 
-  const validatePassword = (pass: string) => {
-    if (pass.length < 8) {
-      return "Пароль должен содержать минимум 8 символов";
-    }
-    if (!/(?=.*[a-z])/.test(pass)) {
-      return "Пароль должен содержать строчные буквы";
-    }
-    if (!/(?=.*[A-Z])/.test(pass)) {
-      return "Пароль должен содержать прописные буквы";
-    }
-    if (!/(?=.*\d)/.test(pass)) {
-      return "Пароль должен содержать цифры";
-    }
-    return "";
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
 
-    const passwordError = validatePassword(password);
-    if (passwordError) {
-      setError(passwordError);
+    if (password.length < 8) {
+      setError("Пароль должен содержать минимум 8 символов");
       return;
     }
 
@@ -55,15 +39,22 @@ export default function ResetPasswordForm({ token, onSuccess }: ResetPasswordFor
     setIsLoading(true);
 
     try {
-      const { data, error } = await supabase.functions.invoke('password-reset', {
-        body: {
+      const response = await fetch(`https://adxpefaptdrsbcnekzvx.supabase.co/functions/v1/password-reset`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFkeHBlZmFwdGRyc2JjbmVrenZ4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU2MTcxODIsImV4cCI6MjA3MTE5MzE4Mn0.lXOTkz7GHT3MXgZqHOj7vaPACkHEV_aXlHMHhUsBKfA`
+        },
+        body: JSON.stringify({
           token,
           newPassword: password
-        }
+        })
       });
 
-      if (error || !data?.success) {
-        throw new Error(data?.error || error?.message || 'Ошибка сброса пароля');
+      const data = await response.json();
+
+      if (!response.ok || !data?.success) {
+        throw new Error(data?.error || 'Ошибка сброса пароля');
       }
 
       toast({
@@ -162,27 +153,7 @@ export default function ResetPasswordForm({ token, onSuccess }: ResetPasswordFor
             </div>
           </div>
 
-          <div className="text-xs text-muted-foreground space-y-1">
-            <p>Пароль должен содержать:</p>
-            <ul className="space-y-1">
-              <li className={`flex items-center gap-2 ${password.length >= 8 ? 'text-green-600' : ''}`}>
-                {password.length >= 8 ? <CheckCircle className="h-3 w-3" /> : <div className="h-3 w-3 rounded-full border border-muted-foreground" />}
-                Минимум 8 символов
-              </li>
-              <li className={`flex items-center gap-2 ${/(?=.*[a-z])/.test(password) ? 'text-green-600' : ''}`}>
-                {/(?=.*[a-z])/.test(password) ? <CheckCircle className="h-3 w-3" /> : <div className="h-3 w-3 rounded-full border border-muted-foreground" />}
-                Строчные буквы
-              </li>
-              <li className={`flex items-center gap-2 ${/(?=.*[A-Z])/.test(password) ? 'text-green-600' : ''}`}>
-                {/(?=.*[A-Z])/.test(password) ? <CheckCircle className="h-3 w-3" /> : <div className="h-3 w-3 rounded-full border border-muted-foreground" />}
-                Прописные буквы
-              </li>
-              <li className={`flex items-center gap-2 ${/(?=.*\d)/.test(password) ? 'text-green-600' : ''}`}>
-                {/(?=.*\d)/.test(password) ? <CheckCircle className="h-3 w-3" /> : <div className="h-3 w-3 rounded-full border border-muted-foreground" />}
-                Цифры
-              </li>
-            </ul>
-          </div>
+          <PasswordStrengthIndicator password={password} />
 
           <Button 
             type="submit" 

@@ -14,6 +14,7 @@ interface AuthContextType {
   signInWithGithub: () => Promise<{ error: any }>;
   signOut: () => Promise<{ error: any }>;
   resetPassword: (email: string) => Promise<{ error: any }>;
+  updatePassword: (password: string) => Promise<{ error: any }>;
   refreshProfile: () => Promise<void>;
 }
 
@@ -124,7 +125,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const resetPassword = async (email: string) => {
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/auth?tab=reset`
+      redirectTo: `${window.location.origin}/reset-password`
+    });
+    return { error };
+  };
+
+  const updatePassword = async (password: string) => {
+    const { error } = await supabase.auth.updateUser({
+      password
     });
     return { error };
   };
@@ -152,6 +160,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     signInWithGithub,
     signOut,
     resetPassword,
+    updatePassword,
     refreshProfile,
   };
 
