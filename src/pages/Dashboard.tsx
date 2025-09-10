@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import Navigation from '@/components/Navigation';
@@ -17,7 +17,7 @@ const Dashboard = () => {
   const { user, loading, profile } = useAuth();
   const navigate = useNavigate();
   const { t } = useLanguage();
-  const [profileLoading, setProfileLoading] = useState(true);
+  
 
   useEffect(() => {
     if (!loading && !user) {
@@ -25,13 +25,8 @@ const Dashboard = () => {
     }
   }, [user, loading, navigate]);
 
-  useEffect(() => {
-    if (profile) {
-      setProfileLoading(false);
-    }
-  }, [profile]);
 
-  if (loading || profileLoading) {
+  if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="animate-pulse">Загрузка...</div>
@@ -39,12 +34,13 @@ const Dashboard = () => {
     );
   }
 
-  if (!user || !profile) {
+  if (!user) {
     return null;
   }
 
-  // Route to specialized dashboards based on role
-  if (profile.role === 'superadmin') {
+  // Determine role and route to specialized dashboards based on role
+  const role = profile?.role ?? 'guest';
+  if (role === 'superadmin') {
     return (
       <div className="min-h-screen">
         <Navigation />
@@ -56,7 +52,7 @@ const Dashboard = () => {
     );
   }
 
-  if (profile.role === 'investor') {
+  if (role === 'investor') {
     return (
       <div className="min-h-screen">
         <Navigation />
@@ -68,7 +64,7 @@ const Dashboard = () => {
     );
   }
 
-  if (profile.role === 'freelancer' || profile.role === 'contractor') {
+  if (role === 'freelancer' || role === 'contractor') {
     return (
       <div className="min-h-screen">
         <Navigation />
@@ -87,7 +83,7 @@ const Dashboard = () => {
       founder: 'Фаундер',
       investor: 'Инвестор'
     };
-    return roleMap[role] || role;
+    return roleMap[role] || 'Пользователь';
   };
 
   const getRoleColor = (role: string) => {
@@ -123,7 +119,7 @@ const Dashboard = () => {
     ]
   };
 
-  const actions = quickActions[profile?.role as keyof typeof quickActions] || [];
+  const actions = quickActions[role as keyof typeof quickActions] || [];
 
   return (
     <div className="min-h-screen">
@@ -140,8 +136,8 @@ const Dashboard = () => {
                 </h1>
                 <p className="text-xl text-muted-foreground mb-6">
                   Ваша роль на платформе: 
-                  <Badge className={`ml-2 ${getRoleColor(profile?.role)}`}>
-                    {getRoleDisplayName(profile?.role)}
+                  <Badge className={`ml-2 ${getRoleColor(role)}`}>
+                    {getRoleDisplayName(role)}
                   </Badge>
                 </p>
               </div>
@@ -149,14 +145,14 @@ const Dashboard = () => {
               <Card className="w-full lg:w-auto">
                 <CardContent className="p-6">
                   <div className="flex items-center gap-4">
-                    <div className={`w-16 h-16 ${getRoleColor(profile?.role)} rounded-full flex items-center justify-center text-white font-bold text-xl`}>
+                    <div className={`w-16 h-16 ${getRoleColor(role)} rounded-full flex items-center justify-center text-white font-bold text-xl`}>
                       {profile?.first_name?.[0]}{profile?.last_name?.[0]}
                     </div>
                     <div>
-                      <h3 className="font-semibold">{profile?.first_name} {profile?.last_name}</h3>
+                      <h3 className="font-semibold">{profile?.first_name || 'Пользователь'} {profile?.last_name || ''}</h3>
                       <p className="text-muted-foreground">{user.email}</p>
                       <Badge variant="outline" className="mt-1">
-                        {getRoleDisplayName(profile?.role)}
+                        {getRoleDisplayName(role)}
                       </Badge>
                     </div>
                   </div>
