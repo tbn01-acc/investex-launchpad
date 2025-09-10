@@ -76,6 +76,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setSession(session);
       setUser(session?.user ?? null);
       setLoading(false);
+      if (session?.user) {
+        setTimeout(() => {
+          refreshProfile();
+        }, 0);
+      }
     });
 
     return () => subscription.unsubscribe();

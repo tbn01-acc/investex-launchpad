@@ -32,6 +32,7 @@ const translations = {
     'nav.login': 'Войти',
     'nav.dashboard': 'Кабинет',
     'nav.admin': 'Админ',
+    'nav.profile': 'Профиль',
     
     // Hero Section
     'hero.title': 'Платформа для инвестиций и фриланса нового поколения',
@@ -79,6 +80,7 @@ const translations = {
     'nav.login': 'Login',
     'nav.dashboard': 'Dashboard',
     'nav.admin': 'Admin',
+    'nav.profile': 'Profile',
     
     // Hero Section
     'hero.title': 'Next-generation platform for investments and freelancing',
@@ -130,7 +132,10 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   useEffect(() => {
     const savedLang = localStorage.getItem('investex-language');
     const savedCurrency = localStorage.getItem('investex-currency');
-    if (savedLang) setLanguage(savedLang);
+    if (savedLang) {
+      const normalized = savedLang.replace(/[^a-z]/g, '');
+      setLanguage((normalized === 'en' || normalized === 'ru') ? normalized : 'ru');
+    }
     if (savedCurrency) setCurrency(savedCurrency);
   }, []);
 
@@ -146,7 +151,8 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   const t = (key: string, params?: Record<string, string | number>): string => {
     const keys = key.split('.');
-    let value: any = translations[language as keyof typeof translations];
+    const dict = (translations as any)[language] || (translations as any)['ru'];
+    let value: any = dict;
     
     for (const k of keys) {
       value = value?.[k];

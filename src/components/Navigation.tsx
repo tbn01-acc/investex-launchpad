@@ -109,6 +109,9 @@ const Navigation = () => {
                     </Button>
                   </ApiConfigDialog>
                   <Button variant="ghost" className="hover:bg-accent/10" asChild>
+                    <Link to="/profile">{t('nav.profile')}</Link>
+                  </Button>
+                  <Button variant="ghost" className="hover:bg-accent/10" asChild>
                     <Link to="/dashboard">{t('nav.dashboard')}</Link>
                   </Button>
                   {profile?.role === 'superadmin' && (
@@ -197,6 +200,9 @@ const Navigation = () => {
                         API Настройки
                       </Button>
                     </ApiConfigDialog>
+                    <Button variant="ghost" className="w-full justify-start" asChild>
+                      <Link to="/profile" onClick={() => setIsOpen(false)}>{t('nav.profile')}</Link>
+                    </Button>
                     <Button variant="ghost" className="w-full justify-start" asChild>
                       <Link to="/dashboard" onClick={() => setIsOpen(false)}>{t('nav.dashboard')}</Link>
                     </Button>
