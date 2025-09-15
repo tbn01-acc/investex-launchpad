@@ -57,6 +57,186 @@ const Projects = () => {
       type: 'Стратегия',
       applicants: 15,
       posted: '3 дня назад'
+    },
+    {
+      id: 5,
+      title: 'DevOps инженер для облачной инфраструктуры',
+      description: 'Настройка и оптимизация CI/CD пайплайнов, контейнеризация приложений, мониторинг производительности.',
+      budget: { min: 600000, max: 900000, currency: 'RUB' },
+      deadline: '2 месяца',
+      skills: ['Docker', 'Kubernetes', 'AWS', 'Jenkins', 'Terraform'],
+      category: 'DevOps',
+      type: 'Инфраструктура',
+      applicants: 7,
+      posted: '1 день назад'
+    },
+    {
+      id: 6,
+      title: 'Интеграция платежных систем для интернет-магазина',
+      description: 'Подключение различных платежных шлюзов (Stripe, PayPal, Яндекс.Касса) к существующему сайту.',
+      budget: { min: 200000, max: 350000, currency: 'RUB' },
+      deadline: '1 месяц',
+      skills: ['PHP', 'Laravel', 'Payment APIs', 'MySQL'],
+      category: 'Разработка',
+      type: 'Интеграция',
+      applicants: 18,
+      posted: '5 дней назад'
+    },
+    {
+      id: 7,
+      title: 'Создание корпоративного сайта для юридической фирмы',
+      description: 'Разработка современного сайта с CMS, формами обратной связи и интеграцией с CRM системой.',
+      budget: { min: 250000, max: 400000, currency: 'RUB' },
+      deadline: '6 недель',
+      skills: ['WordPress', 'PHP', 'JavaScript', 'CRM Integration'],
+      category: 'Веб-разработка',
+      type: 'Корпоративный сайт',
+      applicants: 14,
+      posted: '1 неделя назад'
+    },
+    {
+      id: 8,
+      title: 'Data Science проект для анализа клиентских данных',
+      description: 'Создание модели машинного обучения для предсказания поведения клиентов и сегментации.',
+      budget: { min: 700000, max: 1100000, currency: 'RUB' },
+      deadline: '3 месяца',
+      skills: ['Python', 'Pandas', 'Scikit-learn', 'TensorFlow', 'SQL'],
+      category: 'Data Science',
+      type: 'ML модель',
+      applicants: 6,
+      posted: '4 дня назад'
+    },
+    {
+      id: 9,
+      title: 'Мобильная игра на Unity для iOS и Android',
+      description: 'Разработка 2D аркадной игры с монетизацией через рекламу и внутриигровые покупки.',
+      budget: { min: 1000000, max: 1800000, currency: 'RUB' },
+      deadline: '5 месяцев',
+      skills: ['Unity', 'C#', 'Game Design', 'Mobile Development'],
+      category: 'Геймдев',
+      type: 'Мобильная игра',
+      applicants: 9,
+      posted: '6 дней назад'
+    },
+    {
+      id: 10,
+      title: 'SEO оптимизация и продвижение сайта',
+      description: 'Комплексная SEO оптимизация сайта, создание контент-стратегии, линкбилдинг.',
+      budget: { min: 150000, max: 300000, currency: 'RUB' },
+      deadline: '3 месяца',
+      skills: ['SEO', 'Google Analytics', 'Content Marketing', 'Link Building'],
+      category: 'Маркетинг',
+      type: 'SEO',
+      applicants: 22,
+      posted: '2 дня назад'
+    },
+    {
+      id: 11,
+      title: 'Система управления складом (WMS)',
+      description: 'Разработка веб-приложения для управления складскими операциями с интеграцией 1С.',
+      budget: { min: 900000, max: 1400000, currency: 'RUB' },
+      deadline: '4 месяца',
+      skills: ['Java', 'Spring', 'PostgreSQL', '1C Integration', 'REST API'],
+      category: 'Enterprise',
+      type: 'Корпоративная система',
+      applicants: 5,
+      posted: '1 неделя назад'
+    },
+    {
+      id: 12,
+      title: 'Чат-бот для Telegram с ИИ функциями',
+      description: 'Создание умного чат-бота для автоматизации клиентской поддержки с использованием GPT.',
+      budget: { min: 350000, max: 550000, currency: 'RUB' },
+      deadline: '2 месяца',
+      skills: ['Python', 'Telegram API', 'OpenAI API', 'NLP'],
+      category: 'ИИ/ML',
+      type: 'Чат-бот',
+      applicants: 13,
+      posted: '3 дня назад'
+    },
+    {
+      id: 13,
+      title: 'Аудит безопасности веб-приложения',
+      description: 'Проведение пентеста и анализа безопасности веб-приложения, устранение уязвимостей.',
+      budget: { min: 400000, max: 600000, currency: 'RUB' },
+      deadline: '1 месяц',
+      skills: ['Penetration Testing', 'OWASP', 'Security Audit', 'Vulnerability Assessment'],
+      category: 'Безопасность',
+      type: 'Аудит',
+      applicants: 4,
+      posted: '2 дня назад'
+    },
+    {
+      id: 14,
+      title: 'Анимированные видео для YouTube канала',
+      description: 'Создание серии образовательных анимированных роликов для IT канала длительностью 5-10 минут.',
+      budget: { min: 300000, max: 500000, currency: 'RUB' },
+      deadline: '2 месяца',
+      skills: ['After Effects', 'Illustrator', 'Animation', 'Video Production'],
+      category: 'Видеопродакшн',
+      type: 'Анимация',
+      applicants: 11,
+      posted: '5 дней назад'
+    },
+    {
+      id: 15,
+      title: 'ERP система для производственного предприятия',
+      description: 'Разработка модульной ERP системы для управления производством, кадрами и финансами.',
+      budget: { min: 2000000, max: 3500000, currency: 'RUB' },
+      deadline: '8 месяцев',
+      skills: ['Java', 'Spring Boot', 'Angular', 'PostgreSQL', 'Microservices'],
+      category: 'Enterprise',
+      type: 'ERP система',
+      applicants: 3,
+      posted: '1 неделя назад'
+    },
+    {
+      id: 16,
+      title: 'Разработка API для IoT устройств',
+      description: 'Создание RESTful API для сбора и обработки данных с IoT сенсоров в реальном времени.',
+      budget: { min: 500000, max: 800000, currency: 'RUB' },
+      deadline: '3 месяца',
+      skills: ['Node.js', 'Express', 'MongoDB', 'MQTT', 'WebSocket'],
+      category: 'IoT',
+      type: 'API разработка',
+      applicants: 8,
+      posted: '4 дня назад'
+    },
+    {
+      id: 17,
+      title: 'Дизайн мобильного приложения для фитнеса',
+      description: 'UI/UX дизайн мобильного приложения с трекингом тренировок, планами питания и социальными функциями.',
+      budget: { min: 250000, max: 400000, currency: 'RUB' },
+      deadline: '6 недель',
+      skills: ['Figma', 'Mobile UI/UX', 'Prototyping', 'User Research'],
+      category: 'Дизайн',
+      type: 'Mobile UI/UX',
+      applicants: 16,
+      posted: '3 дня назад'
+    },
+    {
+      id: 18,
+      title: 'Блокчейн-кошелек для криптовалют',
+      description: 'Разработка веб-кошелька с поддержкой множественных криптовалют и DeFi функций.',
+      budget: { min: 1200000, max: 2000000, currency: 'RUB' },
+      deadline: '5 месяцев',
+      skills: ['React', 'Web3.js', 'Solidity', 'MetaMask', 'DeFi'],
+      category: 'Blockchain',
+      type: 'Криптокошелек',
+      applicants: 7,
+      posted: '1 неделя назад'
+    },
+    {
+      id: 19,
+      title: 'Система видеоконференций на WebRTC',
+      description: 'Создание веб-платформы для видеоконференций с возможностью записи, чата и совместной работы.',
+      budget: { min: 800000, max: 1300000, currency: 'RUB' },
+      deadline: '4 месяца',
+      skills: ['WebRTC', 'Node.js', 'Socket.io', 'React', 'Media Streaming'],
+      category: 'Разработка',
+      type: 'Видеоплатформа',
+      applicants: 6,
+      posted: '2 дня назад'
     }
   ];
 
@@ -69,9 +249,18 @@ const Projects = () => {
   const getCategoryColor = (category: string) => {
     const colors: { [key: string]: string } = {
       'Разработка': 'bg-primary text-primary-foreground',
-      'Дизайн': 'bg-secondary text-secondary-foreground',
+      'Дизайн': 'bg-secondary text-secondary-foreground', 
       'Blockchain': 'bg-accent text-accent-foreground',
-      'Маркетинг': 'bg-muted text-muted-foreground'
+      'Маркетинг': 'bg-muted text-muted-foreground',
+      'DevOps': 'bg-orange-500 text-white',
+      'Веб-разработка': 'bg-blue-500 text-white',
+      'Data Science': 'bg-purple-500 text-white',
+      'Геймдев': 'bg-green-500 text-white',
+      'Enterprise': 'bg-gray-700 text-white',
+      'ИИ/ML': 'bg-indigo-500 text-white',
+      'Безопасность': 'bg-red-500 text-white',
+      'Видеопродакшн': 'bg-pink-500 text-white',
+      'IoT': 'bg-teal-500 text-white'
     };
     return colors[category] || 'bg-muted text-muted-foreground';
   };

@@ -29,6 +29,8 @@ import Cookies from "./pages/Cookies";
 import Security from "./pages/Security";
 import ApiDocs from "./pages/ApiDocs";
 import KnowledgeBase from "./pages/KnowledgeBase";
+import ProjectManagement from "./pages/ProjectManagement";
+import Payment from "./pages/Payment";
 
 const queryClient = new QueryClient();
 
@@ -68,6 +70,8 @@ const App = () => (
                 <Route path="/security" element={<Security />} />
                 <Route path="/api-docs" element={<ApiDocs />} />
                 <Route path="/knowledge-base" element={<KnowledgeBase />} />
+                <Route path="/project-management" element={<ProjectManagement />} />
+                <Route path="/payment" element={<Payment />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>

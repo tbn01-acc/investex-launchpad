@@ -1,14 +1,30 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle, Star, Zap, Crown } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { useState } from "react";
 import pricingImage from "@/assets/pricing-realistic.jpg";
 
 const PricingSection = () => {
+  const { formatCurrency } = useLanguage();
+  const [selectedPeriod, setSelectedPeriod] = useState("monthly");
+  
+  const getPrice = (basePrice: number, period: string) => {
+    if (basePrice === 0) return "Бесплатно";
+    
+    let multiplier = 1;
+    if (period === "quarterly") multiplier = 2.85; // 5% discount
+    else if (period === "biannual") multiplier = 5.4; // 10% discount  
+    else if (period === "annual") multiplier = 9.6; // 20% discount
+    
+    return formatCurrency(basePrice * multiplier, "USD");
+  };
+
   const plans = [
     {
       name: "Базовый",
-      price: "Бесплатно",
-      period: "",
+      basePrice: 0,
+      period: selectedPeriod === "monthly" ? "/месяц" : selectedPeriod === "quarterly" ? "/3 месяца" : selectedPeriod === "biannual" ? "/6 месяцев" : "/год",
       description: "Для начинающих фрилансеров и небольших проектов",
       features: [
         "Создание базового профиля",
@@ -26,8 +42,8 @@ const PricingSection = () => {
     },
     {
       name: "PRO",
-      price: "$49",
-      period: "/месяц",
+      basePrice: 49,
+      period: selectedPeriod === "monthly" ? "/месяц" : selectedPeriod === "quarterly" ? "/3 месяца" : selectedPeriod === "biannual" ? "/6 месяцев" : "/год",
       description: "Для профессиональных фрилансеров и средних проектов",
       features: [
         "Все возможности Базового тарифа",
@@ -46,9 +62,9 @@ const PricingSection = () => {
       buttonVariant: "default" as const
     },
     {
-      name: "BUSINESS",
-      price: "$99",
-      period: "/месяц",
+      name: "BUSINESS", 
+      basePrice: 99,
+      period: selectedPeriod === "monthly" ? "/месяц" : selectedPeriod === "quarterly" ? "/3 месяца" : selectedPeriod === "biannual" ? "/6 месяцев" : "/год",
       description: "Для аутсорсинговых компаний и крупных проектов",
       features: [
         "Все возможности PRO тарифа",
@@ -68,10 +84,11 @@ const PricingSection = () => {
     }
   ];
 
-  const discounts = [
-    { period: "3 месяца", discount: "5%", popular: false },
-    { period: "6 месяцев", discount: "10%", popular: true },
-    { period: "12 месяцев", discount: "20%", popular: false }
+  const periods = [
+    { id: "monthly", name: "1 месяц", discount: null, popular: false },
+    { id: "quarterly", name: "3 месяца", discount: "5%", popular: false },
+    { id: "biannual", name: "6 месяцев", discount: "10%", popular: true },
+    { id: "annual", name: "12 месяцев", discount: "20%", popular: false }
   ];
 
   return (
@@ -94,19 +111,26 @@ const PricingSection = () => {
           </p>
         </div>
 
-        {/* Discount badges */}
-        <div className="flex justify-center gap-4 mb-12">
-          {discounts.map((discount, index) => (
-            <div 
-              key={index}
-              className={`px-4 py-2 rounded-full text-sm font-medium ${
-                discount.popular 
-                  ? 'bg-primary text-white shadow-elegant' 
-                  : 'bg-secondary text-secondary-foreground'
+        {/* Payment Period Selector */}
+        <div className="flex justify-center gap-2 mb-12">
+          {periods.map((period) => (
+            <Button
+              key={period.id}
+              variant={selectedPeriod === period.id ? "default" : "outline"}
+              onClick={() => setSelectedPeriod(period.id)}
+              className={`px-6 py-3 ${
+                period.popular 
+                  ? 'ring-2 ring-primary ring-offset-2' 
+                  : ''
               }`}
             >
-              {discount.period}: -{discount.discount}
-            </div>
+              {period.name}
+              {period.discount && (
+                <span className="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">
+                  -{period.discount}
+                </span>
+              )}
+            </Button>
           ))}
         </div>
 
@@ -137,7 +161,7 @@ const PricingSection = () => {
                   
                   <CardTitle className="text-2xl font-bold text-foreground">{plan.name}</CardTitle>
                   <div className="flex items-end justify-center gap-1 mb-2">
-                    <span className="text-4xl font-bold text-foreground">{plan.price}</span>
+                    <span className="text-4xl font-bold text-foreground">{getPrice(plan.basePrice, selectedPeriod)}</span>
                     <span className="text-lg text-muted-foreground pb-1">{plan.period}</span>
                   </div>
                   <p className="text-muted-foreground text-sm">{plan.description}</p>
@@ -157,6 +181,15 @@ const PricingSection = () => {
                     variant={plan.buttonVariant}
                     className="w-full"
                     size="lg"
+                    onClick={() => {
+                      // Navigate to payment form with pre-filled data
+                      const params = new URLSearchParams({
+                        plan: plan.name,
+                        price: getPrice(plan.basePrice, selectedPeriod),
+                        period: selectedPeriod
+                      });
+                      window.location.href = `/payment?${params.toString()}`;
+                    }}
                   >
                     {plan.cta}
                   </Button>
