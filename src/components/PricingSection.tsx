@@ -8,6 +8,7 @@ import pricingImage from "@/assets/pricing-realistic.jpg";
 const PricingSection = () => {
   const { formatCurrency } = useLanguage();
   const [selectedPeriod, setSelectedPeriod] = useState("monthly");
+  const [selectedRole, setSelectedRole] = useState("freelancer");
   
   const getPrice = (basePrice: number, period: string) => {
     if (basePrice === 0) return "Бесплатно";
@@ -20,69 +21,211 @@ const PricingSection = () => {
     return formatCurrency(basePrice * multiplier, "USD");
   };
 
-  const plans = [
-    {
-      name: "Базовый",
-      basePrice: 0,
-      period: selectedPeriod === "monthly" ? "/месяц" : selectedPeriod === "quarterly" ? "/3 месяца" : selectedPeriod === "biannual" ? "/6 месяцев" : "/год",
-      description: "Для начинающих фрилансеров и небольших проектов",
-      features: [
-        "Создание базового профиля",
-        "Поиск проектов с ограничениями",
-        "До 3 активных проектов",
-        "Базовая версия базы знаний",
-        "Внутренний чат (до 50 сообщений/месяц)",
-        "Стандартная поддержка"
-      ],
-      cta: "Начать бесплатно",
-      popular: false,
-      icon: Zap,
-      gradient: "from-gray-50 to-gray-100",
-      buttonVariant: "outline" as const
-    },
-    {
-      name: "PRO",
-      basePrice: 49,
-      period: selectedPeriod === "monthly" ? "/месяц" : selectedPeriod === "quarterly" ? "/3 месяца" : selectedPeriod === "biannual" ? "/6 месяцев" : "/год",
-      description: "Для профессиональных фрилансеров и средних проектов",
-      features: [
-        "Все возможности Базового тарифа",
-        "Неограниченный поиск и фильтры",
-        "До 15 активных проектов",
-        "Расширенная аналитика",
-        "Приоритет в поиске",
-        "Персональные рекомендации",
-        "Расширенные коммуникации",
-        "Email поддержка"
-      ],
-      cta: "Выбрать PRO",
-      popular: true,
-      icon: Star,
-      gradient: "from-primary/10 to-primary/5",
-      buttonVariant: "default" as const
-    },
-    {
-      name: "BUSINESS", 
-      basePrice: 99,
-      period: selectedPeriod === "monthly" ? "/месяц" : selectedPeriod === "quarterly" ? "/3 месяца" : selectedPeriod === "biannual" ? "/6 месяцев" : "/год",
-      description: "Для аутсорсинговых компаний и крупных проектов",
-      features: [
-        "Все возможности PRO тарифа",
-        "Управление командой до 50 человек",
-        "Неограниченные проекты",
-        "Расширенные финансовые инструменты",
-        "Интеграции с CRM",
-        "Белая маркировка",
-        "Приоритетная поддержка",
-        "Персональный менеджер"
-      ],
-      cta: "Выбрать BUSINESS",
-      popular: false,
-      icon: Crown,
-      gradient: "from-investment-green/10 to-investment-green/5",
-      buttonVariant: "investment" as const
-    }
-  ];
+  const rolePlans = {
+    freelancer: [
+      {
+        name: "Стартер",
+        basePrice: 0,
+        description: "Для начинающих фрилансеров",
+        features: [
+          "Создание базового профиля",
+          "Поиск проектов с ограничениями",
+          "До 3 активных проектов",
+          "Базовая поддержка"
+        ],
+        cta: "Начать бесплатно",
+        popular: false,
+        icon: Zap,
+        gradient: "from-gray-50 to-gray-100",
+        buttonVariant: "outline" as const
+      },
+      {
+        name: "Профи",
+        basePrice: 29,
+        description: "Для профессиональных фрилансеров",
+        features: [
+          "Все возможности Стартер",
+          "Неограниченный поиск проектов",
+          "До 15 активных проектов",
+          "Расширенная аналитика",
+          "Приоритетная поддержка"
+        ],
+        cta: "Выбрать Профи",
+        popular: true,
+        icon: Star,
+        gradient: "from-primary/10 to-primary/5",
+        buttonVariant: "default" as const
+      },
+      {
+        name: "Эксперт",
+        basePrice: 59,
+        description: "Для экспертного уровня",
+        features: [
+          "Все возможности Профи",
+          "Неограниченные проекты",
+          "Персональный менеджер",
+          "Белая маркировка профиля"
+        ],
+        cta: "Выбрать Эксперт",
+        popular: false,
+        icon: Crown,
+        gradient: "from-investment-green/10 to-investment-green/5",
+        buttonVariant: "investment" as const
+      }
+    ],
+    investor: [
+      {
+        name: "Базовый",
+        basePrice: 0,
+        description: "Для начинающих инвесторов",
+        features: [
+          "Просмотр проектов",
+          "Базовая аналитика",
+          "До 3 инвестиций в месяц",
+          "Стандартная поддержка"
+        ],
+        cta: "Начать бесплатно",
+        popular: false,
+        icon: Zap,
+        gradient: "from-gray-50 to-gray-100",
+        buttonVariant: "outline" as const
+      },
+      {
+        name: "Золотой",
+        basePrice: 99,
+        description: "Для активных инвесторов",
+        features: [
+          "Все возможности Базового",
+          "Неограниченные инвестиции",
+          "Расширенная due diligence",
+          "Персональная аналитика",
+          "Приоритетный доступ"
+        ],
+        cta: "Выбрать Золотой",
+        popular: true,
+        icon: Star,
+        gradient: "from-primary/10 to-primary/5",
+        buttonVariant: "default" as const
+      },
+      {
+        name: "Платиновый",
+        basePrice: 299,
+        description: "Для профессиональных инвесторов",
+        features: [
+          "Все возможности Золотого",
+          "Персональный менеджер",
+          "Эксклюзивные проекты",
+          "Индивидуальные условия"
+        ],
+        cta: "Выбрать Платиновый",
+        popular: false,
+        icon: Crown,
+        gradient: "from-investment-green/10 to-investment-green/5",
+        buttonVariant: "investment" as const
+      }
+    ],
+    founder: [
+      {
+        name: "Стартап",
+        basePrice: 0,
+        description: "Для начинающих фаундеров",
+        features: [
+          "Создание проекта",
+          "Поиск инвесторов",
+          "Базовые инструменты",
+          "Стандартная поддержка"
+        ],
+        cta: "Начать бесплатно",
+        popular: false,
+        icon: Zap,
+        gradient: "from-gray-50 to-gray-100",
+        buttonVariant: "outline" as const
+      },
+      {
+        name: "Рост",
+        basePrice: 149,
+        description: "Для растущих проектов",
+        features: [
+          "Все возможности Стартап",
+          "Расширенные инструменты",
+          "Питч-материалы",
+          "Менторская поддержка"
+        ],
+        cta: "Выбрать Рост",
+        popular: true,
+        icon: Star,
+        gradient: "from-primary/10 to-primary/5",
+        buttonVariant: "default" as const
+      },
+      {
+        name: "Масштаб",
+        basePrice: 399,
+        description: "Для масштабирования бизнеса",
+        features: [
+          "Все возможности Роста",
+          "Персональный консультант",
+          "Приоритетное размещение",
+          "Юридическая поддержка"
+        ],
+        cta: "Выбрать Масштаб",
+        popular: false,
+        icon: Crown,
+        gradient: "from-investment-green/10 to-investment-green/5",
+        buttonVariant: "investment" as const
+      }
+    ],
+    outsourcer: [
+      {
+        name: "Команда",
+        basePrice: 0,
+        description: "Для небольших команд",
+        features: [
+          "До 5 участников команды",
+          "Базовое управление проектами",
+          "Стандартная поддержка"
+        ],
+        cta: "Начать бесплатно",
+        popular: false,
+        icon: Zap,
+        gradient: "from-gray-50 to-gray-100",
+        buttonVariant: "outline" as const
+      },
+      {
+        name: "Агентство",
+        basePrice: 199,
+        description: "Для профессиональных агентств",
+        features: [
+          "До 25 участников команды",
+          "Расширенное управление",
+          "Клиентский портал",
+          "Отчетность и аналитика"
+        ],
+        cta: "Выбрать Агентство",
+        popular: true,
+        icon: Star,
+        gradient: "from-primary/10 to-primary/5",
+        buttonVariant: "default" as const
+      },
+      {
+        name: "Корпоратив",
+        basePrice: 499,
+        description: "Для крупных компаний",
+        features: [
+          "Неограниченная команда",
+          "Белая маркировка",
+          "Интеграции с CRM",
+          "Персональный менеджер"
+        ],
+        cta: "Выбрать Корпоратив",
+        popular: false,
+        icon: Crown,
+        gradient: "from-investment-green/10 to-investment-green/5",
+        buttonVariant: "investment" as const
+      }
+    ]
+  };
+
+  const plans = rolePlans[selectedRole as keyof typeof rolePlans] || rolePlans.freelancer;
 
   const periods = [
     { id: "monthly", name: "1 месяц", discount: null, popular: false },
@@ -109,6 +252,38 @@ const PricingSection = () => {
             Выберите подходящий план для вашего бизнеса. 
             Комиссия 5% с транзакций + дополнительные премиум-услуги
           </p>
+        </div>
+
+        {/* Role Selector */}
+        <div className="flex justify-center gap-2 mb-8">
+          <Button
+            variant={selectedRole === "freelancer" ? "default" : "outline"}
+            onClick={() => setSelectedRole("freelancer")}
+            className="px-4 py-2"
+          >
+            Фрилансер
+          </Button>
+          <Button
+            variant={selectedRole === "investor" ? "default" : "outline"}
+            onClick={() => setSelectedRole("investor")}
+            className="px-4 py-2"
+          >
+            Инвестор
+          </Button>
+          <Button
+            variant={selectedRole === "founder" ? "default" : "outline"}
+            onClick={() => setSelectedRole("founder")}
+            className="px-4 py-2"
+          >
+            Фаундер
+          </Button>
+          <Button
+            variant={selectedRole === "outsourcer" ? "default" : "outline"}
+            onClick={() => setSelectedRole("outsourcer")}
+            className="px-4 py-2"
+          >
+            Аутсорсер
+          </Button>
         </div>
 
         {/* Payment Period Selector */}
@@ -162,7 +337,9 @@ const PricingSection = () => {
                   <CardTitle className="text-2xl font-bold text-foreground">{plan.name}</CardTitle>
                   <div className="flex items-end justify-center gap-1 mb-2">
                     <span className="text-4xl font-bold text-foreground">{getPrice(plan.basePrice, selectedPeriod)}</span>
-                    <span className="text-lg text-muted-foreground pb-1">{plan.period}</span>
+                    <span className="text-lg text-muted-foreground pb-1">
+                      {selectedPeriod === "monthly" ? "/месяц" : selectedPeriod === "quarterly" ? "/3 месяца" : selectedPeriod === "biannual" ? "/6 месяцев" : "/год"}
+                    </span>
                   </div>
                   <p className="text-muted-foreground text-sm">{plan.description}</p>
                 </CardHeader>
@@ -186,7 +363,8 @@ const PricingSection = () => {
                       const params = new URLSearchParams({
                         plan: plan.name,
                         price: getPrice(plan.basePrice, selectedPeriod),
-                        period: selectedPeriod
+                        period: selectedPeriod,
+                        role: selectedRole
                       });
                       window.location.href = `/payment?${params.toString()}`;
                     }}

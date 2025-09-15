@@ -6,6 +6,9 @@ import Footer from '@/components/Footer';
 import SuperadminDashboard from '@/pages/dashboards/SuperadminDashboard';
 import InvestorDashboard from '@/pages/dashboards/InvestorDashboard';
 import FreelancerDashboard from '@/pages/dashboards/FreelancerDashboard';
+import FounderDashboard from '@/pages/dashboards/FounderDashboard';
+import OutsourcerDashboard from '@/pages/dashboards/OutsourcerDashboard';
+import ContractorDashboard from '@/pages/dashboards/ContractorDashboard';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -19,7 +22,7 @@ import { useToast } from '@/hooks/use-toast';
 const Dashboard = () => {
   const { user, loading, profile, refreshProfile } = useAuth();
   const navigate = useNavigate();
-  const { t } = useLanguage();
+  const { t, formatCurrency } = useLanguage();
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState('overview');
   const [selectedRole, setSelectedRole] = useState<string>('');
@@ -143,8 +146,13 @@ const Dashboard = () => {
       case 'investor':
         return <InvestorDashboard />;
       case 'freelancer':
-      case 'contractor':
         return <FreelancerDashboard />;
+      case 'founder':
+        return <FounderDashboard />;
+      case 'outsourcer':
+        return <OutsourcerDashboard />;
+      case 'contractor':
+        return <ContractorDashboard />;
       default:
         return null;
     }
@@ -291,22 +299,63 @@ const Dashboard = () => {
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                       <BarChart3 className="h-5 w-5" />
-                      Платформенная аналитика
+                      Персональная аналитика - {getRoleDisplayName(role)}
                     </CardTitle>
+                    <CardDescription>
+                      Ваши показатели и сравнение с рынком
+                    </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <p className="text-sm text-muted-foreground">Активные фрилансеры</p>
-                        <p className="text-xl font-bold">{stats.activeFreelancers.toLocaleString()}</p>
+                        <h4 className="font-semibold mb-3">Ваши показатели</h4>
+                        <div className="space-y-3">
+                          <div className="flex justify-between">
+                            <span className="text-sm text-muted-foreground">Завершенных проектов</span>
+                            <span className="font-medium">24</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-sm text-muted-foreground">Средний рейтинг</span>
+                            <span className="font-medium">4.8/5.0</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-sm text-muted-foreground">Доход за месяц</span>
+                            <span className="font-medium">{formatCurrency(285000)}</span>
+                          </div>
+                        </div>
                       </div>
+                      
                       <div>
-                        <p className="text-sm text-muted-foreground">Активные инвесторы</p>
-                        <p className="text-xl font-bold">{stats.activeInvestors.toLocaleString()}</p>
-                      </div>
-                      <div>
-                        <p className="text-sm text-muted-foreground">Общее финансирование</p>
-                        <p className="text-xl font-bold">${(stats.totalFunding / 1000000).toFixed(1)}M</p>
+                        <h4 className="font-semibold mb-3">Сравнение с рынком</h4>
+                        <div className="space-y-3">
+                          <div className="flex justify-between items-center">
+                            <span className="text-sm text-muted-foreground">Продуктивность</span>
+                            <div className="flex items-center gap-2">
+                              <div className="w-16 bg-gray-200 rounded-full h-2">
+                                <div className="bg-green-500 h-2 rounded-full" style={{ width: '85%' }}></div>
+                              </div>
+                              <span className="text-sm font-medium">85%</span>
+                            </div>
+                          </div>
+                          <div className="flex justify-between items-center">
+                            <span className="text-sm text-muted-foreground">Качество работ</span>
+                            <div className="flex items-center gap-2">
+                              <div className="w-16 bg-gray-200 rounded-full h-2">
+                                <div className="bg-blue-500 h-2 rounded-full" style={{ width: '92%' }}></div>
+                              </div>
+                              <span className="text-sm font-medium">92%</span>
+                            </div>
+                          </div>
+                          <div className="flex justify-between items-center">
+                            <span className="text-sm text-muted-foreground">Соблюдение сроков</span>
+                            <div className="flex items-center gap-2">
+                              <div className="w-16 bg-gray-200 rounded-full h-2">
+                                <div className="bg-primary h-2 rounded-full" style={{ width: '96%' }}></div>
+                              </div>
+                              <span className="text-sm font-medium">96%</span>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </CardContent>
