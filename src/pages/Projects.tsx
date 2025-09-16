@@ -312,7 +312,13 @@ const Projects = () => {
                     </SelectContent>
                   </Select>
                   
-                  <Button className="w-full">
+                  <Button 
+                    className="w-full"
+                    onClick={() => {
+                      // Apply filters (demo functionality)
+                      alert('Фильтры применены!');
+                    }}
+                  >
                     <Filter className="w-4 h-4 mr-2" />
                     Применить фильтры
                   </Button>
@@ -379,10 +385,22 @@ const Projects = () => {
                     </div>
                     
                     <div className="flex gap-3">
-                      <Button className="flex-1">
+                      <Button 
+                        className="flex-1"
+                        onClick={() => {
+                          // Show success message for demo purposes
+                          alert(`Отклик на проект "${project.title}" отправлен!`);
+                        }}
+                      >
                         Откликнуться на проект
                       </Button>
-                      <Button variant="outline">
+                      <Button 
+                        variant="outline"
+                        onClick={() => {
+                          // Show project details modal (for demo)
+                          alert(`Показать детали проекта: ${project.title}`);
+                        }}
+                      >
                         Подробнее
                       </Button>
                     </div>
@@ -393,7 +411,14 @@ const Projects = () => {
 
             {/* Load More */}
             <div className="text-center mt-12">
-              <Button variant="outline" size="lg">
+              <Button 
+                variant="outline" 
+                size="lg"
+                onClick={() => {
+                  // Simulate loading more projects
+                  alert('Загружаем дополнительные проекты...');
+                }}
+              >
                 Загрузить еще проекты
               </Button>
             </div>
@@ -407,7 +432,13 @@ const Projects = () => {
                 <p className="text-lg text-muted-foreground mb-6 max-w-2xl mx-auto">
                   Опубликуйте свой проект и найдите лучших исполнителей из нашего сообщества профессионалов
                 </p>
-                <Button size="lg">
+                <Button 
+                  size="lg"
+                  onClick={() => {
+                    // Navigate to project creation or login
+                    window.location.href = '/auth?mode=signup';
+                  }}
+                >
                   Разместить проект
                 </Button>
               </CardContent>

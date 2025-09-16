@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import { ArrowRight, TrendingUp, Users, Briefcase, Building } from "lucide-react";
 import heroImage from "@/assets/hero-realistic.jpg";
 import collaborationImage from "@/assets/collaboration-realistic.jpg";
@@ -36,12 +37,16 @@ const HeroSection = () => {
             </div>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Button variant="hero" size="lg" className="text-lg px-8 py-6 h-auto">
-                Начать сейчас
-                <ArrowRight className="w-5 h-5" />
+              <Button variant="hero" size="lg" className="text-lg px-8 py-6 h-auto" asChild>
+                <Link to="/auth?mode=signup">
+                  Начать сейчас
+                  <ArrowRight className="w-5 h-5" />
+                </Link>
               </Button>
-              <Button variant="outline" size="lg" className="text-lg px-8 py-6 h-auto bg-white/10 backdrop-blur-sm border-white/30 text-white hover:bg-white hover:text-primary">
-                Узнать больше
+              <Button variant="outline" size="lg" className="text-lg px-8 py-6 h-auto bg-white/10 backdrop-blur-sm border-white/30 text-white hover:bg-white hover:text-primary" asChild>
+                <Link to="/about">
+                  Узнать больше
+                </Link>
               </Button>
             </div>
             

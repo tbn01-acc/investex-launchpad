@@ -269,7 +269,25 @@ const Dashboard = () => {
                 <h2 className="text-xl font-bold mb-4">Быстрые действия</h2>
                 <div className="grid md:grid-cols-3 gap-4">
                   {actions.map((action, index) => (
-                    <Card key={index} className="hover:shadow-lg transition-shadow cursor-pointer">
+                    <Card 
+                      key={index} 
+                      className="hover:shadow-lg transition-shadow cursor-pointer"
+                      onClick={() => {
+                        // Navigate based on action type
+                        if (action.title.includes('профиль') || action.title.includes('Мой профиль')) {
+                          navigate('/profile');
+                        } else if (action.title.includes('проект')) {
+                          navigate('/projects');
+                        } else if (action.title.includes('инвестор') || action.title.includes('портфель') || action.title.includes('Аналитика')) {
+                          navigate('/investments');
+                        } else if (action.title.includes('команд') || action.title.includes('исполнитель')) {
+                          navigate('/projects');
+                        } else {
+                          // Default fallback
+                          navigate('/projects');
+                        }
+                      }}
+                    >
                       <CardContent className="p-4">
                         <div className="flex items-center gap-4">
                           <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
@@ -371,20 +389,32 @@ const Dashboard = () => {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    <div className="flex justify-between items-center">
-                      <div>
-                        <h3 className="font-medium">Имя</h3>
-                        <p className="text-sm text-muted-foreground">{profile?.first_name} {profile?.last_name}</p>
-                      </div>
-                      <Button variant="outline" size="sm">Изменить</Button>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <div>
-                        <h3 className="font-medium">Email</h3>
-                        <p className="text-sm text-muted-foreground">{user?.email}</p>
-                      </div>
-                      <Button variant="outline" size="sm">Изменить</Button>
-                    </div>
+                     <div className="flex justify-between items-center">
+                       <div>
+                         <h3 className="font-medium">Имя</h3>
+                         <p className="text-sm text-muted-foreground">{profile?.first_name} {profile?.last_name}</p>
+                       </div>
+                       <Button 
+                         variant="outline" 
+                         size="sm"
+                         onClick={() => navigate('/profile')}
+                       >
+                         Изменить
+                       </Button>
+                     </div>
+                     <div className="flex justify-between items-center">
+                       <div>
+                         <h3 className="font-medium">Email</h3>
+                         <p className="text-sm text-muted-foreground">{user?.email}</p>
+                       </div>
+                       <Button 
+                         variant="outline" 
+                         size="sm"
+                         onClick={() => navigate('/profile')}
+                       >
+                         Изменить
+                       </Button>
+                     </div>
                     <div className="flex justify-between items-center">
                       <div>
                         <h3 className="font-medium">Роль</h3>

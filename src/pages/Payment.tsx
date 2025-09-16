@@ -35,7 +35,7 @@ const Payment = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle payment processing here
-    console.log('Processing payment...', { planName, price, period, formData });
+    alert(`Обработка платежа для тарифа "${planName}" на сумму ${price}. Форма оплаты будет интегрирована позже.`);
   };
 
   const features = {
