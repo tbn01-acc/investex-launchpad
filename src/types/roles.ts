@@ -7,8 +7,7 @@ export type UserRole =
   | 'job_seeker'
   | 'freelancer'
   | 'outsourcer'
-  | 'contractor'
-  | 'superadmin'; // Add superadmin for backward compatibility
+  | 'contractor';
 
 export type SubscriptionTier = 'start' | 'profi' | 'premium';
 
@@ -87,13 +86,6 @@ export const ROLE_CONFIGS: Record<UserRole, RoleConfig> = {
     description: 'Специализированные корпоративные услуги, ресурсная база',
     category: 'executing',
     icon: '🏭'
-  },
-  superadmin: {
-    key: 'superadmin',
-    name: 'Суперадминистратор',
-    description: 'Полный административный доступ к платформе',
-    category: 'key',
-    icon: '⚡'
   }
 };
 
