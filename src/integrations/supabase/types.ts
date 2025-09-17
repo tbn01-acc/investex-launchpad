@@ -349,13 +349,48 @@ export type Database = {
         }
         Relationships: []
       }
+      pricing_config: {
+        Row: {
+          created_at: string | null
+          features: Json | null
+          id: string
+          limits: Json | null
+          price_monthly: number
+          role: Database["public"]["Enums"]["new_user_role"]
+          tier: Database["public"]["Enums"]["subscription_plan"]
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          features?: Json | null
+          id?: string
+          limits?: Json | null
+          price_monthly: number
+          role: Database["public"]["Enums"]["new_user_role"]
+          tier: Database["public"]["Enums"]["subscription_plan"]
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          features?: Json | null
+          id?: string
+          limits?: Json | null
+          price_monthly?: number
+          role?: Database["public"]["Enums"]["new_user_role"]
+          tier?: Database["public"]["Enums"]["subscription_plan"]
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           added_by: string | null
           allowed_projects: string[] | null
+          available_for_projects: boolean | null
           avatar_url: string | null
           bio: string | null
           company: string | null
+          company_size: number | null
           created_at: string
           currency: string | null
           email: string | null
@@ -363,6 +398,7 @@ export type Database = {
           experience_level: string | null
           first_name: string | null
           id: string
+          investment_capacity: number | null
           language: string | null
           last_login: string | null
           last_name: string | null
@@ -380,25 +416,33 @@ export type Database = {
             | Database["public"]["Enums"]["registration_method"]
             | null
           reviews_count: number | null
-          role: Database["public"]["Enums"]["user_role"]
+          role: Database["public"]["Enums"]["new_user_role"] | null
           skills: string[] | null
+          specialization: string[] | null
           subscription_expires_at: string | null
+          subscription_period: number | null
           subscription_plan: string | null
+          subscription_tier:
+            | Database["public"]["Enums"]["subscription_plan"]
+            | null
           total_earnings: number | null
           total_projects: number | null
           two_factor_enabled: boolean | null
           two_factor_secret: string | null
           updated_at: string
           user_id: string
+          verification_level: string | null
           verification_status: string | null
           website: string | null
         }
         Insert: {
           added_by?: string | null
           allowed_projects?: string[] | null
+          available_for_projects?: boolean | null
           avatar_url?: string | null
           bio?: string | null
           company?: string | null
+          company_size?: number | null
           created_at?: string
           currency?: string | null
           email?: string | null
@@ -406,6 +450,7 @@ export type Database = {
           experience_level?: string | null
           first_name?: string | null
           id?: string
+          investment_capacity?: number | null
           language?: string | null
           last_login?: string | null
           last_name?: string | null
@@ -423,25 +468,33 @@ export type Database = {
             | Database["public"]["Enums"]["registration_method"]
             | null
           reviews_count?: number | null
-          role?: Database["public"]["Enums"]["user_role"]
+          role?: Database["public"]["Enums"]["new_user_role"] | null
           skills?: string[] | null
+          specialization?: string[] | null
           subscription_expires_at?: string | null
+          subscription_period?: number | null
           subscription_plan?: string | null
+          subscription_tier?:
+            | Database["public"]["Enums"]["subscription_plan"]
+            | null
           total_earnings?: number | null
           total_projects?: number | null
           two_factor_enabled?: boolean | null
           two_factor_secret?: string | null
           updated_at?: string
           user_id: string
+          verification_level?: string | null
           verification_status?: string | null
           website?: string | null
         }
         Update: {
           added_by?: string | null
           allowed_projects?: string[] | null
+          available_for_projects?: boolean | null
           avatar_url?: string | null
           bio?: string | null
           company?: string | null
+          company_size?: number | null
           created_at?: string
           currency?: string | null
           email?: string | null
@@ -449,6 +502,7 @@ export type Database = {
           experience_level?: string | null
           first_name?: string | null
           id?: string
+          investment_capacity?: number | null
           language?: string | null
           last_login?: string | null
           last_name?: string | null
@@ -466,16 +520,22 @@ export type Database = {
             | Database["public"]["Enums"]["registration_method"]
             | null
           reviews_count?: number | null
-          role?: Database["public"]["Enums"]["user_role"]
+          role?: Database["public"]["Enums"]["new_user_role"] | null
           skills?: string[] | null
+          specialization?: string[] | null
           subscription_expires_at?: string | null
+          subscription_period?: number | null
           subscription_plan?: string | null
+          subscription_tier?:
+            | Database["public"]["Enums"]["subscription_plan"]
+            | null
           total_earnings?: number | null
           total_projects?: number | null
           two_factor_enabled?: boolean | null
           two_factor_secret?: string | null
           updated_at?: string
           user_id?: string
+          verification_level?: string | null
           verification_status?: string | null
           website?: string | null
         }
@@ -760,7 +820,7 @@ export type Database = {
           created_at: string | null
           id: string
           is_current: boolean | null
-          role: Database["public"]["Enums"]["user_role"]
+          role: Database["public"]["Enums"]["new_user_role"] | null
           updated_at: string | null
           user_id: string
         }
@@ -768,7 +828,7 @@ export type Database = {
           created_at?: string | null
           id?: string
           is_current?: boolean | null
-          role: Database["public"]["Enums"]["user_role"]
+          role?: Database["public"]["Enums"]["new_user_role"] | null
           updated_at?: string | null
           user_id: string
         }
@@ -776,7 +836,7 @@ export type Database = {
           created_at?: string | null
           id?: string
           is_current?: boolean | null
-          role?: Database["public"]["Enums"]["user_role"]
+          role?: Database["public"]["Enums"]["new_user_role"] | null
           updated_at?: string | null
           user_id?: string
         }
@@ -810,7 +870,7 @@ export type Database = {
       }
       get_current_user_role: {
         Args: Record<PropertyKey, never>
-        Returns: string
+        Returns: Database["public"]["Enums"]["new_user_role"]
       }
       get_platform_stats: {
         Args: Record<PropertyKey, never>
@@ -827,6 +887,16 @@ export type Database = {
     }
     Enums: {
       investment_status: "pending" | "approved" | "rejected" | "funded"
+      new_user_role:
+        | "investor"
+        | "subsidiary_investor"
+        | "founder"
+        | "co_founder"
+        | "co_owner"
+        | "job_seeker"
+        | "freelancer"
+        | "outsourcer"
+        | "contractor"
       organization_type: "individual" | "company" | "fund" | "organization"
       project_status:
         | "draft"
@@ -839,6 +909,7 @@ export type Database = {
         | "standard_form"
         | "invitation_link"
         | "direct_addition"
+      subscription_plan: "start" | "profi" | "premium"
       user_role:
         | "freelancer"
         | "outsourcer"
@@ -977,6 +1048,17 @@ export const Constants = {
   public: {
     Enums: {
       investment_status: ["pending", "approved", "rejected", "funded"],
+      new_user_role: [
+        "investor",
+        "subsidiary_investor",
+        "founder",
+        "co_founder",
+        "co_owner",
+        "job_seeker",
+        "freelancer",
+        "outsourcer",
+        "contractor",
+      ],
       organization_type: ["individual", "company", "fund", "organization"],
       project_status: [
         "draft",
@@ -991,6 +1073,7 @@ export const Constants = {
         "invitation_link",
         "direct_addition",
       ],
+      subscription_plan: ["start", "profi", "premium"],
       user_role: [
         "freelancer",
         "outsourcer",
