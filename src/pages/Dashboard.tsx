@@ -9,6 +9,11 @@ import FreelancerDashboard from '@/pages/dashboards/FreelancerDashboard';
 import FounderDashboard from '@/pages/dashboards/FounderDashboard';
 import OutsourcerDashboard from '@/pages/dashboards/OutsourcerDashboard';
 import ContractorDashboard from '@/pages/dashboards/ContractorDashboard';
+import SubsidiaryInvestorDashboard from '@/pages/dashboards/SubsidiaryInvestorDashboard';
+import CoFounderDashboard from '@/pages/dashboards/CoFounderDashboard';
+import CoOwnerDashboard from '@/pages/dashboards/CoOwnerDashboard';
+import JobSeekerDashboard from '@/pages/dashboards/JobSeekerDashboard';
+import PersonalAnalytics from '@/components/PersonalAnalytics';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -18,6 +23,7 @@ import { User, Briefcase, DollarSign, Users, Plus, Settings, BarChart3, Trending
 import { supabase } from '@/integrations/supabase/client';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useToast } from '@/hooks/use-toast';
+import { UserRole, ROLE_CONFIGS } from '@/types/roles';
 
 const Dashboard = () => {
   const { user, loading, profile, refreshProfile } = useAuth();
@@ -25,7 +31,7 @@ const Dashboard = () => {
   const { t, formatCurrency } = useLanguage();
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState('overview');
-  const [selectedRole, setSelectedRole] = useState<string>('');
+  const [selectedRole, setSelectedRole] = useState<UserRole>('job_seeker');
   const [stats, setStats] = useState({
     totalUsers: 15847,
     totalProjects: 3421,
@@ -49,13 +55,13 @@ const Dashboard = () => {
     }
   }, [profile]);
 
-  const handleRoleChange = async (newRole: 'freelancer' | 'investor' | 'founder' | 'outsourcer' | 'contractor' | 'superadmin') => {
+  const handleRoleChange = async (newRole: UserRole) => {
     if (!user) return;
     
     try {
       const { error } = await supabase
         .from('profiles')
-        .update({ role: newRole })
+        .update({ role: newRole as any })
         .eq('user_id', user.id);
 
       if (error) throw error;
