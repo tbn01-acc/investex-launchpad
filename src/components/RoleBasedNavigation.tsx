@@ -91,7 +91,7 @@ const RoleBasedNavigation: React.FC<RoleBasedNavigationProps> = ({ userRole }) =
   };
 
   const hasRelevantItems = (items: NavigationItem[]) => {
-    if (!userRole || userRole === 'superadmin') return true;
+    if (!userRole) return true;
     return items.some(item => item.roles.includes(userRole));
   };
 

@@ -53,12 +53,6 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
 
   const fetchPricing = async () => {
     try {
-      // Skip superadmin role
-      if (selectedRole === 'superadmin') {
-        setPricing([]);
-        setLoading(false);
-        return;
-      }
 
       const { data, error } = await supabase
         .from('pricing_config')
