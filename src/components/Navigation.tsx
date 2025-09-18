@@ -48,11 +48,6 @@ const Navigation = () => {
                   <Button variant="ghost" className="hover:bg-accent/10" asChild>
                     <Link to="/dashboard">{t('nav.dashboard')}</Link>
                   </Button>
-                  {profile?.role === 'superadmin' && (
-                    <Button variant="outline" size="sm" asChild>
-                      <Link to="/admin">{t('nav.admin')}</Link>
-                    </Button>
-                  )}
                   <Button 
                     variant="ghost" 
                     className="hover:bg-accent/10"

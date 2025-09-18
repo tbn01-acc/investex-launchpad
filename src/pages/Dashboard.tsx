@@ -21,6 +21,9 @@ import OutsourcerDashboardPro from '@/pages/dashboards/OutsourcerDashboardPro';
 import JobSeekerDashboard from '@/pages/dashboards/JobSeekerDashboard';
 import JobSeekerDashboardPro from '@/pages/dashboards/JobSeekerDashboardPro';
 import PersonalAnalytics from '@/components/PersonalAnalytics';
+import InvestmentMarketplace from '@/components/InvestmentMarketplace';
+import AIMatchingSystem from '@/components/AIMatchingSystem';
+import AdvancedAnalytics from '@/components/AdvancedAnalytics';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -295,9 +298,12 @@ const Dashboard = () => {
               </Card>
             </TabsContent>
 
-            <TabsContent value="analytics">
-              <PersonalAnalytics userRole={selectedRole} />
-            </TabsContent>
+              <TabsContent value="analytics">
+                <div className="space-y-6">
+                  <PersonalAnalytics userRole={selectedRole} />
+                  <AdvancedAnalytics />
+                </div>
+              </TabsContent>
           </Tabs>
         </div>
       </main>
