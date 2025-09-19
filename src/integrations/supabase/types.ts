@@ -619,16 +619,21 @@ export type Database = {
           company_size: number | null
           created_at: string
           currency: string | null
+          documents_status: string | null
           email: string | null
           email_verified: boolean | null
           experience_level: string | null
+          financial_verification: Json | null
           first_name: string | null
           id: string
           investment_capacity: number | null
+          investment_range_verified: boolean | null
+          kyc_status: string | null
           language: string | null
           last_login: string | null
           last_name: string | null
           onboarding_completed: boolean | null
+          onboarding_completed_at: string | null
           organization_type:
             | Database["public"]["Enums"]["organization_type"]
             | null
@@ -643,6 +648,7 @@ export type Database = {
             | null
           reviews_count: number | null
           role: Database["public"]["Enums"]["new_user_role"] | null
+          role_specific_data: Json | null
           skills: string[] | null
           specialization: string[] | null
           subscription_expires_at: string | null
@@ -657,6 +663,7 @@ export type Database = {
           two_factor_secret: string | null
           updated_at: string
           user_id: string
+          verification_documents: Json | null
           verification_level: string | null
           verification_status: string | null
           website: string | null
@@ -671,16 +678,21 @@ export type Database = {
           company_size?: number | null
           created_at?: string
           currency?: string | null
+          documents_status?: string | null
           email?: string | null
           email_verified?: boolean | null
           experience_level?: string | null
+          financial_verification?: Json | null
           first_name?: string | null
           id?: string
           investment_capacity?: number | null
+          investment_range_verified?: boolean | null
+          kyc_status?: string | null
           language?: string | null
           last_login?: string | null
           last_name?: string | null
           onboarding_completed?: boolean | null
+          onboarding_completed_at?: string | null
           organization_type?:
             | Database["public"]["Enums"]["organization_type"]
             | null
@@ -695,6 +707,7 @@ export type Database = {
             | null
           reviews_count?: number | null
           role?: Database["public"]["Enums"]["new_user_role"] | null
+          role_specific_data?: Json | null
           skills?: string[] | null
           specialization?: string[] | null
           subscription_expires_at?: string | null
@@ -709,6 +722,7 @@ export type Database = {
           two_factor_secret?: string | null
           updated_at?: string
           user_id: string
+          verification_documents?: Json | null
           verification_level?: string | null
           verification_status?: string | null
           website?: string | null
@@ -723,16 +737,21 @@ export type Database = {
           company_size?: number | null
           created_at?: string
           currency?: string | null
+          documents_status?: string | null
           email?: string | null
           email_verified?: boolean | null
           experience_level?: string | null
+          financial_verification?: Json | null
           first_name?: string | null
           id?: string
           investment_capacity?: number | null
+          investment_range_verified?: boolean | null
+          kyc_status?: string | null
           language?: string | null
           last_login?: string | null
           last_name?: string | null
           onboarding_completed?: boolean | null
+          onboarding_completed_at?: string | null
           organization_type?:
             | Database["public"]["Enums"]["organization_type"]
             | null
@@ -747,6 +766,7 @@ export type Database = {
             | null
           reviews_count?: number | null
           role?: Database["public"]["Enums"]["new_user_role"] | null
+          role_specific_data?: Json | null
           skills?: string[] | null
           specialization?: string[] | null
           subscription_expires_at?: string | null
@@ -761,6 +781,7 @@ export type Database = {
           two_factor_secret?: string | null
           updated_at?: string
           user_id?: string
+          verification_documents?: Json | null
           verification_level?: string | null
           verification_status?: string | null
           website?: string | null
@@ -1136,6 +1157,36 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      role_verification_requirements: {
+        Row: {
+          created_at: string | null
+          id: string
+          required_documents: string[] | null
+          role: Database["public"]["Enums"]["user_role"]
+          updated_at: string | null
+          verification_criteria: Json | null
+          verification_type: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          required_documents?: string[] | null
+          role: Database["public"]["Enums"]["user_role"]
+          updated_at?: string | null
+          verification_criteria?: Json | null
+          verification_type: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          required_documents?: string[] | null
+          role?: Database["public"]["Enums"]["user_role"]
+          updated_at?: string | null
+          verification_criteria?: Json | null
+          verification_type?: string
+        }
+        Relationships: []
       }
       skill_categories: {
         Row: {
