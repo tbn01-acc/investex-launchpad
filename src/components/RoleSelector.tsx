@@ -9,12 +9,14 @@ interface RoleSelectorProps {
   selectedRole?: UserRole;
   onRoleSelect: (role: UserRole) => void;
   showDescription?: boolean;
+  showPricing?: boolean;
 }
 
 const RoleSelector: React.FC<RoleSelectorProps> = ({ 
   selectedRole, 
   onRoleSelect,
-  showDescription = true 
+  showDescription = true,
+  showPricing = false
 }) => {
   const [hoveredRole, setHoveredRole] = useState<UserRole | null>(null);
 
