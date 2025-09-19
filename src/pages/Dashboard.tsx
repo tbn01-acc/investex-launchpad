@@ -3,28 +3,12 @@ import { useAuth } from '@/hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
-
-// Import all dashboards
+import SuperadminDashboard from '@/pages/dashboards/SuperadminDashboard';
 import InvestorDashboard from '@/pages/dashboards/InvestorDashboard';
-import InvestorDashboardVIP from '@/pages/dashboards/InvestorDashboardVIP';
-import SubsidiaryInvestorDashboard from '@/pages/dashboards/SubsidiaryInvestorDashboard';
-import FounderDashboard from '@/pages/dashboards/FounderDashboard';
-import FounderDashboardPro from '@/pages/dashboards/FounderDashboardPro';
-import CoFounderDashboard from '@/pages/dashboards/CoFounderDashboard';
-import CoOwnerDashboard from '@/pages/dashboards/CoOwnerDashboard';
 import FreelancerDashboard from '@/pages/dashboards/FreelancerDashboard';
-import FreelancerDashboardPro from '@/pages/dashboards/FreelancerDashboardPro';
-import ContractorDashboard from '@/pages/dashboards/ContractorDashboard';
-import ContractorDashboardPro from '@/pages/dashboards/ContractorDashboardPro';
+import FounderDashboard from '@/pages/dashboards/FounderDashboard';
 import OutsourcerDashboard from '@/pages/dashboards/OutsourcerDashboard';
-import OutsourcerDashboardPro from '@/pages/dashboards/OutsourcerDashboardPro';
-import JobSeekerDashboard from '@/pages/dashboards/JobSeekerDashboard';
-import JobSeekerDashboardPro from '@/pages/dashboards/JobSeekerDashboardPro';
-import PersonalAnalytics from '@/components/PersonalAnalytics';
-import InvestmentMarketplace from '@/components/InvestmentMarketplace';
-import AIMatchingSystem from '@/components/AIMatchingSystem';
-import AdvancedAnalytics from '@/components/AdvancedAnalytics';
-
+import ContractorDashboard from '@/pages/dashboards/ContractorDashboard';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -34,7 +18,6 @@ import { User, Briefcase, DollarSign, Users, Plus, Settings, BarChart3, Trending
 import { supabase } from '@/integrations/supabase/client';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useToast } from '@/hooks/use-toast';
-import { UserRole, ROLE_CONFIGS } from '@/types/roles';
 
 const Dashboard = () => {
   const { user, loading, profile, refreshProfile } = useAuth();
@@ -42,7 +25,7 @@ const Dashboard = () => {
   const { t, formatCurrency } = useLanguage();
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState('overview');
-  const [selectedRole, setSelectedRole] = useState<UserRole>('job_seeker');
+  const [selectedRole, setSelectedRole] = useState<string>('');
   const [stats, setStats] = useState({
     totalUsers: 15847,
     totalProjects: 3421,
@@ -53,58 +36,39 @@ const Dashboard = () => {
     successfulProjects: 2847
   });
   
+
   useEffect(() => {
     if (!loading && !user) {
       navigate('/auth');
     }
   }, [user, loading, navigate]);
 
-  const getDashboardComponent = () => {
-    if (!profile?.role) return <div>Загрузка...</div>;
-    
-    // Check subscription tier for premium dashboards
-    const isPremiumUser = profile.subscription_tier === 'premium' || profile.subscription_tier === 'profi';
-    
-    switch (profile.role) {
-      case 'investor':
-        return isPremiumUser ? <InvestorDashboardVIP /> : <InvestorDashboard />;
-      case 'subsidiary_investor':
-        return <SubsidiaryInvestorDashboard />;
-      case 'founder':
-        return isPremiumUser ? <FounderDashboardPro /> : <FounderDashboard />;
-      case 'co_founder':
-        return <CoFounderDashboard />;
-      case 'co_owner':
-        return <CoOwnerDashboard />;
-      case 'freelancer':
-        return isPremiumUser ? <FreelancerDashboardPro /> : <FreelancerDashboard />;
-      case 'contractor':
-        return isPremiumUser ? <ContractorDashboardPro /> : <ContractorDashboard />;
-      case 'outsourcer':
-        return isPremiumUser ? <OutsourcerDashboardPro /> : <OutsourcerDashboard />;
-      case 'job_seeker':
-        return isPremiumUser ? <JobSeekerDashboardPro /> : <JobSeekerDashboard />;
-      default:
-        return <div>Неизвестная роль пользователя</div>;
+  useEffect(() => {
+    if (profile?.role) {
+      setSelectedRole(profile.role);
     }
-  };
+  }, [profile]);
 
-  const updateRole = async (newRole: UserRole) => {
+  const handleRoleChange = async (newRole: 'freelancer' | 'investor' | 'founder' | 'outsourcer' | 'contractor' | 'superadmin') => {
+    if (!user) return;
+    
     try {
       const { error } = await supabase
         .from('profiles')
         .update({ role: newRole })
-        .eq('user_id', user?.id);
+        .eq('user_id', user.id);
 
       if (error) throw error;
 
+      setSelectedRole(newRole);
       await refreshProfile();
+      
       toast({
         title: "Роль обновлена",
-        description: `Ваша роль изменена на "${ROLE_CONFIGS[newRole].name}"`,
+        description: `Ваша роль изменена на ${getRoleDisplayName(newRole)}`,
       });
-    } catch (error) {
-      console.error('Ошибка при обновлении роли:', error);
+    } catch (error: any) {
+      console.error('Error updating role:', error);
       toast({
         title: "Ошибка",
         description: "Не удалось обновить роль",
@@ -113,17 +77,11 @@ const Dashboard = () => {
     }
   };
 
+
   if (loading) {
     return (
-      <div className="min-h-screen bg-background">
-        <Navigation />
-        <div className="flex items-center justify-center min-h-[50vh]">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
-            <p className="mt-2 text-muted-foreground">Загрузка...</p>
-          </div>
-        </div>
-        <Footer />
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-pulse">Загрузка...</div>
       </div>
     );
   }
@@ -132,117 +90,290 @@ const Dashboard = () => {
     return null;
   }
 
-  // If user has a role, show their dashboard
-  if (profile?.role) {
-    return (
-      <div className="min-h-screen bg-background">
-        <Navigation />
-        <main className="container mx-auto px-4 py-8">
-          {getDashboardComponent()}
-        </main>
-        <Footer />
-      </div>
-    );
-  }
+  const role = selectedRole || profile?.role || 'freelancer';
 
-  // If no role is set, show role selection interface
+  const getRoleDisplayName = (role: string) => {
+    const roleMap: { [key: string]: string } = {
+      freelancer: 'Фрилансер',
+      outsourcer: 'Аутсорсер', 
+      founder: 'Фаундер',
+      investor: 'Инвестор',
+      contractor: 'Подрядчик',
+      superadmin: 'Суперадмин'
+    };
+    return roleMap[role] || 'Пользователь';
+  };
+
+  const getRoleColor = (role: string) => {
+    const colorMap: { [key: string]: string } = {
+      freelancer: 'bg-primary',
+      outsourcer: 'bg-secondary',
+      founder: 'bg-accent',
+      investor: 'bg-gradient-to-r from-primary to-secondary'
+    };
+    return colorMap[role] || 'bg-primary';
+  };
+
+  const quickActions = {
+    freelancer: [
+      { title: 'Найти проекты', description: 'Поиск новых заказов', icon: Briefcase },
+      { title: 'Присоединиться к команде', description: 'Стать частью команды', icon: Users },
+      { title: 'Мой профиль', description: 'Редактировать информацию', icon: User }
+    ],
+    outsourcer: [
+      { title: 'Предложить услуги', description: 'Создать предложение', icon: Plus },
+      { title: 'Найти исполнителей', description: 'Подобрать команду', icon: Users },
+      { title: 'Мои проекты', description: 'Управление проектами', icon: Briefcase }
+    ],
+    founder: [
+      { title: 'Создать проект', description: 'Запустить новый проект', icon: Plus },
+      { title: 'Найти инвесторов', description: 'Привлечь финансирование', icon: DollarSign },
+      { title: 'Собрать команду', description: 'Найти соучредителей', icon: Users }
+    ],
+    investor: [
+      { title: 'Найти проекты', description: 'Инвестиционные возможности', icon: Briefcase },
+      { title: 'Мой портфель', description: 'Текущие инвестиции', icon: DollarSign },
+      { title: 'Аналитика', description: 'Отчеты и метрики', icon: Settings }
+    ]
+  };
+
+  const actions = quickActions[role as keyof typeof quickActions] || [];
+
+  const renderRoleSpecificDashboard = () => {
+    switch (role) {
+      case 'superadmin':
+        return <SuperadminDashboard />;
+      case 'investor':
+        return <InvestorDashboard />;
+      case 'freelancer':
+        return <FreelancerDashboard />;
+      case 'founder':
+        return <FounderDashboard />;
+      case 'outsourcer':
+        return <OutsourcerDashboard />;
+      case 'contractor':
+        return <ContractorDashboard />;
+      default:
+        return null;
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       <Navigation />
-      <main className="container mx-auto px-4 py-8">
-        <div className="max-w-4xl mx-auto space-y-8">
-          <div className="text-center space-y-4">
-            <h1 className="text-3xl font-bold">Добро пожаловать в Invest-Ex!</h1>
-            <p className="text-muted-foreground">
-              Пожалуйста, выберите вашу роль для настройки персонализированного опыта
-            </p>
-          </div>
+      
+      <main className="pt-24 pb-16">
+        <div className="container mx-auto px-4">
+          {/* Header */}
+          <section className="mb-8">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+              <div>
+                <h1 className="text-3xl font-bold mb-2">
+                  Добро пожаловать, {profile?.first_name || 'Пользователь'}!
+                </h1>
+                <p className="text-muted-foreground">
+                  Управляйте своими проектами и отслеживайте прогресс
+                </p>
+              </div>
+              
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-muted-foreground">Роль:</span>
+                  <Select value={role} onValueChange={handleRoleChange}>
+                    <SelectTrigger className="w-32">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="freelancer">Фрилансер</SelectItem>
+                      <SelectItem value="investor">Инвестор</SelectItem>
+                      <SelectItem value="founder">Фаундер</SelectItem>
+                      <SelectItem value="outsourcer">Аутсорсер</SelectItem>
+                      <SelectItem value="contractor">Подрядчик</SelectItem>
+                      {profile?.role === 'superadmin' && (
+                        <SelectItem value="superadmin">Суперадмин</SelectItem>
+                      )}
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                <div className={`w-12 h-12 ${getRoleColor(role)} rounded-full flex items-center justify-center text-white font-bold`}>
+                  {profile?.first_name?.[0] || 'U'}{profile?.last_name?.[0] || ''}
+                </div>
+              </div>
+            </div>
+          </section>
 
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-            <TabsList className="grid w-full grid-cols-3">
+          {/* Tabs */}
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+            <TabsList className="grid w-full grid-cols-4">
               <TabsTrigger value="overview">Обзор</TabsTrigger>
-              <TabsTrigger value="role-selection">Выбор роли</TabsTrigger>
+              <TabsTrigger value="dashboard">Дашборд</TabsTrigger>
               <TabsTrigger value="analytics">Аналитика</TabsTrigger>
+              <TabsTrigger value="settings">Настройки</TabsTrigger>
             </TabsList>
 
-            <TabsContent value="overview">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <TabsContent value="overview" className="space-y-6">
+              {/* Platform Stats */}
+              <section className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <Card>
-                  <CardContent className="p-6">
+                  <CardContent className="p-4">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-sm font-medium text-muted-foreground">Всего пользователей</p>
+                        <p className="text-sm text-muted-foreground">Пользователи</p>
                         <p className="text-2xl font-bold">{stats.totalUsers.toLocaleString()}</p>
                       </div>
-                      <Users className="h-8 w-8 text-blue-500" />
+                      <Users className="h-8 w-8 text-primary" />
                     </div>
                   </CardContent>
                 </Card>
-
+                
                 <Card>
-                  <CardContent className="p-6">
+                  <CardContent className="p-4">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-sm font-medium text-muted-foreground">Активные проекты</p>
+                        <p className="text-sm text-muted-foreground">Проекты</p>
                         <p className="text-2xl font-bold">{stats.totalProjects.toLocaleString()}</p>
                       </div>
-                      <Briefcase className="h-8 w-8 text-green-500" />
+                      <Briefcase className="h-8 w-8 text-primary" />
                     </div>
                   </CardContent>
                 </Card>
-
+                
                 <Card>
-                  <CardContent className="p-6">
+                  <CardContent className="p-4">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-sm font-medium text-muted-foreground">Инвестиции</p>
+                        <p className="text-sm text-muted-foreground">Инвестиции</p>
                         <p className="text-2xl font-bold">{stats.totalInvestments.toLocaleString()}</p>
                       </div>
-                      <DollarSign className="h-8 w-8 text-purple-500" />
+                      <DollarSign className="h-8 w-8 text-primary" />
                     </div>
                   </CardContent>
                 </Card>
-
+                
                 <Card>
-                  <CardContent className="p-6">
+                  <CardContent className="p-4">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-sm font-medium text-muted-foreground">Привлечено средств</p>
-                        <p className="text-2xl font-bold">{formatCurrency(stats.totalFunding)}</p>
+                        <p className="text-sm text-muted-foreground">Успешные</p>
+                        <p className="text-2xl font-bold">{stats.successfulProjects.toLocaleString()}</p>
                       </div>
-                      <TrendingUp className="h-8 w-8 text-orange-500" />
+                      <TrendingUp className="h-8 w-8 text-primary" />
                     </div>
                   </CardContent>
                 </Card>
-              </div>
+              </section>
 
-              <div className="mt-8">
+              {/* Quick Actions */}
+              <section>
+                <h2 className="text-xl font-bold mb-4">Быстрые действия</h2>
+                <div className="grid md:grid-cols-3 gap-4">
+                  {actions.map((action, index) => (
+                    <Card 
+                      key={index} 
+                      className="hover:shadow-lg transition-shadow cursor-pointer"
+                      onClick={() => {
+                        // Navigate based on action type
+                        if (action.title.includes('профиль') || action.title.includes('Мой профиль')) {
+                          navigate('/profile');
+                        } else if (action.title.includes('проект')) {
+                          navigate('/projects');
+                        } else if (action.title.includes('инвестор') || action.title.includes('портфель') || action.title.includes('Аналитика')) {
+                          navigate('/investments');
+                        } else if (action.title.includes('команд') || action.title.includes('исполнитель')) {
+                          navigate('/projects');
+                        } else {
+                          // Default fallback
+                          navigate('/projects');
+                        }
+                      }}
+                    >
+                      <CardContent className="p-4">
+                        <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+                            <action.icon className="w-5 h-5 text-primary" />
+                          </div>
+                          <div>
+                            <h3 className="font-semibold">{action.title}</h3>
+                            <p className="text-sm text-muted-foreground">{action.description}</p>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </section>
+            </TabsContent>
+
+            <TabsContent value="dashboard">
+              <div className="bg-card rounded-lg border p-6">
+                {renderRoleSpecificDashboard()}
+              </div>
+            </TabsContent>
+
+            <TabsContent value="analytics">
+              <div className="grid gap-6">
                 <Card>
                   <CardHeader>
-                    <CardTitle>Обзор платформы</CardTitle>
+                    <CardTitle className="flex items-center gap-2">
+                      <BarChart3 className="h-5 w-5" />
+                      Персональная аналитика - {getRoleDisplayName(role)}
+                    </CardTitle>
                     <CardDescription>
-                      Invest-Ex — это комплексная экосистема для всех участников инвестиционного процесса
+                      Ваши показатели и сравнение с рынком
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                      <div className="text-center p-6 border rounded-lg">
-                        <h3 className="font-semibold">Для инвесторов</h3>
-                        <p className="text-sm text-muted-foreground mt-2">
-                          Доступ к проверенным проектам, due diligence, управление портфелем
-                        </p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <h4 className="font-semibold mb-3">Ваши показатели</h4>
+                        <div className="space-y-3">
+                          <div className="flex justify-between">
+                            <span className="text-sm text-muted-foreground">Завершенных проектов</span>
+                            <span className="font-medium">24</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-sm text-muted-foreground">Средний рейтинг</span>
+                            <span className="font-medium">4.8/5.0</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-sm text-muted-foreground">Доход за месяц</span>
+                            <span className="font-medium">{formatCurrency(285000)}</span>
+                          </div>
+                        </div>
                       </div>
-                      <div className="text-center p-6 border rounded-lg">
-                        <h3 className="font-semibold">Для фаундеров</h3>
-                        <p className="text-sm text-muted-foreground mt-2">
-                          Поиск инвесторов, управление проектами, привлечение команды
-                        </p>
-                      </div>
-                      <div className="text-center p-6 border rounded-lg">
-                        <h3 className="font-semibold">Для исполнителей</h3>
-                        <p className="text-sm text-muted-foreground mt-2">
-                          Поиск проектов, управление контрактами, развитие карьеры
-                        </p>
+                      
+                      <div>
+                        <h4 className="font-semibold mb-3">Сравнение с рынком</h4>
+                        <div className="space-y-3">
+                          <div className="flex justify-between items-center">
+                            <span className="text-sm text-muted-foreground">Продуктивность</span>
+                            <div className="flex items-center gap-2">
+                              <div className="w-16 bg-gray-200 rounded-full h-2">
+                                <div className="bg-green-500 h-2 rounded-full" style={{ width: '85%' }}></div>
+                              </div>
+                              <span className="text-sm font-medium">85%</span>
+                            </div>
+                          </div>
+                          <div className="flex justify-between items-center">
+                            <span className="text-sm text-muted-foreground">Качество работ</span>
+                            <div className="flex items-center gap-2">
+                              <div className="w-16 bg-gray-200 rounded-full h-2">
+                                <div className="bg-blue-500 h-2 rounded-full" style={{ width: '92%' }}></div>
+                              </div>
+                              <span className="text-sm font-medium">92%</span>
+                            </div>
+                          </div>
+                          <div className="flex justify-between items-center">
+                            <span className="text-sm text-muted-foreground">Соблюдение сроков</span>
+                            <div className="flex items-center gap-2">
+                              <div className="w-16 bg-gray-200 rounded-full h-2">
+                                <div className="bg-primary h-2 rounded-full" style={{ width: '96%' }}></div>
+                              </div>
+                              <span className="text-sm font-medium">96%</span>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </CardContent>
@@ -250,63 +381,55 @@ const Dashboard = () => {
               </div>
             </TabsContent>
 
-            <TabsContent value="role-selection">
+            <TabsContent value="settings">
               <Card>
                 <CardHeader>
-                  <CardTitle>Выбор роли</CardTitle>
-                  <CardDescription>
-                    Выберите роль, которая лучше всего описывает ваши цели на платформе
-                  </CardDescription>
+                  <CardTitle>Настройки профиля</CardTitle>
+                  <CardDescription>Управление личными данными и предпочтениями</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-6">
-                  <div>
-                    <Select value={selectedRole} onValueChange={(value: UserRole) => setSelectedRole(value)}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Выберите роль" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {Object.values(ROLE_CONFIGS).map((role) => (
-                          <SelectItem key={role.key} value={role.key}>
-                            {role.icon} {role.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  {selectedRole && (
-                    <div className="p-4 border rounded-lg">
-                      <h3 className="font-semibold flex items-center gap-2">
-                        {ROLE_CONFIGS[selectedRole].icon}
-                        {ROLE_CONFIGS[selectedRole].name}
-                      </h3>
-                      <p className="text-sm text-muted-foreground mt-2">
-                        {ROLE_CONFIGS[selectedRole].description}
-                      </p>
-                      {ROLE_CONFIGS[selectedRole].minInvestment && (
-                        <Badge variant="secondary" className="mt-2">
-                          Мин. инвестиции: {(ROLE_CONFIGS[selectedRole].minInvestment! / 1000000).toFixed(0)} млн ₽
-                        </Badge>
-                      )}
+                <CardContent>
+                  <div className="space-y-4">
+                     <div className="flex justify-between items-center">
+                       <div>
+                         <h3 className="font-medium">Имя</h3>
+                         <p className="text-sm text-muted-foreground">{profile?.first_name} {profile?.last_name}</p>
+                       </div>
+                       <Button 
+                         variant="outline" 
+                         size="sm"
+                         onClick={() => navigate('/profile')}
+                       >
+                         Изменить
+                       </Button>
+                     </div>
+                     <div className="flex justify-between items-center">
+                       <div>
+                         <h3 className="font-medium">Email</h3>
+                         <p className="text-sm text-muted-foreground">{user?.email}</p>
+                       </div>
+                       <Button 
+                         variant="outline" 
+                         size="sm"
+                         onClick={() => navigate('/profile')}
+                       >
+                         Изменить
+                       </Button>
+                     </div>
+                    <div className="flex justify-between items-center">
+                      <div>
+                        <h3 className="font-medium">Роль</h3>
+                        <p className="text-sm text-muted-foreground">{getRoleDisplayName(role)}</p>
+                      </div>
+                      <Badge variant="outline">{getRoleDisplayName(role)}</Badge>
                     </div>
-                  )}
-
-                  <Button onClick={() => updateRole(selectedRole)} className="w-full">
-                    Подтвердить выбор роли
-                  </Button>
+                  </div>
                 </CardContent>
               </Card>
             </TabsContent>
-
-              <TabsContent value="analytics">
-                <div className="space-y-6">
-                  <PersonalAnalytics userRole={selectedRole} />
-                  <AdvancedAnalytics />
-                </div>
-              </TabsContent>
           </Tabs>
         </div>
       </main>
+      
       <Footer />
     </div>
   );
