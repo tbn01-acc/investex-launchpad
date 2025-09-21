@@ -22,8 +22,8 @@ const Footer = () => {
           <div className="space-y-4">
             <h3 className="text-2xl font-bold">InvestEx</h3>
             <p className="text-white/80 leading-relaxed">
-              Универсальная платформа для организации проектной работы с интегрированной 
-              инвестиционной биржей проектов и стартапов.
+              Инвестиционная платформа InvestEx — поиск проектов, инвесторов и партнеров. 
+              Рейтинг стартапов, коллективные инвестиции, аутсорс-команды и франчайзинг.
             </p>
             <div className="flex gap-3">
               <Button variant="ghost" size="icon" className="text-white hover:bg-white/20">
