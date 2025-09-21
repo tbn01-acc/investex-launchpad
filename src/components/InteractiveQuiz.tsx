@@ -5,84 +5,80 @@ import { Checkbox } from "@/components/ui/checkbox";
 
 const quizData = [
   {
-    question: "Какая у вас основная цель на платформе?",
+    question: "Какова ваша основная цель в мире технологий и стартапов?",
     answers: [
-      { text: "Найти финансирование для своего проекта", scores: { founder: 3, investor: 0, freelancer: 0, expert: 1 } },
-      { text: "Инвестировать в перспективные стартапы", scores: { founder: 0, investor: 3, freelancer: 0, expert: 1 } },
-      { text: "Найти интересные проекты для работы", scores: { founder: 0, investor: 0, freelancer: 3, expert: 1 } },
-      { text: "Консультировать и делиться опытом", scores: { founder: 1, investor: 1, freelancer: 1, expert: 3 } }
+      { text: "Приумножить капитал, инвестируя в перспективные идеи", scores: { "Инвестор": 3, "Коллективный инвестор": 2 } },
+      { text: "Воплотить собственную идею в жизнь, создав продукт с нуля", scores: { "Фаундер": 3, "Ко-фаундер": 2 } },
+      { text: "Применить свои профессиональные навыки в интересных проектах", scores: { "Фрилансер/Эксперт/Консультант": 3, "Сотрудник проекта": 2, "Соискатель": 3 } },
+      { text: "Оказывать услуги и находить крупных клиентов для своей компании", scores: { "Аутсорсер": 3, "Подрядчик": 2 } }
     ]
   },
   {
-    question: "Какой у вас опыт в бизнесе?",
+    question: "Какой стиль работы вам ближе?",
     answers: [
-      { text: "У меня есть идея, но мало опыта", scores: { founder: 3, investor: 0, freelancer: 1, expert: 0 } },
-      { text: "Успешно инвестировал/управлял капиталом", scores: { founder: 1, investor: 3, freelancer: 0, expert: 2 } },
-      { text: "Работал в различных проектах как специалист", scores: { founder: 0, investor: 0, freelancer: 3, expert: 1 } },
-      { text: "Большой опыт в определенной сфере", scores: { founder: 1, investor: 2, freelancer: 1, expert: 3 } }
+      { text: "Стратегическое планирование и принятие ключевых решений", scores: { "Фаундер": 2, "Инвестор": 2, "Администратор проекта": 1 } },
+      { text: "Глубокое погружение в свою область экспертизы и выполнение конкретных задач", scores: { "Фрилансер/Эксперт/Консультант": 2, "Сотрудник проекта": 2, "Соискатель": 2 } },
+      { text: "Поиск партнеров и развитие деловых связей", scores: { "Ко-фаундер": 2, "Партнёр (Affiliate)": 2, "Амбассадор проекта": 1 } },
+      { text: "Анализ рынка и оценка финансовых рисков", scores: { "Инвестор": 3, "Коллективный инвестор": 2 } }
     ]
   },
   {
-    question: "Что вас больше всего мотивирует?",
+    question: "Как вы относитесь к риску?",
     answers: [
-      { text: "Создать что-то новое и изменить мир", scores: { founder: 3, investor: 1, freelancer: 1, expert: 1 } },
-      { text: "Получить хорошую прибыль от инвестиций", scores: { founder: 0, investor: 3, freelancer: 0, expert: 1 } },
-      { text: "Применить свои навыки в интересных задачах", scores: { founder: 1, investor: 0, freelancer: 3, expert: 2 } },
-      { text: "Помочь другим достичь успеха", scores: { founder: 1, investor: 1, freelancer: 1, expert: 3 } }
+      { text: "Я готов к высоким рискам ради прорывного результата", scores: { "Фаундер": 3, "Инвестор": 2 } },
+      { text: "Я предпочитаю работать с проверенными командами и понятными бизнес-моделями", scores: { "Коллективный инвестор": 2, "Соучредитель": 2 } },
+      { text: "Я минимизирую риски, опираясь на свой опыт и репутацию", scores: { "Фрилансер/Эксперт/Консультант": 2, "Аутсорсер": 1 } },
+      { text: "Я ищу стабильность и возможность карьерного роста", scores: { "Сотрудник проекта": 3, "Администратор проекта": 2, "Соискатель": 3 } }
     ]
   },
   {
-    question: "Сколько времени готовы уделять проектам?",
+    question: "Что для вас важнее в команде?",
     answers: [
-      { text: "Полный рабочий день - это мой основной фокус", scores: { founder: 3, investor: 0, freelancer: 2, expert: 1 } },
-      { text: "Периодически анализирую и принимаю решения", scores: { founder: 1, investor: 3, freelancer: 0, expert: 1 } },
-      { text: "Несколько часов в день на конкретные задачи", scores: { founder: 0, investor: 0, freelancer: 3, expert: 2 } },
-      { text: "Консультации по запросу", scores: { founder: 0, investor: 1, freelancer: 1, expert: 3 } }
+      { text: "Возможность быть лидером и вести команду за собой", scores: { "Фаундер": 3, "Администратор проекта": 2 } },
+      { text: "Быть ключевым партнером, влияющим на стратегию", scores: { "Ко-фаундер": 3, "Соучредитель": 2 } },
+      { text: "Быть ценным специалистом в сильной команде", scores: { "Сотрудник проекта": 3, "Фрилансер/Эксперт/Консультант": 2, "Соискатель": 3 } },
+      { text: "Наблюдать за работой команды со стороны, доверяя ее экспертизе", scores: { "Инвестор": 3 } }
     ]
   },
   {
-    question: "Что для вас важнее всего в работе?",
+    question: "Какой результат на платформе был бы для вас идеальным?",
     answers: [
-      { text: "Контроль над процессом и стратегией", scores: { founder: 3, investor: 2, freelancer: 0, expert: 1 } },
-      { text: "Стабильный доход и рост портфеля", scores: { founder: 1, investor: 3, freelancer: 1, expert: 1 } },
-      { text: "Разнообразие задач и гибкий график", scores: { founder: 0, investor: 0, freelancer: 3, expert: 2 } },
-      { text: "Признание экспертизы и влияние", scores: { founder: 1, investor: 1, freelancer: 1, expert: 3 } }
+      { text: "Найти 'единорога' и получить десятикратную прибыль", scores: { "Инвестор": 3, "Коллективный инвестор": 2 } },
+      { text: "Запустить свой проект и привлечь инвестиции", scores: { "Фаундер": 3 } },
+      { text: "Найти работу мечты в инновационной компании", scores: { "Сотрудник проекта": 2, "Соискатель": 3 } },
+      { text: "Расширить свою сеть контактов и найти новые возможности для бизнеса", scores: { "Партнёр (Affiliate)": 3, "Лидер мнений/Блогер": 2 } }
     ]
   }
 ];
 
 const roleResults = {
-  founder: { 
-    name: "Фаундер", 
-    description: "Вы прирожденный предприниматель! Ваша миссия — создавать инновационные продукты и строить команды для их реализации." 
-  },
-  investor: { 
-    name: "Инвестор", 
-    description: "У вас отличный нюх на перспективные проекты! Ваша роль — находить и финансировать следующие единороги." 
-  },
-  freelancer: { 
-    name: "Фрилансер", 
-    description: "Вы цените свободу и разнообразие! Ваш путь — работать над интересными проектами и развивать свои навыки." 
-  },
-  expert: { 
-    name: "Эксперт", 
-    description: "Ваш опыт — ваше главное преимущество! Помогайте другим достигать успеха и монетизируйте свою экспертизу." 
-  }
+  "Инвестор": { name: "Инвестор", description: "Ищу лучшие стартапы, отрасли, управляю портфелем и рисками." },
+  "Коллективный инвестор": { name: "Коллективный инвестор", description: "Доступ к сделкам совместных инвестиций, приватным раундам, аналитике и аукционам." },
+  "Фаундер": { name: "Фаундер", description: "Запускаю стартап, управляю командой, презентуюсь инвесторам." },
+  "Ко-фаундер": { name: "Ко-фаундер", description: "Вхожу в перспективные проекты, улучшаю профиль команды, развиваю идеи." },
+  "Соучредитель": { name: "Соучредитель", description: "Вхожу в проекты, получая долю, работаю с лидерами, строю бизнес." },
+  "Фрилансер/Эксперт/Консультант": { name: "Фрилансер/Эксперт/Консультант", description: "Получаю уникальные задачи, выстраиваю портфолио, расту с проектами." },
+  "Аутсорсер": { name: "Аутсорсер", description: "Расширяю клиентскую базу, предлагаю сервисы проектам и корпорациям." },
+  "Подрядчик": { name: "Подрядчик", description: "Подключаюсь к крупным заказам, B2B-кейсам, интегрируюсь в экосистему." },
+  "Администратор проекта": { name: "Администратор проекта", description: "Управляю процессами, координирую команду, отвечаю за успех." },
+  "Сотрудник проекта": { name: "Сотрудник проекта", description: "Влияю на успех, расту с командой, получаю репутацию, обучаюсь у лидеров." },
+  "Соискатель": { name: "Соискатель", description: "Ищу работу в перспективном стартапе, хочу строить карьеру в инновационной среде." },
+  "Партнёр (Affiliate)": { name: "Партнёр (Affiliate)", description: "Развиваю интеграции, привлекаю трафик, получаю вознаграждение." },
+  "Амбассадор проекта": { name: "Амбассадор проекта", description: "Представляю бренд, повышаю лояльность, расширяю сообщество." },
+  "Лидер мнений/Блогер": { name: "Лидер мнений/Блогер", description: "Создаю контент, делюсь экспертизой, влияю на аудиторию." }
 };
 
 const InteractiveQuiz = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [scores, setScores] = useState({ founder: 0, investor: 0, freelancer: 0, expert: 0 });
+  const [scores, setScores] = useState<Record<string, number>>({});
   const [showResult, setShowResult] = useState(false);
   const [hideQuiz, setHideQuiz] = useState(false);
 
-  const handleAnswer = (answerScores: typeof scores) => {
-    const newScores = {
-      founder: scores.founder + answerScores.founder,
-      investor: scores.investor + answerScores.investor,
-      freelancer: scores.freelancer + answerScores.freelancer,
-      expert: scores.expert + answerScores.expert
-    };
+  const handleAnswer = (answerScores: Record<string, number>) => {
+    const newScores = { ...scores };
+    Object.entries(answerScores).forEach(([role, score]) => {
+      newScores[role] = (newScores[role] || 0) + score;
+    });
     setScores(newScores);
 
     if (currentQuestion < quizData.length - 1) {
@@ -94,14 +90,14 @@ const InteractiveQuiz = () => {
 
   const resetQuiz = () => {
     setCurrentQuestion(0);
-    setScores({ founder: 0, investor: 0, freelancer: 0, expert: 0 });
+    setScores({});
     setShowResult(false);
   };
 
   const getTopRole = () => {
     const maxScore = Math.max(...Object.values(scores));
-    const topRole = Object.entries(scores).find(([_, score]) => score === maxScore)?.[0] as keyof typeof roleResults;
-    return roleResults[topRole];
+    const topRole = Object.entries(scores).find(([_, score]) => score === maxScore)?.[0];
+    return roleResults[topRole as keyof typeof roleResults] || roleResults["Фаундер"];
   };
 
   const progress = ((currentQuestion) / quizData.length) * 100;
