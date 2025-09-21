@@ -1,5 +1,5 @@
 import Navigation from "@/components/Navigation";
-import HeroSectionNew from "@/components/HeroSectionNew";
+import HeroSection from "@/components/HeroSection";
 import AboutUsSection from "@/components/AboutUsSection";
 import RoleAnimator from "@/components/RoleAnimator";
 import PowerfulFeaturesSection from "@/components/PowerfulFeaturesSection";
@@ -18,7 +18,7 @@ const Index = () => {
   return (
     <div className="min-h-screen font-['Inter']">
       <Navigation />
-      <HeroSectionNew />
+      <HeroSection />
       <AboutUsSection />
       <RoleAnimator />
       <PowerfulFeaturesSection />

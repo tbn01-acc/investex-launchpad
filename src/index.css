@@ -8,53 +8,53 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Original InvestEx Color Palette - Teal Theme */
-    --background: 240 10% 97%; /* Light mint background (#f0fdf4) */
-    --foreground: 215 19% 15%; /* Dark text (#1a202c) */
+    /* InvestEx Original Color Palette - Professional Business Theme */
+    --background: 0 0% 100%; /* White background */
+    --foreground: 222.2 84% 4.9%; /* Dark text */
 
     --card: 0 0% 100%;
-    --card-foreground: 215 19% 15%;
+    --card-foreground: 222.2 84% 4.9%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 215 19% 15%;
+    --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 178 100% 15%; /* Dark teal (#004d40) */
+    --primary: 217 91% 60%; /* Professional blue */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 142 76% 45%;
+    --secondary: 142 76% 45%; /* Success green */
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 142 20% 95%;
-    --muted-foreground: 215 16% 40%; /* Medium gray (#4a5568) */
+    --muted: 210 40% 98%;
+    --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 25 95% 53%;
+    --accent: 25 95% 53%; /* Orange accent */
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 213 13% 88%; /* Light gray (#e2e8f0) */
-    --input: 213 13% 88%;
-    --ring: 178 100% 15%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 217 91% 60%;
 
     --radius: 0.75rem;
 
-    /* InvestEx Original Design Tokens - Teal Theme */
-    --gradient-primary: linear-gradient(135deg, hsl(178 100% 15%), hsl(142 76% 45%));
+    /* InvestEx Professional Design Tokens */
+    --gradient-primary: linear-gradient(135deg, hsl(217 91% 60%), hsl(142 76% 45%));
     --gradient-secondary: linear-gradient(135deg, hsl(142 76% 45%), hsl(25 95% 53%));
-    --gradient-accent: linear-gradient(45deg, hsl(142 20% 95%), hsl(240 10% 97%));
-    --gradient-hero: linear-gradient(135deg, hsl(178 100% 15%) 0%, hsl(142 76% 45%) 50%, hsl(25 95% 53%) 100%);
+    --gradient-accent: linear-gradient(45deg, hsl(210 40% 98%), hsl(214.3 31.8% 91.4%));
+    --gradient-hero: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(217 91% 50%) 50%, hsl(142 76% 45%) 100%);
     
     --investment-green: 142 76% 45%;
     --investment-red: 0 84% 60%;
     --fintech-blue: 217 91% 60%;
     --startup-orange: 25 95% 53%;
     --success-emerald: 160 84% 39%;
-    --business-navy: 178 100% 20%;
+    --business-navy: 217 33% 17%;
     
-    --shadow-elegant: 0 10px 40px -10px hsl(178 100% 15% / 0.2);
-    --shadow-glow: 0 0 30px hsl(178 100% 15% / 0.3);
-    --shadow-card: 0 4px 20px -2px hsl(178 100% 15% / 0.1);
+    --shadow-elegant: 0 10px 40px -10px hsl(217 91% 60% / 0.2);
+    --shadow-glow: 0 0 30px hsl(217 91% 60% / 0.3);
+    --shadow-card: 0 4px 20px -2px hsl(217 91% 60% / 0.1);
     
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
