@@ -8,56 +8,63 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* InvestEx Original Color Palette - Professional Business Theme */
-    --background: 0 0% 100%; /* White background */
-    --foreground: 222.2 84% 4.9%; /* Dark text */
+    /* Modern Fintech Design System - Purple & Blue Theme */
+    --background: 248 250 252; /* Light gray-blue */
+    --foreground: 15 23 42; /* Dark slate */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 255 255 255;
+    --card-foreground: 15 23 42;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 255 255 255;
+    --popover-foreground: 15 23 42;
 
-    --primary: 217 91% 60%; /* Professional blue */
-    --primary-foreground: 0 0% 100%;
+    --primary: 244 63% 69%; /* Modern purple */
+    --primary-foreground: 255 255 255;
 
-    --secondary: 142 76% 45%; /* Success green */
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 219 78% 64%; /* Modern blue */
+    --secondary-foreground: 255 255 255;
 
-    --muted: 210 40% 98%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 248 250 252;
+    --muted-foreground: 100 116 139;
 
-    --accent: 25 95% 53%; /* Orange accent */
-    --accent-foreground: 0 0% 100%;
+    --accent: 168 85% 59%; /* Modern green accent */
+    --accent-foreground: 255 255 255;
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 239 68% 68%;
+    --destructive-foreground: 255 255 255;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 217 91% 60%;
+    --border: 226 232 240;
+    --input: 226 232 240;
+    --ring: 244 63% 69%;
 
-    --radius: 0.75rem;
+    --radius: 1rem;
 
-    /* InvestEx Professional Design Tokens */
-    --gradient-primary: linear-gradient(135deg, hsl(217 91% 60%), hsl(142 76% 45%));
-    --gradient-secondary: linear-gradient(135deg, hsl(142 76% 45%), hsl(25 95% 53%));
-    --gradient-accent: linear-gradient(45deg, hsl(210 40% 98%), hsl(214.3 31.8% 91.4%));
-    --gradient-hero: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(217 91% 50%) 50%, hsl(142 76% 45%) 100%);
+    /* Modern Gradient System */
+    --gradient-primary: linear-gradient(135deg, hsl(244 63% 69%) 0%, hsl(219 78% 64%) 100%);
+    --gradient-secondary: linear-gradient(135deg, hsl(219 78% 64%) 0%, hsl(168 85% 59%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(168 85% 59%) 0%, hsl(244 63% 69%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(244 63% 69%) 0%, hsl(219 78% 64%) 50%, hsl(168 85% 59%) 100%);
+    --gradient-card: linear-gradient(145deg, rgba(255,255,255,0.9) 0%, rgba(248,250,252,0.8) 100%);
     
-    --investment-green: 142 76% 45%;
-    --investment-red: 0 84% 60%;
-    --fintech-blue: 217 91% 60%;
-    --startup-orange: 25 95% 53%;
-    --success-emerald: 160 84% 39%;
-    --business-navy: 217 33% 17%;
+    /* Modern Color Tokens */
+    --purple-primary: 244 63% 69%;
+    --purple-dark: 244 63% 59%;
+    --blue-primary: 219 78% 64%;
+    --blue-dark: 219 78% 54%;
+    --green-accent: 168 85% 59%;
+    --slate-dark: 15 23 42;
+    --slate-medium: 51 65 85;
+    --slate-light: 148 163 184;
     
-    --shadow-elegant: 0 10px 40px -10px hsl(217 91% 60% / 0.2);
-    --shadow-glow: 0 0 30px hsl(217 91% 60% / 0.3);
-    --shadow-card: 0 4px 20px -2px hsl(217 91% 60% / 0.1);
+    /* Modern Shadow System */
+    --shadow-soft: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    --shadow-medium: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-large: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --shadow-glow: 0 0 40px hsl(244 63% 69% / 0.3);
     
-    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-bounce: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-spring: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     --sidebar-background: 0 0% 98%;
 
@@ -122,5 +129,7 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+    font-feature-settings: 'cv03', 'cv04', 'cv11';
   }
 }
