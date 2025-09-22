@@ -62,15 +62,6 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Modern design system colors
-				"purple-primary": "hsl(var(--purple-primary))",
-				"purple-dark": "hsl(var(--purple-dark))",
-				"blue-primary": "hsl(var(--blue-primary))",
-				"blue-dark": "hsl(var(--blue-dark))",
-				"green-accent": "hsl(var(--green-accent))",
-				"slate-dark": "hsl(var(--slate-dark))",
-				"slate-medium": "hsl(var(--slate-medium))",
-				"slate-light": "hsl(var(--slate-light))",
 				// InvestEx custom colors
 				'investment-green': 'hsl(var(--investment-green))',
 				'investment-red': 'hsl(var(--investment-red))',
@@ -84,12 +75,8 @@ export default {
 				'gradient-hero': 'var(--gradient-hero)'
 			},
 			boxShadow: {
-				'soft': 'var(--shadow-soft)',
-				'medium': 'var(--shadow-medium)',
-				'large': 'var(--shadow-large)',
-				'xl': 'var(--shadow-xl)',
-				'glow': 'var(--shadow-glow)',
 				'elegant': 'var(--shadow-elegant)',
+				'glow': 'var(--shadow-glow)',
 				'card': 'var(--shadow-card)'
 			},
 			transitionTimingFunction: {

@@ -45,29 +45,22 @@ const RoleAnimator = () => {
   const calculatePosition = (index: number) => {
     const angleStep = (360 / roles.length) * (Math.PI / 180);
     const currentAngle = angleStep * (index - activeIndex);
-    const radius = 360; // Увеличено на 20% (300 * 1.2 = 360)
+    const radius = 300;
     
     const x = Math.cos(currentAngle - Math.PI / 2) * radius;
     const y = Math.sin(currentAngle - Math.PI / 2) * radius;
     
     return {
-      x: x + 400, // центр контейнера (увеличен пропорционально)
-      y: y + 400,
+      x: x + 350, // центр контейнера
+      y: y + 350,
       rotation: 0 // Плашки всегда горизонтальны
     };
   };
 
   return (
-    <section className="py-24 overflow-hidden bg-gradient-to-b from-background via-muted/30 to-background">
+    <section className="py-24 overflow-hidden">
       <div className="container mx-auto px-8">
-        <h2 className="text-5xl font-bold text-center mb-6 bg-gradient-to-r from-purple-primary to-blue-primary bg-clip-text text-transparent">
-          Экосистема ролей
-        </h2>
-        <p className="text-xl text-muted-foreground text-center mb-16 max-w-3xl mx-auto">
-          Каждая роль в нашей экосистеме важна. Выберите свою роль для подробного описания
-        </p>
-        
-        <div className="relative w-[800px] h-[800px] mx-auto flex items-center justify-center">
+        <div className="relative w-[700px] h-[700px] mx-auto flex items-center justify-center">
           {/* Вращающееся колесо с ролями */}
           <div className="absolute inset-0">
             {roles.map((role, index) => {
@@ -77,16 +70,15 @@ const RoleAnimator = () => {
               return (
                 <div
                   key={role.name}
-                  className={`absolute cursor-pointer transition-all duration-500 ease-out rounded-full px-6 py-3 whitespace-nowrap text-sm font-semibold backdrop-blur-sm ${
+                  className={`absolute cursor-pointer transition-all duration-500 ease-out rounded-full px-6 py-3 whitespace-nowrap text-lg font-medium border shadow-md ${
                     isActive 
-                      ? 'bg-gradient-to-r from-purple-primary to-blue-primary text-white scale-115 font-bold z-10 shadow-xl' 
-                      : 'bg-white/80 text-slate-dark border border-slate-light/30 hover:bg-white hover:border-purple-primary/50 hover:shadow-lg hover:scale-105'
+                      ? 'bg-primary text-primary-foreground border-primary scale-115 font-bold z-10' 
+                      : 'bg-background text-foreground border-border hover:border-primary'
                   }`}
                   style={{
-                    left: `${position.x - 60}px`,
+                    left: `${position.x - 50}px`,
                     top: `${position.y - 20}px`,
-                    transform: `rotate(${position.rotation}deg)`,
-                    boxShadow: isActive ? 'var(--shadow-glow)' : 'var(--shadow-soft)',
+                    transform: `rotate(${position.rotation}deg)`
                   }}
                   onClick={() => handleRoleClick(index)}
                 >
@@ -97,13 +89,11 @@ const RoleAnimator = () => {
           </div>
 
           {/* Центральная сфера с описанием */}
-          <div className="relative w-[400px] h-[400px] bg-gradient-to-br from-purple-primary via-blue-primary to-green-accent rounded-full flex flex-col items-center justify-center p-10 text-center shadow-xl z-20">
-            <div className="backdrop-blur-sm bg-white/10 rounded-full p-8 w-full h-full flex flex-col items-center justify-center border border-white/20">
-              <h3 className="text-3xl font-bold mb-6 text-white">{roles[activeIndex].name}</h3>
-              <p className="text-lg text-white/90 leading-relaxed">
-                {roles[activeIndex].description}
-              </p>
-            </div>
+          <div className="relative w-[350px] h-[350px] bg-primary text-primary-foreground rounded-full flex flex-col items-center justify-center p-8 text-center shadow-2xl z-20">
+            <h3 className="text-2xl font-bold mb-4">{roles[activeIndex].name}</h3>
+            <p className="text-lg opacity-90 leading-relaxed">
+              {roles[activeIndex].description}
+            </p>
           </div>
         </div>
       </div>
