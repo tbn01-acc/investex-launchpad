@@ -281,33 +281,33 @@ const RolePathSection = () => {
             {Object.entries(segments).map(([groupName, group]) => (
               <div 
                 key={groupName}
-                className={`bg-white border-2 rounded-2xl overflow-hidden transition-all duration-300 ${
-                  activeGroup === groupName ? 'border-primary shadow-lg' : 'border-border'
+                className={`bg-card border rounded-lg overflow-hidden transition-all duration-300 ${
+                  activeGroup === groupName ? 'border-primary shadow-card' : 'border-border'
                 }`}
               >
                 <div 
-                  className={`p-6 cursor-pointer font-bold text-xl flex justify-between items-center transition-all duration-300 ${
+                  className={`p-4 cursor-pointer font-semibold text-lg flex justify-between items-center transition-all duration-300 ${
                     activeGroup === groupName && activeRole ? 'hidden' : 'block'
-                  }`}
+                  } hover:bg-muted/50`}
                   onClick={() => handleGroupClick(groupName)}
                 >
                   {groupName}
-                  <ChevronDown className={`transition-transform duration-300 ${
+                  <ChevronDown className={`w-5 h-5 transition-transform duration-300 ${
                     activeGroup === groupName ? 'rotate-180' : ''
                   }`} />
                 </div>
                 
                 <div className={`transition-all duration-400 overflow-hidden ${
-                  activeGroup === groupName ? 'max-h-96' : 'max-h-0'
+                  activeGroup === groupName ? (groupName === 'Участники' ? 'max-h-[500px]' : 'max-h-96') : 'max-h-0'
                 }`}>
                   <div className="p-2 space-y-2">
                     {group.roles.map((role) => (
                       <div 
                         key={role.name}
-                        className={`p-6 rounded-xl cursor-pointer transition-all duration-300 ${
+                        className={`p-4 rounded-lg cursor-pointer transition-all duration-300 ${
                           activeRole === role.name 
-                            ? 'bg-primary text-primary-foreground font-bold text-xl'
-                            : 'bg-background border border-border hover:border-primary text-lg'
+                            ? 'bg-primary text-primary-foreground font-semibold text-base'
+                            : 'bg-background border border-border hover:border-primary hover:bg-muted/50 text-base'
                         }`}
                         onClick={() => handleRoleClick(role.name, role)}
                       >
@@ -321,29 +321,29 @@ const RolePathSection = () => {
           </div>
 
           {/* Правая колонка - Детали роли */}
-          <div className="flex-1 bg-white p-10 rounded-3xl shadow-lg min-h-[600px] sticky top-24">
+          <div className="flex-1 bg-card p-8 rounded-lg shadow-card min-h-[600px] sticky top-24">
             {selectedRoleData ? (
               <div>
-                <h3 className="text-3xl font-bold text-primary mb-6">Вы сможете</h3>
+                <h3 className="text-2xl font-bold text-foreground mb-6">Вы сможете</h3>
                 
-                <ul className="space-y-4 mb-8">
+                <ul className="space-y-3 mb-8">
                   {selectedRoleData.capabilities.map((capability: string, index: number) => (
                     <li key={index} className="flex items-start gap-3">
-                      <CheckCircle className="text-primary mt-1 flex-shrink-0" size={20} />
-                      <span className="text-lg">{capability}</span>
+                      <CheckCircle className="text-primary mt-1 flex-shrink-0" size={18} />
+                      <span className="text-base text-foreground">{capability}</span>
                     </li>
                   ))}
                 </ul>
 
-                <div className="border-t border-border pt-8 mb-8">
-                  <h4 className="text-xl font-semibold mb-4">Варианты действий</h4>
-                  <div className="text-center space-y-4">
-                    <div className="bg-emerald-50 border border-emerald-200 p-4 rounded-xl text-lg font-medium">
+                <div className="border-t border-border pt-6 mb-6">
+                  <h4 className="text-lg font-semibold mb-4 text-foreground">Варианты действий</h4>
+                  <div className="text-center space-y-3">
+                    <div className="bg-secondary/10 border border-secondary/20 p-3 rounded-lg text-base font-medium text-foreground">
                       {selectedRoleData.actions[0]}
                     </div>
-                    <div className="flex justify-center gap-4">
+                    <div className="flex justify-center gap-3">
                       {selectedRoleData.actions.slice(1).map((action: string, index: number) => (
-                        <div key={index} className="bg-white border border-border p-3 rounded-xl text-sm">
+                        <div key={index} className="bg-muted border border-border p-2 rounded-lg text-sm text-foreground">
                           {action}
                         </div>
                       ))}
@@ -352,14 +352,14 @@ const RolePathSection = () => {
                 </div>
 
                 <div className="text-center">
-                  <h4 className="text-xl font-semibold mb-4">Популярные запросы</h4>
-                  <div className="flex justify-center gap-4 flex-wrap">
+                  <h4 className="text-lg font-semibold mb-4 text-foreground">Популярные запросы</h4>
+                  <div className="flex justify-center gap-3 flex-wrap">
                     {selectedRoleData.requests.map((request: string, index: number) => (
                       <Button 
                         key={index}
-                        variant="default"
+                        variant="outline"
                         size="sm" 
-                        className="rounded-full px-6 hover:-translate-y-1 transition-all duration-200"
+                        className="rounded-full px-4 hover:bg-primary hover:text-primary-foreground transition-all duration-200"
                       >
                         {request}
                       </Button>
