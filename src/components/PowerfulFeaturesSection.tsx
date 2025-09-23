@@ -48,38 +48,50 @@ const features = [
   },
   {
     icon: UserCheck,
-    title: "Проверенные эксперты",
-    description: "Находите аттестованных специалистов с подтвержденным опытом и рейтингом, основанным на реальных результатах."
+    title: "Верификация и надежность",
+    description: "Система рейтингов, отзывов и документооборота гарантирует высокое качество взаимодействия между участниками."
   },
   {
     icon: BookOpen,
-    title: "База знаний и шаблонов",
-    description: "Получите доступ к юридически выверенным шаблонам (NDA, Term Sheet) и экспертным статьям для всех этапов развития бизнеса."
+    title: "База знаний и менторство",
+    description: "Доступ к курсам, webinar'ам и персональным консультациям от экспертов в инвестициях и управлении проектами."
   }
 ];
 
 const PowerfulFeaturesSection = () => {
   return (
-    <section className="py-16">
-      <div className="container mx-auto px-8">
-        <h2 className="text-4xl font-bold text-center mb-4">Мощные возможности</h2>
-        <p className="text-xl text-muted-foreground text-center max-w-4xl mx-auto mb-12">
-          Все инструменты для эффективной работы с проектами и инвестициями в одной платформе
-        </p>
+    <section className="py-16 bg-background">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-foreground mb-4">
+            Мощные инструменты для каждого
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            Платформа объединяет все необходимые инструменты в одном месте, 
+            от AI-аналитики до управления проектами
+          </p>
+        </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map((feature, index) => {
             const IconComponent = feature.icon;
             return (
-              <div key={index} className="bg-white p-8 rounded-2xl shadow-lg flex gap-6 items-start">
-                <div className="text-3xl text-primary mt-1">
-                  <IconComponent size={28} />
-                </div>
-                <div>
-                  <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    {feature.description}
-                  </p>
+              <div 
+                key={index}
+                className="bg-card border border-border rounded-lg p-6 shadow-card hover:shadow-elegant transition-all duration-200"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <IconComponent className="w-5 h-5 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-foreground mb-2">
+                      {feature.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {feature.description}
+                    </p>
+                  </div>
                 </div>
               </div>
             );

@@ -7,14 +7,14 @@ const StatsSection = () => {
   ];
 
   return (
-    <section className="py-16">
-      <div className="container mx-auto px-8">
-        <div className="bg-gradient-to-r from-primary to-secondary rounded-3xl p-12 text-white">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+    <section className="py-16 bg-background">
+      <div className="container mx-auto px-4">
+        <div className="bg-card border border-border rounded-lg p-8 shadow-card">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             {stats.map((stat, index) => (
               <div key={index}>
-                <div className="text-4xl font-bold mb-2">{stat.value}</div>
-                <div className="text-lg opacity-90">{stat.label}</div>
+                <div className="text-3xl font-bold text-foreground mb-2">{stat.value}</div>
+                <div className="text-sm text-muted-foreground">{stat.label}</div>
               </div>
             ))}
           </div>

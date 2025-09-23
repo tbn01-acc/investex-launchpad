@@ -21,19 +21,19 @@ const TestimonialsSection = () => {
   ];
 
   return (
-    <section className="py-16">
-      <div className="container mx-auto px-8">
-        <h2 className="text-4xl font-bold text-center mb-4">Что о нас говорят</h2>
-        <p className="text-xl text-muted-foreground text-center max-w-4xl mx-auto mb-12">
+    <section className="py-16 bg-background">
+      <div className="container mx-auto px-4">
+        <h2 className="text-3xl font-bold text-center text-foreground mb-4">Что о нас говорят</h2>
+        <p className="text-lg text-muted-foreground text-center max-w-3xl mx-auto mb-12">
           Доверие — наша главная ценность. Вот мнения тех, кто уже использует Invest-Ex для своего роста.
         </p>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {testimonials.map((testimonial, index) => (
-            <div key={index} className="bg-white p-8 rounded-2xl shadow-lg">
-              <div className="relative mb-6">
-                <p className="text-muted-foreground italic text-lg leading-relaxed pl-8 relative">
-                  <span className="absolute left-0 top-0 text-5xl text-primary opacity-50 leading-none">
+            <div key={index} className="bg-card border border-border rounded-lg p-6 shadow-card">
+              <div className="relative mb-4">
+                <p className="text-muted-foreground text-base leading-relaxed pl-6 relative">
+                  <span className="absolute left-0 top-0 text-3xl text-primary opacity-50 leading-none">
                     "
                   </span>
                   {testimonial.text}
@@ -44,7 +44,7 @@ const TestimonialsSection = () => {
                 <img 
                   src={testimonial.avatar} 
                   alt={testimonial.author}
-                  className="w-12 h-12 rounded-full object-cover mr-4"
+                  className="w-10 h-10 rounded-full object-cover mr-3"
                 />
                 <div>
                   <div className="font-bold">{testimonial.author}</div>

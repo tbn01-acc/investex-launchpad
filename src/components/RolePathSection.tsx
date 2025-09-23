@@ -268,8 +268,8 @@ const RolePathSection = () => {
   };
 
   return (
-    <section className="py-16">
-      <div className="container mx-auto px-8">
+    <section className="py-16 bg-background">
+      <div className="container mx-auto px-4">
         <h2 className="text-4xl font-bold text-center mb-4">Выберите свой путь к успеху</h2>
         <p className="text-xl text-muted-foreground text-center max-w-4xl mx-auto mb-12">
           Invest-Ex создан для каждого, кто стремится к развитию. Выберите, кто вы, и узнайте, как мы можем помочь вам достичь целей.

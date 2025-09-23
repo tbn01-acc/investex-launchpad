@@ -4,8 +4,8 @@ const AboutUsSection = () => {
   return (
     <section className="py-16 bg-background">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center mb-4">Что такое Invest-Ex?</h2>
-        <p className="text-xl text-muted-foreground text-center max-w-4xl mx-auto mb-12">
+        <h2 className="text-3xl font-bold text-center text-foreground mb-4">Что такое Invest-Ex?</h2>
+        <p className="text-lg text-muted-foreground text-center max-w-3xl mx-auto mb-12">
           Это больше, чем просто платформа. Это комплексная среда, где каждая деталь работает на ваш успех.
         </p>
         
