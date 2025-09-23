@@ -47,14 +47,14 @@ const RoleAnimator = () => {
   const calculatePosition = (index: number) => {
     const angleStep = (360 / roles.length) * (Math.PI / 180);
     const currentAngle = angleStep * (index - activeIndex);
-    const radius = 360; // Увеличено на 20% (300 * 1.2)
+    const radius = 396; // Увеличено на 10% (360 * 1.1)
     
     const x = Math.cos(currentAngle - Math.PI / 2) * radius;
     const y = Math.sin(currentAngle - Math.PI / 2) * radius;
     
     return {
-      x: x + 350, // центр контейнера
-      y: y + 350,
+      x: x + 385, // центр контейнера (385 = 350 + 35)
+      y: y + 385,
       rotation: 0 // Плашки всегда горизонтальны
     };
   };
@@ -62,7 +62,7 @@ const RoleAnimator = () => {
   return (
     <section className="py-24 overflow-hidden">
       <div className="container mx-auto px-8">
-        <div className="relative w-[700px] h-[700px] mx-auto flex items-center justify-center">
+        <div className="relative w-[770px] h-[770px] mx-auto flex items-center justify-center">
           {/* Вращающееся колесо с ролями */}
           <div className="absolute inset-0">
             {roles.map((role, index) => {
@@ -72,19 +72,19 @@ const RoleAnimator = () => {
               return (
                 <div
                   key={role.name}
-                  className={`absolute cursor-pointer transition-all duration-500 ease-out rounded-full px-6 py-3 whitespace-nowrap text-lg font-medium border shadow-md ${
+                  className={`absolute cursor-pointer transition-all duration-500 ease-out rounded-full w-24 h-24 flex items-center justify-center text-center text-sm font-medium border shadow-md ${
                     isActive 
                       ? 'bg-primary text-primary-foreground border-primary scale-115 font-bold z-10' 
                       : 'bg-background text-foreground border-border hover:border-primary'
                   }`}
                   style={{
-                    left: `${position.x - 50}px`,
-                    top: `${position.y - 20}px`,
+                    left: `${position.x - 48}px`,
+                    top: `${position.y - 48}px`,
                     transform: `rotate(${position.rotation}deg)`
                   }}
                   onClick={() => handleRoleClick(index)}
                 >
-                  {role.name}
+                  <span className="leading-tight px-1">{role.name}</span>
                 </div>
               );
             })}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -396,12 +397,11 @@ const Projects = () => {
                       </Button>
                       <Button 
                         variant="outline"
-                        onClick={() => {
-                          // Show project details modal (for demo)
-                          alert(`Показать детали проекта: ${project.title}`);
-                        }}
+                        asChild
                       >
-                        Подробнее
+                        <Link to={`/project/${project.id}`}>
+                          Подробнее
+                        </Link>
                       </Button>
                     </div>
                   </CardContent>
