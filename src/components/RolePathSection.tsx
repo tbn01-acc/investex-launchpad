@@ -278,9 +278,9 @@ const segments = {
 };
 
 const RolePathSection = () => {
-  const [activeGroup, setActiveGroup] = useState<string | null>(null);
-  const [activeRole, setActiveRole] = useState<string | null>(null);
-  const [selectedRoleData, setSelectedRoleData] = useState<any>(null);
+  const [activeGroup, setActiveGroup] = useState<string | null>("Участники");
+  const [activeRole, setActiveRole] = useState<string | null>("Инвестор");
+  const [selectedRoleData, setSelectedRoleData] = useState<any>(segments["Участники"].roles[0]);
 
   const handleGroupClick = (groupName: string) => {
     if (activeGroup === groupName) {
@@ -289,14 +289,26 @@ const RolePathSection = () => {
       setSelectedRoleData(null);
     } else {
       setActiveGroup(groupName);
-      setActiveRole(null);
-      setSelectedRoleData(null);
+      const firstRole = segments[groupName as keyof typeof segments].roles[0];
+      setActiveRole(firstRole.name);
+      setSelectedRoleData(firstRole);
     }
   };
 
   const handleRoleClick = (roleName: string, roleData: any) => {
     setActiveRole(roleName);
     setSelectedRoleData(roleData);
+  };
+
+  // Function to get reordered roles with selected role at the top
+  const getReorderedRoles = (roles: any[]) => {
+    if (!activeRole) return roles;
+    const activeRoleIndex = roles.findIndex(role => role.name === activeRole);
+    if (activeRoleIndex === -1) return roles;
+    
+    const activeRoleData = roles[activeRoleIndex];
+    const otherRoles = roles.filter((_, index) => index !== activeRoleIndex);
+    return [activeRoleData, ...otherRoles];
   };
 
   return (
@@ -333,7 +345,7 @@ const RolePathSection = () => {
                   activeGroup === groupName ? (groupName === 'Участники' ? 'max-h-[500px]' : 'max-h-96') : 'max-h-0'
                 }`}>
                   <div className="p-2 space-y-2">
-                    {group.roles.map((role) => (
+                    {getReorderedRoles(group.roles).map((role) => (
                       <div 
                         key={role.name}
                         className={`p-4 rounded-lg cursor-pointer transition-all duration-300 ${

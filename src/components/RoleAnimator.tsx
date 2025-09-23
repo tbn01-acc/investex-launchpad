@@ -72,19 +72,19 @@ const RoleAnimator = () => {
               return (
                 <div
                   key={role.name}
-                  className={`absolute cursor-pointer transition-all duration-500 ease-out rounded-full w-24 h-24 flex items-center justify-center text-center text-sm font-medium border shadow-md ${
+                  className={`absolute cursor-pointer transition-all duration-500 ease-out rounded-full w-28 h-28 flex items-center justify-center text-center text-sm font-medium border shadow-md ${
                     isActive 
                       ? 'bg-primary text-primary-foreground border-primary scale-115 font-bold z-10' 
                       : 'bg-background text-foreground border-border hover:border-primary'
                   }`}
                   style={{
-                    left: `${position.x - 48}px`,
-                    top: `${position.y - 48}px`,
+                    left: `${position.x - 56}px`,
+                    top: `${position.y - 56}px`,
                     transform: `rotate(${position.rotation}deg)`
                   }}
                   onClick={() => handleRoleClick(index)}
                 >
-                  <span className="leading-tight px-1">{role.name}</span>
+                  <span className="leading-tight px-3">{role.name}</span>
                 </div>
               );
             })}

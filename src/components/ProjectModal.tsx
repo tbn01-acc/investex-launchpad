@@ -4,19 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Calendar, DollarSign, Users, Clock, Building } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
-interface Project {
-  id: number;
-  title: string;
-  description: string;
-  category: string;
-  image: string;
-  budget?: string;
-  timeline?: string;
-  team?: string;
-  status?: string;
-  company?: string;
-}
+import { Project } from '@/data/projectsData';
 
 interface ProjectModalProps {
   project: Project | null;

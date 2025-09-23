@@ -6,7 +6,7 @@ import collaborationImage from "@/assets/collaboration-realistic.jpg";
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-600 via-green-500 to-yellow-400 pt-20">
+    <section className="relative min-h-[70vh] flex items-center justify-center bg-gradient-to-br from-blue-600 via-green-500 to-yellow-400 py-12">
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid lg:grid-cols-2 gap-8 items-center">
           
@@ -18,14 +18,14 @@ const HeroSection = () => {
                 Платформа №1 для проектов и инвестиций
               </div>
               
-              <h1 className="text-4xl lg:text-6xl font-bold text-foreground leading-tight">
+              <h1 className="text-4xl lg:text-6xl font-bold text-white leading-tight">
                 <span className="block">InvestEx</span>
-                <span className="block text-xl lg:text-2xl font-normal text-muted-foreground mt-2">
+                <span className="block text-xl lg:text-2xl font-normal text-gray-200 mt-2">
                   Экосистема проектов и инвестиций
                 </span>
               </h1>
               
-              <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed">
+              <p className="text-lg text-orange-300 max-w-2xl leading-relaxed">
                 Объединяем фрилансеров, аутсорсеров, фаундеров и инвесторов в единой платформе. 
                 От идеи до реализации проекта и привлечения инвестиций.
               </p>
@@ -46,18 +46,18 @@ const HeroSection = () => {
             </div>
             
             {/* Stats */}
-            <div className="grid grid-cols-3 gap-6 pt-6 border-t border-border">
+            <div className="grid grid-cols-3 gap-6 pt-6 border-t border-white/20">
               <div className="text-center lg:text-left">
-                <div className="text-2xl font-bold text-foreground">10K+</div>
-                <div className="text-sm text-muted-foreground">Активных проектов</div>
+                <div className="text-2xl font-bold text-orange-400">10K+</div>
+                <div className="text-sm text-gray-200">Активных проектов</div>
               </div>
               <div className="text-center lg:text-left">
-                <div className="text-2xl font-bold text-foreground">$50M+</div>
-                <div className="text-sm text-muted-foreground">Инвестировано</div>
+                <div className="text-2xl font-bold text-orange-400">$50M+</div>
+                <div className="text-sm text-gray-200">Инвестировано</div>
               </div>
               <div className="text-center lg:text-left">
-                <div className="text-2xl font-bold text-foreground">25K+</div>
-                <div className="text-sm text-muted-foreground">Участников</div>
+                <div className="text-2xl font-bold text-orange-400">25K+</div>
+                <div className="text-sm text-gray-200">Участников</div>
               </div>
             </div>
           </div>
