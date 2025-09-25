@@ -55,7 +55,7 @@ const RoleAnimator = () => {
     
     // Use different radius for active vs inactive cards
     const radius = isActive ? baseRadius : baseRadius * 1.875; // 1.5 * 1.25 = 1.875
-    const x = Math.sin(angle) * radius;
+    let x = Math.sin(angle) * radius;
     let z = Math.cos(angle) * radius;
     
     // Calculate rotation and scale
@@ -63,9 +63,10 @@ const RoleAnimator = () => {
     const scale = isActive ? 1.2 : 0.9;
     const elevationY = isActive ? -30 : 0;
     
-    // Bring active card significantly forward
+    // Bring active card significantly forward and center it
     if (isActive) {
-      z = z + 150; // Push active card much closer to viewer
+      z = 400; // Put active card much closer to viewer
+      x = 0; // Center active card horizontally
     }
     
     // Calculate opacity based on z-position (closer cards are more visible)
@@ -76,11 +77,11 @@ const RoleAnimator = () => {
         translateX(${x}px) 
         translateZ(${z}px) 
         translateY(${elevationY}px)
-        rotateY(${rotationY}deg) 
+        rotateY(${isActive ? 0 : rotationY}deg) 
         scale(${scale})
       `,
       opacity,
-      zIndex: isActive ? 1000 : Math.round(z + 300),
+      zIndex: isActive ? 2000 : Math.round(z + 300), // Higher z-index for active
     };
   };
 
