@@ -61,7 +61,7 @@ const RoleAnimator = () => {
     
     // Calculate rotation and scale
     const rotationY = (angle * 180) / Math.PI;
-    const scale = 1; // Same size for all cards
+    const scale = isActive ? 0.67 : 1; // Active card smaller (1/1.5 = 0.67)
     const elevationY = isActive ? -30 : 0;
     
     // Bring active card significantly forward and center it
