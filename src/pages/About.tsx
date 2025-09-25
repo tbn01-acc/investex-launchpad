@@ -4,6 +4,7 @@ import Footer from '@/components/Footer';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Users, Zap, Shield, Globe } from 'lucide-react';
+import RoadmapSection from '@/components/RoadmapSection';
 
 const About = () => {
   return (
@@ -159,6 +160,9 @@ const About = () => {
               </Card>
             </div>
           </section>
+
+          {/* Roadmap Section */}
+          <RoadmapSection />
         </div>
       </main>
       

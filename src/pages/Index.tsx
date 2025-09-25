@@ -9,7 +9,7 @@ import RolePathSection from "@/components/RolePathSection";
 import ProjectShowcase from "@/components/ProjectShowcase";
 import WallOfFameSection from "@/components/WallOfFameSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
-import RoadmapSection from "@/components/RoadmapSection";
+
 import StatsSection from "@/components/StatsSection";
 import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
@@ -28,7 +28,7 @@ const Index = () => {
       <ProjectShowcase />
       <WallOfFameSection />
       <TestimonialsSection />
-      <RoadmapSection />
+      
       <StatsSection />
       <CTASection />
       <Footer />
