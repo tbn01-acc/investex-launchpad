@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
@@ -8,8 +8,11 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Search, Filter, Calendar, DollarSign, Users, Clock } from 'lucide-react';
+import ProjectApplicationModal from '@/components/ProjectApplicationModal';
 
 const Projects = () => {
+  const [selectedProject, setSelectedProject] = useState<any>(null);
+
   const projects = [
     {
       id: 1,
@@ -388,10 +391,13 @@ const Projects = () => {
                     <div className="flex gap-3">
                       <Button 
                         className="flex-1"
-                        onClick={() => {
-                          // Show success message for demo purposes
-                          alert(`Отклик на проект "${project.title}" отправлен!`);
-                        }}
+                        onClick={() => setSelectedProject({
+                          id: project.id,
+                          title: project.title,
+                          budget: project.budget,
+                          timeline: project.deadline,
+                          category: project.category
+                        })}
                       >
                         Откликнуться на проект
                       </Button>
@@ -448,6 +454,12 @@ const Projects = () => {
       </main>
       
       <Footer />
+
+      <ProjectApplicationModal 
+        open={!!selectedProject}
+        onOpenChange={(open) => !open && setSelectedProject(null)}
+        project={selectedProject}
+      />
     </div>
   );
 };
