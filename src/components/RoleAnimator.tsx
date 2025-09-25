@@ -52,13 +52,18 @@ const RoleAnimator = () => {
     // Calculate position for this card
     const angle = index * angleStep - (activeIndex * angleStep);
     const x = Math.sin(angle) * radius;
-    const z = Math.cos(angle) * radius;
+    let z = Math.cos(angle) * radius;
     
     // Calculate rotation and scale
     const rotationY = (angle * 180) / Math.PI;
     const isActive = index === activeIndex;
-    const scale = isActive ? 1.1 : 0.9;
-    const elevationY = isActive ? -20 : 0;
+    const scale = isActive ? 1.2 : 0.9;
+    const elevationY = isActive ? -30 : 0;
+    
+    // Bring active card significantly forward
+    if (isActive) {
+      z = z + 150; // Push active card much closer to viewer
+    }
     
     // Calculate opacity based on z-position (closer cards are more visible)
     const opacity = z > -100 ? 1 : Math.max(0.3, (z + 200) / 300);
@@ -72,7 +77,7 @@ const RoleAnimator = () => {
         scale(${scale})
       `,
       opacity,
-      zIndex: Math.round(z + 300),
+      zIndex: isActive ? 1000 : Math.round(z + 300),
     };
   };
 
