@@ -48,6 +48,7 @@ const RoleAnimator = () => {
     const totalCards = roles.length;
     const angleStep = (2 * Math.PI) / totalCards;
     const baseRadius = 280;
+    const maxInactiveZ = baseRadius * 1.875; // maximum Z any inactive card can reach
     
     // Calculate position for this card
     const angle = index * angleStep - (activeIndex * angleStep);
@@ -65,7 +66,7 @@ const RoleAnimator = () => {
     
     // Bring active card significantly forward and center it
     if (isActive) {
-      z = 400; // Put active card much closer to viewer
+      z = maxInactiveZ + 200; // Ensure active always has the highest Z
       x = 0; // Center active card horizontally
     }
     
