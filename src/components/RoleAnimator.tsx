@@ -47,16 +47,19 @@ const RoleAnimator = () => {
   const getRolodexCardStyle = (index: number) => {
     const totalCards = roles.length;
     const angleStep = (2 * Math.PI) / totalCards;
-    const radius = 280;
+    const baseRadius = 280;
     
     // Calculate position for this card
     const angle = index * angleStep - (activeIndex * angleStep);
+    const isActive = index === activeIndex;
+    
+    // Use different radius for active vs inactive cards
+    const radius = isActive ? baseRadius : baseRadius * 1.5;
     const x = Math.sin(angle) * radius;
     let z = Math.cos(angle) * radius;
     
     // Calculate rotation and scale
     const rotationY = (angle * 180) / Math.PI;
-    const isActive = index === activeIndex;
     const scale = isActive ? 1.2 : 0.9;
     const elevationY = isActive ? -30 : 0;
     
@@ -79,6 +82,27 @@ const RoleAnimator = () => {
       opacity,
       zIndex: isActive ? 1000 : Math.round(z + 300),
     };
+  };
+
+  const handleNavigation = (direction: 'prev' | 'next' | 'first' | 'last') => {
+    setIsRunning(false);
+    
+    switch (direction) {
+      case 'prev':
+        setActiveIndex((prev) => (prev - 1 + roles.length) % roles.length);
+        break;
+      case 'next':
+        setActiveIndex((prev) => (prev + 1) % roles.length);
+        break;
+      case 'first':
+        setActiveIndex(0);
+        break;
+      case 'last':
+        setActiveIndex(roles.length - 1);
+        break;
+    }
+    
+    setTimeout(() => setIsRunning(true), 5000);
   };
 
   return (
@@ -161,9 +185,52 @@ const RoleAnimator = () => {
             </div>
           </div>
           
+          {/* Navigation Controls */}
+          <div className="absolute top-1/2 left-4 transform -translate-y-1/2 flex flex-col space-y-4">
+            <button
+              onClick={() => handleNavigation('first')}
+              className="w-10 h-10 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
+              title="В начало"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="m11 17-5-5 5-5M18 17l-5-5 5-5"/>
+              </svg>
+            </button>
+            <button
+              onClick={() => handleNavigation('prev')}
+              className="w-10 h-10 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
+              title="Назад"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="m15 18-6-6 6-6"/>
+              </svg>
+            </button>
+          </div>
+
+          <div className="absolute top-1/2 right-4 transform -translate-y-1/2 flex flex-col space-y-4">
+            <button
+              onClick={() => handleNavigation('next')}
+              className="w-10 h-10 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
+              title="Вперед"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="m9 18 6-6-6-6"/>
+              </svg>
+            </button>
+            <button
+              onClick={() => handleNavigation('last')}
+              className="w-10 h-10 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
+              title="В конец"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="m6 17 5-5-5-5M13 17l5-5-5-5"/>
+              </svg>
+            </button>
+          </div>
+          
           {/* Control handle */}
           <div className="absolute bottom-16 right-8 w-8 h-8 bg-primary rounded-full shadow-lg cursor-pointer hover:scale-110 transition-transform duration-200"
-               onClick={() => handleRoleClick((activeIndex + 1) % roles.length)}>
+               onClick={() => handleNavigation('next')}>
             <div className="w-full h-full rounded-full bg-gradient-to-br from-primary-foreground/20 to-transparent"></div>
           </div>
           
