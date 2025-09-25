@@ -28,7 +28,7 @@ const RoleAnimator = () => {
     if (isRunning) {
       intervalRef.current = setInterval(() => {
         setActiveIndex((prev) => (prev + 1) % roles.length);
-      }, 3500); // 3 секунды на роль + 0.5 сек анимация
+      }, 3500);
     }
 
     return () => {
@@ -41,61 +41,85 @@ const RoleAnimator = () => {
   const handleRoleClick = (index: number) => {
     setActiveIndex(index);
     setIsRunning(false);
-    setTimeout(() => setIsRunning(true), 5000); // Возобновить через 5 секунд
+    setTimeout(() => setIsRunning(true), 5000);
   };
 
-  const calculatePosition = (index: number) => {
-    const angleStep = (360 / roles.length) * (Math.PI / 180);
-    const currentAngle = angleStep * (index - activeIndex);
-    const radius = 396; // Увеличено на 10% (360 * 1.1)
-    
-    const x = Math.cos(currentAngle - Math.PI / 2) * radius;
-    const y = Math.sin(currentAngle - Math.PI / 2) * radius;
+  const getCardPosition = (index: number) => {
+    const offset = index - activeIndex;
+    const cardWidth = 320;
+    const spacing = 40;
+    const totalWidth = cardWidth + spacing;
     
     return {
-      x: x + 385, // центр контейнера (385 = 350 + 35)
-      y: y + 385,
-      rotation: 0 // Плашки всегда горизонтальны
+      x: offset * totalWidth,
+      scale: Math.abs(offset) === 0 ? 1 : 0.85,
+      opacity: Math.abs(offset) <= 2 ? (Math.abs(offset) === 0 ? 1 : 0.6) : 0,
+      zIndex: Math.abs(offset) === 0 ? 10 : 5 - Math.abs(offset)
     };
   };
 
   return (
     <section className="py-24 overflow-hidden">
       <div className="container mx-auto px-8">
-        <div className="relative w-[770px] h-[770px] mx-auto flex items-center justify-center">
-          {/* Вращающееся колесо с ролями */}
-          <div className="absolute inset-0">
+        <div className="relative h-[400px] flex items-center justify-center">
+          <div className="relative w-full max-w-6xl h-[300px] flex items-center justify-center">
             {roles.map((role, index) => {
-              const position = calculatePosition(index);
+              const position = getCardPosition(index);
               const isActive = index === activeIndex;
               
               return (
                 <div
                   key={role.name}
-                  className={`absolute cursor-pointer transition-all duration-500 ease-out rounded-full w-28 h-28 flex items-center justify-center text-center text-sm font-medium border shadow-md ${
+                  className={`absolute cursor-pointer transition-all duration-700 ease-out rounded-2xl border shadow-xl ${
                     isActive 
-                      ? 'bg-primary text-primary-foreground border-primary scale-115 font-bold z-10' 
+                      ? 'bg-primary text-primary-foreground border-primary' 
                       : 'bg-background text-foreground border-border hover:border-primary'
                   }`}
                   style={{
-                    left: `${position.x - 56}px`,
-                    top: `${position.y - 56}px`,
-                    transform: `rotate(${position.rotation}deg)`
+                    transform: `translateX(${position.x}px) scale(${position.scale})`,
+                    opacity: position.opacity,
+                    zIndex: position.zIndex,
+                    width: '320px',
+                    height: '200px'
                   }}
                   onClick={() => handleRoleClick(index)}
                 >
-                  <span className="leading-tight px-3">{role.name}</span>
+                  <div className="p-6 h-full flex flex-col justify-between">
+                    <div>
+                      <h3 className={`text-xl font-bold mb-3 ${isActive ? 'text-primary-foreground' : 'text-primary'}`}>
+                        {role.name}
+                      </h3>
+                      <p className={`text-sm leading-relaxed ${isActive ? 'text-primary-foreground/90' : 'text-muted-foreground'}`}>
+                        {role.description}
+                      </p>
+                    </div>
+                    {isActive && (
+                      <div className="flex items-center justify-between mt-4">
+                        <div className="w-8 h-0.5 bg-primary-foreground/30 rounded"></div>
+                        <span className="text-xs font-medium text-primary-foreground/70">
+                          {index + 1} / {roles.length}
+                        </span>
+                      </div>
+                    )}
+                  </div>
                 </div>
               );
             })}
           </div>
-
-          {/* Центральная сфера с описанием */}
-          <div className="relative w-[350px] h-[350px] bg-primary text-primary-foreground rounded-full flex flex-col items-center justify-center p-8 text-center shadow-2xl z-20">
-            <h3 className="text-2xl font-bold mb-4">{roles[activeIndex].name}</h3>
-            <p className="text-lg opacity-90 leading-relaxed">
-              {roles[activeIndex].description}
-            </p>
+          
+          {/* Navigation indicators */}
+          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 flex space-x-2">
+            {roles.map((_, index) => (
+              <button
+                key={index}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  index === activeIndex 
+                    ? 'bg-primary scale-125' 
+                    : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
+                }`}
+                onClick={() => handleRoleClick(index)}
+              />
+            ))}
           </div>
         </div>
       </div>
