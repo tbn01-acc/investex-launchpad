@@ -54,7 +54,7 @@ const RoleAnimator = () => {
     const isActive = index === activeIndex;
     
     // Use different radius for active vs inactive cards
-    const radius = isActive ? baseRadius : baseRadius * 1.5;
+    const radius = isActive ? baseRadius : baseRadius * 1.875; // 1.5 * 1.25 = 1.875
     const x = Math.sin(angle) * radius;
     let z = Math.cos(angle) * radius;
     
@@ -185,68 +185,52 @@ const RoleAnimator = () => {
             </div>
           </div>
           
-          {/* Navigation Controls */}
-          <div className="absolute top-1/2 left-4 transform -translate-y-1/2 flex flex-col space-y-4">
+          
+          {/* Bottom Navigation Controls */}
+          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex items-center space-x-6">
             <button
               onClick={() => handleNavigation('first')}
-              className="w-10 h-10 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
+              className="w-12 h-12 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
               title="В начало"
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="m11 17-5-5 5-5M18 17l-5-5 5-5"/>
               </svg>
             </button>
             <button
               onClick={() => handleNavigation('prev')}
-              className="w-10 h-10 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
+              className="w-12 h-12 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
               title="Назад"
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="m15 18-6-6 6-6"/>
               </svg>
             </button>
-          </div>
-
-          <div className="absolute top-1/2 right-4 transform -translate-y-1/2 flex flex-col space-y-4">
+            
+            <div className="mx-8 px-4 py-2 bg-muted rounded-full">
+              <span className="text-sm font-medium text-muted-foreground">
+                {activeIndex + 1} / {roles.length}
+              </span>
+            </div>
+            
             <button
               onClick={() => handleNavigation('next')}
-              className="w-10 h-10 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
+              className="w-12 h-12 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
               title="Вперед"
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="m9 18 6-6-6-6"/>
               </svg>
             </button>
             <button
               onClick={() => handleNavigation('last')}
-              className="w-10 h-10 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
+              className="w-12 h-12 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
               title="В конец"
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="m6 17 5-5-5-5M13 17l5-5-5-5"/>
               </svg>
             </button>
-          </div>
-          
-          {/* Control handle */}
-          <div className="absolute bottom-16 right-8 w-8 h-8 bg-primary rounded-full shadow-lg cursor-pointer hover:scale-110 transition-transform duration-200"
-               onClick={() => handleNavigation('next')}>
-            <div className="w-full h-full rounded-full bg-gradient-to-br from-primary-foreground/20 to-transparent"></div>
-          </div>
-          
-          {/* Navigation indicators */}
-          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-            {roles.map((_, index) => (
-              <button
-                key={index}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  index === activeIndex 
-                    ? 'bg-primary scale-125' 
-                    : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
-                }`}
-                onClick={() => handleRoleClick(index)}
-              />
-            ))}
           </div>
         </div>
       </div>
