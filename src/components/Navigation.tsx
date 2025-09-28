@@ -63,8 +63,8 @@ const Navigation = () => {
                         <NavigationMenuTrigger className="bg-transparent hover:bg-accent/10">
                           {item.title}
                         </NavigationMenuTrigger>
-                        <NavigationMenuContent>
-                          <div className="grid w-[600px] grid-cols-2 gap-3 p-4">
+                         <NavigationMenuContent>
+                           <div className="grid w-full max-w-[600px] grid-cols-1 sm:grid-cols-2 gap-3 p-4">
                             {item.items.map((subItem) => (
                               <NavigationMenuLink key={subItem.title} asChild>
                                 <Link

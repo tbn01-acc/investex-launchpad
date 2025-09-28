@@ -106,8 +106,8 @@ const InteractiveQuiz = () => {
 
   return (
     <section className="py-16">
-      <div className="container mx-auto px-8">
-        <div className="bg-white rounded-3xl shadow-xl relative max-w-4xl mx-auto">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-white rounded-3xl shadow-xl relative max-w-4xl mx-auto overflow-hidden">
           <div className="absolute top-5 right-5 text-sm text-muted-foreground">
             <label className="flex items-center space-x-2 cursor-pointer">
               <Checkbox 
@@ -133,7 +133,7 @@ const InteractiveQuiz = () => {
                     {quizData[currentQuestion].question}
                   </h3>
                   
-                  <div className="space-y-4 max-w-2xl mx-auto">
+                  <div className="space-y-4 max-w-2xl mx-auto px-4">
                     {quizData[currentQuestion].answers.map((answer, index) => (
                       <Button
                         key={index}

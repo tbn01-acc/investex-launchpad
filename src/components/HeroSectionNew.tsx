@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 const HeroSectionNew = () => {
   return (
     <section className="py-16 text-center bg-gradient-to-br from-emerald-50 to-teal-50">
-      <div className="container mx-auto px-8">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2 max-w-5xl mx-auto text-4xl font-bold leading-tight">
           <div className="md:text-left">
             <div>Единая</div>

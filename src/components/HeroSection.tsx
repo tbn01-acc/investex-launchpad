@@ -25,7 +25,7 @@ const HeroSection = () => {
                 </span>
               </h1>
               
-              <p className="text-lg text-orange-300 max-w-2xl leading-relaxed">
+              <p className="text-lg text-orange-300 max-w-full sm:max-w-2xl leading-relaxed px-4 sm:px-0">
                 Объединяем фрилансеров, аутсорсеров, фаундеров и инвесторов в единой платформе. 
                 От идеи до реализации проекта и привлечения инвестиций.
               </p>

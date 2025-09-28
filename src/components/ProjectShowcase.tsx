@@ -44,7 +44,7 @@ const ProjectShowcase = () => {
 
   return (
     <section className="py-16 relative">
-      <div className="container mx-auto px-8">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-4xl font-bold text-center mb-4">Витрина проектов</h2>
         <p className="text-xl text-muted-foreground text-center max-w-4xl mx-auto mb-8">
           Откройте для себя разнообразие стартапов на нашей платформе — от FinTech до BioTech.
@@ -74,8 +74,8 @@ const ProjectShowcase = () => {
             style={{ transform: `translateX(-${currentSlide * 100}%)` }}
           >
             {Array.from({ length: totalSlides }).map((_, slideIndex) => (
-              <div key={slideIndex} className="w-full flex-shrink-0 px-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              <div key={slideIndex} className="w-full flex-shrink-0 px-2 sm:px-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
                   {filteredProjects
                     .slice(slideIndex * projectsPerSlide, (slideIndex + 1) * projectsPerSlide)
                     .map((project, index) => (

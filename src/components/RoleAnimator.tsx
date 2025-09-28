@@ -1,4 +1,11 @@
 import { useState, useEffect, useRef } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  type CarouselApi,
+} from "@/components/ui/carousel";
 
 const roles = [
   { name: "Инвестор", description: "Ищу лучшие стартапы, отрасли, управляю портфелем и рисками." },
@@ -23,11 +30,17 @@ const RoleAnimator = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isRunning, setIsRunning] = useState(true);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const isMobile = useIsMobile();
+  const [carouselApi, setCarouselApi] = useState<CarouselApi>();
 
   useEffect(() => {
-    if (isRunning) {
+    if (isRunning && !isMobile) {
       intervalRef.current = setInterval(() => {
         setActiveIndex((prev) => (prev + 1) % roles.length);
+      }, 3500);
+    } else if (isRunning && isMobile && carouselApi) {
+      intervalRef.current = setInterval(() => {
+        carouselApi.scrollNext();
       }, 3500);
     }
 
@@ -36,10 +49,22 @@ const RoleAnimator = () => {
         clearInterval(intervalRef.current);
       }
     };
-  }, [isRunning]);
+  }, [isRunning, isMobile, carouselApi]);
+
+  useEffect(() => {
+    if (!carouselApi) return;
+
+    carouselApi.on("select", () => {
+      setActiveIndex(carouselApi.selectedScrollSnap());
+    });
+  }, [carouselApi]);
 
   const handleRoleClick = (index: number) => {
-    setActiveIndex(index);
+    if (isMobile && carouselApi) {
+      carouselApi.scrollTo(index);
+    } else {
+      setActiveIndex(index);
+    }
     setIsRunning(false);
     setTimeout(() => setIsRunning(true), 5000);
   };
@@ -48,7 +73,6 @@ const RoleAnimator = () => {
     const totalCards = roles.length;
     const angleStep = (2 * Math.PI) / totalCards;
     const baseRadius = 280;
-    const maxInactiveZ = baseRadius * 1.875; // maximum Z any inactive card can reach
     
     // Calculate position for this card
     const angle = index * angleStep - (activeIndex * angleStep);
@@ -62,11 +86,11 @@ const RoleAnimator = () => {
     // Calculate rotation and scale
     const rotationY = (angle * 180) / Math.PI;
     const scale = isActive ? 0.67 : 1; // Active card smaller (1/1.5 = 0.67)
-    const elevationY = isActive ? -30 : 0;
+    const elevationY = 0; // Remove elevation for active card
     
-    // Bring active card significantly forward and center it
+    // Bring active card forward and center it, but don't elevate
     if (isActive) {
-      z = maxInactiveZ + 200; // Ensure active always has the highest Z
+      z = baseRadius * 2.5; // Fixed forward position
       x = 0; // Center active card horizontally
     }
     
@@ -89,30 +113,87 @@ const RoleAnimator = () => {
   const handleNavigation = (direction: 'prev' | 'next' | 'first' | 'last') => {
     setIsRunning(false);
     
-    switch (direction) {
-      case 'prev':
-        setActiveIndex((prev) => (prev - 1 + roles.length) % roles.length);
-        break;
-      case 'next':
-        setActiveIndex((prev) => (prev + 1) % roles.length);
-        break;
-      case 'first':
-        setActiveIndex(0);
-        break;
-      case 'last':
-        setActiveIndex(roles.length - 1);
-        break;
+    if (isMobile && carouselApi) {
+      switch (direction) {
+        case 'prev':
+          carouselApi.scrollPrev();
+          break;
+        case 'next':
+          carouselApi.scrollNext();
+          break;
+        case 'first':
+          carouselApi.scrollTo(0);
+          break;
+        case 'last':
+          carouselApi.scrollTo(roles.length - 1);
+          break;
+      }
+    } else {
+      switch (direction) {
+        case 'prev':
+          setActiveIndex((prev) => (prev - 1 + roles.length) % roles.length);
+          break;
+        case 'next':
+          setActiveIndex((prev) => (prev + 1) % roles.length);
+          break;
+        case 'first':
+          setActiveIndex(0);
+          break;
+        case 'last':
+          setActiveIndex(roles.length - 1);
+          break;
+      }
     }
     
     setTimeout(() => setIsRunning(true), 5000);
   };
 
+  if (isMobile) {
+    return (
+      <section className="py-12 overflow-hidden">
+        <div className="container mx-auto px-4">
+          <Carousel 
+            setApi={setCarouselApi}
+            className="w-full max-w-sm mx-auto"
+            opts={{
+              align: "center",
+              loop: true,
+            }}
+          >
+            <CarouselContent>
+              {roles.map((role, index) => (
+                <CarouselItem key={role.name}>
+                  <div className="p-1">
+                    <div className="bg-background border-2 border-border rounded-xl shadow-lg p-6 h-[400px] flex flex-col justify-between">
+                      <div>
+                        <h3 className="text-xl font-bold mb-4 text-primary text-center">
+                          {role.name}
+                        </h3>
+                        <p className="text-sm leading-relaxed text-muted-foreground text-center">
+                          {role.description}
+                        </p>
+                      </div>
+                      
+                      <div className="flex items-center justify-center mt-4">
+                        <div className="w-12 h-1 bg-primary/30 rounded"></div>
+                      </div>
+                    </div>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="py-24 overflow-hidden">
-      <div className="container mx-auto px-8">
-        <div className="relative h-[500px] flex items-center justify-center">
+      <div className="container mx-auto px-4 sm:px-8">
+        <div className="relative h-[600px] flex items-center justify-center">
           {/* Platform base */}
-          <div className="absolute bottom-8 w-[600px] h-[600px] rounded-full bg-gradient-to-r from-muted/20 to-muted/40 border border-border/20" 
+          <div className="absolute bottom-20 w-[600px] h-[600px] rounded-full bg-gradient-to-r from-muted/20 to-muted/40 border border-border/20" 
                style={{ transform: 'perspective(800px) rotateX(75deg)' }}>
             {/* Central axis */}
             <div className="absolute top-1/2 left-1/2 w-4 h-24 bg-gradient-to-t from-border to-muted-foreground/50 rounded-full transform -translate-x-1/2 -translate-y-1/2"
@@ -187,49 +268,48 @@ const RoleAnimator = () => {
             </div>
           </div>
           
-          
           {/* Bottom Navigation Controls */}
-          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex items-center space-x-6">
+          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex items-center space-x-4 sm:space-x-6">
             <button
               onClick={() => handleNavigation('first')}
-              className="w-12 h-12 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
+              className="w-10 h-10 sm:w-12 sm:h-12 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
               title="В начало"
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg width="16" height="16" className="sm:w-5 sm:h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="m11 17-5-5 5-5M18 17l-5-5 5-5"/>
               </svg>
             </button>
             <button
               onClick={() => handleNavigation('prev')}
-              className="w-12 h-12 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
+              className="w-10 h-10 sm:w-12 sm:h-12 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
               title="Назад"
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg width="16" height="16" className="sm:w-5 sm:h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="m15 18-6-6 6-6"/>
               </svg>
             </button>
             
-            <div className="mx-8 px-4 py-2 bg-muted rounded-full">
-              <span className="text-sm font-medium text-muted-foreground">
+            <div className="mx-4 sm:mx-8 px-3 py-1 sm:px-4 sm:py-2 bg-muted rounded-full">
+              <span className="text-xs sm:text-sm font-medium text-muted-foreground">
                 {activeIndex + 1} / {roles.length}
               </span>
             </div>
             
             <button
               onClick={() => handleNavigation('next')}
-              className="w-12 h-12 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
+              className="w-10 h-10 sm:w-12 sm:h-12 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
               title="Вперед"
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg width="16" height="16" className="sm:w-5 sm:h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="m9 18 6-6-6-6"/>
               </svg>
             </button>
             <button
               onClick={() => handleNavigation('last')}
-              className="w-12 h-12 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
+              className="w-10 h-10 sm:w-12 sm:h-12 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
               title="В конец"
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg width="16" height="16" className="sm:w-5 sm:h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="m6 17 5-5-5-5M13 17l5-5-5-5"/>
               </svg>
             </button>
