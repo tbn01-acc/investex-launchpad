@@ -98,7 +98,7 @@ export const PasswordStrengthIndicator: React.FC<PasswordStrengthIndicatorProps>
             style={{ width: `${(strength.score / 5) * 100}%` }}
           />
         </div>
-        <span className="text-sm font-medium text-muted-foreground min-w-fit">
+        <span className="text-xs sm:text-sm font-medium text-muted-foreground shrink-0">
           {strength.label}
         </span>
       </div>

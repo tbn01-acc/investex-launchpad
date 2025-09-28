@@ -139,10 +139,10 @@ const InteractiveQuiz = () => {
                         key={index}
                         variant="outline"
                         size="lg"
-                        className="w-full text-left justify-start p-6 h-auto text-lg font-medium hover:border-primary hover:bg-emerald-50"
+                        className="w-full text-left justify-start p-4 sm:p-6 h-auto text-sm sm:text-lg font-medium hover:border-primary hover:bg-emerald-50 leading-relaxed"
                         onClick={() => handleAnswer(answer.scores)}
                       >
-                        {answer.text}
+                        <span className="break-words">{answer.text}</span>
                       </Button>
                     ))}
                   </div>

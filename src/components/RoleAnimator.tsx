@@ -152,9 +152,15 @@ const RoleAnimator = () => {
     return (
       <section className="py-12 overflow-hidden">
         <div className="container mx-auto px-4">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">Сообщество профессионалов</h2>
+            <p className="text-lg sm:text-xl text-muted-foreground max-w-4xl mx-auto">
+              От идеи до реализации — каждая роль важна для успеха проектов
+            </p>
+          </div>
           <Carousel 
             setApi={setCarouselApi}
-            className="w-full max-w-sm mx-auto"
+            className="w-full max-w-xs mx-auto"
             opts={{
               align: "center",
               loop: true,
@@ -164,7 +170,7 @@ const RoleAnimator = () => {
               {roles.map((role, index) => (
                 <CarouselItem key={role.name}>
                   <div className="p-1">
-                    <div className="bg-background border-2 border-border rounded-xl shadow-lg p-6 h-[400px] flex flex-col justify-between">
+                    <div className="bg-background border-2 border-border rounded-xl shadow-lg p-4 h-[320px] flex flex-col justify-between">
                       <div>
                         <h3 className="text-xl font-bold mb-4 text-primary text-center">
                           {role.name}
@@ -191,6 +197,12 @@ const RoleAnimator = () => {
   return (
     <section className="py-24 overflow-hidden">
       <div className="container mx-auto px-4 sm:px-8">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl sm:text-4xl font-bold mb-4">Сообщество профессионалов</h2>
+          <p className="text-lg sm:text-xl text-muted-foreground max-w-4xl mx-auto">
+            От идеи до реализации — каждая роль важна для успеха проектов
+          </p>
+        </div>
         <div className="relative h-[600px] flex items-center justify-center">
           {/* Platform base */}
           <div className="absolute bottom-20 w-[600px] h-[600px] rounded-full bg-gradient-to-r from-muted/20 to-muted/40 border border-border/20" 

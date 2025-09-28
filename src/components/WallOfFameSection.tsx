@@ -1,4 +1,14 @@
+import { useIsMobile } from "@/hooks/use-mobile";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  type CarouselApi,
+} from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
+
 const WallOfFameSection = () => {
+  const isMobile = useIsMobile();
   const achievements = [
     {
       title: "Проект \"Nova AI\"",
@@ -28,16 +38,46 @@ const WallOfFameSection = () => {
           Гордимся результатами наших пользователей. Эти проекты — яркий пример того, чего можно достичь с Invest-Ex.
         </p>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {achievements.map((achievement, index) => (
-            <div key={index} className="bg-white rounded-2xl p-8 text-center shadow-lg border-t-4 border-primary">
-              <h3 className="text-xl font-bold mb-2">{achievement.title}</h3>
-              <p className="text-muted-foreground mb-6">{achievement.subtitle}</p>
-              <div className="text-4xl font-bold text-primary mb-2">{achievement.metric}</div>
-              <p className="text-muted-foreground font-semibold">{achievement.label}</p>
-            </div>
-          ))}
-        </div>
+        {isMobile ? (
+          <Carousel
+            plugins={[
+              Autoplay({
+                delay: 3500,
+              }),
+            ]}
+            className="w-full max-w-sm mx-auto"
+            opts={{
+              align: "center",
+              loop: true,
+            }}
+          >
+            <CarouselContent>
+              {achievements.map((achievement, index) => (
+                <CarouselItem key={index}>
+                  <div className="p-1">
+                    <div className="bg-white rounded-2xl p-6 text-center shadow-lg border-t-4 border-primary">
+                      <h3 className="text-lg font-bold mb-2">{achievement.title}</h3>
+                      <p className="text-muted-foreground text-sm mb-4">{achievement.subtitle}</p>
+                      <div className="text-3xl font-bold text-primary mb-2">{achievement.metric}</div>
+                      <p className="text-muted-foreground text-sm font-semibold">{achievement.label}</p>
+                    </div>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {achievements.map((achievement, index) => (
+              <div key={index} className="bg-white rounded-2xl p-8 text-center shadow-lg border-t-4 border-primary">
+                <h3 className="text-xl font-bold mb-2">{achievement.title}</h3>
+                <p className="text-muted-foreground mb-6">{achievement.subtitle}</p>
+                <div className="text-4xl font-bold text-primary mb-2">{achievement.metric}</div>
+                <p className="text-muted-foreground font-semibold">{achievement.label}</p>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

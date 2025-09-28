@@ -1,9 +1,9 @@
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
 import AboutUsSection from "@/components/AboutUsSection";
+import VerificationSection from "@/components/VerificationSection";
 import RoleAnimator from "@/components/RoleAnimator";
 import PowerfulFeaturesSection from "@/components/PowerfulFeaturesSection";
-import VerificationSection from "@/components/VerificationSection";
 import InteractiveQuiz from "@/components/InteractiveQuiz";
 import RolePathSection from "@/components/RolePathSection";
 import ProjectShowcase from "@/components/ProjectShowcase";
@@ -20,9 +20,9 @@ const Index = () => {
       <Navigation />
       <HeroSection />
       <AboutUsSection />
+      <VerificationSection />
       <RoleAnimator />
       <PowerfulFeaturesSection />
-      <VerificationSection />
       <InteractiveQuiz />
       <RolePathSection />
       <ProjectShowcase />

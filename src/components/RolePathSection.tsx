@@ -319,9 +319,9 @@ const RolePathSection = () => {
           Invest-Ex создан для каждого, кто стремится к развитию. Выберите, кто вы, и узнайте, как мы можем помочь вам достичь целей.
         </p>
         
-        <div className="flex gap-10 items-start">
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-10 items-start">
           {/* Левая колонка - Аккордеон */}
-          <div className="flex-1 space-y-4">
+          <div className="w-full lg:flex-1 space-y-4">
             {Object.entries(segments).map(([groupName, group]) => (
               <div 
                 key={groupName}
@@ -365,7 +365,7 @@ const RolePathSection = () => {
           </div>
 
           {/* Правая колонка - Детали роли */}
-          <div className="flex-1 bg-card p-8 rounded-lg shadow-card min-h-[600px] sticky top-24">
+          <div className="w-full lg:flex-1 bg-card p-4 sm:p-6 lg:p-8 rounded-lg shadow-card min-h-[400px] lg:min-h-[600px] lg:sticky lg:top-24">
             {selectedRoleData ? (
               <div>
                 <h3 className="text-2xl font-bold text-foreground mb-6">Вы сможете</h3>
@@ -379,7 +379,7 @@ const RolePathSection = () => {
                   ))}
                 </ul>
 
-                <div className="border-t border-border pt-6 mb-6">
+                <div className="hidden lg:block border-t border-border pt-6 mb-6">
                   <h4 className="text-lg font-semibold mb-4 text-foreground">Варианты действий</h4>
                   <div className="text-center space-y-3">
                     <div className="bg-secondary/10 border border-secondary/20 p-3 rounded-lg text-base font-medium text-foreground">
@@ -395,7 +395,7 @@ const RolePathSection = () => {
                   </div>
                 </div>
 
-                <div className="text-center">
+                <div className="hidden lg:block text-center">
                   <h4 className="text-lg font-semibold mb-4 text-foreground">Популярные запросы</h4>
                   <div className="flex justify-center gap-3 flex-wrap">
                     {selectedRoleData.requests.map((request: string, index: number) => (
@@ -408,6 +408,40 @@ const RolePathSection = () => {
                         {request}
                       </Button>
                     ))}
+                  </div>
+                </div>
+
+                {/* Mobile accordion sections */}
+                <div className="lg:hidden space-y-4 mt-6">
+                  <div className="border border-border rounded-lg overflow-hidden">
+                    <h4 className="text-base font-semibold p-4 bg-muted text-foreground border-b border-border">
+                      Варианты действий
+                    </h4>
+                    <div className="p-4 space-y-2">
+                      {selectedRoleData.actions.map((action: string, index: number) => (
+                        <div key={index} className="bg-background border border-border p-2 rounded text-sm text-foreground">
+                          {action}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="border border-border rounded-lg overflow-hidden">
+                    <h4 className="text-base font-semibold p-4 bg-muted text-foreground border-b border-border">
+                      Популярные запросы
+                    </h4>
+                    <div className="p-4 space-y-2">
+                      {selectedRoleData.requests.map((request: string, index: number) => (
+                        <Button 
+                          key={index}
+                          variant="outline"
+                          size="sm" 
+                          className="w-full justify-start text-left rounded px-3 py-2 text-sm hover:bg-primary hover:text-primary-foreground transition-all duration-200"
+                        >
+                          {request}
+                        </Button>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>

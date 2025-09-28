@@ -93,7 +93,7 @@ const Footer = () => {
                 <input 
                   type="email" 
                   placeholder="Ваш email"
-                  className="flex-1 px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder:text-white/60 focus:outline-none focus:border-white/40"
+                  className="flex-1 min-w-0 px-2 sm:px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder:text-white/60 focus:outline-none focus:border-white/40 text-sm"
                 />
                 <Button variant="secondary" size="sm">
                   <Mail className="w-4 h-4" />
