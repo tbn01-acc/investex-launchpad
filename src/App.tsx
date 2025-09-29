@@ -13,6 +13,10 @@ import ForFreelancers from "./pages/ForFreelancers";
 import ForOutsourcers from "./pages/ForOutsourcers";
 import ForFounders from "./pages/ForFounders";
 import ForInvestors from "./pages/ForInvestors";
+import Participants from "./pages/Participants";
+import Executors from "./pages/Executors";
+import Employees from "./pages/Employees";
+import Partners from "./pages/Partners";
 import Pricing from "./pages/Pricing";
 import Contact from "./pages/Contact";
 import Dashboard from "./pages/Dashboard";
@@ -56,6 +60,10 @@ const App = () => (
                 <Route path="/for-founders" element={<ForFounders />} />
                 <Route path="/investors" element={<ForInvestors />} />
                 <Route path="/for-investors" element={<ForInvestors />} />
+                <Route path="/participants" element={<Participants />} />
+                <Route path="/executors" element={<Executors />} />
+                <Route path="/employees" element={<Employees />} />
+                <Route path="/partners" element={<Partners />} />
                 <Route path="/pricing" element={<Pricing />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/projects" element={<Projects />} />

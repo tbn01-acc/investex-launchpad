@@ -24,12 +24,31 @@ const Navigation = () => {
 
   const navigationItems = [
     {
-      title: "Для участников",
+      title: "Участники",
       items: [
-        { title: "Фрилансеры", href: "/freelancers", description: "Найдите проекты и клиентов" },
-        { title: "Аутсорсеры", href: "/outsourcers", description: "Управляйте командой и проектами" },
-        { title: "Фаундеры", href: "/founders", description: "Создавайте стартапы и привлекайте инвестиции" },
-        { title: "Инвесторы", href: "/investors", description: "Инвестируйте в перспективные проекты" },
+        { title: "Инвесторы", href: "/participants", description: "Инвестиции и партнерство" },
+        { title: "Фаундеры", href: "/participants", description: "Создание стартапов" },
+      ]
+    },
+    {
+      title: "Исполнители", 
+      items: [
+        { title: "Фрилансеры", href: "/executors", description: "Проекты и задачи" },
+        { title: "Аутсорсеры", href: "/executors", description: "Управление командами" },
+      ]
+    },
+    {
+      title: "Сотрудники",
+      items: [
+        { title: "Администраторы", href: "/employees", description: "Управление проектами" },
+        { title: "Соискатели", href: "/employees", description: "Поиск работы" },
+      ]
+    },
+    {
+      title: "Партнеры",
+      items: [
+        { title: "Партнерство", href: "/partners", description: "Развитие сотрудничества" },
+        { title: "Амбассадоры", href: "/partners", description: "Представительство" },
       ]
     },
     { title: "Проекты", href: "/projects" },

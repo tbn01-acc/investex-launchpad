@@ -9,6 +9,9 @@ import FreelancerDashboard from '@/pages/dashboards/FreelancerDashboard';
 import FounderDashboard from '@/pages/dashboards/FounderDashboard';
 import OutsourcerDashboard from '@/pages/dashboards/OutsourcerDashboard';
 import ContractorDashboard from '@/pages/dashboards/ContractorDashboard';
+import ExpertDashboard from '@/pages/dashboards/ExpertDashboard';
+import CollectiveInvestorDashboard from '@/pages/dashboards/CollectiveInvestorDashboard';
+import PartnerDashboard from '@/pages/dashboards/PartnerDashboard';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -145,14 +148,22 @@ const Dashboard = () => {
         return <SuperadminDashboard />;
       case 'investor':
         return <InvestorDashboard />;
+      case 'collective-investor':
+        return <CollectiveInvestorDashboard />;
       case 'freelancer':
         return <FreelancerDashboard />;
+      case 'expert':
+        return <ExpertDashboard />;
       case 'founder':
         return <FounderDashboard />;
       case 'outsourcer':
         return <OutsourcerDashboard />;
       case 'contractor':
         return <ContractorDashboard />;
+      case 'partner':
+      case 'ambassador':
+      case 'blogger':
+        return <PartnerDashboard />;
       default:
         return null;
     }
