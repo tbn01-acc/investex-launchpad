@@ -22,33 +22,62 @@ const Navigation = () => {
   const { user, signOut, profile } = useAuth();
   const { t } = useLanguage();
 
-  const navigationItems = [
+  const navigationItems: Array<{
+    title: string;
+    href?: string;
+    categories?: Array<{
+      title: string;
+      items: Array<{
+        title: string;
+        href: string;
+        description: string;
+      }>;
+    }>;
+    items?: Array<{
+      title: string;
+      href: string;
+      description: string;
+    }>;
+  }> = [
     {
-      title: "Участники",
-      items: [
-        { title: "Инвесторы", href: "/participants", description: "Инвестиции и партнерство" },
-        { title: "Фаундеры", href: "/participants", description: "Создание стартапов" },
-      ]
-    },
-    {
-      title: "Исполнители", 
-      items: [
-        { title: "Фрилансеры", href: "/executors", description: "Проекты и задачи" },
-        { title: "Аутсорсеры", href: "/executors", description: "Управление командами" },
-      ]
-    },
-    {
-      title: "Сотрудники",
-      items: [
-        { title: "Администраторы", href: "/employees", description: "Управление проектами" },
-        { title: "Соискатели", href: "/employees", description: "Поиск работы" },
-      ]
-    },
-    {
-      title: "Партнеры",
-      items: [
-        { title: "Партнерство", href: "/partners", description: "Развитие сотрудничества" },
-        { title: "Амбассадоры", href: "/partners", description: "Представительство" },
+      title: "Сообщество",
+      categories: [
+        {
+          title: "Участники",
+          items: [
+            { title: "Инвесторы", href: "/participants", description: "Инвестиции в проекты" },
+            { title: "Коллективные инвесторы", href: "/participants", description: "Групповые инвестиции" },
+            { title: "Фаундеры", href: "/participants", description: "Создание стартапов" },
+            { title: "Ко-фаундеры", href: "/participants", description: "Партнерство в проектах" },
+            { title: "Соучредители", href: "/participants", description: "Совместное учредительство" },
+          ]
+        },
+        {
+          title: "Исполнители",
+          items: [
+            { title: "Фрилансеры", href: "/executors", description: "Проекты и задачи" },
+            { title: "Эксперты", href: "/executors", description: "Консультации и экспертиза" },
+            { title: "Консультанты", href: "/executors", description: "Стратегические решения" },
+            { title: "Аутсорсеры", href: "/executors", description: "Управление командами" },
+            { title: "Подрядчики", href: "/executors", description: "Специализированные работы" },
+          ]
+        },
+        {
+          title: "Сотрудники",
+          items: [
+            { title: "Администраторы проектов", href: "/employees", description: "Управление проектами" },
+            { title: "Сотрудники проектов", href: "/employees", description: "Участие в команде" },
+            { title: "Соискатели", href: "/employees", description: "Поиск работы" },
+          ]
+        },
+        {
+          title: "Партнеры",
+          items: [
+            { title: "Партнеры", href: "/partners", description: "Стратегическое партнерство" },
+            { title: "Амбассадоры", href: "/partners", description: "Представительство бренда" },
+            { title: "Блогеры", href: "/partners", description: "Контент и продвижение" },
+          ]
+        }
       ]
     },
     { title: "Проекты", href: "/projects" },
@@ -77,7 +106,41 @@ const Navigation = () => {
               <NavigationMenuList>
                 {navigationItems.map((item) => (
                   <NavigationMenuItem key={item.title}>
-                    {item.items ? (
+                    {item.categories ? (
+                      <>
+                        <NavigationMenuTrigger className="bg-transparent hover:bg-accent/10">
+                          {item.title}
+                        </NavigationMenuTrigger>
+                        <NavigationMenuContent>
+                          <div className="grid w-full max-w-[800px] grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-6">
+                            {item.categories.map((category) => (
+                              <div key={category.title} className="space-y-3">
+                                <h3 className="font-semibold text-sm text-primary border-b border-border pb-2">
+                                  {category.title}
+                                </h3>
+                                <div className="space-y-2">
+                                  {category.items.map((subItem) => (
+                                    <NavigationMenuLink key={subItem.title} asChild>
+                                      <Link
+                                        to={subItem.href}
+                                        className={cn(
+                                          "block select-none space-y-1 rounded-md p-2 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                                        )}
+                                      >
+                                        <div className="text-sm font-medium leading-none">{subItem.title}</div>
+                                        <p className="line-clamp-2 text-xs leading-snug text-muted-foreground">
+                                          {subItem.description}
+                                        </p>
+                                      </Link>
+                                    </NavigationMenuLink>
+                                  ))}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </NavigationMenuContent>
+                      </>
+                    ) : item.items ? (
                       <>
                         <NavigationMenuTrigger className="bg-transparent hover:bg-accent/10">
                           {item.title}
@@ -105,7 +168,7 @@ const Navigation = () => {
                     ) : (
                       <NavigationMenuLink asChild>
                         <Link
-                          to={item.href}
+                          to={item.href!}
                           className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium transition-colors hover:bg-accent/10 hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
                         >
                           {item.title}
@@ -153,7 +216,35 @@ const Navigation = () => {
             <div className="flex flex-col space-y-2 pt-4">
               {navigationItems.map((item) => (
                 <div key={item.title}>
-                  {item.items ? (
+                  {item.categories ? (
+                    <div>
+                      <div className="flex items-center justify-between px-4 py-2 text-sm font-medium text-muted-foreground">
+                        {item.title}
+                        <ChevronDown size={16} />
+                      </div>
+                      <div className="pl-4 space-y-2">
+                        {item.categories.map((category) => (
+                          <div key={category.title}>
+                            <div className="px-4 py-1 text-xs font-semibold text-primary">
+                              {category.title}
+                            </div>
+                            <div className="pl-4 space-y-1">
+                              {category.items.map((subItem) => (
+                                <Link
+                                  key={subItem.title}
+                                  to={subItem.href}
+                                  className="block px-4 py-2 text-sm hover:bg-accent/10 rounded-md transition-colors"
+                                  onClick={() => setIsOpen(false)}
+                                >
+                                  {subItem.title}
+                                </Link>
+                              ))}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ) : item.items ? (
                     <div>
                       <div className="flex items-center justify-between px-4 py-2 text-sm font-medium text-muted-foreground">
                         {item.title}
@@ -174,7 +265,7 @@ const Navigation = () => {
                     </div>
                   ) : (
                     <Link
-                      to={item.href}
+                      to={item.href!}
                       className="block px-4 py-2 text-sm hover:bg-accent/10 rounded-md transition-colors"
                       onClick={() => setIsOpen(false)}
                     >
