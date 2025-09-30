@@ -111,8 +111,8 @@ const Navigation = () => {
                         <NavigationMenuTrigger className="bg-transparent hover:bg-accent/10">
                           {item.title}
                         </NavigationMenuTrigger>
-                        <NavigationMenuContent className="w-screen max-w-none left-0">
-                          <div className="container mx-auto px-4 py-6">
+                        <NavigationMenuContent>
+                          <div className="max-w-7xl mx-auto px-4 py-6">
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                               {item.categories.map((category) => (
                                 <div key={category.title} className="space-y-3">
@@ -187,14 +187,9 @@ const Navigation = () => {
               {user ? (
                 <UserAvatar />
               ) : (
-                <>
-                  <Button variant="ghost" className="hover:bg-accent/10" asChild>
-                    <Link to="/auth">{t('nav.login')}</Link>
-                  </Button>
-                  <Button className="bg-gradient-primary hover:opacity-90" asChild>
-                    <Link to="/auth?mode=signup">Регистрация</Link>
-                  </Button>
-                </>
+                <Button className="bg-gradient-primary hover:opacity-90" asChild>
+                  <Link to="/auth">Вход / Регистрация</Link>
+                </Button>
               )}
             </div>
           </div>
@@ -284,14 +279,9 @@ const Navigation = () => {
                     <UserAvatar />
                   </div>
                 ) : (
-                  <>
-                    <Button variant="ghost" className="w-full justify-start" asChild>
-                      <Link to="/auth" onClick={() => setIsOpen(false)}>{t('nav.login')}</Link>
-                    </Button>
-                    <Button className="w-full bg-gradient-primary" asChild>
-                      <Link to="/auth?mode=signup" onClick={() => setIsOpen(false)}>Регистрация</Link>
-                    </Button>
-                  </>
+                  <Button className="w-full bg-gradient-primary" asChild>
+                    <Link to="/auth" onClick={() => setIsOpen(false)}>Вход / Регистрация</Link>
+                  </Button>
                 )}
               </div>
             </div>

@@ -12,6 +12,10 @@ import ContractorDashboard from '@/pages/dashboards/ContractorDashboard';
 import ExpertDashboard from '@/pages/dashboards/ExpertDashboard';
 import CollectiveInvestorDashboard from '@/pages/dashboards/CollectiveInvestorDashboard';
 import PartnerDashboard from '@/pages/dashboards/PartnerDashboard';
+import CoFounderDashboard from '@/pages/dashboards/CoFounderDashboard';
+import ConsultantDashboard from '@/pages/dashboards/ConsultantDashboard';
+import JobSeekerDashboard from '@/pages/dashboards/JobSeekerDashboard';
+import AmbassadorDashboard from '@/pages/dashboards/AmbassadorDashboard';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -100,8 +104,19 @@ const Dashboard = () => {
       freelancer: 'Фрилансер',
       outsourcer: 'Аутсорсер', 
       founder: 'Фаундер',
+      'co-founder': 'Ко-фаундер',
+      'co-owner': 'Соучредитель',
       investor: 'Инвестор',
+      'collective-investor': 'Коллективный инвестор',
       contractor: 'Подрядчик',
+      expert: 'Эксперт',
+      consultant: 'Консультант',
+      'project-admin': 'Администратор проектов',
+      'project-employee': 'Сотрудник проектов',
+      'job-seeker': 'Соискатель',
+      partner: 'Партнер',
+      ambassador: 'Амбассадор',
+      blogger: 'Блогер',
       superadmin: 'Суперадмин'
     };
     return roleMap[role] || 'Пользователь';
@@ -154,16 +169,30 @@ const Dashboard = () => {
         return <FreelancerDashboard />;
       case 'expert':
         return <ExpertDashboard />;
+      case 'consultant':
+        return <ConsultantDashboard />;
       case 'founder':
         return <FounderDashboard />;
+      case 'co-founder':
+        return <CoFounderDashboard />;
+      case 'co-owner':
+        return <CoFounderDashboard />; // Using same dashboard for now
       case 'outsourcer':
         return <OutsourcerDashboard />;
       case 'contractor':
         return <ContractorDashboard />;
+      case 'project-admin':
+        return <OutsourcerDashboard />; // Using similar dashboard for now
+      case 'project-employee':
+        return <FreelancerDashboard />; // Using similar dashboard for now
+      case 'job-seeker':
+        return <JobSeekerDashboard />;
       case 'partner':
-      case 'ambassador':
-      case 'blogger':
         return <PartnerDashboard />;
+      case 'ambassador':
+        return <AmbassadorDashboard />;
+      case 'blogger':
+        return <PartnerDashboard />; // Using partner dashboard for now
       default:
         return null;
     }
@@ -196,10 +225,21 @@ const Dashboard = () => {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="freelancer">Фрилансер</SelectItem>
-                      <SelectItem value="investor">Инвестор</SelectItem>
-                      <SelectItem value="founder">Фаундер</SelectItem>
+                      <SelectItem value="expert">Эксперт</SelectItem>
+                      <SelectItem value="consultant">Консультант</SelectItem>
                       <SelectItem value="outsourcer">Аутсорсер</SelectItem>
                       <SelectItem value="contractor">Подрядчик</SelectItem>
+                      <SelectItem value="investor">Инвестор</SelectItem>
+                      <SelectItem value="collective-investor">Коллективный инвестор</SelectItem>
+                      <SelectItem value="founder">Фаундер</SelectItem>
+                      <SelectItem value="co-founder">Ко-фаундер</SelectItem>
+                      <SelectItem value="co-owner">Соучредитель</SelectItem>
+                      <SelectItem value="project-admin">Администратор проектов</SelectItem>
+                      <SelectItem value="project-employee">Сотрудник проектов</SelectItem>
+                      <SelectItem value="job-seeker">Соискатель</SelectItem>
+                      <SelectItem value="partner">Партнер</SelectItem>
+                      <SelectItem value="ambassador">Амбассадор</SelectItem>
+                      <SelectItem value="blogger">Блогер</SelectItem>
                       {profile?.role === 'superadmin' && (
                         <SelectItem value="superadmin">Суперадмин</SelectItem>
                       )}
