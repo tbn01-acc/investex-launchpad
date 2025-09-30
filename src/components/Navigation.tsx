@@ -111,32 +111,34 @@ const Navigation = () => {
                         <NavigationMenuTrigger className="bg-transparent hover:bg-accent/10">
                           {item.title}
                         </NavigationMenuTrigger>
-                        <NavigationMenuContent>
-                          <div className="grid w-full max-w-[800px] grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-6">
-                            {item.categories.map((category) => (
-                              <div key={category.title} className="space-y-3">
-                                <h3 className="font-semibold text-sm text-primary border-b border-border pb-2">
-                                  {category.title}
-                                </h3>
-                                <div className="space-y-2">
-                                  {category.items.map((subItem) => (
-                                    <NavigationMenuLink key={subItem.title} asChild>
-                                      <Link
-                                        to={subItem.href}
-                                        className={cn(
-                                          "block select-none space-y-1 rounded-md p-2 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                                        )}
-                                      >
-                                        <div className="text-sm font-medium leading-none">{subItem.title}</div>
-                                        <p className="line-clamp-2 text-xs leading-snug text-muted-foreground">
-                                          {subItem.description}
-                                        </p>
-                                      </Link>
-                                    </NavigationMenuLink>
-                                  ))}
+                        <NavigationMenuContent className="w-screen max-w-none left-0">
+                          <div className="container mx-auto px-4 py-6">
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                              {item.categories.map((category) => (
+                                <div key={category.title} className="space-y-3">
+                                  <h3 className="font-semibold text-sm text-primary border-b border-border pb-2">
+                                    {category.title}
+                                  </h3>
+                                  <div className="space-y-2">
+                                    {category.items.map((subItem) => (
+                                      <NavigationMenuLink key={subItem.title} asChild>
+                                        <Link
+                                          to={subItem.href}
+                                          className={cn(
+                                            "block select-none space-y-1 rounded-md p-2 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                                          )}
+                                        >
+                                          <div className="text-sm font-medium leading-none">{subItem.title}</div>
+                                          <p className="line-clamp-2 text-xs leading-snug text-muted-foreground">
+                                            {subItem.description}
+                                          </p>
+                                        </Link>
+                                      </NavigationMenuLink>
+                                    ))}
+                                  </div>
                                 </div>
-                              </div>
-                            ))}
+                              ))}
+                            </div>
                           </div>
                         </NavigationMenuContent>
                       </>
