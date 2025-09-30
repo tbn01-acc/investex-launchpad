@@ -16,6 +16,10 @@ import CoFounderDashboard from '@/pages/dashboards/CoFounderDashboard';
 import ConsultantDashboard from '@/pages/dashboards/ConsultantDashboard';
 import JobSeekerDashboard from '@/pages/dashboards/JobSeekerDashboard';
 import AmbassadorDashboard from '@/pages/dashboards/AmbassadorDashboard';
+import { FreelancerAnalytics } from '@/components/analytics/FreelancerAnalytics';
+import { InvestorAnalytics } from '@/components/analytics/InvestorAnalytics';
+import { FounderAnalytics } from '@/components/analytics/FounderAnalytics';
+import { ExpertAnalytics } from '@/components/analytics/ExpertAnalytics';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -156,6 +160,73 @@ const Dashboard = () => {
   };
 
   const actions = quickActions[role as keyof typeof quickActions] || [];
+
+  const renderRoleAnalytics = () => {
+    switch (role) {
+      case 'freelancer':
+      case 'project-employee':
+        return <FreelancerAnalytics />;
+      case 'investor':
+      case 'collective-investor':
+        return <InvestorAnalytics />;
+      case 'founder':
+      case 'co-founder':
+      case 'co-owner':
+        return <FounderAnalytics />;
+      case 'expert':
+      case 'consultant':
+        return <ExpertAnalytics />;
+      case 'outsourcer':
+      case 'contractor':
+      case 'project-admin':
+        return <FreelancerAnalytics />; // Using similar analytics
+      case 'job-seeker':
+      case 'partner':
+      case 'ambassador':
+      case 'blogger':
+      case 'superadmin':
+        return (
+          <div className="grid gap-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <BarChart3 className="h-5 w-5" />
+                  Персональная аналитика - {getRoleDisplayName(role)}
+                </CardTitle>
+                <CardDescription>
+                  Детальная аналитика будет доступна в следующей версии
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <h4 className="font-semibold mb-3">Основные показатели</h4>
+                    <div className="space-y-3">
+                      <div className="flex justify-between">
+                        <span className="text-sm text-muted-foreground">Активность</span>
+                        <span className="font-medium">Высокая</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-sm text-muted-foreground">Рейтинг</span>
+                        <span className="font-medium">4.7/5.0</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold mb-3">Прогресс</h4>
+                    <div className="w-full bg-secondary rounded-full h-2 mb-2">
+                      <div className="bg-primary h-2 rounded-full" style={{ width: '75%' }} />
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        );
+      default:
+        return <FreelancerAnalytics />;
+    }
+  };
 
   const renderRoleSpecificDashboard = () => {
     switch (role) {
@@ -363,73 +434,7 @@ const Dashboard = () => {
             </TabsContent>
 
             <TabsContent value="analytics">
-              <div className="grid gap-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <BarChart3 className="h-5 w-5" />
-                      Персональная аналитика - {getRoleDisplayName(role)}
-                    </CardTitle>
-                    <CardDescription>
-                      Ваши показатели и сравнение с рынком
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div>
-                        <h4 className="font-semibold mb-3">Ваши показатели</h4>
-                        <div className="space-y-3">
-                          <div className="flex justify-between">
-                            <span className="text-sm text-muted-foreground">Завершенных проектов</span>
-                            <span className="font-medium">24</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-sm text-muted-foreground">Средний рейтинг</span>
-                            <span className="font-medium">4.8/5.0</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-sm text-muted-foreground">Доход за месяц</span>
-                            <span className="font-medium">{formatCurrency(285000)}</span>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div>
-                        <h4 className="font-semibold mb-3">Сравнение с рынком</h4>
-                        <div className="space-y-3">
-                          <div className="flex justify-between items-center">
-                            <span className="text-sm text-muted-foreground">Продуктивность</span>
-                            <div className="flex items-center gap-2">
-                              <div className="w-16 bg-gray-200 rounded-full h-2">
-                                <div className="bg-green-500 h-2 rounded-full" style={{ width: '85%' }}></div>
-                              </div>
-                              <span className="text-sm font-medium">85%</span>
-                            </div>
-                          </div>
-                          <div className="flex justify-between items-center">
-                            <span className="text-sm text-muted-foreground">Качество работ</span>
-                            <div className="flex items-center gap-2">
-                              <div className="w-16 bg-gray-200 rounded-full h-2">
-                                <div className="bg-blue-500 h-2 rounded-full" style={{ width: '92%' }}></div>
-                              </div>
-                              <span className="text-sm font-medium">92%</span>
-                            </div>
-                          </div>
-                          <div className="flex justify-between items-center">
-                            <span className="text-sm text-muted-foreground">Соблюдение сроков</span>
-                            <div className="flex items-center gap-2">
-                              <div className="w-16 bg-gray-200 rounded-full h-2">
-                                <div className="bg-primary h-2 rounded-full" style={{ width: '96%' }}></div>
-                              </div>
-                              <span className="text-sm font-medium">96%</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
+              {renderRoleAnalytics()}
             </TabsContent>
 
             <TabsContent value="settings">

@@ -111,11 +111,12 @@ const CoFounderDashboard = () => {
 
       {/* Detailed Information */}
       <Tabs defaultValue="projects" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-5">
           <TabsTrigger value="projects">Проекты</TabsTrigger>
           <TabsTrigger value="team">Команда</TabsTrigger>
           <TabsTrigger value="equity">Капитал</TabsTrigger>
           <TabsTrigger value="roadmap">Дорожная карта</TabsTrigger>
+          <TabsTrigger value="analytics">Аналитика</TabsTrigger>
         </TabsList>
 
         <TabsContent value="projects" className="space-y-4">
@@ -186,6 +187,45 @@ const CoFounderDashboard = () => {
               </p>
             </CardContent>
           </Card>
+        </TabsContent>
+
+        <TabsContent value="analytics">
+          <div className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>Аналитика ко-фаундера</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-sm font-medium">Рост капитала</span>
+                    <span className="text-sm text-muted-foreground">+18% за квартал</span>
+                  </div>
+                  <div className="w-full bg-secondary rounded-full h-2">
+                    <div className="bg-green-500 h-2 rounded-full" style={{ width: '72%' }} />
+                  </div>
+                </div>
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-sm font-medium">Достижение вех</span>
+                    <span className="text-sm text-muted-foreground">{stats.completedMilestones}/{stats.milestones}</span>
+                  </div>
+                  <div className="w-full bg-secondary rounded-full h-2">
+                    <div className="bg-blue-500 h-2 rounded-full" style={{ width: `${(stats.completedMilestones / stats.milestones) * 100}%` }} />
+                  </div>
+                </div>
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-sm font-medium">Эффективность команды</span>
+                    <span className="text-sm text-muted-foreground">88%</span>
+                  </div>
+                  <div className="w-full bg-secondary rounded-full h-2">
+                    <div className="bg-primary h-2 rounded-full" style={{ width: '88%' }} />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </TabsContent>
       </Tabs>
     </div>

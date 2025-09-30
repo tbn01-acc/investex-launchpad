@@ -107,11 +107,12 @@ const AmbassadorDashboard = () => {
 
       {/* Detailed Information */}
       <Tabs defaultValue="campaigns" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-5">
           <TabsTrigger value="campaigns">Кампании</TabsTrigger>
           <TabsTrigger value="referrals">Рефералы</TabsTrigger>
           <TabsTrigger value="materials">Материалы</TabsTrigger>
           <TabsTrigger value="earnings">Доходы</TabsTrigger>
+          <TabsTrigger value="analytics">Аналитика</TabsTrigger>
         </TabsList>
 
         <TabsContent value="campaigns" className="space-y-4">
@@ -187,6 +188,48 @@ const AmbassadorDashboard = () => {
               </p>
             </CardContent>
           </Card>
+        </TabsContent>
+
+        <TabsContent value="analytics">
+          <div className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>Аналитика амбассадора</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-sm font-medium">Рост рефералов</span>
+                    <span className="text-sm text-muted-foreground">+32% за месяц</span>
+                  </div>
+                  <div className="w-full bg-secondary rounded-full h-2">
+                    <div className="bg-green-500 h-2 rounded-full" style={{ width: '82%' }} />
+                  </div>
+                </div>
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-sm font-medium">Конверсия</span>
+                    <span className="text-sm text-muted-foreground">{stats.conversionRate}%</span>
+                  </div>
+                  <div className="w-full bg-secondary rounded-full h-2">
+                    <div className="bg-blue-500 h-2 rounded-full" style={{ width: `${stats.conversionRate}%` }} />
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Отличный результат - на 15% выше среднего
+                  </p>
+                </div>
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-sm font-medium">Рост дохода</span>
+                    <span className="text-sm text-muted-foreground">+28% за квартал</span>
+                  </div>
+                  <div className="w-full bg-secondary rounded-full h-2">
+                    <div className="bg-primary h-2 rounded-full" style={{ width: '78%' }} />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </TabsContent>
       </Tabs>
     </div>

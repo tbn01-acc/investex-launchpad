@@ -1,7 +1,7 @@
 import React from 'react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Users, Zap, Shield, Globe } from 'lucide-react';
 import RoadmapSection from '@/components/RoadmapSection';
@@ -163,6 +163,149 @@ const About = () => {
 
           {/* Roadmap Section */}
           <RoadmapSection />
+
+          {/* Platform Analytics Section */}
+          <section className="mb-16">
+            <h2 className="text-3xl font-bold text-center mb-12">Аналитика платформы</h2>
+            <div className="grid gap-6">
+              {/* Growth Metrics */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Рост платформы</CardTitle>
+                  <p className="text-sm text-muted-foreground">Динамика развития за последний год</p>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                      <div className="text-3xl font-bold text-primary mb-2">+285%</div>
+                      <p className="text-sm text-muted-foreground mb-3">Рост пользователей</p>
+                      <div className="w-full bg-secondary rounded-full h-2">
+                        <div className="bg-primary h-2 rounded-full" style={{ width: '85%' }} />
+                      </div>
+                    </div>
+                    <div>
+                      <div className="text-3xl font-bold text-secondary mb-2">+342%</div>
+                      <p className="text-sm text-muted-foreground mb-3">Рост инвестиций</p>
+                      <div className="w-full bg-secondary rounded-full h-2">
+                        <div className="bg-secondary h-2 rounded-full" style={{ width: '92%' }} />
+                      </div>
+                    </div>
+                    <div>
+                      <div className="text-3xl font-bold text-accent mb-2">+198%</div>
+                      <p className="text-sm text-muted-foreground mb-3">Рост проектов</p>
+                      <div className="w-full bg-secondary rounded-full h-2">
+                        <div className="bg-accent h-2 rounded-full" style={{ width: '78%' }} />
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* User Distribution */}
+              <div className="grid md:grid-cols-2 gap-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Распределение пользователей</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div>
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-sm font-medium">Фрилансеры</span>
+                        <span className="text-sm text-muted-foreground">42%</span>
+                      </div>
+                      <div className="w-full bg-secondary rounded-full h-2">
+                        <div className="bg-primary h-2 rounded-full" style={{ width: '42%' }} />
+                      </div>
+                    </div>
+                    <div>
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-sm font-medium">Фаундеры</span>
+                        <span className="text-sm text-muted-foreground">28%</span>
+                      </div>
+                      <div className="w-full bg-secondary rounded-full h-2">
+                        <div className="bg-secondary h-2 rounded-full" style={{ width: '28%' }} />
+                      </div>
+                    </div>
+                    <div>
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-sm font-medium">Инвесторы</span>
+                        <span className="text-sm text-muted-foreground">18%</span>
+                      </div>
+                      <div className="w-full bg-secondary rounded-full h-2">
+                        <div className="bg-accent h-2 rounded-full" style={{ width: '18%' }} />
+                      </div>
+                    </div>
+                    <div>
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-sm font-medium">Другие роли</span>
+                        <span className="text-sm text-muted-foreground">12%</span>
+                      </div>
+                      <div className="w-full bg-secondary rounded-full h-2">
+                        <div className="bg-muted h-2 rounded-full" style={{ width: '12%' }} />
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Ключевые достижения</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="flex items-start gap-3">
+                      <Badge className="mt-1">Q1 2024</Badge>
+                      <div>
+                        <h4 className="font-semibold">Запуск платформы 2.0</h4>
+                        <p className="text-sm text-muted-foreground">Обновленный интерфейс и новые функции</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <Badge className="mt-1">Q2 2024</Badge>
+                      <div>
+                        <h4 className="font-semibold">1000+ успешных проектов</h4>
+                        <p className="text-sm text-muted-foreground">Рекордное количество завершенных проектов</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <Badge className="mt-1">Q3 2024</Badge>
+                      <div>
+                        <h4 className="font-semibold">10M₽ инвестиций</h4>
+                        <p className="text-sm text-muted-foreground">Преодолен рубеж в 10 миллионов рублей</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Market Position */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Позиция на рынке</CardTitle>
+                  <p className="text-sm text-muted-foreground">Сравнение с конкурентами</p>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div className="text-center p-4 border rounded-lg">
+                      <div className="text-2xl font-bold mb-1">#1</div>
+                      <p className="text-sm text-muted-foreground">По удовлетворенности</p>
+                    </div>
+                    <div className="text-center p-4 border rounded-lg">
+                      <div className="text-2xl font-bold mb-1">#2</div>
+                      <p className="text-sm text-muted-foreground">По росту пользователей</p>
+                    </div>
+                    <div className="text-center p-4 border rounded-lg">
+                      <div className="text-2xl font-bold mb-1">92%</div>
+                      <p className="text-sm text-muted-foreground">Retention rate</p>
+                    </div>
+                    <div className="text-center p-4 border rounded-lg">
+                      <div className="text-2xl font-bold mb-1">4.8/5</div>
+                      <p className="text-sm text-muted-foreground">Средний рейтинг</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </section>
         </div>
       </main>
       

@@ -127,11 +127,12 @@ const ConsultantDashboard = () => {
 
       {/* Detailed Information */}
       <Tabs defaultValue="consultations" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-5">
           <TabsTrigger value="consultations">Консультации</TabsTrigger>
           <TabsTrigger value="expertise">Экспертиза</TabsTrigger>
           <TabsTrigger value="clients">Клиенты</TabsTrigger>
           <TabsTrigger value="knowledge">База знаний</TabsTrigger>
+          <TabsTrigger value="analytics">Аналитика</TabsTrigger>
         </TabsList>
 
         <TabsContent value="consultations" className="space-y-4">
@@ -210,6 +211,45 @@ const ConsultantDashboard = () => {
               </p>
             </CardContent>
           </Card>
+        </TabsContent>
+
+        <TabsContent value="analytics">
+          <div className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>Аналитика консультанта</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-sm font-medium">Рост дохода</span>
+                    <span className="text-sm text-muted-foreground">+24% за месяц</span>
+                  </div>
+                  <div className="w-full bg-secondary rounded-full h-2">
+                    <div className="bg-green-500 h-2 rounded-full" style={{ width: '76%' }} />
+                  </div>
+                </div>
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-sm font-medium">Удержание клиентов</span>
+                    <span className="text-sm text-muted-foreground">82%</span>
+                  </div>
+                  <div className="w-full bg-secondary rounded-full h-2">
+                    <div className="bg-blue-500 h-2 rounded-full" style={{ width: '82%' }} />
+                  </div>
+                </div>
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-sm font-medium">Средняя оценка</span>
+                    <span className="text-sm text-muted-foreground">{stats.rating}/5.0</span>
+                  </div>
+                  <div className="w-full bg-secondary rounded-full h-2">
+                    <div className="bg-primary h-2 rounded-full" style={{ width: '98%' }} />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </TabsContent>
       </Tabs>
     </div>

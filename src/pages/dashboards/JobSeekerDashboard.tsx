@@ -135,11 +135,12 @@ const JobSeekerDashboard = () => {
 
       {/* Detailed Information */}
       <Tabs defaultValue="applications" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-5">
           <TabsTrigger value="applications">Отклики</TabsTrigger>
           <TabsTrigger value="jobs">Вакансии</TabsTrigger>
           <TabsTrigger value="resume">Резюме</TabsTrigger>
           <TabsTrigger value="saved">Избранное</TabsTrigger>
+          <TabsTrigger value="analytics">Аналитика</TabsTrigger>
         </TabsList>
 
         <TabsContent value="applications" className="space-y-4">
@@ -214,6 +215,48 @@ const JobSeekerDashboard = () => {
               </p>
             </CardContent>
           </Card>
+        </TabsContent>
+
+        <TabsContent value="analytics">
+          <div className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>Аналитика соискателя</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-sm font-medium">Конверсия откликов</span>
+                    <span className="text-sm text-muted-foreground">{stats.responseRate}%</span>
+                  </div>
+                  <div className="w-full bg-secondary rounded-full h-2">
+                    <div className="bg-green-500 h-2 rounded-full" style={{ width: `${stats.responseRate}%` }} />
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    На 8% выше среднего по рынку
+                  </p>
+                </div>
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-sm font-medium">Активность поиска</span>
+                    <span className="text-sm text-muted-foreground">Высокая</span>
+                  </div>
+                  <div className="w-full bg-secondary rounded-full h-2">
+                    <div className="bg-blue-500 h-2 rounded-full" style={{ width: '85%' }} />
+                  </div>
+                </div>
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-sm font-medium">Просмотры профиля</span>
+                    <span className="text-sm text-muted-foreground">{stats.profileViews} за месяц</span>
+                  </div>
+                  <div className="w-full bg-secondary rounded-full h-2">
+                    <div className="bg-primary h-2 rounded-full" style={{ width: '72%' }} />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </TabsContent>
       </Tabs>
     </div>
