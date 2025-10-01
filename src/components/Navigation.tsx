@@ -113,7 +113,7 @@ const Navigation = () => {
                         </NavigationMenuTrigger>
                         <NavigationMenuContent>
                           <div className="px-6 py-6">
-                            <div className="grid grid-cols-4 gap-6">
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                               {item.categories.map((category) => (
                                 <div key={category.title} className="space-y-3">
                                   <h3 className="font-semibold text-sm text-primary border-b border-border pb-2">
