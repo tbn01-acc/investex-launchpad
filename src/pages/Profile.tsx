@@ -9,10 +9,37 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 
-const AVAILABLE_ROLES = ['freelancer', 'investor', 'founder', 'outsourcer', 'contractor'] as const;
+const ROLE_CATEGORIES = {
+  "Участники": [
+    { value: 'investor', label: 'Инвестор' },
+    { value: 'collective_investor', label: 'Коллективный инвестор' },
+    { value: 'founder', label: 'Фаундер' },
+    { value: 'co_founder', label: 'Ко-фаундер' },
+    { value: 'partner', label: 'Соучредитель' },
+  ],
+  "Исполнители": [
+    { value: 'freelancer', label: 'Фрилансер' },
+    { value: 'expert', label: 'Эксперт' },
+    { value: 'consultant', label: 'Консультант' },
+    { value: 'outsourcer', label: 'Аутсорсер' },
+    { value: 'contractor', label: 'Подрядчик' },
+  ],
+  "Сотрудники": [
+    { value: 'project_admin', label: 'Администратор проекта' },
+    { value: 'employee', label: 'Сотрудник проекта' },
+    { value: 'job_seeker', label: 'Соискатель' },
+  ],
+  "Партнеры": [
+    { value: 'affiliate', label: 'Партнёр (Affiliate)' },
+    { value: 'ambassador', label: 'Амбассадор проекта' },
+    { value: 'influencer', label: 'Лидер мнений/Блогер' },
+  ],
+} as const;
+
+const AVAILABLE_ROLES = Object.values(ROLE_CATEGORIES).flat().map(r => r.value);
 
 type Role = typeof AVAILABLE_ROLES[number];
 
@@ -130,8 +157,15 @@ export default function Profile() {
                       <SelectValue placeholder="Выберите роль" />
                     </SelectTrigger>
                     <SelectContent>
-                      {AVAILABLE_ROLES.map((r) => (
-                        <SelectItem key={r} value={r}>{r}</SelectItem>
+                      {Object.entries(ROLE_CATEGORIES).map(([category, roles]) => (
+                        <SelectGroup key={category}>
+                          <SelectLabel>{category}</SelectLabel>
+                          {roles.map((role) => (
+                            <SelectItem key={role.value} value={role.value}>
+                              {role.label}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
                       ))}
                     </SelectContent>
                   </Select>
@@ -149,9 +183,14 @@ export default function Profile() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex flex-wrap gap-2">
-                  {userRoles.map((r) => (
-                    <Badge key={r} variant="secondary">{r}</Badge>
-                  ))}
+                  {userRoles.map((r) => {
+                    const roleLabel = Object.values(ROLE_CATEGORIES)
+                      .flat()
+                      .find(role => role.value === r)?.label || r;
+                    return (
+                      <Badge key={r} variant="secondary">{roleLabel}</Badge>
+                    );
+                  })}
                   {userRoles.length === 0 && (
                     <p className="text-sm text-muted-foreground">Пока нет дополнительных ролей</p>
                   )}
@@ -164,11 +203,18 @@ export default function Profile() {
                         <SelectValue placeholder="Выберите роль" />
                       </SelectTrigger>
                       <SelectContent>
-                        {AVAILABLE_ROLES
-                          .filter(r => !userRoles.includes(r))
-                          .map((r) => (
-                            <SelectItem key={r} value={r}>{r}</SelectItem>
-                          ))}
+                        {Object.entries(ROLE_CATEGORIES).map(([category, roles]) => (
+                          <SelectGroup key={category}>
+                            <SelectLabel>{category}</SelectLabel>
+                            {roles
+                              .filter(role => !userRoles.includes(role.value as Role))
+                              .map((role) => (
+                                <SelectItem key={role.value} value={role.value}>
+                                  {role.label}
+                                </SelectItem>
+                              ))}
+                          </SelectGroup>
+                        ))}
                       </SelectContent>
                     </Select>
                     <Button onClick={handleAddRole} disabled={!newRole}>Добавить</Button>
