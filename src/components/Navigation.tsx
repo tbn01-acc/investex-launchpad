@@ -112,8 +112,8 @@ const Navigation = () => {
                           {item.title}
                         </NavigationMenuTrigger>
                         <NavigationMenuContent>
-                          <div className="max-w-7xl px-4 py-6">
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                          <div className="max-w-3xl px-4 py-6">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                               {item.categories.map((category) => (
                                 <div key={category.title} className="space-y-3">
                                   <h3 className="font-semibold text-sm text-primary border-b border-border pb-2">
