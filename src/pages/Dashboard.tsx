@@ -60,13 +60,13 @@ const Dashboard = () => {
     }
   }, [profile]);
 
-  const handleRoleChange = async (newRole: 'freelancer' | 'investor' | 'founder' | 'outsourcer' | 'contractor' | 'superadmin') => {
+  const handleRoleChange = async (newRole: string) => {
     if (!user) return;
     
     try {
       const { error } = await supabase
         .from('profiles')
-        .update({ role: newRole })
+        .update({ role: newRole as any })
         .eq('user_id', user.id);
 
       if (error) throw error;

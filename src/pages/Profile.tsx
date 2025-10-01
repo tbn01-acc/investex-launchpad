@@ -107,7 +107,7 @@ export default function Profile() {
       toast({ title: 'Роль уже добавлена', description: 'Выберите другую роль' });
       return;
     }
-    const { error } = await supabase.from('user_roles').insert({ user_id: user.id, role: newRole });
+    const { error } = await supabase.from('user_roles').insert([{ user_id: user.id, role: newRole as any }]);
     if (error) {
       toast({ title: t('common.error'), description: error.message, variant: 'destructive' });
       return;

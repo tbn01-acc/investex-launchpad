@@ -68,6 +68,118 @@ export type Database = {
         }
         Relationships: []
       }
+      due_diligence_items: {
+        Row: {
+          category: string
+          created_at: string | null
+          description: string | null
+          document_url: string | null
+          id: string
+          item_name: string
+          project_id: string | null
+          risk_level: string | null
+          updated_at: string | null
+          verification_date: string | null
+          verification_status: string | null
+          verified_by: string | null
+        }
+        Insert: {
+          category: string
+          created_at?: string | null
+          description?: string | null
+          document_url?: string | null
+          id?: string
+          item_name: string
+          project_id?: string | null
+          risk_level?: string | null
+          updated_at?: string | null
+          verification_date?: string | null
+          verification_status?: string | null
+          verified_by?: string | null
+        }
+        Update: {
+          category?: string
+          created_at?: string | null
+          description?: string | null
+          document_url?: string | null
+          id?: string
+          item_name?: string
+          project_id?: string | null
+          risk_level?: string | null
+          updated_at?: string | null
+          verification_date?: string | null
+          verification_status?: string | null
+          verified_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "due_diligence_items_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      investment_expressions: {
+        Row: {
+          conditions: string[] | null
+          created_at: string | null
+          due_diligence_status: string | null
+          id: string
+          investment_amount: number
+          investment_terms: Json | null
+          investor_id: string
+          legal_documents: Json | null
+          notes: string | null
+          project_id: string | null
+          reviewed_at: string | null
+          status: string | null
+          submitted_at: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          conditions?: string[] | null
+          created_at?: string | null
+          due_diligence_status?: string | null
+          id?: string
+          investment_amount: number
+          investment_terms?: Json | null
+          investor_id: string
+          legal_documents?: Json | null
+          notes?: string | null
+          project_id?: string | null
+          reviewed_at?: string | null
+          status?: string | null
+          submitted_at?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          conditions?: string[] | null
+          created_at?: string | null
+          due_diligence_status?: string | null
+          id?: string
+          investment_amount?: number
+          investment_terms?: Json | null
+          investor_id?: string
+          legal_documents?: Json | null
+          notes?: string | null
+          project_id?: string | null
+          reviewed_at?: string | null
+          status?: string | null
+          submitted_at?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "investment_expressions_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       investments: {
         Row: {
           amount: number
@@ -117,6 +229,120 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      investor_preferences: {
+        Row: {
+          board_participation_desired: boolean | null
+          created_at: string | null
+          esg_requirements: boolean | null
+          follow_on_capacity: boolean | null
+          funding_stages: Database["public"]["Enums"]["funding_stage"][] | null
+          geographic_preferences: string[] | null
+          id: string
+          industry_preferences:
+            | Database["public"]["Enums"]["industry_category"][]
+            | null
+          investment_thesis: string | null
+          investor_id: string
+          lead_investor_capable: boolean | null
+          max_investment_amount: number | null
+          min_investment_amount: number | null
+          min_team_experience: number | null
+          min_traction_metrics: Json | null
+          risk_tolerance: string | null
+          sector_expertise: string[] | null
+          updated_at: string | null
+        }
+        Insert: {
+          board_participation_desired?: boolean | null
+          created_at?: string | null
+          esg_requirements?: boolean | null
+          follow_on_capacity?: boolean | null
+          funding_stages?: Database["public"]["Enums"]["funding_stage"][] | null
+          geographic_preferences?: string[] | null
+          id?: string
+          industry_preferences?:
+            | Database["public"]["Enums"]["industry_category"][]
+            | null
+          investment_thesis?: string | null
+          investor_id: string
+          lead_investor_capable?: boolean | null
+          max_investment_amount?: number | null
+          min_investment_amount?: number | null
+          min_team_experience?: number | null
+          min_traction_metrics?: Json | null
+          risk_tolerance?: string | null
+          sector_expertise?: string[] | null
+          updated_at?: string | null
+        }
+        Update: {
+          board_participation_desired?: boolean | null
+          created_at?: string | null
+          esg_requirements?: boolean | null
+          follow_on_capacity?: boolean | null
+          funding_stages?: Database["public"]["Enums"]["funding_stage"][] | null
+          geographic_preferences?: string[] | null
+          id?: string
+          industry_preferences?:
+            | Database["public"]["Enums"]["industry_category"][]
+            | null
+          investment_thesis?: string | null
+          investor_id?: string
+          lead_investor_capable?: boolean | null
+          max_investment_amount?: number | null
+          min_investment_amount?: number | null
+          min_team_experience?: number | null
+          min_traction_metrics?: Json | null
+          risk_tolerance?: string | null
+          sector_expertise?: string[] | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      market_analytics: {
+        Row: {
+          average_deal_size: number | null
+          average_time_to_close_days: number | null
+          created_at: string | null
+          date: string
+          funding_stage: Database["public"]["Enums"]["funding_stage"] | null
+          geographic_region: string | null
+          id: string
+          industry: Database["public"]["Enums"]["industry_category"] | null
+          median_valuation: number | null
+          success_rate_percentage: number | null
+          total_deals: number | null
+          total_funding_amount: number | null
+        }
+        Insert: {
+          average_deal_size?: number | null
+          average_time_to_close_days?: number | null
+          created_at?: string | null
+          date?: string
+          funding_stage?: Database["public"]["Enums"]["funding_stage"] | null
+          geographic_region?: string | null
+          id?: string
+          industry?: Database["public"]["Enums"]["industry_category"] | null
+          median_valuation?: number | null
+          success_rate_percentage?: number | null
+          total_deals?: number | null
+          total_funding_amount?: number | null
+        }
+        Update: {
+          average_deal_size?: number | null
+          average_time_to_close_days?: number | null
+          created_at?: string | null
+          date?: string
+          funding_stage?: Database["public"]["Enums"]["funding_stage"] | null
+          geographic_region?: string | null
+          id?: string
+          industry?: Database["public"]["Enums"]["industry_category"] | null
+          median_valuation?: number | null
+          success_rate_percentage?: number | null
+          total_deals?: number | null
+          total_funding_amount?: number | null
+        }
+        Relationships: []
       }
       messages: {
         Row: {
@@ -349,24 +575,65 @@ export type Database = {
         }
         Relationships: []
       }
+      pricing_config: {
+        Row: {
+          created_at: string | null
+          features: Json | null
+          id: string
+          limits: Json | null
+          price_monthly: number
+          role: Database["public"]["Enums"]["new_user_role"]
+          tier: Database["public"]["Enums"]["subscription_plan"]
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          features?: Json | null
+          id?: string
+          limits?: Json | null
+          price_monthly: number
+          role: Database["public"]["Enums"]["new_user_role"]
+          tier: Database["public"]["Enums"]["subscription_plan"]
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          features?: Json | null
+          id?: string
+          limits?: Json | null
+          price_monthly?: number
+          role?: Database["public"]["Enums"]["new_user_role"]
+          tier?: Database["public"]["Enums"]["subscription_plan"]
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           added_by: string | null
           allowed_projects: string[] | null
+          available_for_projects: boolean | null
           avatar_url: string | null
           bio: string | null
           company: string | null
+          company_size: number | null
           created_at: string
           currency: string | null
+          documents_status: string | null
           email: string | null
           email_verified: boolean | null
           experience_level: string | null
+          financial_verification: Json | null
           first_name: string | null
           id: string
+          investment_capacity: number | null
+          investment_range_verified: boolean | null
+          kyc_status: string | null
           language: string | null
           last_login: string | null
           last_name: string | null
           onboarding_completed: boolean | null
+          onboarding_completed_at: string | null
           organization_type:
             | Database["public"]["Enums"]["organization_type"]
             | null
@@ -380,36 +647,52 @@ export type Database = {
             | Database["public"]["Enums"]["registration_method"]
             | null
           reviews_count: number | null
-          role: Database["public"]["Enums"]["user_role"]
+          role: Database["public"]["Enums"]["new_user_role"] | null
+          role_specific_data: Json | null
           skills: string[] | null
+          specialization: string[] | null
           subscription_expires_at: string | null
+          subscription_period: number | null
           subscription_plan: string | null
+          subscription_tier:
+            | Database["public"]["Enums"]["subscription_plan"]
+            | null
           total_earnings: number | null
           total_projects: number | null
           two_factor_enabled: boolean | null
           two_factor_secret: string | null
           updated_at: string
           user_id: string
+          verification_documents: Json | null
+          verification_level: string | null
           verification_status: string | null
           website: string | null
         }
         Insert: {
           added_by?: string | null
           allowed_projects?: string[] | null
+          available_for_projects?: boolean | null
           avatar_url?: string | null
           bio?: string | null
           company?: string | null
+          company_size?: number | null
           created_at?: string
           currency?: string | null
+          documents_status?: string | null
           email?: string | null
           email_verified?: boolean | null
           experience_level?: string | null
+          financial_verification?: Json | null
           first_name?: string | null
           id?: string
+          investment_capacity?: number | null
+          investment_range_verified?: boolean | null
+          kyc_status?: string | null
           language?: string | null
           last_login?: string | null
           last_name?: string | null
           onboarding_completed?: boolean | null
+          onboarding_completed_at?: string | null
           organization_type?:
             | Database["public"]["Enums"]["organization_type"]
             | null
@@ -423,36 +706,52 @@ export type Database = {
             | Database["public"]["Enums"]["registration_method"]
             | null
           reviews_count?: number | null
-          role?: Database["public"]["Enums"]["user_role"]
+          role?: Database["public"]["Enums"]["new_user_role"] | null
+          role_specific_data?: Json | null
           skills?: string[] | null
+          specialization?: string[] | null
           subscription_expires_at?: string | null
+          subscription_period?: number | null
           subscription_plan?: string | null
+          subscription_tier?:
+            | Database["public"]["Enums"]["subscription_plan"]
+            | null
           total_earnings?: number | null
           total_projects?: number | null
           two_factor_enabled?: boolean | null
           two_factor_secret?: string | null
           updated_at?: string
           user_id: string
+          verification_documents?: Json | null
+          verification_level?: string | null
           verification_status?: string | null
           website?: string | null
         }
         Update: {
           added_by?: string | null
           allowed_projects?: string[] | null
+          available_for_projects?: boolean | null
           avatar_url?: string | null
           bio?: string | null
           company?: string | null
+          company_size?: number | null
           created_at?: string
           currency?: string | null
+          documents_status?: string | null
           email?: string | null
           email_verified?: boolean | null
           experience_level?: string | null
+          financial_verification?: Json | null
           first_name?: string | null
           id?: string
+          investment_capacity?: number | null
+          investment_range_verified?: boolean | null
+          kyc_status?: string | null
           language?: string | null
           last_login?: string | null
           last_name?: string | null
           onboarding_completed?: boolean | null
+          onboarding_completed_at?: string | null
           organization_type?:
             | Database["public"]["Enums"]["organization_type"]
             | null
@@ -466,16 +765,24 @@ export type Database = {
             | Database["public"]["Enums"]["registration_method"]
             | null
           reviews_count?: number | null
-          role?: Database["public"]["Enums"]["user_role"]
+          role?: Database["public"]["Enums"]["new_user_role"] | null
+          role_specific_data?: Json | null
           skills?: string[] | null
+          specialization?: string[] | null
           subscription_expires_at?: string | null
+          subscription_period?: number | null
           subscription_plan?: string | null
+          subscription_tier?:
+            | Database["public"]["Enums"]["subscription_plan"]
+            | null
           total_earnings?: number | null
           total_projects?: number | null
           two_factor_enabled?: boolean | null
           two_factor_secret?: string | null
           updated_at?: string
           user_id?: string
+          verification_documents?: Json | null
+          verification_level?: string | null
           verification_status?: string | null
           website?: string | null
         }
@@ -533,86 +840,274 @@ export type Database = {
           },
         ]
       }
+      project_team_members: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          created_at: string | null
+          education: string[] | null
+          equity_percentage: number | null
+          experience_years: number | null
+          id: string
+          is_advisor: boolean | null
+          is_founder: boolean | null
+          linkedin_url: string | null
+          name: string
+          previous_companies: string[] | null
+          project_id: string | null
+          role: string
+          skills: string[] | null
+          user_id: string | null
+          verified: boolean | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string | null
+          education?: string[] | null
+          equity_percentage?: number | null
+          experience_years?: number | null
+          id?: string
+          is_advisor?: boolean | null
+          is_founder?: boolean | null
+          linkedin_url?: string | null
+          name: string
+          previous_companies?: string[] | null
+          project_id?: string | null
+          role: string
+          skills?: string[] | null
+          user_id?: string | null
+          verified?: boolean | null
+        }
+        Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string | null
+          education?: string[] | null
+          equity_percentage?: number | null
+          experience_years?: number | null
+          id?: string
+          is_advisor?: boolean | null
+          is_founder?: boolean | null
+          linkedin_url?: string | null
+          name?: string
+          previous_companies?: string[] | null
+          project_id?: string | null
+          role?: string
+          skills?: string[] | null
+          user_id?: string | null
+          verified?: boolean | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_team_members_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       projects: {
         Row: {
           attachments: Json | null
           budget_max: number | null
           budget_min: number | null
+          burn_rate: number | null
+          business_model: string | null
+          carbon_footprint_score: number | null
           category_id: string | null
+          competitive_advantage: string | null
           created_at: string
           currency: string | null
+          current_valuation: number | null
+          customer_count: number | null
           deadline: string | null
+          demo_url: string | null
           description: string
           equity_offered: number | null
+          esg_score: number | null
+          executive_summary: string | null
           favorites_count: number | null
+          financial_highlights: Json | null
+          funding_amount_seeking: number | null
           funding_goal: number | null
           funding_raised: number | null
+          funding_stage: Database["public"]["Enums"]["funding_stage"] | null
+          geographic_location: string | null
           id: string
+          industry: Database["public"]["Enums"]["industry_category"] | null
+          intellectual_property: string[] | null
+          investment_terms: Json | null
+          is_featured: boolean | null
+          key_metrics: Json | null
           location: string | null
+          market_size: number | null
+          max_investment: number | null
           milestones: Json | null
+          min_investment: number | null
+          monthly_revenue: number | null
           owner_id: string
+          partnerships: string[] | null
+          pitch_deck_url: string | null
+          previous_funding: number | null
+          product_screenshots: string[] | null
+          project_stage: Database["public"]["Enums"]["project_stage"] | null
           project_type: string
+          projected_exit_timeline: number | null
+          regulatory_status: string | null
+          revenue_model: string | null
+          risk_factors: string[] | null
           roi_projected: number | null
+          runway_months: number | null
           skills_required: string[] | null
+          social_impact_score: number | null
           status: string | null
           tags: string[] | null
+          target_market: string | null
+          target_roi_percentage: number | null
+          team_highlight: string | null
           team_size: number | null
           title: string
+          traction_metrics: Json | null
           updated_at: string
+          use_of_funds: Json | null
+          value_proposition: string | null
+          video_pitch_url: string | null
           views_count: number | null
         }
         Insert: {
           attachments?: Json | null
           budget_max?: number | null
           budget_min?: number | null
+          burn_rate?: number | null
+          business_model?: string | null
+          carbon_footprint_score?: number | null
           category_id?: string | null
+          competitive_advantage?: string | null
           created_at?: string
           currency?: string | null
+          current_valuation?: number | null
+          customer_count?: number | null
           deadline?: string | null
+          demo_url?: string | null
           description: string
           equity_offered?: number | null
+          esg_score?: number | null
+          executive_summary?: string | null
           favorites_count?: number | null
+          financial_highlights?: Json | null
+          funding_amount_seeking?: number | null
           funding_goal?: number | null
           funding_raised?: number | null
+          funding_stage?: Database["public"]["Enums"]["funding_stage"] | null
+          geographic_location?: string | null
           id?: string
+          industry?: Database["public"]["Enums"]["industry_category"] | null
+          intellectual_property?: string[] | null
+          investment_terms?: Json | null
+          is_featured?: boolean | null
+          key_metrics?: Json | null
           location?: string | null
+          market_size?: number | null
+          max_investment?: number | null
           milestones?: Json | null
+          min_investment?: number | null
+          monthly_revenue?: number | null
           owner_id: string
+          partnerships?: string[] | null
+          pitch_deck_url?: string | null
+          previous_funding?: number | null
+          product_screenshots?: string[] | null
+          project_stage?: Database["public"]["Enums"]["project_stage"] | null
           project_type: string
+          projected_exit_timeline?: number | null
+          regulatory_status?: string | null
+          revenue_model?: string | null
+          risk_factors?: string[] | null
           roi_projected?: number | null
+          runway_months?: number | null
           skills_required?: string[] | null
+          social_impact_score?: number | null
           status?: string | null
           tags?: string[] | null
+          target_market?: string | null
+          target_roi_percentage?: number | null
+          team_highlight?: string | null
           team_size?: number | null
           title: string
+          traction_metrics?: Json | null
           updated_at?: string
+          use_of_funds?: Json | null
+          value_proposition?: string | null
+          video_pitch_url?: string | null
           views_count?: number | null
         }
         Update: {
           attachments?: Json | null
           budget_max?: number | null
           budget_min?: number | null
+          burn_rate?: number | null
+          business_model?: string | null
+          carbon_footprint_score?: number | null
           category_id?: string | null
+          competitive_advantage?: string | null
           created_at?: string
           currency?: string | null
+          current_valuation?: number | null
+          customer_count?: number | null
           deadline?: string | null
+          demo_url?: string | null
           description?: string
           equity_offered?: number | null
+          esg_score?: number | null
+          executive_summary?: string | null
           favorites_count?: number | null
+          financial_highlights?: Json | null
+          funding_amount_seeking?: number | null
           funding_goal?: number | null
           funding_raised?: number | null
+          funding_stage?: Database["public"]["Enums"]["funding_stage"] | null
+          geographic_location?: string | null
           id?: string
+          industry?: Database["public"]["Enums"]["industry_category"] | null
+          intellectual_property?: string[] | null
+          investment_terms?: Json | null
+          is_featured?: boolean | null
+          key_metrics?: Json | null
           location?: string | null
+          market_size?: number | null
+          max_investment?: number | null
           milestones?: Json | null
+          min_investment?: number | null
+          monthly_revenue?: number | null
           owner_id?: string
+          partnerships?: string[] | null
+          pitch_deck_url?: string | null
+          previous_funding?: number | null
+          product_screenshots?: string[] | null
+          project_stage?: Database["public"]["Enums"]["project_stage"] | null
           project_type?: string
+          projected_exit_timeline?: number | null
+          regulatory_status?: string | null
+          revenue_model?: string | null
+          risk_factors?: string[] | null
           roi_projected?: number | null
+          runway_months?: number | null
           skills_required?: string[] | null
+          social_impact_score?: number | null
           status?: string | null
           tags?: string[] | null
+          target_market?: string | null
+          target_roi_percentage?: number | null
+          team_highlight?: string | null
           team_size?: number | null
           title?: string
+          traction_metrics?: Json | null
           updated_at?: string
+          use_of_funds?: Json | null
+          value_proposition?: string | null
+          video_pitch_url?: string | null
           views_count?: number | null
         }
         Relationships: [
@@ -662,6 +1157,36 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      role_verification_requirements: {
+        Row: {
+          created_at: string | null
+          id: string
+          required_documents: string[] | null
+          role: Database["public"]["Enums"]["user_role"]
+          updated_at: string | null
+          verification_criteria: Json | null
+          verification_type: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          required_documents?: string[] | null
+          role: Database["public"]["Enums"]["user_role"]
+          updated_at?: string | null
+          verification_criteria?: Json | null
+          verification_type: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          required_documents?: string[] | null
+          role?: Database["public"]["Enums"]["user_role"]
+          updated_at?: string | null
+          verification_criteria?: Json | null
+          verification_type?: string
+        }
+        Relationships: []
       }
       skill_categories: {
         Row: {
@@ -760,7 +1285,7 @@ export type Database = {
           created_at: string | null
           id: string
           is_current: boolean | null
-          role: Database["public"]["Enums"]["user_role"]
+          role: Database["public"]["Enums"]["new_user_role"] | null
           updated_at: string | null
           user_id: string
         }
@@ -768,7 +1293,7 @@ export type Database = {
           created_at?: string | null
           id?: string
           is_current?: boolean | null
-          role: Database["public"]["Enums"]["user_role"]
+          role?: Database["public"]["Enums"]["new_user_role"] | null
           updated_at?: string | null
           user_id: string
         }
@@ -776,7 +1301,7 @@ export type Database = {
           created_at?: string | null
           id?: string
           is_current?: boolean | null
-          role?: Database["public"]["Enums"]["user_role"]
+          role?: Database["public"]["Enums"]["new_user_role"] | null
           updated_at?: string | null
           user_id?: string
         }
@@ -804,13 +1329,17 @@ export type Database = {
           username: string
         }[]
       }
+      calculate_investment_match_score: {
+        Args: { p_investor_id: string; p_project_id: string }
+        Returns: number
+      }
       clean_expired_password_reset_tokens: {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }
       get_current_user_role: {
         Args: Record<PropertyKey, never>
-        Returns: string
+        Returns: Database["public"]["Enums"]["new_user_role"]
       }
       get_platform_stats: {
         Args: Record<PropertyKey, never>
@@ -826,8 +1355,48 @@ export type Database = {
       }
     }
     Enums: {
+      funding_stage:
+        | "pre_seed"
+        | "seed"
+        | "series_a"
+        | "series_b"
+        | "series_c"
+        | "series_d"
+        | "ipo"
+      industry_category:
+        | "fintech"
+        | "healthtech"
+        | "edtech"
+        | "greentech"
+        | "e_commerce"
+        | "saas"
+        | "marketplace"
+        | "ai_ml"
+        | "blockchain"
+        | "iot"
+        | "gaming"
+        | "media"
+        | "real_estate"
+        | "agriculture"
+        | "logistics"
+        | "cybersecurity"
+        | "biotech"
+        | "aerospace"
+        | "automotive"
+        | "retail"
       investment_status: "pending" | "approved" | "rejected" | "funded"
+      new_user_role:
+        | "investor"
+        | "subsidiary_investor"
+        | "founder"
+        | "co_founder"
+        | "co_owner"
+        | "job_seeker"
+        | "freelancer"
+        | "outsourcer"
+        | "contractor"
       organization_type: "individual" | "company" | "fund" | "organization"
+      project_stage: "idea" | "mvp" | "traction" | "scale" | "exit"
       project_status:
         | "draft"
         | "active"
@@ -839,6 +1408,7 @@ export type Database = {
         | "standard_form"
         | "invitation_link"
         | "direct_addition"
+      subscription_plan: "start" | "profi" | "premium"
       user_role:
         | "freelancer"
         | "outsourcer"
@@ -849,6 +1419,18 @@ export type Database = {
         | "project_admin"
         | "project_employee"
         | "system_admin"
+        | "subsidiary_investor"
+        | "co_founder"
+        | "co_owner"
+        | "job_seeker"
+        | "collective_investor"
+        | "partner"
+        | "expert"
+        | "consultant"
+        | "employee"
+        | "affiliate"
+        | "ambassador"
+        | "influencer"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -976,8 +1558,51 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      funding_stage: [
+        "pre_seed",
+        "seed",
+        "series_a",
+        "series_b",
+        "series_c",
+        "series_d",
+        "ipo",
+      ],
+      industry_category: [
+        "fintech",
+        "healthtech",
+        "edtech",
+        "greentech",
+        "e_commerce",
+        "saas",
+        "marketplace",
+        "ai_ml",
+        "blockchain",
+        "iot",
+        "gaming",
+        "media",
+        "real_estate",
+        "agriculture",
+        "logistics",
+        "cybersecurity",
+        "biotech",
+        "aerospace",
+        "automotive",
+        "retail",
+      ],
       investment_status: ["pending", "approved", "rejected", "funded"],
+      new_user_role: [
+        "investor",
+        "subsidiary_investor",
+        "founder",
+        "co_founder",
+        "co_owner",
+        "job_seeker",
+        "freelancer",
+        "outsourcer",
+        "contractor",
+      ],
       organization_type: ["individual", "company", "fund", "organization"],
+      project_stage: ["idea", "mvp", "traction", "scale", "exit"],
       project_status: [
         "draft",
         "active",
@@ -991,6 +1616,7 @@ export const Constants = {
         "invitation_link",
         "direct_addition",
       ],
+      subscription_plan: ["start", "profi", "premium"],
       user_role: [
         "freelancer",
         "outsourcer",
@@ -1001,6 +1627,18 @@ export const Constants = {
         "project_admin",
         "project_employee",
         "system_admin",
+        "subsidiary_investor",
+        "co_founder",
+        "co_owner",
+        "job_seeker",
+        "collective_investor",
+        "partner",
+        "expert",
+        "consultant",
+        "employee",
+        "affiliate",
+        "ambassador",
+        "influencer",
       ],
     },
   },

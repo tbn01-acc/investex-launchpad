@@ -1,0 +1,11 @@
+-- Add new role types to the user_role enum
+ALTER TYPE public.user_role ADD VALUE IF NOT EXISTS 'collective_investor';
+ALTER TYPE public.user_role ADD VALUE IF NOT EXISTS 'co_founder';
+ALTER TYPE public.user_role ADD VALUE IF NOT EXISTS 'partner';
+ALTER TYPE public.user_role ADD VALUE IF NOT EXISTS 'expert';
+ALTER TYPE public.user_role ADD VALUE IF NOT EXISTS 'consultant';
+ALTER TYPE public.user_role ADD VALUE IF NOT EXISTS 'employee';
+ALTER TYPE public.user_role ADD VALUE IF NOT EXISTS 'job_seeker';
+ALTER TYPE public.user_role ADD VALUE IF NOT EXISTS 'affiliate';
+ALTER TYPE public.user_role ADD VALUE IF NOT EXISTS 'ambassador';
+ALTER TYPE public.user_role ADD VALUE IF NOT EXISTS 'influencer';
