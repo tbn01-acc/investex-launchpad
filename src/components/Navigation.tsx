@@ -46,7 +46,7 @@ const Navigation = () => {
           title: "Участники",
           items: [
             { title: "Инвесторы", href: "/participants", description: "Инвестиции в проекты" },
-            { title: "Коллективные инвесторы", href: "/participants", description: "Групповые инвестиции" },
+            { title: "Соинвесторы", href: "/participants", description: "Групповые инвестиции" },
             { title: "Фаундеры", href: "/participants", description: "Создание стартапов" },
             { title: "Ко-фаундеры", href: "/participants", description: "Партнерство в проектах" },
             { title: "Соучредители", href: "/participants", description: "Совместное учредительство" },
@@ -65,8 +65,8 @@ const Navigation = () => {
         {
           title: "Сотрудники",
           items: [
-            { title: "Администраторы проектов", href: "/employees", description: "Управление проектами" },
-            { title: "Сотрудники проектов", href: "/employees", description: "Участие в команде" },
+            { title: "Администраторы", href: "/employees", description: "Управление проектами" },
+            { title: "Сотрудники", href: "/employees", description: "Участие в команде" },
             { title: "Соискатели", href: "/employees", description: "Поиск работы" },
           ]
         },

@@ -13,6 +13,8 @@ import ExpertDashboard from '@/pages/dashboards/ExpertDashboard';
 import CollectiveInvestorDashboard from '@/pages/dashboards/CollectiveInvestorDashboard';
 import PartnerDashboard from '@/pages/dashboards/PartnerDashboard';
 import CoFounderDashboard from '@/pages/dashboards/CoFounderDashboard';
+import CoPartnerDashboard from '@/pages/dashboards/CoPartnerDashboard';
+import BloggerDashboard from '@/pages/dashboards/BloggerDashboard';
 import ConsultantDashboard from '@/pages/dashboards/ConsultantDashboard';
 import JobSeekerDashboard from '@/pages/dashboards/JobSeekerDashboard';
 import AmbassadorDashboard from '@/pages/dashboards/AmbassadorDashboard';
@@ -247,7 +249,8 @@ const Dashboard = () => {
       case 'co-founder':
         return <CoFounderDashboard />;
       case 'co-owner':
-        return <CoFounderDashboard />; // Using same dashboard for now
+      case 'co_partner':
+        return <CoPartnerDashboard />;
       case 'outsourcer':
         return <OutsourcerDashboard />;
       case 'contractor':
@@ -263,7 +266,7 @@ const Dashboard = () => {
       case 'ambassador':
         return <AmbassadorDashboard />;
       case 'blogger':
-        return <PartnerDashboard />; // Using partner dashboard for now
+        return <BloggerDashboard />;
       default:
         return null;
     }
