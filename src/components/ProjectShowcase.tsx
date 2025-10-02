@@ -6,18 +6,16 @@ import { Link } from "react-router-dom";
 import ProjectModal from "./ProjectModal";
 import { allProjects } from "@/data/projectsData";
 
-const showcaseProjects = allProjects;
-
 const ProjectShowcase = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("Все");
   const [selectedProject, setSelectedProject] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   
-  const categories = ["Все", "AI/ML", "Blockchain", "FinTech", "HealthTech", "EdTech", "GreenTech", "FoodTech", "PropTech"];
+  const categories = ["Все", "AI/ML", "Blockchain", "FinTech", "HealthTech", "EdTech", "GreenTech", "FoodTech", "PropTech", "IoT", "SaaS", "Marketplace", "AgriTech", "LegalTech"];
   
   const filteredProjects = selectedCategory === "Все" 
-    ? showcaseProjects.slice(0, 8) // Показываем только первые 8 проектов
-    : showcaseProjects.filter(project => project.category === selectedCategory).slice(0, 8);
+    ? allProjects.slice(0, 8)
+    : allProjects.filter(project => project.category === selectedCategory).slice(0, 8);
 
   const handleProjectClick = (project: any) => {
     setSelectedProject(project);
@@ -88,7 +86,7 @@ const ProjectShowcase = () => {
         <div className="flex justify-end mt-6">
           <Button asChild variant="outline">
             <Link to="/projects">
-              Все проекты
+              Все проекты ({allProjects.length})
             </Link>
           </Button>
         </div>

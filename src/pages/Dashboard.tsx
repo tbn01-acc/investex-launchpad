@@ -18,10 +18,15 @@ import BloggerDashboard from '@/pages/dashboards/BloggerDashboard';
 import ConsultantDashboard from '@/pages/dashboards/ConsultantDashboard';
 import JobSeekerDashboard from '@/pages/dashboards/JobSeekerDashboard';
 import AmbassadorDashboard from '@/pages/dashboards/AmbassadorDashboard';
+import ProjectAdminDashboard from '@/pages/dashboards/ProjectAdminDashboard';
+import EmployeeDashboard from '@/pages/dashboards/EmployeeDashboard';
 import { FreelancerAnalytics } from '@/components/analytics/FreelancerAnalytics';
 import { InvestorAnalytics } from '@/components/analytics/InvestorAnalytics';
 import { FounderAnalytics } from '@/components/analytics/FounderAnalytics';
 import { ExpertAnalytics } from '@/components/analytics/ExpertAnalytics';
+import { JobSeekerAnalytics } from '@/components/analytics/JobSeekerAnalytics';
+import { PartnerAnalytics } from '@/components/analytics/PartnerAnalytics';
+import { BloggerAnalytics } from '@/components/analytics/BloggerAnalytics';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -112,14 +117,19 @@ const Dashboard = () => {
       founder: 'Фаундер',
       'co-founder': 'Ко-фаундер',
       'co-owner': 'Соучредитель',
+      'co_partner': 'Соучредитель',
       investor: 'Инвестор',
-      'collective-investor': 'Коллективный инвестор',
+      'collective-investor': 'Соинвестор',
+      'collective_investor': 'Соинвестор',
       contractor: 'Подрядчик',
       expert: 'Эксперт',
       consultant: 'Консультант',
-      'project-admin': 'Администратор проектов',
-      'project-employee': 'Сотрудник проектов',
+      'project-admin': 'Администратор',
+      'project_admin': 'Администратор',
+      'project-employee': 'Сотрудник',
+      'employee': 'Сотрудник',
       'job-seeker': 'Соискатель',
+      'job_seeker': 'Соискатель',
       partner: 'Партнер',
       ambassador: 'Амбассадор',
       blogger: 'Блогер',
@@ -183,9 +193,15 @@ const Dashboard = () => {
       case 'project-admin':
         return <FreelancerAnalytics />; // Using similar analytics
       case 'job-seeker':
+      case 'job_seeker':
+        return <JobSeekerAnalytics />;
       case 'partner':
+      case 'affiliate':
+        return <PartnerAnalytics />;
       case 'ambassador':
+        return <PartnerAnalytics />;
       case 'blogger':
+        return <BloggerAnalytics />;
       case 'superadmin':
         return (
           <div className="grid gap-6">
@@ -256,9 +272,11 @@ const Dashboard = () => {
       case 'contractor':
         return <ContractorDashboard />;
       case 'project-admin':
-        return <OutsourcerDashboard />; // Using similar dashboard for now
+      case 'project_admin':
+        return <ProjectAdminDashboard />;
       case 'project-employee':
-        return <FreelancerDashboard />; // Using similar dashboard for now
+      case 'employee':
+        return <EmployeeDashboard />;
       case 'job-seeker':
         return <JobSeekerDashboard />;
       case 'partner':
@@ -304,12 +322,12 @@ const Dashboard = () => {
                       <SelectItem value="outsourcer">Аутсорсер</SelectItem>
                       <SelectItem value="contractor">Подрядчик</SelectItem>
                       <SelectItem value="investor">Инвестор</SelectItem>
-                      <SelectItem value="collective-investor">Коллективный инвестор</SelectItem>
+                      <SelectItem value="collective-investor">Соинвестор</SelectItem>
                       <SelectItem value="founder">Фаундер</SelectItem>
                       <SelectItem value="co-founder">Ко-фаундер</SelectItem>
                       <SelectItem value="co-owner">Соучредитель</SelectItem>
-                      <SelectItem value="project-admin">Администратор проектов</SelectItem>
-                      <SelectItem value="project-employee">Сотрудник проектов</SelectItem>
+                      <SelectItem value="project-admin">Администратор</SelectItem>
+                      <SelectItem value="project-employee">Сотрудник</SelectItem>
                       <SelectItem value="job-seeker">Соискатель</SelectItem>
                       <SelectItem value="partner">Партнер</SelectItem>
                       <SelectItem value="ambassador">Амбассадор</SelectItem>
