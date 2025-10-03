@@ -6,15 +6,21 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { CreateProjectModal } from '@/components/CreateProjectModal';
+import { PitchModal } from '@/components/PitchModal';
+import { MessagesTab } from '@/components/MessagesTab';
+import { useNavigate } from 'react-router-dom';
 import { 
   Rocket, Users, DollarSign, TrendingUp, 
-  Plus, Eye, Target, Lightbulb, Calendar
+  Plus, Eye, Target, Lightbulb, Calendar, MessageSquare
 } from 'lucide-react';
 
 export default function FounderDashboard() {
   const { user, profile } = useAuth();
   const { t, formatCurrency } = useLanguage();
+  const navigate = useNavigate();
   const [createProjectOpen, setCreateProjectOpen] = useState(false);
+  const [pitchModalOpen, setPitchModalOpen] = useState(false);
+  const [selectedProject, setSelectedProject] = useState<{ id: number; name: string } | null>(null);
   
   const [stats] = useState({
     activeProjects: 3,
@@ -202,7 +208,7 @@ export default function FounderDashboard() {
 
         {/* Detailed Tabs */}
         <Tabs defaultValue="projects" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="projects">
               <Rocket className="h-4 w-4 mr-2" />
               Проекты
@@ -218,6 +224,10 @@ export default function FounderDashboard() {
             <TabsTrigger value="events">
               <Calendar className="h-4 w-4 mr-2" />
               События
+            </TabsTrigger>
+            <TabsTrigger value="messages">
+              <MessageSquare className="h-4 w-4 mr-2" />
+              Сообщения
             </TabsTrigger>
           </TabsList>
 
@@ -282,11 +292,18 @@ export default function FounderDashboard() {
                           <Eye className="h-4 w-4 mr-2" />
                           Подробнее
                         </Button>
-                        <Button size="sm">
+                        <Button size="sm" onClick={() => navigate('/project-management')}>
                           Управление
                         </Button>
                         {project.status === 'fundraising' && (
-                          <Button variant="outline" size="sm">
+                          <Button 
+                            variant="outline" 
+                            size="sm"
+                            onClick={() => {
+                              setSelectedProject({ id: project.id, name: project.name });
+                              setPitchModalOpen(true);
+                            }}
+                          >
                             <Target className="h-4 w-4 mr-2" />
                             Питч
                           </Button>
@@ -414,11 +431,22 @@ export default function FounderDashboard() {
               </Card>
             </div>
           </TabsContent>
+
+          <TabsContent value="messages">
+            <MessagesTab />
+          </TabsContent>
         </Tabs>
 
         <CreateProjectModal 
           open={createProjectOpen} 
           onOpenChange={setCreateProjectOpen}
+        />
+        
+        <PitchModal
+          open={pitchModalOpen}
+          onOpenChange={setPitchModalOpen}
+          projectId={selectedProject?.id}
+          projectName={selectedProject?.name}
         />
       </div>
     </div>

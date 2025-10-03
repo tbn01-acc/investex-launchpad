@@ -5,11 +5,14 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Users, Briefcase, TrendingUp, Clock, DollarSign, Target } from 'lucide-react';
+import { MessagesTab } from '@/components/MessagesTab';
+import { useNavigate } from 'react-router-dom';
+import { Users, Briefcase, TrendingUp, Clock, DollarSign, Target, MessageSquare } from 'lucide-react';
 
 const CoFounderDashboard = () => {
   const { user, profile } = useAuth();
   const { formatCurrency } = useLanguage();
+  const navigate = useNavigate();
 
   const [stats] = useState({
     activeProjects: 3,
@@ -111,12 +114,16 @@ const CoFounderDashboard = () => {
 
       {/* Detailed Information */}
       <Tabs defaultValue="projects" className="w-full">
-        <TabsList className="grid w-full grid-cols-5">
+        <TabsList className="grid w-full grid-cols-6">
           <TabsTrigger value="projects">Проекты</TabsTrigger>
           <TabsTrigger value="team">Команда</TabsTrigger>
           <TabsTrigger value="equity">Капитал</TabsTrigger>
           <TabsTrigger value="roadmap">Дорожная карта</TabsTrigger>
           <TabsTrigger value="analytics">Аналитика</TabsTrigger>
+          <TabsTrigger value="messages">
+            <MessageSquare className="h-4 w-4 mr-2" />
+            Сообщения
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="projects" className="space-y-4">
@@ -140,7 +147,7 @@ const CoFounderDashboard = () => {
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-3 gap-4 mb-4">
                   <div>
                     <p className="text-sm text-muted-foreground">Доля</p>
                     <p className="text-lg font-semibold">{project.equity}%</p>
@@ -154,6 +161,9 @@ const CoFounderDashboard = () => {
                     <Badge variant="outline">{project.status}</Badge>
                   </div>
                 </div>
+                <Button size="sm" onClick={() => navigate('/project-management')}>
+                  Управление
+                </Button>
               </CardContent>
             </Card>
           ))}
@@ -226,6 +236,10 @@ const CoFounderDashboard = () => {
               </CardContent>
             </Card>
           </div>
+        </TabsContent>
+
+        <TabsContent value="messages">
+          <MessagesTab />
         </TabsContent>
       </Tabs>
     </div>

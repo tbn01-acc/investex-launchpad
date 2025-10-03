@@ -1,6 +1,7 @@
-import { useState } from "react";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Menu, X, ChevronDown, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -21,6 +22,7 @@ const Navigation = () => {
   const navigate = useNavigate();
   const { user, signOut, profile } = useAuth();
   const { t } = useLanguage();
+  const [unreadMessages, setUnreadMessages] = useState(2);
 
   const navigationItems: Array<{
     title: string;
@@ -184,6 +186,24 @@ const Navigation = () => {
 
             <div className="flex items-center space-x-3">
               <LanguageCurrencySelector />
+              {user && (
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="relative"
+                  onClick={() => navigate('/dashboard?tab=messages')}
+                >
+                  <Mail className="h-5 w-5" />
+                  {unreadMessages > 0 && (
+                    <Badge 
+                      variant="destructive" 
+                      className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs"
+                    >
+                      {unreadMessages}
+                    </Badge>
+                  )}
+                </Button>
+              )}
               {user ? (
                 <UserAvatar />
               ) : (

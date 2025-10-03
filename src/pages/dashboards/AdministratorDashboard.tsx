@@ -3,7 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/hooks/useAuth';
-import { Users, Settings, FileText, Activity, Shield, AlertCircle } from 'lucide-react';
+import { MessagesTab } from '@/components/MessagesTab';
+import { Users, Settings, FileText, Activity, Shield, AlertCircle, MessageSquare } from 'lucide-react';
 
 const AdministratorDashboard = () => {
   const { user } = useAuth();
@@ -133,6 +134,10 @@ const AdministratorDashboard = () => {
           <TabsTrigger value="projects">Проекты</TabsTrigger>
           <TabsTrigger value="settings">Настройки</TabsTrigger>
           <TabsTrigger value="logs">Логи</TabsTrigger>
+          <TabsTrigger value="messages">
+            <MessageSquare className="h-4 w-4 mr-2" />
+            Сообщения
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="pending" className="space-y-4">
@@ -208,6 +213,10 @@ const AdministratorDashboard = () => {
               <p className="text-muted-foreground">История действий и событий системы</p>
             </CardContent>
           </Card>
+        </TabsContent>
+
+        <TabsContent value="messages">
+          <MessagesTab />
         </TabsContent>
       </Tabs>
     </div>
