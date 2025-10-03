@@ -20,6 +20,8 @@ import JobSeekerDashboard from '@/pages/dashboards/JobSeekerDashboard';
 import AmbassadorDashboard from '@/pages/dashboards/AmbassadorDashboard';
 import ProjectAdminDashboard from '@/pages/dashboards/ProjectAdminDashboard';
 import EmployeeDashboard from '@/pages/dashboards/EmployeeDashboard';
+import CoInvestorDashboard from '@/pages/dashboards/CoInvestorDashboard';
+import AdministratorDashboard from '@/pages/dashboards/AdministratorDashboard';
 import { FreelancerAnalytics } from '@/components/analytics/FreelancerAnalytics';
 import { InvestorAnalytics } from '@/components/analytics/InvestorAnalytics';
 import { FounderAnalytics } from '@/components/analytics/FounderAnalytics';
@@ -27,6 +29,8 @@ import { ExpertAnalytics } from '@/components/analytics/ExpertAnalytics';
 import { JobSeekerAnalytics } from '@/components/analytics/JobSeekerAnalytics';
 import { PartnerAnalytics } from '@/components/analytics/PartnerAnalytics';
 import { BloggerAnalytics } from '@/components/analytics/BloggerAnalytics';
+import CoInvestorAnalytics from '@/components/analytics/CoInvestorAnalytics';
+import AdministratorAnalytics from '@/components/analytics/AdministratorAnalytics';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -112,26 +116,33 @@ const Dashboard = () => {
 
   const getRoleDisplayName = (role: string) => {
     const roleMap: { [key: string]: string } = {
-      freelancer: 'Фрилансер',
-      outsourcer: 'Аутсорсер', 
+      // Участники
+      investor: 'Инвестор',
+      co_investor: 'Соинвестор',
+      'collective-investor': 'Соинвестор',
+      'collective_investor': 'Соинвестор',
       founder: 'Фаундер',
+      co_founder: 'Ко-фаундер',
       'co-founder': 'Ко-фаундер',
       'co-owner': 'Соучредитель',
       'co_partner': 'Соучредитель',
-      investor: 'Инвестор',
-      'collective-investor': 'Соинвестор',
-      'collective_investor': 'Соинвестор',
-      contractor: 'Подрядчик',
+      // Исполнители
+      freelancer: 'Фрилансер',
       expert: 'Эксперт',
       consultant: 'Консультант',
+      outsourcer: 'Аутсорсер',
+      contractor: 'Подрядчик',
+      // Сотрудники
+      administrator: 'Администратор',
       'project-admin': 'Администратор',
       'project_admin': 'Администратор',
+      employee: 'Сотрудник',
       'project-employee': 'Сотрудник',
-      'employee': 'Сотрудник',
+      job_seeker: 'Соискатель',
       'job-seeker': 'Соискатель',
-      'job_seeker': 'Соискатель',
-      partner: 'Партнер',
+      // Партнеры
       ambassador: 'Амбассадор',
+      partner: 'Партнер',
       blogger: 'Блогер',
       superadmin: 'Суперадмин'
     };
@@ -175,30 +186,41 @@ const Dashboard = () => {
 
   const renderRoleAnalytics = () => {
     switch (role) {
-      case 'freelancer':
-      case 'project-employee':
-        return <FreelancerAnalytics />;
       case 'investor':
-      case 'collective-investor':
         return <InvestorAnalytics />;
+      case 'co_investor':
+      case 'collective-investor':
+      case 'collective_investor':
+        return <CoInvestorAnalytics />;
       case 'founder':
+        return <FounderAnalytics />;
+      case 'co_founder':
       case 'co-founder':
       case 'co-owner':
+      case 'co_partner':
         return <FounderAnalytics />;
+      case 'freelancer':
+        return <FreelancerAnalytics />;
       case 'expert':
+        return <ExpertAnalytics />;
       case 'consultant':
         return <ExpertAnalytics />;
       case 'outsourcer':
       case 'contractor':
+        return <FreelancerAnalytics />;
+      case 'administrator':
       case 'project-admin':
-        return <FreelancerAnalytics />; // Using similar analytics
-      case 'job-seeker':
+      case 'project_admin':
+        return <AdministratorAnalytics />;
+      case 'employee':
+      case 'project-employee':
+        return <FreelancerAnalytics />;
       case 'job_seeker':
+      case 'job-seeker':
         return <JobSeekerAnalytics />;
-      case 'partner':
-      case 'affiliate':
-        return <PartnerAnalytics />;
       case 'ambassador':
+        return <PartnerAnalytics />;
+      case 'partner':
         return <PartnerAnalytics />;
       case 'blogger':
         return <BloggerAnalytics />;
@@ -252,37 +274,42 @@ const Dashboard = () => {
         return <SuperadminDashboard />;
       case 'investor':
         return <InvestorDashboard />;
+      case 'co_investor':
       case 'collective-investor':
-        return <CollectiveInvestorDashboard />;
+      case 'collective_investor':
+        return <CoInvestorDashboard />;
+      case 'founder':
+        return <FounderDashboard />;
+      case 'co_founder':
+      case 'co-founder':
+        return <CoFounderDashboard />;
+      case 'co-owner':
+      case 'co_partner':
+        return <CoPartnerDashboard />;
       case 'freelancer':
         return <FreelancerDashboard />;
       case 'expert':
         return <ExpertDashboard />;
       case 'consultant':
         return <ConsultantDashboard />;
-      case 'founder':
-        return <FounderDashboard />;
-      case 'co-founder':
-        return <CoFounderDashboard />;
-      case 'co-owner':
-      case 'co_partner':
-        return <CoPartnerDashboard />;
       case 'outsourcer':
         return <OutsourcerDashboard />;
       case 'contractor':
         return <ContractorDashboard />;
+      case 'administrator':
       case 'project-admin':
       case 'project_admin':
-        return <ProjectAdminDashboard />;
-      case 'project-employee':
+        return <AdministratorDashboard />;
       case 'employee':
+      case 'project-employee':
         return <EmployeeDashboard />;
+      case 'job_seeker':
       case 'job-seeker':
         return <JobSeekerDashboard />;
-      case 'partner':
-        return <PartnerDashboard />;
       case 'ambassador':
         return <AmbassadorDashboard />;
+      case 'partner':
+        return <PartnerDashboard />;
       case 'blogger':
         return <BloggerDashboard />;
       default:
@@ -315,25 +342,36 @@ const Dashboard = () => {
                     <SelectTrigger className="w-32">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="max-h-[300px]">
+                      <div className="px-2 py-1.5 text-sm font-semibold text-muted-foreground">Участники</div>
+                      <SelectItem value="investor">Инвестор</SelectItem>
+                      <SelectItem value="co_investor">Соинвестор</SelectItem>
+                      <SelectItem value="founder">Фаундер</SelectItem>
+                      <SelectItem value="co_founder">Ко-фаундер</SelectItem>
+                      <SelectItem value="co-owner">Соучредитель</SelectItem>
+                      
+                      <div className="px-2 py-1.5 text-sm font-semibold text-muted-foreground mt-2">Исполнители</div>
                       <SelectItem value="freelancer">Фрилансер</SelectItem>
                       <SelectItem value="expert">Эксперт</SelectItem>
                       <SelectItem value="consultant">Консультант</SelectItem>
                       <SelectItem value="outsourcer">Аутсорсер</SelectItem>
                       <SelectItem value="contractor">Подрядчик</SelectItem>
-                      <SelectItem value="investor">Инвестор</SelectItem>
-                      <SelectItem value="collective-investor">Соинвестор</SelectItem>
-                      <SelectItem value="founder">Фаундер</SelectItem>
-                      <SelectItem value="co-founder">Ко-фаундер</SelectItem>
-                      <SelectItem value="co-owner">Соучредитель</SelectItem>
-                      <SelectItem value="project-admin">Администратор</SelectItem>
-                      <SelectItem value="project-employee">Сотрудник</SelectItem>
-                      <SelectItem value="job-seeker">Соискатель</SelectItem>
-                      <SelectItem value="partner">Партнер</SelectItem>
+                      
+                      <div className="px-2 py-1.5 text-sm font-semibold text-muted-foreground mt-2">Сотрудники</div>
+                      <SelectItem value="administrator">Администратор</SelectItem>
+                      <SelectItem value="employee">Сотрудник</SelectItem>
+                      <SelectItem value="job_seeker">Соискатель</SelectItem>
+                      
+                      <div className="px-2 py-1.5 text-sm font-semibold text-muted-foreground mt-2">Партнеры</div>
                       <SelectItem value="ambassador">Амбассадор</SelectItem>
+                      <SelectItem value="partner">Партнер</SelectItem>
                       <SelectItem value="blogger">Блогер</SelectItem>
+                      
                       {profile?.role === 'superadmin' && (
-                        <SelectItem value="superadmin">Суперадмин</SelectItem>
+                        <>
+                          <div className="px-2 py-1.5 text-sm font-semibold text-muted-foreground mt-2">Администрация</div>
+                          <SelectItem value="superadmin">Суперадмин</SelectItem>
+                        </>
                       )}
                     </SelectContent>
                   </Select>

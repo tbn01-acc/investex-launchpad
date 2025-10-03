@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
@@ -6,16 +6,87 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  DropdownMenuLabel,
 } from '@/components/ui/dropdown-menu';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { User, LayoutDashboard, LogOut, Settings } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { ApiConfigDialog } from '@/components/ApiConfigDialog';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 
 const UserAvatar = () => {
-  const { user, profile, signOut } = useAuth();
+  const { user, profile, signOut, refreshProfile } = useAuth();
+  const { toast } = useToast();
+  const [selectedRole, setSelectedRole] = useState(profile?.role || '');
+
+  React.useEffect(() => {
+    if (profile?.role) {
+      setSelectedRole(profile.role);
+    }
+  }, [profile]);
 
   if (!user) return null;
+
+  const handleRoleChange = async (newRole: string) => {
+    try {
+      const { error } = await supabase
+        .from('profiles')
+        .update({ role: newRole as any })
+        .eq('user_id', user.id);
+
+      if (error) throw error;
+
+      setSelectedRole(newRole);
+      await refreshProfile();
+      
+      toast({
+        title: "Роль обновлена",
+        description: `Ваша роль изменена на ${getRoleDisplayName(newRole)}`,
+      });
+    } catch (error: any) {
+      console.error('Error updating role:', error);
+      toast({
+        title: "Ошибка",
+        description: "Не удалось обновить роль",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const getRoleDisplayName = (role: string) => {
+    const roleMap: { [key: string]: string } = {
+      // Участники
+      investor: 'Инвестор',
+      co_investor: 'Соинвестор',
+      founder: 'Фаундер',
+      co_founder: 'Ко-фаундер',
+      'co-owner': 'Соучредитель',
+      // Исполнители
+      freelancer: 'Фрилансер',
+      expert: 'Эксперт',
+      consultant: 'Консультант',
+      outsourcer: 'Аутсорсер',
+      contractor: 'Подрядчик',
+      // Сотрудники
+      administrator: 'Администратор',
+      employee: 'Сотрудник',
+      job_seeker: 'Соискатель',
+      // Партнеры
+      ambassador: 'Амбассадор',
+      partner: 'Партнер',
+      blogger: 'Блогер',
+      superadmin: 'Суперадмин'
+    };
+    return roleMap[role] || 'Пользователь';
+  };
 
   // Генерируем инициалы для аватара
   const getInitials = () => {
@@ -66,10 +137,53 @@ const UserAvatar = () => {
         </div>
       </DropdownMenuTrigger>
       
-      <DropdownMenuContent align="end" className="w-56">
+      <DropdownMenuContent align="end" className="w-64 max-h-[500px] overflow-y-auto">
         <div className="px-2 py-1.5">
           <p className="text-sm font-medium">{getUserDisplayName()}</p>
           <p className="text-xs text-muted-foreground">{user.email}</p>
+        </div>
+        
+        <DropdownMenuSeparator />
+        
+        <DropdownMenuLabel>Текущая роль</DropdownMenuLabel>
+        <div className="px-2 py-2">
+          <Select value={selectedRole} onValueChange={handleRoleChange}>
+            <SelectTrigger className="w-full">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent className="max-h-[300px]">
+              <div className="px-2 py-1.5 text-sm font-semibold text-muted-foreground">Участники</div>
+              <SelectItem value="investor">Инвестор</SelectItem>
+              <SelectItem value="co_investor">Соинвестор</SelectItem>
+              <SelectItem value="founder">Фаундер</SelectItem>
+              <SelectItem value="co_founder">Ко-фаундер</SelectItem>
+              <SelectItem value="co-owner">Соучредитель</SelectItem>
+              
+              <div className="px-2 py-1.5 text-sm font-semibold text-muted-foreground mt-2">Исполнители</div>
+              <SelectItem value="freelancer">Фрилансер</SelectItem>
+              <SelectItem value="expert">Эксперт</SelectItem>
+              <SelectItem value="consultant">Консультант</SelectItem>
+              <SelectItem value="outsourcer">Аутсорсер</SelectItem>
+              <SelectItem value="contractor">Подрядчик</SelectItem>
+              
+              <div className="px-2 py-1.5 text-sm font-semibold text-muted-foreground mt-2">Сотрудники</div>
+              <SelectItem value="administrator">Администратор</SelectItem>
+              <SelectItem value="employee">Сотрудник</SelectItem>
+              <SelectItem value="job_seeker">Соискатель</SelectItem>
+              
+              <div className="px-2 py-1.5 text-sm font-semibold text-muted-foreground mt-2">Партнеры</div>
+              <SelectItem value="ambassador">Амбассадор</SelectItem>
+              <SelectItem value="partner">Партнер</SelectItem>
+              <SelectItem value="blogger">Блогер</SelectItem>
+              
+              {profile?.role === 'superadmin' && (
+                <>
+                  <div className="px-2 py-1.5 text-sm font-semibold text-muted-foreground mt-2">Администрация</div>
+                  <SelectItem value="superadmin">Суперадмин</SelectItem>
+                </>
+              )}
+            </SelectContent>
+          </Select>
         </div>
         
         <DropdownMenuSeparator />

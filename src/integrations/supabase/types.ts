@@ -1418,6 +1418,7 @@ export type Database = {
         | "ambassador"
         | "partner"
         | "blogger"
+        | "co_investor"
       organization_type: "individual" | "company" | "fund" | "organization"
       project_stage: "idea" | "mvp" | "traction" | "scale" | "exit"
       project_status:
@@ -1455,6 +1456,8 @@ export type Database = {
         | "ambassador"
         | "influencer"
         | "blogger"
+        | "co_investor"
+        | "administrator"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1631,6 +1634,7 @@ export const Constants = {
         "ambassador",
         "partner",
         "blogger",
+        "co_investor",
       ],
       organization_type: ["individual", "company", "fund", "organization"],
       project_stage: ["idea", "mvp", "traction", "scale", "exit"],
@@ -1671,6 +1675,8 @@ export const Constants = {
         "ambassador",
         "influencer",
         "blogger",
+        "co_investor",
+        "administrator",
       ],
     },
   },

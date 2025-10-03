@@ -15,7 +15,7 @@ import { Badge } from '@/components/ui/badge';
 const ROLE_CATEGORIES = {
   "Участники": [
     { value: 'investor', label: 'Инвестор' },
-    { value: 'collective_investor', label: 'Соинвестор' },
+    { value: 'co_investor', label: 'Соинвестор' },
     { value: 'founder', label: 'Фаундер' },
     { value: 'co_founder', label: 'Ко-фаундер' },
     { value: 'co_partner', label: 'Соучредитель' },
@@ -28,13 +28,13 @@ const ROLE_CATEGORIES = {
     { value: 'contractor', label: 'Подрядчик' },
   ],
   "Сотрудники": [
-    { value: 'project_admin', label: 'Администратор' },
+    { value: 'administrator', label: 'Администратор' },
     { value: 'employee', label: 'Сотрудник' },
     { value: 'job_seeker', label: 'Соискатель' },
   ],
   "Партнеры": [
     { value: 'ambassador', label: 'Амбассадор' },
-    { value: 'affiliate', label: 'Партнер' },
+    { value: 'partner', label: 'Партнер' },
     { value: 'blogger', label: 'Блогер' },
   ],
 } as const;
