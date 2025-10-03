@@ -910,6 +910,8 @@ export type Database = {
       }
       projects: {
         Row: {
+          approved_at: string | null
+          approved_by: string | null
           attachments: Json | null
           budget_max: number | null
           budget_min: number | null
@@ -940,6 +942,7 @@ export type Database = {
           intellectual_property: string[] | null
           investment_terms: Json | null
           is_featured: boolean | null
+          is_sandbox: boolean | null
           key_metrics: Json | null
           location: string | null
           market_size: number | null
@@ -977,6 +980,8 @@ export type Database = {
           views_count: number | null
         }
         Insert: {
+          approved_at?: string | null
+          approved_by?: string | null
           attachments?: Json | null
           budget_max?: number | null
           budget_min?: number | null
@@ -1007,6 +1012,7 @@ export type Database = {
           intellectual_property?: string[] | null
           investment_terms?: Json | null
           is_featured?: boolean | null
+          is_sandbox?: boolean | null
           key_metrics?: Json | null
           location?: string | null
           market_size?: number | null
@@ -1044,6 +1050,8 @@ export type Database = {
           views_count?: number | null
         }
         Update: {
+          approved_at?: string | null
+          approved_by?: string | null
           attachments?: Json | null
           budget_max?: number | null
           budget_min?: number | null
@@ -1074,6 +1082,7 @@ export type Database = {
           intellectual_property?: string[] | null
           investment_terms?: Json | null
           is_featured?: boolean | null
+          is_sandbox?: boolean | null
           key_metrics?: Json | null
           location?: string | null
           market_size?: number | null
@@ -1111,6 +1120,13 @@ export type Database = {
           views_count?: number | null
         }
         Relationships: [
+          {
+            foreignKeyName: "projects_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
           {
             foreignKeyName: "projects_category_id_fkey"
             columns: ["category_id"]
@@ -1395,6 +1411,13 @@ export type Database = {
         | "freelancer"
         | "outsourcer"
         | "contractor"
+        | "expert"
+        | "consultant"
+        | "administrator"
+        | "employee"
+        | "ambassador"
+        | "partner"
+        | "blogger"
       organization_type: "individual" | "company" | "fund" | "organization"
       project_stage: "idea" | "mvp" | "traction" | "scale" | "exit"
       project_status:
@@ -1431,6 +1454,7 @@ export type Database = {
         | "affiliate"
         | "ambassador"
         | "influencer"
+        | "blogger"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1600,6 +1624,13 @@ export const Constants = {
         "freelancer",
         "outsourcer",
         "contractor",
+        "expert",
+        "consultant",
+        "administrator",
+        "employee",
+        "ambassador",
+        "partner",
+        "blogger",
       ],
       organization_type: ["individual", "company", "fund", "organization"],
       project_stage: ["idea", "mvp", "traction", "scale", "exit"],
@@ -1639,6 +1670,7 @@ export const Constants = {
         "affiliate",
         "ambassador",
         "influencer",
+        "blogger",
       ],
     },
   },

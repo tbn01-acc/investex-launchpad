@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { CreateProjectModal } from '@/components/CreateProjectModal';
 import { 
   Rocket, Users, DollarSign, TrendingUp, 
   Plus, Eye, Target, Lightbulb, Calendar
@@ -13,6 +14,7 @@ import {
 export default function FounderDashboard() {
   const { user, profile } = useAuth();
   const { t, formatCurrency } = useLanguage();
+  const [createProjectOpen, setCreateProjectOpen] = useState(false);
   
   const [stats] = useState({
     activeProjects: 3,
@@ -138,7 +140,7 @@ export default function FounderDashboard() {
               {t('common.welcome')}, {profile?.first_name || 'Фаундер'}
             </p>
           </div>
-          <Button>
+          <Button onClick={() => setCreateProjectOpen(true)}>
             <Plus className="h-4 w-4 mr-2" />
             Создать проект
           </Button>
@@ -413,6 +415,11 @@ export default function FounderDashboard() {
             </div>
           </TabsContent>
         </Tabs>
+
+        <CreateProjectModal 
+          open={createProjectOpen} 
+          onOpenChange={setCreateProjectOpen}
+        />
       </div>
     </div>
   );
