@@ -37,6 +37,9 @@ const ROLE_CATEGORIES = {
     { value: 'partner', label: 'Партнер' },
     { value: 'blogger', label: 'Блогер' },
   ],
+  "Администрация": [
+    { value: 'superadmin', label: 'Суперадминистратор' },
+  ],
 } as const;
 
 const AVAILABLE_ROLES = Object.values(ROLE_CATEGORIES).flat().map(r => r.value);
@@ -47,6 +50,7 @@ export default function Profile() {
   const { user, profile, refreshProfile } = useAuth();
   const { t } = useLanguage();
   const { toast } = useToast();
+  const [isSuperadmin, setIsSuperadmin] = useState(false);
 
   const [firstName, setFirstName] = useState(profile?.first_name || '');
   const [lastName, setLastName] = useState(profile?.last_name || '');
@@ -71,7 +75,9 @@ export default function Profile() {
         .select('role')
         .eq('user_id', user.id);
       if (!error && data) {
-        setUserRoles(data.map(r => r.role as Role));
+        const roles = data.map(r => r.role as Role);
+        setUserRoles(roles);
+        setIsSuperadmin(roles.includes('superadmin' as Role));
       }
     };
     fetchRoles();
@@ -157,16 +163,21 @@ export default function Profile() {
                       <SelectValue placeholder="Выберите роль" />
                     </SelectTrigger>
                     <SelectContent>
-                      {Object.entries(ROLE_CATEGORIES).map(([category, roles]) => (
-                        <SelectGroup key={category}>
-                          <SelectLabel>{category}</SelectLabel>
-                          {roles.map((role) => (
-                            <SelectItem key={role.value} value={role.value}>
-                              {role.label}
-                            </SelectItem>
-                          ))}
-                        </SelectGroup>
-                      ))}
+                      {Object.entries(ROLE_CATEGORIES).map(([category, roles]) => {
+                        // Скрыть категорию "Администрация" для не-суперадминов
+                        if (category === "Администрация" && !isSuperadmin) return null;
+                        
+                        return (
+                          <SelectGroup key={category}>
+                            <SelectLabel>{category}</SelectLabel>
+                            {roles.map((role) => (
+                              <SelectItem key={role.value} value={role.value}>
+                                {role.label}
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
+                        );
+                      })}
                     </SelectContent>
                   </Select>
                 </div>
@@ -203,18 +214,23 @@ export default function Profile() {
                         <SelectValue placeholder="Выберите роль" />
                       </SelectTrigger>
                       <SelectContent>
-                        {Object.entries(ROLE_CATEGORIES).map(([category, roles]) => (
-                          <SelectGroup key={category}>
-                            <SelectLabel>{category}</SelectLabel>
-                            {roles
-                              .filter(role => !userRoles.includes(role.value as Role))
-                              .map((role) => (
-                                <SelectItem key={role.value} value={role.value}>
-                                  {role.label}
-                                </SelectItem>
-                              ))}
-                          </SelectGroup>
-                        ))}
+                        {Object.entries(ROLE_CATEGORIES).map(([category, roles]) => {
+                          // Скрыть категорию "Администрация" для не-суперадминов
+                          if (category === "Администрация" && !isSuperadmin) return null;
+                          
+                          return (
+                            <SelectGroup key={category}>
+                              <SelectLabel>{category}</SelectLabel>
+                              {roles
+                                .filter(role => !userRoles.includes(role.value as Role))
+                                .map((role) => (
+                                  <SelectItem key={role.value} value={role.value}>
+                                    {role.label}
+                                  </SelectItem>
+                                ))}
+                            </SelectGroup>
+                          );
+                        })}
                       </SelectContent>
                     </Select>
                     <Button onClick={handleAddRole} disabled={!newRole}>Добавить</Button>

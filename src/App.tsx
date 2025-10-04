@@ -45,6 +45,16 @@ import DashboardPage from "./pages/bi/DashboardPage";
 import ProjectsSandbox from "./pages/superadmin/ProjectsSandbox";
 import StaffManagement from "./pages/superadmin/StaffManagement";
 import SuperadminAnalytics from "./pages/superadmin/SuperadminAnalytics";
+import ProjectsOverviewPage from "./pages/pm/ProjectsOverviewPage";
+import TimelinePage from "./pages/pm/TimelinePage";
+import TeamPage from "./pages/hr/TeamPage";
+import OnboardingPage from "./pages/hr/OnboardingPage";
+import PipelinesPage from "./pages/crm/PipelinesPage";
+import DealsPage from "./pages/crm/DealsPage";
+import WikiPage from "./pages/kb/WikiPage";
+import FilesPage from "./pages/kb/FilesPage";
+import ReportsPage from "./pages/bi/ReportsPage";
+import AnalyticsPage from "./pages/bi/AnalyticsPage";
 
 const queryClient = new QueryClient();
 
@@ -104,6 +114,24 @@ const App = () => (
                 <Route path="/superadmin/projects-sandbox" element={<ProjectsSandbox />} />
                 <Route path="/superadmin/staff-management" element={<StaffManagement />} />
                 <Route path="/superadmin/analytics" element={<SuperadminAnalytics />} />
+                
+                {/* Project Management Module Routes */}
+                <Route path="/project-management/pm" element={<TasksPage />} />
+                <Route path="/project-management/pm/projects" element={<ProjectsOverviewPage />} />
+                <Route path="/project-management/pm/timeline" element={<TimelinePage />} />
+                <Route path="/project-management/hr" element={<RecruitmentPage />} />
+                <Route path="/project-management/hr/team" element={<TeamPage />} />
+                <Route path="/project-management/hr/onboarding" element={<OnboardingPage />} />
+                <Route path="/project-management/crm" element={<ContactsPage />} />
+                <Route path="/project-management/crm/pipelines" element={<PipelinesPage />} />
+                <Route path="/project-management/crm/deals" element={<DealsPage />} />
+                <Route path="/project-management/kb" element={<DocumentationPage />} />
+                <Route path="/project-management/kb/wiki" element={<WikiPage />} />
+                <Route path="/project-management/kb/files" element={<FilesPage />} />
+                <Route path="/project-management/bi" element={<DashboardPage />} />
+                <Route path="/project-management/bi/reports" element={<ReportsPage />} />
+                <Route path="/project-management/bi/analytics" element={<AnalyticsPage />} />
+                
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>

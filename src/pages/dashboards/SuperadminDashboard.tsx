@@ -120,7 +120,7 @@ export default function SuperadminDashboard() {
           <div className="flex items-center gap-4">
             <Shield className="h-8 w-8 text-primary" />
             <div>
-              <h1 className="text-3xl font-bold">Панель Суперадминистратора</h1>
+              <h1 className="text-3xl font-bold">Кабинет Суперадминистратора</h1>
               <p className="text-muted-foreground">
                 {t('common.welcome')}, {profile?.first_name || 'Суперадмин'}
               </p>
