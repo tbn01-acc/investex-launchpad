@@ -21,7 +21,7 @@ const HeroSection = () => {
               <h1 className="text-4xl lg:text-6xl font-bold text-white leading-tight">
                 <span className="block">InvestEx</span>
                 <span className="block text-xl lg:text-2xl font-normal text-gray-200 mt-2">
-                  Экосистема проектов и инвестиций
+                  Единая инвестиционная платформа проектов и инвестиций
                 </span>
               </h1>
               
