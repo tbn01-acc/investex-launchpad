@@ -161,7 +161,7 @@ const CoFounderDashboard = () => {
                     <Badge variant="outline">{project.status}</Badge>
                   </div>
                 </div>
-                <Button size="sm" onClick={() => navigate('/project-management')}>
+                <Button size="sm" onClick={() => navigate('/project-management-hub')}>
                   Управление
                 </Button>
               </CardContent>

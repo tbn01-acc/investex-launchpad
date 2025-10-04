@@ -86,7 +86,7 @@ export default function EmployeeDashboard() {
             Управляйте своими задачами и отслеживайте прогресс
           </p>
         </div>
-        <Button onClick={() => navigate('/project-management')}>
+        <Button onClick={() => navigate('/project-management-hub')}>
           <Briefcase className="mr-2 h-4 w-4" />
           Управление проектами
         </Button>
@@ -181,7 +181,7 @@ export default function EmployeeDashboard() {
                         <p className="text-sm text-muted-foreground">Активен</p>
                       </div>
                     </div>
-                    <Button variant="outline" size="sm" onClick={() => navigate('/project-management')}>
+                    <Button variant="outline" size="sm" onClick={() => navigate('/project-management-hub')}>
                       Открыть
                     </Button>
                   </div>

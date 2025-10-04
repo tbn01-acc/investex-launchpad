@@ -93,7 +93,7 @@ export default function ProjectAdminDashboard() {
           </p>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" onClick={() => navigate('/project-management')}>
+          <Button variant="outline" onClick={() => navigate('/project-management-hub')}>
             <Settings className="mr-2 h-4 w-4" />
             Управление
           </Button>
@@ -147,7 +147,7 @@ export default function ProjectAdminDashboard() {
                       </Badge>
                     </div>
                   </div>
-                  <Button variant="outline" size="sm" onClick={() => navigate('/project-management')}>
+                  <Button variant="outline" size="sm" onClick={() => navigate('/project-management-hub')}>
                     Управлять
                   </Button>
                 </div>
@@ -295,7 +295,7 @@ export default function ProjectAdminDashboard() {
                   <p className="text-muted-foreground">
                     Детальная аналитика находится в разработке
                   </p>
-                  <Button variant="outline" onClick={() => navigate('/project-management')}>
+                  <Button variant="outline" onClick={() => navigate('/project-management-hub')}>
                     Перейти к управлению проектами
                   </Button>
                 </div>

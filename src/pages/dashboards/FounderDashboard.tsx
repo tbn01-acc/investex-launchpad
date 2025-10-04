@@ -292,7 +292,7 @@ export default function FounderDashboard() {
                           <Eye className="h-4 w-4 mr-2" />
                           Подробнее
                         </Button>
-                        <Button size="sm" onClick={() => navigate('/project-management')}>
+                        <Button size="sm" onClick={() => navigate('/project-management-hub')}>
                           Управление
                         </Button>
                         {project.status === 'fundraising' && (
