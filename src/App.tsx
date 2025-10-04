@@ -36,6 +36,12 @@ import ApiDocs from "./pages/ApiDocs";
 import KnowledgeBase from "./pages/KnowledgeBase";
 import ProjectManagement from "./pages/ProjectManagement";
 import Payment from "./pages/Payment";
+import ProjectManagementHub from "./pages/ProjectManagementHub";
+import TasksPage from "./pages/pm/TasksPage";
+import RecruitmentPage from "./pages/hr/RecruitmentPage";
+import ContactsPage from "./pages/crm/ContactsPage";
+import DocumentationPage from "./pages/kb/DocumentationPage";
+import DashboardPage from "./pages/bi/DashboardPage";
 
 const queryClient = new QueryClient();
 
@@ -81,6 +87,12 @@ const App = () => (
                 <Route path="/api-docs" element={<ApiDocs />} />
                 <Route path="/knowledge-base" element={<KnowledgeBase />} />
                 <Route path="/project-management" element={<ProjectManagement />} />
+                <Route path="/project-management-hub" element={<ProjectManagementHub />} />
+                <Route path="/project-management/pm/tasks" element={<TasksPage />} />
+                <Route path="/project-management/hr/recruitment" element={<RecruitmentPage />} />
+                <Route path="/project-management/crm/contacts" element={<ContactsPage />} />
+                <Route path="/project-management/kb/docs" element={<DocumentationPage />} />
+                <Route path="/project-management/bi/dashboard" element={<DashboardPage />} />
                 <Route path="/payment" element={<Payment />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
