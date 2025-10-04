@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -11,7 +12,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { 
   Shield, Users, Settings, BarChart3, DollarSign, 
-  TrendingUp, Activity, Lock, RefreshCw, Save 
+  TrendingUp, Activity, Lock, RefreshCw, Save, Briefcase, FileText
 } from 'lucide-react';
 
 interface PlatformStats {
@@ -28,6 +29,7 @@ export default function SuperadminDashboard() {
   const { user, profile } = useAuth();
   const { t, formatCurrency } = useLanguage();
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [stats, setStats] = useState<PlatformStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState(false);
@@ -199,23 +201,12 @@ export default function SuperadminDashboard() {
 
         {/* Detailed Tabs */}
         <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="overview">
-              <Activity className="h-4 w-4 mr-2" />
-              Обзор
-            </TabsTrigger>
-            <TabsTrigger value="users">
-              <Users className="h-4 w-4 mr-2" />
-              Пользователи
-            </TabsTrigger>
-            <TabsTrigger value="finance">
-              <DollarSign className="h-4 w-4 mr-2" />
-              Финансы
-            </TabsTrigger>
-            <TabsTrigger value="settings">
-              <Settings className="h-4 w-4 mr-2" />
-              Настройки
-            </TabsTrigger>
+          <TabsList className="grid w-full grid-cols-5">
+            <TabsTrigger value="overview">Обзор</TabsTrigger>
+            <TabsTrigger value="projects">Проекты</TabsTrigger>
+            <TabsTrigger value="staff">Персонал</TabsTrigger>
+            <TabsTrigger value="analytics">Аналитика</TabsTrigger>
+            <TabsTrigger value="settings">Настройки</TabsTrigger>
           </TabsList>
 
           <TabsContent value="overview">
@@ -272,31 +263,38 @@ export default function SuperadminDashboard() {
             </div>
           </TabsContent>
 
-          <TabsContent value="users">
-            <Card>
+          <TabsContent value="projects">
+            <div className="grid gap-4 md:grid-cols-3">
+              <Card className="cursor-pointer hover:shadow-lg transition-shadow" onClick={() => navigate('/superadmin/projects-sandbox')}>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2"><Briefcase className="h-5 w-5" />Песочница проектов</CardTitle>
+                  <CardDescription>Модерация и управление</CardDescription>
+                </CardHeader>
+              </Card>
+              <Card className="cursor-pointer hover:shadow-lg transition-shadow" onClick={() => navigate('/superadmin/analytics')}>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2"><FileText className="h-5 w-5" />Аналитика проектов</CardTitle>
+                  <CardDescription>Детальная статистика</CardDescription>
+                </CardHeader>
+              </Card>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="staff">
+            <Card className="cursor-pointer hover:shadow-lg transition-shadow" onClick={() => navigate('/superadmin/staff-management')}>
               <CardHeader>
-                <CardTitle>Управление пользователями</CardTitle>
-                <CardDescription>Модерация и администрирование учетных записей</CardDescription>
+                <CardTitle className="flex items-center gap-2"><Shield className="h-5 w-5" />Управление персоналом</CardTitle>
+                <CardDescription>Администраторы, модераторы, редакторы</CardDescription>
               </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Инструменты управления пользователями будут реализованы в следующих версиях.
-                </p>
-              </CardContent>
             </Card>
           </TabsContent>
 
-          <TabsContent value="finance">
-            <Card>
+          <TabsContent value="analytics">
+            <Card className="cursor-pointer hover:shadow-lg transition-shadow" onClick={() => navigate('/superadmin/analytics')}>
               <CardHeader>
-                <CardTitle>Финансовая отчетность</CardTitle>
-                <CardDescription>Детальная аналитика доходов и расходов</CardDescription>
+                <CardTitle className="flex items-center gap-2"><Activity className="h-5 w-5" />Полная аналитика</CardTitle>
+                <CardDescription>Подробная статистика и отчеты</CardDescription>
               </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Расширенная финансовая аналитика будет добавлена в следующих версиях.
-                </p>
-              </CardContent>
             </Card>
           </TabsContent>
 

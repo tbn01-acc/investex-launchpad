@@ -1066,6 +1066,39 @@ export type Database = {
         }
         Relationships: []
       }
+      platform_staff: {
+        Row: {
+          assigned_by: string
+          created_at: string
+          id: string
+          is_active: boolean
+          permissions: Json
+          staff_role: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          assigned_by: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          permissions?: Json
+          staff_role: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          assigned_by?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          permissions?: Json
+          staff_role?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       platform_statistics: {
         Row: {
           active_freelancers: number | null
@@ -1360,6 +1393,50 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "project_applications_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      project_moderation: {
+        Row: {
+          action: string
+          comment: string | null
+          created_at: string
+          id: string
+          level_changed_to: string | null
+          moderator_id: string
+          new_status: string | null
+          previous_status: string | null
+          project_id: string
+        }
+        Insert: {
+          action: string
+          comment?: string | null
+          created_at?: string
+          id?: string
+          level_changed_to?: string | null
+          moderator_id: string
+          new_status?: string | null
+          previous_status?: string | null
+          project_id: string
+        }
+        Update: {
+          action?: string
+          comment?: string | null
+          created_at?: string
+          id?: string
+          level_changed_to?: string | null
+          moderator_id?: string
+          new_status?: string | null
+          previous_status?: string | null
+          project_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_moderation_project_id_fkey"
             columns: ["project_id"]
             isOneToOne: false
             referencedRelation: "projects"
@@ -1884,6 +1961,36 @@ export type Database = {
           },
         ]
       }
+      superadmin_audit_log: {
+        Row: {
+          action: string
+          admin_id: string
+          created_at: string
+          details: Json | null
+          id: string
+          target_id: string | null
+          target_type: string
+        }
+        Insert: {
+          action: string
+          admin_id: string
+          created_at?: string
+          details?: Json | null
+          id?: string
+          target_id?: string | null
+          target_type: string
+        }
+        Update: {
+          action?: string
+          admin_id?: string
+          created_at?: string
+          details?: Json | null
+          id?: string
+          target_id?: string | null
+          target_type?: string
+        }
+        Relationships: []
+      }
       task_attachments: {
         Row: {
           created_at: string | null
@@ -2193,6 +2300,13 @@ export type Database = {
           provider: string
         }[]
       }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["new_user_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
       funding_stage:
@@ -2243,6 +2357,7 @@ export type Database = {
         | "partner"
         | "blogger"
         | "co_investor"
+        | "superadmin"
       organization_type: "individual" | "company" | "fund" | "organization"
       project_stage: "idea" | "mvp" | "traction" | "scale" | "exit"
       project_status:
@@ -2459,6 +2574,7 @@ export const Constants = {
         "partner",
         "blogger",
         "co_investor",
+        "superadmin",
       ],
       organization_type: ["individual", "company", "fund", "organization"],
       project_stage: ["idea", "mvp", "traction", "scale", "exit"],

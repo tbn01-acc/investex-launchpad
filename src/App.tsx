@@ -42,6 +42,9 @@ import RecruitmentPage from "./pages/hr/RecruitmentPage";
 import ContactsPage from "./pages/crm/ContactsPage";
 import DocumentationPage from "./pages/kb/DocumentationPage";
 import DashboardPage from "./pages/bi/DashboardPage";
+import ProjectsSandbox from "./pages/superadmin/ProjectsSandbox";
+import StaffManagement from "./pages/superadmin/StaffManagement";
+import SuperadminAnalytics from "./pages/superadmin/SuperadminAnalytics";
 
 const queryClient = new QueryClient();
 
@@ -93,7 +96,14 @@ const App = () => (
                 <Route path="/project-management/crm/contacts" element={<ContactsPage />} />
                 <Route path="/project-management/kb/docs" element={<DocumentationPage />} />
                 <Route path="/project-management/bi/dashboard" element={<DashboardPage />} />
-                <Route path="/payment" element={<Payment />} />
+                <Route path="/pm/tasks" element={<TasksPage />} />
+                <Route path="/hr/recruitment" element={<RecruitmentPage />} />
+                <Route path="/crm/contacts" element={<ContactsPage />} />
+                <Route path="/kb/documentation" element={<DocumentationPage />} />
+                <Route path="/bi/dashboard" element={<DashboardPage />} />
+                <Route path="/superadmin/projects-sandbox" element={<ProjectsSandbox />} />
+                <Route path="/superadmin/staff-management" element={<StaffManagement />} />
+                <Route path="/superadmin/analytics" element={<SuperadminAnalytics />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
