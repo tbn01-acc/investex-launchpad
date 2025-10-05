@@ -1613,6 +1613,7 @@ export type Database = {
         Row: {
           approved_at: string | null
           approved_by: string | null
+          archived_at: string | null
           attachments: Json | null
           budget_max: number | null
           budget_min: number | null
@@ -1638,11 +1639,14 @@ export type Database = {
           funding_raised: number | null
           funding_stage: Database["public"]["Enums"]["funding_stage"] | null
           geographic_location: string | null
+          gold_fund_added_at: string | null
+          gold_fund_added_by: string | null
           id: string
           industry: Database["public"]["Enums"]["industry_category"] | null
           intellectual_property: string[] | null
           investment_terms: Json | null
           is_featured: boolean | null
+          is_pitch: boolean | null
           is_sandbox: boolean | null
           key_metrics: Json | null
           location: string | null
@@ -1650,12 +1654,14 @@ export type Database = {
           max_investment: number | null
           milestones: Json | null
           min_investment: number | null
+          moderation_status: string | null
           monthly_revenue: number | null
           owner_id: string
           partnerships: string[] | null
           pitch_deck_url: string | null
           previous_funding: number | null
           product_screenshots: string[] | null
+          project_category: string | null
           project_stage: Database["public"]["Enums"]["project_stage"] | null
           project_type: string
           projected_exit_timeline: number | null
@@ -1664,6 +1670,8 @@ export type Database = {
           risk_factors: string[] | null
           roi_projected: number | null
           runway_months: number | null
+          sandbox_approved_at: string | null
+          sandbox_approved_by: string | null
           skills_required: string[] | null
           social_impact_score: number | null
           status: string | null
@@ -1683,6 +1691,7 @@ export type Database = {
         Insert: {
           approved_at?: string | null
           approved_by?: string | null
+          archived_at?: string | null
           attachments?: Json | null
           budget_max?: number | null
           budget_min?: number | null
@@ -1708,11 +1717,14 @@ export type Database = {
           funding_raised?: number | null
           funding_stage?: Database["public"]["Enums"]["funding_stage"] | null
           geographic_location?: string | null
+          gold_fund_added_at?: string | null
+          gold_fund_added_by?: string | null
           id?: string
           industry?: Database["public"]["Enums"]["industry_category"] | null
           intellectual_property?: string[] | null
           investment_terms?: Json | null
           is_featured?: boolean | null
+          is_pitch?: boolean | null
           is_sandbox?: boolean | null
           key_metrics?: Json | null
           location?: string | null
@@ -1720,12 +1732,14 @@ export type Database = {
           max_investment?: number | null
           milestones?: Json | null
           min_investment?: number | null
+          moderation_status?: string | null
           monthly_revenue?: number | null
           owner_id: string
           partnerships?: string[] | null
           pitch_deck_url?: string | null
           previous_funding?: number | null
           product_screenshots?: string[] | null
+          project_category?: string | null
           project_stage?: Database["public"]["Enums"]["project_stage"] | null
           project_type: string
           projected_exit_timeline?: number | null
@@ -1734,6 +1748,8 @@ export type Database = {
           risk_factors?: string[] | null
           roi_projected?: number | null
           runway_months?: number | null
+          sandbox_approved_at?: string | null
+          sandbox_approved_by?: string | null
           skills_required?: string[] | null
           social_impact_score?: number | null
           status?: string | null
@@ -1753,6 +1769,7 @@ export type Database = {
         Update: {
           approved_at?: string | null
           approved_by?: string | null
+          archived_at?: string | null
           attachments?: Json | null
           budget_max?: number | null
           budget_min?: number | null
@@ -1778,11 +1795,14 @@ export type Database = {
           funding_raised?: number | null
           funding_stage?: Database["public"]["Enums"]["funding_stage"] | null
           geographic_location?: string | null
+          gold_fund_added_at?: string | null
+          gold_fund_added_by?: string | null
           id?: string
           industry?: Database["public"]["Enums"]["industry_category"] | null
           intellectual_property?: string[] | null
           investment_terms?: Json | null
           is_featured?: boolean | null
+          is_pitch?: boolean | null
           is_sandbox?: boolean | null
           key_metrics?: Json | null
           location?: string | null
@@ -1790,12 +1810,14 @@ export type Database = {
           max_investment?: number | null
           milestones?: Json | null
           min_investment?: number | null
+          moderation_status?: string | null
           monthly_revenue?: number | null
           owner_id?: string
           partnerships?: string[] | null
           pitch_deck_url?: string | null
           previous_funding?: number | null
           product_screenshots?: string[] | null
+          project_category?: string | null
           project_stage?: Database["public"]["Enums"]["project_stage"] | null
           project_type?: string
           projected_exit_timeline?: number | null
@@ -1804,6 +1826,8 @@ export type Database = {
           risk_factors?: string[] | null
           roi_projected?: number | null
           runway_months?: number | null
+          sandbox_approved_at?: string | null
+          sandbox_approved_by?: string | null
           skills_required?: string[] | null
           social_impact_score?: number | null
           status?: string | null
@@ -2267,6 +2291,18 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      add_project_to_gold_fund: {
+        Args: { p_admin_id: string; p_project_id: string }
+        Returns: undefined
+      }
+      approve_project_to_sandbox: {
+        Args: { p_admin_id: string; p_project_id: string }
+        Returns: undefined
+      }
+      archive_project: {
+        Args: { p_admin_id: string; p_project_id: string }
+        Returns: undefined
+      }
       authenticate_admin: {
         Args: { p_password: string; p_username: string }
         Returns: {

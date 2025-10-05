@@ -55,6 +55,10 @@ import WikiPage from "./pages/kb/WikiPage";
 import FilesPage from "./pages/kb/FilesPage";
 import ReportsPage from "./pages/bi/ReportsPage";
 import AnalyticsPage from "./pages/bi/AnalyticsPage";
+import TaskNew from './pages/pm/TaskNew';
+import VacancyNew from './pages/hr/VacancyNew';
+import ContactNew from './pages/crm/ContactNew';
+import ArticleNew from './pages/kb/ArticleNew';
 
 const queryClient = new QueryClient();
 
@@ -131,6 +135,12 @@ const App = () => (
                 <Route path="/project-management/bi" element={<DashboardPage />} />
                 <Route path="/project-management/bi/reports" element={<ReportsPage />} />
                 <Route path="/project-management/bi/analytics" element={<AnalyticsPage />} />
+                
+                {/* Project Management Modal Routes */}
+                <Route path="/project-management/pm/tasks/new" element={<TaskNew />} />
+                <Route path="/project-management/hr/vacancies/new" element={<VacancyNew />} />
+                <Route path="/project-management/crm/contacts/new" element={<ContactNew />} />
+                <Route path="/project-management/kb/articles/new" element={<ArticleNew />} />
                 
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
