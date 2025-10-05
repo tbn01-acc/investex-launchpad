@@ -14,6 +14,8 @@ export interface Project {
   company: string;
   technologies: string[];
   features: string[];
+  projectCategory?: 'active' | 'sandbox' | 'gold_fund' | 'archived';
+  isPitch?: boolean;
   milestones: {
     title: string;
     status: 'completed' | 'in-progress' | 'planned';
@@ -39,6 +41,8 @@ export const allProjects: Project[] = [
     team: "15 человек",
     status: "В разработке",
     company: "TechVision AI",
+    projectCategory: "active",
+    isPitch: false,
     technologies: ["Python", "TensorFlow", "React", "Node.js", "PostgreSQL"],
     features: [
       "Персонализированные рекомендации товаров",
@@ -71,6 +75,8 @@ export const allProjects: Project[] = [
     team: "12 человек",
     status: "Поиск инвестиций",
     company: "LogiChain Solutions",
+    projectCategory: "sandbox",
+    isPitch: false,
     technologies: ["Ethereum", "Solidity", "IPFS", "React", "Node.js"],
     features: [
       "Отслеживание грузов в реальном времени",
@@ -103,6 +109,8 @@ export const allProjects: Project[] = [
     team: "8 человек",
     status: "Готов к запуску",
     company: "FinFlow Inc",
+    projectCategory: "gold_fund",
+    isPitch: false,
     technologies: ["React Native", "Node.js", "MongoDB", "Stripe API"],
     features: [
       "Агрегация банковских счетов",
@@ -135,6 +143,8 @@ export const allProjects: Project[] = [
     team: "18 человек",
     status: "В разработке",
     company: "HealthTech Solutions",
+    projectCategory: "active",
+    isPitch: true,
     technologies: ["React", "Node.js", "WebRTC", "Python", "TensorFlow"],
     features: [
       "Видеоконсультации с врачами",
@@ -167,6 +177,8 @@ export const allProjects: Project[] = [
     team: "12 человек",
     status: "Поиск инвестиций",
     company: "EduTech Innovations",
+    projectCategory: "archived",
+    isPitch: false,
     technologies: ["React", "Python", "TensorFlow", "PostgreSQL", "WebRTC"],
     features: [
       "Персонализированные учебные планы",

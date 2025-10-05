@@ -23,7 +23,22 @@ const Projects = () => {
     const matchesSearch = project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          project.description.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory = selectedCategory === 'all' || project.category === selectedCategory;
-    return matchesSearch && matchesCategory;
+    
+    // Filter by project category based on active tab
+    let matchesTab = true;
+    if (projectCategory === 'active') {
+      matchesTab = (project.projectCategory === 'active' || !project.projectCategory);
+    } else if (projectCategory === 'sandbox') {
+      matchesTab = project.projectCategory === 'sandbox';
+    } else if (projectCategory === 'gold_fund') {
+      matchesTab = project.projectCategory === 'gold_fund';
+    } else if (projectCategory === 'archived') {
+      matchesTab = project.projectCategory === 'archived';
+    } else if (projectCategory === 'pitch') {
+      matchesTab = project.isPitch === true;
+    }
+    
+    return matchesSearch && matchesCategory && matchesTab;
   });
 
   const handleProjectClick = (project: any) => {
@@ -164,7 +179,7 @@ const Projects = () => {
               </p>
             </div>
 
-            <Tabs defaultValue="active" className="w-full">
+            <Tabs defaultValue="active" className="w-full" onValueChange={setProjectCategory}>
               <TabsList className="grid w-full grid-cols-5 mb-8">
                 <TabsTrigger value="active">Активные</TabsTrigger>
                 <TabsTrigger value="sandbox">Песочница</TabsTrigger>

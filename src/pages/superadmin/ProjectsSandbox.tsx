@@ -37,6 +37,8 @@ interface Project {
   funding_goal?: number;
   current_funding?: number;
   industry?: string;
+  project_category?: 'active' | 'sandbox' | 'gold_fund' | 'archived';
+  moderation_status?: string;
 }
 
 export default function ProjectsSandbox() {
@@ -47,6 +49,7 @@ export default function ProjectsSandbox() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [comment, setComment] = useState("");
   const [action, setAction] = useState<"approve" | "reject" | "revision" | "move" | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<'active' | 'sandbox' | 'gold_fund' | 'archived'>('active');
 
   useEffect(() => {
     fetchProjects();
@@ -72,12 +75,56 @@ export default function ProjectsSandbox() {
     }
   };
 
+  const updateProjectCategory = async (projectId: string, category: 'active' | 'sandbox' | 'gold_fund' | 'archived') => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error("Пользователь не авторизован");
+
+      const { error } = await supabase
+        .from("projects")
+        .update({ project_category: category })
+        .eq("id", projectId);
+
+      if (error) throw error;
+
+      await supabase.from("project_moderation").insert({
+        project_id: projectId,
+        moderator_id: user.id,
+        action: "category_change",
+        comment: `Категория изменена на: ${category}`,
+        level_changed_to: category,
+      });
+
+      toast({
+        title: "Успешно",
+        description: "Категория проекта обновлена",
+      });
+
+      fetchProjects();
+    } catch (error: any) {
+      toast({
+        title: "Ошибка",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
+  };
+
   const handleAction = async () => {
     if (!selectedProject || !action) return;
 
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error("Пользователь не авторизован");
+
+      // If action is "move", update category instead
+      if (action === "move") {
+        await updateProjectCategory(selectedProject.id, selectedCategory);
+        setSelectedProject(null);
+        setAction(null);
+        setComment("");
+        return;
+      }
 
       let newStatus = selectedProject.status;
       let actionText = "";
@@ -95,9 +142,6 @@ export default function ProjectsSandbox() {
           newStatus = "needs_revision";
           actionText = "needs_revision";
           break;
-        case "move":
-          newStatus = "promoted";
-          actionText = "moved_to_level";
           break;
       }
 
@@ -256,9 +300,19 @@ export default function ProjectsSandbox() {
                             <CardDescription className="mt-2">
                               {project.description?.substring(0, 150)}...
                             </CardDescription>
-                            {project.industry && (
-                              <Badge variant="outline" className="mt-2">{project.industry}</Badge>
-                            )}
+                            <div className="flex gap-2 mt-2">
+                              {project.industry && (
+                                <Badge variant="outline">{project.industry}</Badge>
+                              )}
+                              {project.project_category && (
+                                <Badge variant="secondary">
+                                  {project.project_category === 'active' && 'Активный'}
+                                  {project.project_category === 'sandbox' && 'Песочница'}
+                                  {project.project_category === 'gold_fund' && 'Золотой'}
+                                  {project.project_category === 'archived' && 'Архив'}
+                                </Badge>
+                              )}
+                            </div>
                           </div>
                         </div>
                       </CardHeader>
@@ -309,17 +363,19 @@ export default function ProjectsSandbox() {
                             </>
                           )}
                           {tab === "active" && (
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              onClick={() => {
-                                setSelectedProject(project);
-                                setAction("move");
-                              }}
-                            >
-                              <TrendingUp className="mr-2 h-4 w-4" />
-                              Повысить уровень
-                            </Button>
+                            <>
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => {
+                                  setSelectedProject(project);
+                                  setAction("move");
+                                }}
+                              >
+                                <TrendingUp className="mr-2 h-4 w-4" />
+                                Изменить категорию
+                              </Button>
+                            </>
                           )}
                         </div>
                       </CardContent>
@@ -345,13 +401,50 @@ export default function ProjectsSandbox() {
               {action === "approve" && "Утвердить проект"}
               {action === "reject" && "Отклонить проект"}
               {action === "revision" && "Отправить на доработку"}
-              {action === "move" && "Повысить уровень проекта"}
+              {action === "move" && "Изменить категорию проекта"}
             </DialogTitle>
             <DialogDescription>
               {selectedProject?.title}
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4">
+            {action === "move" && (
+              <div>
+                <label className="text-sm font-medium mb-2 block">
+                  Выберите категорию
+                </label>
+                <div className="grid grid-cols-2 gap-2">
+                  <Button
+                    type="button"
+                    variant={selectedCategory === 'active' ? 'default' : 'outline'}
+                    onClick={() => setSelectedCategory('active')}
+                  >
+                    Активный
+                  </Button>
+                  <Button
+                    type="button"
+                    variant={selectedCategory === 'sandbox' ? 'default' : 'outline'}
+                    onClick={() => setSelectedCategory('sandbox')}
+                  >
+                    Песочница
+                  </Button>
+                  <Button
+                    type="button"
+                    variant={selectedCategory === 'gold_fund' ? 'default' : 'outline'}
+                    onClick={() => setSelectedCategory('gold_fund')}
+                  >
+                    Золотой
+                  </Button>
+                  <Button
+                    type="button"
+                    variant={selectedCategory === 'archived' ? 'default' : 'outline'}
+                    onClick={() => setSelectedCategory('archived')}
+                  >
+                    Архив
+                  </Button>
+                </div>
+              </div>
+            )}
             <div>
               <label className="text-sm font-medium mb-2 block flex items-center gap-2">
                 <MessageSquare className="h-4 w-4" />

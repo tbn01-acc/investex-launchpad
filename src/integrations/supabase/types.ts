@@ -1661,7 +1661,7 @@ export type Database = {
           pitch_deck_url: string | null
           previous_funding: number | null
           product_screenshots: string[] | null
-          project_category: string | null
+          project_category: Database["public"]["Enums"]["project_category_type"]
           project_stage: Database["public"]["Enums"]["project_stage"] | null
           project_type: string
           projected_exit_timeline: number | null
@@ -1739,7 +1739,7 @@ export type Database = {
           pitch_deck_url?: string | null
           previous_funding?: number | null
           product_screenshots?: string[] | null
-          project_category?: string | null
+          project_category?: Database["public"]["Enums"]["project_category_type"]
           project_stage?: Database["public"]["Enums"]["project_stage"] | null
           project_type: string
           projected_exit_timeline?: number | null
@@ -1817,7 +1817,7 @@ export type Database = {
           pitch_deck_url?: string | null
           previous_funding?: number | null
           product_screenshots?: string[] | null
-          project_category?: string | null
+          project_category?: Database["public"]["Enums"]["project_category_type"]
           project_stage?: Database["public"]["Enums"]["project_stage"] | null
           project_type?: string
           projected_exit_timeline?: number | null
@@ -2395,6 +2395,7 @@ export type Database = {
         | "co_investor"
         | "superadmin"
       organization_type: "individual" | "company" | "fund" | "organization"
+      project_category_type: "active" | "sandbox" | "gold_fund" | "archived"
       project_stage: "idea" | "mvp" | "traction" | "scale" | "exit"
       project_status:
         | "draft"
@@ -2613,6 +2614,7 @@ export const Constants = {
         "superadmin",
       ],
       organization_type: ["individual", "company", "fund", "organization"],
+      project_category_type: ["active", "sandbox", "gold_fund", "archived"],
       project_stage: ["idea", "mvp", "traction", "scale", "exit"],
       project_status: [
         "draft",
