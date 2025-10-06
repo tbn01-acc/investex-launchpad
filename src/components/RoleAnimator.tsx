@@ -7,36 +7,50 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 
+type RoleCategory = "investors" | "creators" | "executors" | "partners";
+
 const roles = [
-  { name: "Инвестор", description: "Ищу лучшие стартапы, отрасли, управляю портфелем и рисками." },
-  { name: "Коллективный инвестор", description: "Доступ к сделкам совместных инвестиций, приватным раундам, аналитике и аукционам." },
-  { name: "Фаундер", description: "Запускаю стартап, управляю командой, презентуюсь инвесторам." },
-  { name: "Ко-фаундер", description: "Вхожу в перспективные проекты, улучшаю профиль команды, развиваю идеи." },
-  { name: "Соучредитель", description: "Вхожу в проекты, получая долю, работаю с лидерами, строю бизнес." },
-  { name: "Фрилансер", description: "Работаю над проектами удаленно, выбираю интересные задачи, строю карьеру." },
-  { name: "Эксперт", description: "Консультирую по узкой специализации, решаю сложные технические задачи." },
-  { name: "Консультант", description: "Помогаю бизнесу в стратегических вопросах, оптимизирую процессы." },
-  { name: "Аутсорсер", description: "Расширяю клиентскую базу, предлагаю сервисы проектам и корпорациям." },
-  { name: "Подрядчик", description: "Подключаюсь к крупным заказам, B2B-кейсам, интегрируюсь в экосистему." },
-  { name: "Администратор проекта", description: "Управляю процессами, координирую команду, отвечаю за успех." },
-  { name: "Сотрудник проекта", description: "Влияю на успех, расту с командой, получаю репутацию, обучаюсь у лидеров." },
-  { name: "Соискатель", description: "Ищу работу в перспективном стартапе, хочу строить карьеру в инновационной среде." },
-  { name: "Партнёр (Affiliate)", description: "Развиваю интеграции, привлекаю трафик, получаю вознаграждение." },
-  { name: "Амбассадор проекта", description: "Представляю бренд, повышаю лояльность, расширяю сообщество." },
-  { name: "Лидер мнений/Блогер", description: "Создаю контент, делюсь экспертизой, влияю на аудиторию." }
+  { name: "Инвестор", description: "Ищу лучшие стартапы, отрасли, управляю портфелем и рисками.", category: "investors" as RoleCategory },
+  { name: "Коллективный инвестор", description: "Доступ к сделкам совместных инвестиций, приватным раундам, аналитике и аукционам.", category: "investors" as RoleCategory },
+  { name: "Фаундер", description: "Запускаю стартап, управляю командой, презентуюсь инвесторам.", category: "creators" as RoleCategory },
+  { name: "Ко-фаундер", description: "Вхожу в перспективные проекты, улучшаю профиль команды, развиваю идеи.", category: "creators" as RoleCategory },
+  { name: "Соучредитель", description: "Вхожу в проекты, получая долю, работаю с лидерами, строю бизнес.", category: "creators" as RoleCategory },
+  { name: "Фрилансер", description: "Работаю над проектами удаленно, выбираю интересные задачи, строю карьеру.", category: "executors" as RoleCategory },
+  { name: "Эксперт", description: "Консультирую по узкой специализации, решаю сложные технические задачи.", category: "executors" as RoleCategory },
+  { name: "Консультант", description: "Помогаю бизнесу в стратегических вопросах, оптимизирую процессы.", category: "executors" as RoleCategory },
+  { name: "Аутсорсер", description: "Расширяю клиентскую базу, предлагаю сервисы проектам и корпорациям.", category: "executors" as RoleCategory },
+  { name: "Подрядчик", description: "Подключаюсь к крупным заказам, B2B-кейсам, интегрируюсь в экосистему.", category: "executors" as RoleCategory },
+  { name: "Администратор проекта", description: "Управляю процессами, координирую команду, отвечаю за успех.", category: "executors" as RoleCategory },
+  { name: "Сотрудник проекта", description: "Влияю на успех, расту с командой, получаю репутацию, обучаюсь у лидеров.", category: "executors" as RoleCategory },
+  { name: "Соискатель", description: "Ищу работу в перспективном стартапе, хочу строить карьеру в инновационной среде.", category: "executors" as RoleCategory },
+  { name: "Партнёр (Affiliate)", description: "Развиваю интеграции, привлекаю трафик, получаю вознаграждение.", category: "partners" as RoleCategory },
+  { name: "Амбассадор проекта", description: "Представляю бренд, повышаю лояльность, расширяю сообщество.", category: "partners" as RoleCategory },
+  { name: "Лидер мнений/Блогер", description: "Создаю контент, делюсь экспертизой, влияю на аудиторию.", category: "partners" as RoleCategory }
+];
+
+const categories = [
+  { id: "investors" as RoleCategory, label: "Инвесторы" },
+  { id: "creators" as RoleCategory, label: "Создатели" },
+  { id: "executors" as RoleCategory, label: "Исполнители" },
+  { id: "partners" as RoleCategory, label: "Партнеры" }
 ];
 
 const RoleAnimator = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isRunning, setIsRunning] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState<RoleCategory | null>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const isMobile = useIsMobile();
   const [carouselApi, setCarouselApi] = useState<CarouselApi>();
 
+  const filteredRoles = selectedCategory 
+    ? roles.filter(role => role.category === selectedCategory)
+    : roles;
+
   useEffect(() => {
     if (isRunning && !isMobile) {
       intervalRef.current = setInterval(() => {
-        setActiveIndex((prev) => (prev + 1) % roles.length);
+        setActiveIndex((prev) => (prev + 1) % filteredRoles.length);
       }, 3500);
     } else if (isRunning && isMobile && carouselApi) {
       intervalRef.current = setInterval(() => {
@@ -49,7 +63,7 @@ const RoleAnimator = () => {
         clearInterval(intervalRef.current);
       }
     };
-  }, [isRunning, isMobile, carouselApi]);
+  }, [isRunning, isMobile, carouselApi, filteredRoles.length]);
 
   useEffect(() => {
     if (!carouselApi) return;
@@ -70,7 +84,7 @@ const RoleAnimator = () => {
   };
 
   const getRolodexCardStyle = (index: number) => {
-    const totalCards = roles.length;
+    const totalCards = filteredRoles.length;
     const angleStep = (2 * Math.PI) / totalCards;
     const baseRadius = 280;
     
@@ -125,26 +139,36 @@ const RoleAnimator = () => {
           carouselApi.scrollTo(0);
           break;
         case 'last':
-          carouselApi.scrollTo(roles.length - 1);
+          carouselApi.scrollTo(filteredRoles.length - 1);
           break;
       }
     } else {
       switch (direction) {
         case 'prev':
-          setActiveIndex((prev) => (prev - 1 + roles.length) % roles.length);
+          setActiveIndex((prev) => (prev - 1 + filteredRoles.length) % filteredRoles.length);
           break;
         case 'next':
-          setActiveIndex((prev) => (prev + 1) % roles.length);
+          setActiveIndex((prev) => (prev + 1) % filteredRoles.length);
           break;
         case 'first':
           setActiveIndex(0);
           break;
         case 'last':
-          setActiveIndex(roles.length - 1);
+          setActiveIndex(filteredRoles.length - 1);
           break;
       }
     }
     
+    setTimeout(() => setIsRunning(true), 5000);
+  };
+
+  const handleCategorySelect = (category: RoleCategory | null) => {
+    setSelectedCategory(category);
+    setActiveIndex(0);
+    setIsRunning(false);
+    if (isMobile && carouselApi) {
+      carouselApi.scrollTo(0);
+    }
     setTimeout(() => setIsRunning(true), 5000);
   };
 
@@ -158,7 +182,35 @@ const RoleAnimator = () => {
               От идеи до реализации — каждая роль важна для успеха проектов
             </p>
           </div>
-          <Carousel 
+
+          {/* Category filter buttons */}
+          <div className="flex flex-wrap justify-center gap-2 mb-8">
+            <button
+              onClick={() => handleCategorySelect(null)}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                selectedCategory === null
+                  ? 'bg-primary text-primary-foreground shadow-lg'
+                  : 'bg-muted text-muted-foreground hover:bg-muted/80'
+              }`}
+            >
+              Все роли
+            </button>
+            {categories.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => handleCategorySelect(cat.id)}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                  selectedCategory === cat.id
+                    ? 'bg-primary text-primary-foreground shadow-lg'
+                    : 'bg-muted text-muted-foreground hover:bg-muted/80'
+                }`}
+              >
+                {cat.label}
+              </button>
+            ))}
+          </div>
+
+          <Carousel
             setApi={setCarouselApi}
             className="w-full max-w-xs mx-auto"
             opts={{
@@ -167,7 +219,7 @@ const RoleAnimator = () => {
             }}
           >
             <CarouselContent>
-              {roles.map((role, index) => (
+              {filteredRoles.map((role, index) => (
                 <CarouselItem key={role.name}>
                   <div className="p-1">
                     <div className="bg-background border-2 border-border rounded-xl shadow-lg p-4 h-[320px] flex flex-col justify-between">
@@ -203,6 +255,34 @@ const RoleAnimator = () => {
             От идеи до реализации — каждая роль важна для успеха проектов
           </p>
         </div>
+
+        {/* Category filter buttons */}
+        <div className="flex flex-wrap justify-center gap-3 mb-12">
+          <button
+            onClick={() => handleCategorySelect(null)}
+            className={`px-6 py-3 rounded-xl text-base font-semibold transition-all ${
+              selectedCategory === null
+                ? 'bg-primary text-primary-foreground shadow-xl scale-105'
+                : 'bg-muted text-muted-foreground hover:bg-muted/80 hover:scale-105'
+            }`}
+          >
+            Все роли
+          </button>
+          {categories.map((cat) => (
+            <button
+              key={cat.id}
+              onClick={() => handleCategorySelect(cat.id)}
+              className={`px-6 py-3 rounded-xl text-base font-semibold transition-all ${
+                selectedCategory === cat.id
+                  ? 'bg-primary text-primary-foreground shadow-xl scale-105'
+                  : 'bg-muted text-muted-foreground hover:bg-muted/80 hover:scale-105'
+              }`}
+            >
+              {cat.label}
+            </button>
+          ))}
+        </div>
+
         <div className="relative h-[600px] flex items-center justify-center">
           {/* Platform base */}
           <div className="absolute bottom-20 w-[600px] h-[600px] rounded-full bg-gradient-to-r from-muted/20 to-muted/40 border border-border/20" 
@@ -227,7 +307,7 @@ const RoleAnimator = () => {
                 transition: 'transform 0.7s ease-out'
               }}
             >
-              {roles.map((role, index) => {
+              {filteredRoles.map((role, index) => {
                 const style = getRolodexCardStyle(index);
                 const isActive = index === activeIndex;
                 
@@ -265,14 +345,14 @@ const RoleAnimator = () => {
                         </p>
                       </div>
                       
-                      {isActive && (
-                        <div className="flex items-center justify-between mt-3">
-                          <div className="w-6 h-0.5 bg-primary-foreground/30 rounded"></div>
-                          <span className="text-xs font-medium text-primary-foreground/70">
-                            {index + 1} / {roles.length}
-                          </span>
-                        </div>
-                      )}
+                        {isActive && (
+                          <div className="flex items-center justify-between mt-3">
+                            <div className="w-6 h-0.5 bg-primary-foreground/30 rounded"></div>
+                            <span className="text-xs font-medium text-primary-foreground/70">
+                              {index + 1} / {filteredRoles.length}
+                            </span>
+                          </div>
+                        )}
                     </div>
                   </div>
                 );
@@ -303,7 +383,7 @@ const RoleAnimator = () => {
             
             <div className="mx-4 sm:mx-8 px-3 py-1 sm:px-4 sm:py-2 bg-muted rounded-full">
               <span className="text-xs sm:text-sm font-medium text-muted-foreground">
-                {activeIndex + 1} / {roles.length}
+                {activeIndex + 1} / {filteredRoles.length}
               </span>
             </div>
             
