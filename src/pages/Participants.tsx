@@ -21,7 +21,7 @@ const Participants = () => {
       href: '/dashboard?role=investor'
     },
     {
-      title: 'Коллективный инвестор', 
+      title: 'Соинвестор', 
       description: 'Участвуйте в совместных инвестициях с другими инвесторами',
       icon: Users,
       color: 'bg-blue-500',
