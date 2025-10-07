@@ -7,8 +7,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { 
   Users, DollarSign, PieChart, Target, 
-  Plus, Eye, BarChart3, TrendingUp, UserPlus
+  Plus, Eye, BarChart3, TrendingUp, UserPlus, MessageSquare
 } from 'lucide-react';
+import { MessagesTab } from '@/components/MessagesTab';
 
 export default function CollectiveInvestorDashboard() {
   const { user, profile } = useAuth();
@@ -197,9 +198,9 @@ export default function CollectiveInvestorDashboard() {
               <BarChart3 className="h-4 w-4 mr-2" />
               Аналитика
             </TabsTrigger>
-            <TabsTrigger value="network">
-              <UserPlus className="h-4 w-4 mr-2" />
-              Сеть
+            <TabsTrigger value="messages">
+              <MessageSquare className="h-4 w-4 mr-2" />
+              {t('common.messages')}
             </TabsTrigger>
           </TabsList>
 
@@ -361,18 +362,8 @@ export default function CollectiveInvestorDashboard() {
             </Card>
           </TabsContent>
 
-          <TabsContent value="network">
-            <Card>
-              <CardHeader>
-                <CardTitle>Инвестиционная сеть</CardTitle>
-                <CardDescription>Ваши контакты и приглашения</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Система управления сетью будет добавлена в следующих версиях.
-                </p>
-              </CardContent>
-            </Card>
+          <TabsContent value="messages">
+            <MessagesTab />
           </TabsContent>
         </Tabs>
       </div>

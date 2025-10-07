@@ -7,8 +7,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { 
   HardHat, Wrench, DollarSign, CheckCircle, 
-  Plus, Eye, Calendar, MapPin, Clock
+  Plus, Eye, Calendar, MapPin, Clock, MessageSquare
 } from 'lucide-react';
+import { MessagesTab } from '@/components/MessagesTab';
 
 export default function ContractorDashboard() {
   const { user, profile } = useAuth();
@@ -248,9 +249,9 @@ export default function ContractorDashboard() {
               <Wrench className="h-4 w-4 mr-2" />
               Оборудование
             </TabsTrigger>
-            <TabsTrigger value="schedule">
-              <Calendar className="h-4 w-4 mr-2" />
-              Расписание
+            <TabsTrigger value="messages">
+              <MessageSquare className="h-4 w-4 mr-2" />
+              {t('common.messages')}
             </TabsTrigger>
           </TabsList>
 
@@ -468,18 +469,8 @@ export default function ContractorDashboard() {
             </div>
           </TabsContent>
 
-          <TabsContent value="schedule">
-            <Card>
-              <CardHeader>
-                <CardTitle>Календарь проектов</CardTitle>
-                <CardDescription>Планирование и учет рабочего времени</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Календарь и система планирования будут реализованы в следующих версиях.
-                </p>
-              </CardContent>
-            </Card>
+          <TabsContent value="messages">
+            <MessagesTab />
           </TabsContent>
         </Tabs>
       </div>

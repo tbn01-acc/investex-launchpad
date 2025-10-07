@@ -10,10 +10,11 @@ import { supabase } from '@/integrations/supabase/client';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { 
   TrendingUp, DollarSign, PieChart, Target, 
-  Plus, Eye, BarChart3, Briefcase, Search, Filter 
+  Plus, Eye, BarChart3, Briefcase, Search, Filter, MessageSquare
 } from 'lucide-react';
 import DueDiligenceTools from '@/components/DueDiligenceTools';
 import PortfolioAnalytics from '@/components/PortfolioAnalytics';
+import { MessagesTab } from '@/components/MessagesTab';
 
 export default function InvestorDashboard() {
   const { user, profile } = useAuth();
@@ -205,9 +206,9 @@ export default function InvestorDashboard() {
               <Eye className="h-4 w-4 mr-2" />
               Due Diligence
             </TabsTrigger>
-            <TabsTrigger value="analytics">
-              <BarChart3 className="h-4 w-4 mr-2" />
-              Аналитика
+            <TabsTrigger value="messages">
+              <MessageSquare className="h-4 w-4 mr-2" />
+              {t('common.messages')}
             </TabsTrigger>
           </TabsList>
 
@@ -410,8 +411,8 @@ export default function InvestorDashboard() {
             />
           </TabsContent>
 
-          <TabsContent value="analytics">
-            <PortfolioAnalytics />
+          <TabsContent value="messages">
+            <MessagesTab />
           </TabsContent>
         </Tabs>
       </div>

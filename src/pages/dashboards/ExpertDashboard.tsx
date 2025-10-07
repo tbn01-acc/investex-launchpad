@@ -7,8 +7,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { 
   Brain, DollarSign, Star, Clock, 
-  Plus, Eye, Search, Target, Award
+  Plus, Eye, Search, Target, Award, MessageSquare
 } from 'lucide-react';
+import { MessagesTab } from '@/components/MessagesTab';
 
 export default function ExpertDashboard() {
   const { user, profile } = useAuth();
@@ -148,9 +149,9 @@ export default function ExpertDashboard() {
               <Search className="h-4 w-4 mr-2" />
               Возможности
             </TabsTrigger>
-            <TabsTrigger value="knowledge">
-              <Target className="h-4 w-4 mr-2" />
-              Знания
+            <TabsTrigger value="messages">
+              <MessageSquare className="h-4 w-4 mr-2" />
+              {t('common.messages')}
             </TabsTrigger>
           </TabsList>
 
@@ -280,18 +281,8 @@ export default function ExpertDashboard() {
             </Card>
           </TabsContent>
 
-          <TabsContent value="knowledge">
-            <Card>
-              <CardHeader>
-                <CardTitle>База знаний</CardTitle>
-                <CardDescription>Материалы и ресурсы для экспертной деятельности</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Библиотека знаний и обучающие материалы будут добавлены в следующих версиях.
-                </p>
-              </CardContent>
-            </Card>
+          <TabsContent value="messages">
+            <MessagesTab />
           </TabsContent>
         </Tabs>
       </div>

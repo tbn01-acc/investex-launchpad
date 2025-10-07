@@ -12,8 +12,9 @@ import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { 
   Shield, Users, Settings, BarChart3, DollarSign, 
-  TrendingUp, Activity, Lock, RefreshCw, Save, Briefcase, FileText
+  TrendingUp, Activity, Lock, RefreshCw, Save, Briefcase, FileText, MessageSquare
 } from 'lucide-react';
+import { MessagesTab } from '@/components/MessagesTab';
 
 interface PlatformStats {
   total_users: number;
@@ -200,16 +201,16 @@ export default function SuperadminDashboard() {
         </div>
 
         {/* Detailed Tabs */}
-        <Tabs defaultValue="overview" className="space-y-6">
+        <Tabs defaultValue="dashboard" className="space-y-6">
           <TabsList className="grid w-full grid-cols-5">
-            <TabsTrigger value="overview">Обзор</TabsTrigger>
+            <TabsTrigger value="dashboard">{t('common.dashboard')}</TabsTrigger>
             <TabsTrigger value="projects">Проекты</TabsTrigger>
             <TabsTrigger value="staff">Персонал</TabsTrigger>
             <TabsTrigger value="analytics">Аналитика</TabsTrigger>
-            <TabsTrigger value="settings">Настройки</TabsTrigger>
+            <TabsTrigger value="messages">{t('common.messages')}</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="overview">
+          <TabsContent value="dashboard">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <Card>
                 <CardHeader>
@@ -364,6 +365,10 @@ export default function SuperadminDashboard() {
                 </Button>
               </CardContent>
             </Card>
+          </TabsContent>
+
+          <TabsContent value="messages">
+            <MessagesTab />
           </TabsContent>
         </Tabs>
       </div>

@@ -5,11 +5,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Users, Share2, TrendingUp, Award, DollarSign, Target } from 'lucide-react';
+import { Users, Share2, TrendingUp, Award, DollarSign, Target, MessageSquare } from 'lucide-react';
+import { MessagesTab } from '@/components/MessagesTab';
 
 const AmbassadorDashboard = () => {
   const { user, profile } = useAuth();
-  const { formatCurrency } = useLanguage();
+  const { formatCurrency, t } = useLanguage();
 
   const [stats] = useState({
     referrals: 45,
@@ -112,7 +113,10 @@ const AmbassadorDashboard = () => {
           <TabsTrigger value="referrals">Рефералы</TabsTrigger>
           <TabsTrigger value="materials">Материалы</TabsTrigger>
           <TabsTrigger value="earnings">Доходы</TabsTrigger>
-          <TabsTrigger value="analytics">Аналитика</TabsTrigger>
+          <TabsTrigger value="messages">
+            <MessageSquare className="h-4 w-4 mr-2" />
+            {t('common.messages')}
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="campaigns" className="space-y-4">
@@ -230,6 +234,10 @@ const AmbassadorDashboard = () => {
               </CardContent>
             </Card>
           </div>
+        </TabsContent>
+
+        <TabsContent value="messages">
+          <MessagesTab />
         </TabsContent>
       </Tabs>
     </div>

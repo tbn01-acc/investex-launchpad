@@ -7,8 +7,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { 
   Building, Users, DollarSign, Briefcase, 
-  Plus, Eye, Search, UserPlus, TrendingUp
+  Plus, Eye, Search, UserPlus, TrendingUp, MessageSquare
 } from 'lucide-react';
+import { MessagesTab } from '@/components/MessagesTab';
 
 export default function OutsourcerDashboard() {
   const { user, profile } = useAuth();
@@ -245,9 +246,9 @@ export default function OutsourcerDashboard() {
               <Search className="h-4 w-4 mr-2" />
               Возможности
             </TabsTrigger>
-            <TabsTrigger value="finance">
-              <DollarSign className="h-4 w-4 mr-2" />
-              Финансы
+            <TabsTrigger value="messages">
+              <MessageSquare className="h-4 w-4 mr-2" />
+              {t('common.messages')}
             </TabsTrigger>
           </TabsList>
 
@@ -468,6 +469,10 @@ export default function OutsourcerDashboard() {
                 </div>
               </CardContent>
             </Card>
+          </TabsContent>
+
+          <TabsContent value="messages">
+            <MessagesTab />
           </TabsContent>
         </Tabs>
       </div>

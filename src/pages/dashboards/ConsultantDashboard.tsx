@@ -5,11 +5,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Users, TrendingUp, Clock, DollarSign, Target, Award } from 'lucide-react';
+import { Users, TrendingUp, Clock, DollarSign, Target, Award, MessageSquare } from 'lucide-react';
+import { MessagesTab } from '@/components/MessagesTab';
 
 const ConsultantDashboard = () => {
   const { user, profile } = useAuth();
-  const { formatCurrency } = useLanguage();
+  const { formatCurrency, t } = useLanguage();
 
   const [stats] = useState({
     activeClients: 8,
@@ -132,7 +133,10 @@ const ConsultantDashboard = () => {
           <TabsTrigger value="expertise">Экспертиза</TabsTrigger>
           <TabsTrigger value="clients">Клиенты</TabsTrigger>
           <TabsTrigger value="knowledge">База знаний</TabsTrigger>
-          <TabsTrigger value="analytics">Аналитика</TabsTrigger>
+          <TabsTrigger value="messages">
+            <MessageSquare className="h-4 w-4 mr-2" />
+            {t('common.messages')}
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="consultations" className="space-y-4">
@@ -250,6 +254,10 @@ const ConsultantDashboard = () => {
               </CardContent>
             </Card>
           </div>
+        </TabsContent>
+
+        <TabsContent value="messages">
+          <MessagesTab />
         </TabsContent>
       </Tabs>
     </div>

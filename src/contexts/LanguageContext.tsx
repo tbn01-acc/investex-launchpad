@@ -81,6 +81,8 @@ const translations = {
     'common.next': 'Далее',
     'common.previous': 'Предыдущий',
     'common.close': 'Закрыть',
+    'common.dashboard': 'Панель управления',
+    'common.messages': 'Сообщения',
     
     // Projects
     'projects.title': 'Проекты',
@@ -189,6 +191,8 @@ const translations = {
     'common.next': 'Next',
     'common.previous': 'Previous',
     'common.close': 'Close',
+    'common.dashboard': 'Dashboard',
+    'common.messages': 'Messages',
     
     // Projects
     'projects.title': 'Projects',

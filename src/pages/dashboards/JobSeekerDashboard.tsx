@@ -5,11 +5,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Briefcase, Send, Eye, Heart, FileText, TrendingUp } from 'lucide-react';
+import { Briefcase, Send, Eye, Heart, FileText, TrendingUp, MessageSquare } from 'lucide-react';
+import { MessagesTab } from '@/components/MessagesTab';
 
 const JobSeekerDashboard = () => {
   const { user, profile } = useAuth();
-  const { formatCurrency } = useLanguage();
+  const { formatCurrency, t } = useLanguage();
 
   const [stats] = useState({
     applications: 15,
@@ -140,7 +141,10 @@ const JobSeekerDashboard = () => {
           <TabsTrigger value="jobs">Вакансии</TabsTrigger>
           <TabsTrigger value="resume">Резюме</TabsTrigger>
           <TabsTrigger value="saved">Избранное</TabsTrigger>
-          <TabsTrigger value="analytics">Аналитика</TabsTrigger>
+          <TabsTrigger value="messages">
+            <MessageSquare className="h-4 w-4 mr-2" />
+            {t('common.messages')}
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="applications" className="space-y-4">
@@ -257,6 +261,10 @@ const JobSeekerDashboard = () => {
               </CardContent>
             </Card>
           </div>
+        </TabsContent>
+
+        <TabsContent value="messages">
+          <MessagesTab />
         </TabsContent>
       </Tabs>
     </div>

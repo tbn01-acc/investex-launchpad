@@ -7,8 +7,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { 
   Briefcase, DollarSign, Star, Clock, 
-  Plus, Eye, Search, Filter 
+  Plus, Eye, Search, Filter, MessageSquare
 } from 'lucide-react';
+import { MessagesTab } from '@/components/MessagesTab';
 
 export default function FreelancerDashboard() {
   const { user, profile } = useAuth();
@@ -197,9 +198,9 @@ export default function FreelancerDashboard() {
               <Search className="h-4 w-4 mr-2" />
               Доступные проекты
             </TabsTrigger>
-            <TabsTrigger value="history">
-              <Clock className="h-4 w-4 mr-2" />
-              История работ
+            <TabsTrigger value="messages">
+              <MessageSquare className="h-4 w-4 mr-2" />
+              {t('common.messages')}
             </TabsTrigger>
           </TabsList>
 
@@ -320,18 +321,8 @@ export default function FreelancerDashboard() {
             </div>
           </TabsContent>
 
-          <TabsContent value="history">
-            <Card>
-              <CardHeader>
-                <CardTitle>История выполненных работ</CardTitle>
-                <CardDescription>Все ваши завершенные проекты и отзывы</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  История проектов и система отзывов будут добавлены в следующих версиях.
-                </p>
-              </CardContent>
-            </Card>
+          <TabsContent value="messages">
+            <MessagesTab />
           </TabsContent>
         </Tabs>
       </div>

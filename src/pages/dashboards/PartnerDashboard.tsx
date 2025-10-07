@@ -7,8 +7,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { 
   Handshake, DollarSign, Users, TrendingUp, 
-  Plus, Eye, Link, Share2, BarChart3
+  Plus, Eye, Link, Share2, BarChart3, MessageSquare
 } from 'lucide-react';
+import { MessagesTab } from '@/components/MessagesTab';
 
 export default function PartnerDashboard() {
   const { user, profile } = useAuth();
@@ -141,11 +142,11 @@ export default function PartnerDashboard() {
         </div>
 
         {/* Detailed Tabs */}
-        <Tabs defaultValue="overview" className="space-y-6">
+        <Tabs defaultValue="dashboard" className="space-y-6">
           <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="overview">
+            <TabsTrigger value="dashboard">
               <BarChart3 className="h-4 w-4 mr-2" />
-              Обзор
+              {t('common.dashboard')}
             </TabsTrigger>
             <TabsTrigger value="tools">
               <Link className="h-4 w-4 mr-2" />
@@ -155,13 +156,13 @@ export default function PartnerDashboard() {
               <Users className="h-4 w-4 mr-2" />
               Рефералы
             </TabsTrigger>
-            <TabsTrigger value="payments">
-              <DollarSign className="h-4 w-4 mr-2" />
-              Выплаты
+            <TabsTrigger value="messages">
+              <MessageSquare className="h-4 w-4 mr-2" />
+              {t('common.messages')}
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="overview">
+          <TabsContent value="dashboard">
             <div className="space-y-6">
               <Card>
                 <CardHeader>
@@ -319,18 +320,8 @@ export default function PartnerDashboard() {
             </Card>
           </TabsContent>
 
-          <TabsContent value="payments">
-            <Card>
-              <CardHeader>
-                <CardTitle>История выплат</CardTitle>
-                <CardDescription>Ваши партнерские комиссии и выплаты</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  История выплат и настройка методов получения будут добавлены в следующих версиях.
-                </p>
-              </CardContent>
-            </Card>
+          <TabsContent value="messages">
+            <MessagesTab />
           </TabsContent>
         </Tabs>
       </div>
