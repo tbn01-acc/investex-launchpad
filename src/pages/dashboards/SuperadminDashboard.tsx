@@ -267,8 +267,8 @@ export default function SuperadminDashboard() {
             <div className="grid gap-4 md:grid-cols-3">
               <Card className="cursor-pointer hover:shadow-lg transition-shadow" onClick={() => navigate('/superadmin/projects-sandbox')}>
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2"><Briefcase className="h-5 w-5" />Песочница проектов</CardTitle>
-                  <CardDescription>Модерация и управление</CardDescription>
+                  <CardTitle className="flex items-center gap-2"><Briefcase className="h-5 w-5" />Управление проектами</CardTitle>
+                  <CardDescription>Модерация и категоризация</CardDescription>
                 </CardHeader>
               </Card>
               <Card className="cursor-pointer hover:shadow-lg transition-shadow" onClick={() => navigate('/superadmin/analytics')}>

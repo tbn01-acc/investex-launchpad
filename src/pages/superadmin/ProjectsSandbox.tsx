@@ -225,8 +225,8 @@ export default function ProjectsSandbox() {
         </Button>
 
         <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-2">Песочница проектов</h1>
-          <p className="text-muted-foreground">Модерация и управление проектами платформы</p>
+          <h1 className="text-4xl font-bold mb-2">Управление проектами</h1>
+          <p className="text-muted-foreground">Модерация, категоризация и управление всеми проектами платформы</p>
         </div>
 
         <div className="grid gap-4 md:grid-cols-4 mb-8">

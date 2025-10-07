@@ -33,6 +33,8 @@ const translations = {
     'nav.dashboard': 'Кабинет',
     'nav.admin': 'Админ',
     'nav.profile': 'Профиль',
+    'nav.community': 'Сообщество',
+    'nav.platform': 'О платформе',
     
     // Hero Section
     'hero.title': 'Платформа для инвестиций и фриланса нового поколения',
@@ -56,6 +58,13 @@ const translations = {
     'role.outsourcer': 'Аутсорсер',
     'role.contractor': 'Подрядчик',
     'role.superadmin': 'Суперадмин',
+    'role.coinvestor': 'Соинвестор',
+    'role.cofounder': 'Ко-фаундер',
+    'role.expert': 'Эксперт',
+    'role.consultant': 'Консультант',
+    'role.partner': 'Партнер',
+    'role.ambassador': 'Амбассадор',
+    'role.blogger': 'Блогер',
     
     // Common
     'common.loading': 'Загрузка...',
@@ -68,6 +77,57 @@ const translations = {
     'common.view': 'Просмотр',
     'common.create': 'Создать',
     'common.welcome': 'Добро пожаловать',
+    'common.back': 'Назад',
+    'common.next': 'Далее',
+    'common.previous': 'Предыдущий',
+    'common.close': 'Закрыть',
+    
+    // Projects
+    'projects.title': 'Проекты',
+    'projects.active': 'Активные',
+    'projects.sandbox': 'Песочница',
+    'projects.goldFund': 'Золотой фонд',
+    'projects.pitch': 'Питч-панель',
+    'projects.archived': 'Архив',
+    'projects.category': 'Категория',
+    'projects.search': 'Поиск проектов...',
+    'projects.filter': 'Фильтр',
+    'projects.create': 'Создать проект',
+    'projects.viewDetails': 'Подробнее',
+    
+    // Investments
+    'investments.title': 'Инвестиции',
+    'investments.portfolio': 'Портфель',
+    'investments.secondary': 'Вторичный рынок',
+    'investments.sandbox': 'Песочница',
+    'investments.goldFund': 'Золотой фонд',
+    'investments.analytics': 'Аналитика',
+    'investments.dueDiligence': 'Due Diligence',
+    
+    // Superadmin
+    'superadmin.title': 'Суперадминистратор',
+    'superadmin.projectManagement': 'Управление проектами',
+    'superadmin.staffManagement': 'Управление персоналом',
+    'superadmin.analytics': 'Аналитика',
+    'superadmin.settings': 'Настройки',
+    'superadmin.approve': 'Одобрить',
+    'superadmin.reject': 'Отклонить',
+    'superadmin.revise': 'На доработку',
+    'superadmin.changeCategory': 'Изменить категорию',
+    'superadmin.moderationComment': 'Комментарий модератора',
+    
+    // Project Categories
+    'category.active': 'Активный',
+    'category.sandbox': 'Песочница',
+    'category.gold': 'Золотой',
+    'category.archived': 'Архив',
+    
+    // Auth
+    'auth.login': 'Вход',
+    'auth.register': 'Регистрация',
+    'auth.logout': 'Выход',
+    'auth.email': 'Email',
+    'auth.password': 'Пароль',
   },
   en: {
     // Navigation  
@@ -81,6 +141,8 @@ const translations = {
     'nav.dashboard': 'Dashboard',
     'nav.admin': 'Admin',
     'nav.profile': 'Profile',
+    'nav.community': 'Community',
+    'nav.platform': 'About Platform',
     
     // Hero Section
     'hero.title': 'Next-generation platform for investments and freelancing',
@@ -104,6 +166,13 @@ const translations = {
     'role.outsourcer': 'Outsourcer',
     'role.contractor': 'Contractor',
     'role.superadmin': 'Superadmin',
+    'role.coinvestor': 'Co-Investor',
+    'role.cofounder': 'Co-Founder',
+    'role.expert': 'Expert',
+    'role.consultant': 'Consultant',
+    'role.partner': 'Partner',
+    'role.ambassador': 'Ambassador',
+    'role.blogger': 'Blogger',
     
     // Common
     'common.loading': 'Loading...',
@@ -116,6 +185,57 @@ const translations = {
     'common.view': 'View',
     'common.create': 'Create',
     'common.welcome': 'Welcome',
+    'common.back': 'Back',
+    'common.next': 'Next',
+    'common.previous': 'Previous',
+    'common.close': 'Close',
+    
+    // Projects
+    'projects.title': 'Projects',
+    'projects.active': 'Active',
+    'projects.sandbox': 'Sandbox',
+    'projects.goldFund': 'Gold Fund',
+    'projects.pitch': 'Pitch Panel',
+    'projects.archived': 'Archive',
+    'projects.category': 'Category',
+    'projects.search': 'Search projects...',
+    'projects.filter': 'Filter',
+    'projects.create': 'Create Project',
+    'projects.viewDetails': 'View Details',
+    
+    // Investments
+    'investments.title': 'Investments',
+    'investments.portfolio': 'Portfolio',
+    'investments.secondary': 'Secondary Market',
+    'investments.sandbox': 'Sandbox',
+    'investments.goldFund': 'Gold Fund',
+    'investments.analytics': 'Analytics',
+    'investments.dueDiligence': 'Due Diligence',
+    
+    // Superadmin
+    'superadmin.title': 'Superadmin',
+    'superadmin.projectManagement': 'Project Management',
+    'superadmin.staffManagement': 'Staff Management',
+    'superadmin.analytics': 'Analytics',
+    'superadmin.settings': 'Settings',
+    'superadmin.approve': 'Approve',
+    'superadmin.reject': 'Reject',
+    'superadmin.revise': 'Revise',
+    'superadmin.changeCategory': 'Change Category',
+    'superadmin.moderationComment': 'Moderator Comment',
+    
+    // Project Categories
+    'category.active': 'Active',
+    'category.sandbox': 'Sandbox',
+    'category.gold': 'Gold',
+    'category.archived': 'Archive',
+    
+    // Auth
+    'auth.login': 'Login',
+    'auth.register': 'Register',
+    'auth.logout': 'Logout',
+    'auth.email': 'Email',
+    'auth.password': 'Password',
   }
 };
 

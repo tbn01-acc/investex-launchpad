@@ -80,7 +80,8 @@ export function CreateProjectModal({ open, onOpenChange }: CreateProjectModalPro
         value_proposition: formData.value_proposition,
         target_market: formData.target_market,
         business_model: formData.business_model,
-        is_sandbox: true, // Проект создается в песочнице
+        project_category: 'sandbox', // Новые проекты попадают в песочницу
+        moderation_status: 'pending', // Ожидает модерации
         status: 'draft'
       }]);
 
