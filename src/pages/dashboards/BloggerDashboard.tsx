@@ -130,13 +130,25 @@ export default function BloggerDashboard() {
       </div>
 
       {/* Основной контент */}
-      <Tabs defaultValue="content" className="space-y-4">
+      <Tabs defaultValue="dashboard" className="space-y-4">
         <TabsList>
+          <TabsTrigger value="dashboard">{t('common.dashboard')}</TabsTrigger>
           <TabsTrigger value="content">Контент</TabsTrigger>
           <TabsTrigger value="partnerships">Партнерства</TabsTrigger>
           <TabsTrigger value="analytics">Аналитика</TabsTrigger>
           <TabsTrigger value="calendar">Календарь</TabsTrigger>
         </TabsList>
+
+        <TabsContent value="dashboard">
+          <Card>
+            <CardHeader>
+              <CardTitle>Панель управления блогера</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground">Обзор вашей активности</p>
+            </CardContent>
+          </Card>
+        </TabsContent>
 
         <TabsContent value="content" className="space-y-4">
           {recentPosts.map((post) => (

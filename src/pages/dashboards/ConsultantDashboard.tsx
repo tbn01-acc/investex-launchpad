@@ -127,8 +127,9 @@ const ConsultantDashboard = () => {
       </div>
 
       {/* Detailed Information */}
-      <Tabs defaultValue="consultations" className="w-full">
-        <TabsList className="grid w-full grid-cols-5">
+      <Tabs defaultValue="dashboard" className="w-full">
+        <TabsList className="grid w-full grid-cols-6">
+          <TabsTrigger value="dashboard">{t('common.dashboard')}</TabsTrigger>
           <TabsTrigger value="consultations">Консультации</TabsTrigger>
           <TabsTrigger value="expertise">Экспертиза</TabsTrigger>
           <TabsTrigger value="clients">Клиенты</TabsTrigger>
@@ -138,6 +139,17 @@ const ConsultantDashboard = () => {
             {t('common.messages')}
           </TabsTrigger>
         </TabsList>
+
+        <TabsContent value="dashboard">
+          <Card>
+            <CardHeader>
+              <CardTitle>Панель управления консультанта</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground">Обзор вашей активности</p>
+            </CardContent>
+          </Card>
+        </TabsContent>
 
         <TabsContent value="consultations" className="space-y-4">
           <div className="flex justify-between items-center">

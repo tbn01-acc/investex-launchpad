@@ -107,8 +107,9 @@ const AmbassadorDashboard = () => {
       </div>
 
       {/* Detailed Information */}
-      <Tabs defaultValue="campaigns" className="w-full">
-        <TabsList className="grid w-full grid-cols-5">
+      <Tabs defaultValue="dashboard" className="w-full">
+        <TabsList className="grid w-full grid-cols-6">
+          <TabsTrigger value="dashboard">{t('common.dashboard')}</TabsTrigger>
           <TabsTrigger value="campaigns">Кампании</TabsTrigger>
           <TabsTrigger value="referrals">Рефералы</TabsTrigger>
           <TabsTrigger value="materials">Материалы</TabsTrigger>
@@ -118,6 +119,17 @@ const AmbassadorDashboard = () => {
             {t('common.messages')}
           </TabsTrigger>
         </TabsList>
+
+        <TabsContent value="dashboard">
+          <Card>
+            <CardHeader>
+              <CardTitle>Панель управления амбассадора</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground">Обзор вашей активности</p>
+            </CardContent>
+          </Card>
+        </TabsContent>
 
         <TabsContent value="campaigns" className="space-y-4">
           <div className="flex justify-between items-center">

@@ -3,6 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { useNavigate } from "react-router-dom";
 import { 
   Briefcase, 
@@ -18,6 +19,7 @@ import {
 
 export default function EmployeeDashboard() {
   const { profile } = useAuth();
+  const { t } = useLanguage();
   const navigate = useNavigate();
 
   const stats = [
@@ -110,13 +112,25 @@ export default function EmployeeDashboard() {
       </div>
 
       {/* Основной контент */}
-      <Tabs defaultValue="tasks" className="space-y-4">
+      <Tabs defaultValue="dashboard" className="space-y-4">
         <TabsList>
+          <TabsTrigger value="dashboard">{t('common.dashboard')}</TabsTrigger>
           <TabsTrigger value="tasks">Мои задачи</TabsTrigger>
           <TabsTrigger value="projects">Проекты</TabsTrigger>
           <TabsTrigger value="team">Команда</TabsTrigger>
           <TabsTrigger value="reports">Отчеты</TabsTrigger>
         </TabsList>
+
+        <TabsContent value="dashboard">
+          <Card>
+            <CardHeader>
+              <CardTitle>Панель управления сотрудника</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground">Обзор вашей активности</p>
+            </CardContent>
+          </Card>
+        </TabsContent>
 
         <TabsContent value="tasks" className="space-y-4">
           {tasks.map((task) => (

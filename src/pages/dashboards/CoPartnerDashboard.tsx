@@ -103,13 +103,25 @@ export default function CoPartnerDashboard() {
       </div>
 
       {/* Основной контент */}
-      <Tabs defaultValue="projects" className="space-y-4">
+      <Tabs defaultValue="dashboard" className="space-y-4">
         <TabsList>
+          <TabsTrigger value="dashboard">{t('common.dashboard')}</TabsTrigger>
           <TabsTrigger value="projects">Проекты</TabsTrigger>
           <TabsTrigger value="finances">Финансы</TabsTrigger>
           <TabsTrigger value="documents">Документы</TabsTrigger>
           <TabsTrigger value="analytics">Аналитика</TabsTrigger>
         </TabsList>
+
+        <TabsContent value="dashboard">
+          <Card>
+            <CardHeader>
+              <CardTitle>Панель управления соучредителя</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground">Обзор вашей активности</p>
+            </CardContent>
+          </Card>
+        </TabsContent>
 
         <TabsContent value="projects" className="space-y-4">
           {projects.map((project) => (

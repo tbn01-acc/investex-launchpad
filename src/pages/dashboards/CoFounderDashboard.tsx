@@ -11,7 +11,7 @@ import { Users, Briefcase, TrendingUp, Clock, DollarSign, Target, MessageSquare 
 
 const CoFounderDashboard = () => {
   const { user, profile } = useAuth();
-  const { formatCurrency } = useLanguage();
+  const { formatCurrency, t } = useLanguage();
   const navigate = useNavigate();
 
   const [stats] = useState({
@@ -113,8 +113,9 @@ const CoFounderDashboard = () => {
       </div>
 
       {/* Detailed Information */}
-      <Tabs defaultValue="projects" className="w-full">
-        <TabsList className="grid w-full grid-cols-6">
+      <Tabs defaultValue="dashboard" className="w-full">
+        <TabsList className="grid w-full grid-cols-7">
+          <TabsTrigger value="dashboard">{t('common.dashboard')}</TabsTrigger>
           <TabsTrigger value="projects">Проекты</TabsTrigger>
           <TabsTrigger value="team">Команда</TabsTrigger>
           <TabsTrigger value="equity">Капитал</TabsTrigger>
@@ -125,6 +126,17 @@ const CoFounderDashboard = () => {
             Сообщения
           </TabsTrigger>
         </TabsList>
+
+        <TabsContent value="dashboard">
+          <Card>
+            <CardHeader>
+              <CardTitle>Панель управления ко-фаундера</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground">Обзор вашей активности</p>
+            </CardContent>
+          </Card>
+        </TabsContent>
 
         <TabsContent value="projects" className="space-y-4">
           <div className="flex justify-between items-center">

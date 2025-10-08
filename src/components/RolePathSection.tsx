@@ -348,7 +348,7 @@ const RolePathSection = () => {
                     {getReorderedRoles(group.roles).map((role) => (
                       <div 
                         key={role.name}
-                        className={`p-4 rounded-lg cursor-pointer transition-all duration-300 ${
+                        className={`p-2 md:p-4 rounded-lg cursor-pointer transition-all duration-300 ${
                           activeRole === role.name 
                             ? 'bg-primary text-primary-foreground font-semibold text-base'
                             : 'bg-background border border-border hover:border-primary hover:bg-muted/50 text-base'

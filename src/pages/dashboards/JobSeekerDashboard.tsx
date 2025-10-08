@@ -135,8 +135,9 @@ const JobSeekerDashboard = () => {
       </div>
 
       {/* Detailed Information */}
-      <Tabs defaultValue="applications" className="w-full">
-        <TabsList className="grid w-full grid-cols-5">
+      <Tabs defaultValue="dashboard" className="w-full">
+        <TabsList className="grid w-full grid-cols-6">
+          <TabsTrigger value="dashboard">{t('common.dashboard')}</TabsTrigger>
           <TabsTrigger value="applications">Отклики</TabsTrigger>
           <TabsTrigger value="jobs">Вакансии</TabsTrigger>
           <TabsTrigger value="resume">Резюме</TabsTrigger>
@@ -146,6 +147,17 @@ const JobSeekerDashboard = () => {
             {t('common.messages')}
           </TabsTrigger>
         </TabsList>
+
+        <TabsContent value="dashboard">
+          <Card>
+            <CardHeader>
+              <CardTitle>Панель управления соискателя</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground">Обзор вашей активности</p>
+            </CardContent>
+          </Card>
+        </TabsContent>
 
         <TabsContent value="applications" className="space-y-4">
           <div className="flex justify-between items-center">

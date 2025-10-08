@@ -9,7 +9,7 @@ import { TrendingUp, Users, DollarSign, Target, PieChart, FileText } from 'lucid
 
 const CoInvestorDashboard = () => {
   const { user } = useAuth();
-  const { formatCurrency } = useLanguage();
+  const { formatCurrency, t } = useLanguage();
 
   const [stats] = useState({
     totalInvestments: 850000,
@@ -122,13 +122,25 @@ const CoInvestorDashboard = () => {
         </Card>
       </div>
 
-      <Tabs defaultValue="investments" className="space-y-4">
+      <Tabs defaultValue="dashboard" className="space-y-4">
         <TabsList>
+          <TabsTrigger value="dashboard">{t('common.dashboard')}</TabsTrigger>
           <TabsTrigger value="investments">Инвестиции</TabsTrigger>
           <TabsTrigger value="syndicate">Синдикат</TabsTrigger>
           <TabsTrigger value="opportunities">Возможности</TabsTrigger>
           <TabsTrigger value="analytics">Аналитика</TabsTrigger>
         </TabsList>
+
+        <TabsContent value="dashboard">
+          <Card>
+            <CardHeader>
+              <CardTitle>Панель управления соинвестора</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground">Обзор вашей активности</p>
+            </CardContent>
+          </Card>
+        </TabsContent>
 
         <TabsContent value="investments" className="space-y-4">
           <Card>

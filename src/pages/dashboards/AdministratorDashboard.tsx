@@ -3,11 +3,13 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/hooks/useAuth';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { MessagesTab } from '@/components/MessagesTab';
 import { Users, Settings, FileText, Activity, Shield, AlertCircle, MessageSquare } from 'lucide-react';
 
 const AdministratorDashboard = () => {
   const { user } = useAuth();
+  const { t } = useLanguage();
 
   const [stats] = useState({
     totalUsers: 1250,
@@ -127,8 +129,9 @@ const AdministratorDashboard = () => {
         </Card>
       </div>
 
-      <Tabs defaultValue="pending" className="space-y-4">
+      <Tabs defaultValue="dashboard" className="space-y-4">
         <TabsList>
+          <TabsTrigger value="dashboard">{t('common.dashboard')}</TabsTrigger>
           <TabsTrigger value="pending">На модерации</TabsTrigger>
           <TabsTrigger value="users">Пользователи</TabsTrigger>
           <TabsTrigger value="projects">Проекты</TabsTrigger>
@@ -139,6 +142,17 @@ const AdministratorDashboard = () => {
             Сообщения
           </TabsTrigger>
         </TabsList>
+
+        <TabsContent value="dashboard">
+          <Card>
+            <CardHeader>
+              <CardTitle>Панель управления администратора</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground">Обзор платформы и активность</p>
+            </CardContent>
+          </Card>
+        </TabsContent>
 
         <TabsContent value="pending" className="space-y-4">
           <Card>
