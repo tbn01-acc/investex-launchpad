@@ -89,13 +89,15 @@ export default function Profile() {
     try {
       const { error } = await supabase
         .from('profiles')
-        .update({
-          first_name: firstName || null,
-          last_name: lastName || null,
-          bio: bio || null,
-          role: currentRole || profile?.role,
-        })
-        .eq('user_id', user.id);
+        .upsert([
+          {
+            user_id: user.id,
+            first_name: firstName || null,
+            last_name: lastName || null,
+            bio: bio || null,
+            role: (currentRole || profile?.role) as any,
+          },
+        ], { onConflict: 'user_id' });
 
       if (error) throw error;
       await refreshProfile();
