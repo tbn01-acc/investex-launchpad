@@ -57,13 +57,15 @@ export default function ProjectsSandbox() {
 
   const fetchProjects = async () => {
     try {
-      const { data, error } = await supabase
-        .from("projects")
-        .select("*")
-        .order("created_at", { ascending: false });
+      const { data, error } = await supabase.functions.invoke('admin-auth', {
+        body: { action: 'getProjects' },
+      });
 
       if (error) throw error;
-      setProjects(data || []);
+
+      // Edge function returns { projects } or full payload
+      const list = (data as any)?.projects ?? (Array.isArray(data) ? data : []);
+      setProjects(list || []);
     } catch (error: any) {
       toast({
         title: "Ошибка",

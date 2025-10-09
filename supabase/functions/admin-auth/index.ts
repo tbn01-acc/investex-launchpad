@@ -98,6 +98,30 @@ serve(async (req) => {
           headers: { ...corsHeaders, "Content-Type": "application/json" } 
         }
       );
+    } else if (action === 'getProjects') {
+      // Получаем все проекты для суперадминистратора (service role обходит RLS)
+      const { data: projects, error: projectsError } = await supabaseAdmin
+        .from('projects')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (projectsError) {
+        console.error('Projects fetch error:', projectsError);
+        return new Response(
+          JSON.stringify({ error: "Ошибка получения проектов" }),
+          { 
+            status: 500, 
+            headers: { ...corsHeaders, "Content-Type": "application/json" } 
+          }
+        );
+      }
+
+      return new Response(
+        JSON.stringify({ projects: projects || [] }),
+        { 
+          headers: { ...corsHeaders, "Content-Type": "application/json" } 
+        }
+      );
     }
 
     return new Response(
