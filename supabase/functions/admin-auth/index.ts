@@ -15,23 +15,46 @@ serve(async (req) => {
   try {
     const { username, password, action = 'login' } = await req.json();
 
-    if (!username || !password) {
-      return new Response(
-        JSON.stringify({ error: "Требуется логин и пароль" }),
-        { 
-          status: 400, 
-          headers: { ...corsHeaders, "Content-Type": "application/json" } 
-        }
-      );
-    }
-
-    // Создаем Supabase клиент с service role для доступа к admin_accounts
+    // Создаем Supabase клиент с service role для привилегированных запросов
     const supabaseAdmin = createClient(
       Deno.env.get("SUPABASE_URL") ?? "",
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
     );
 
+    // Для действий кроме логина проверяем, что вызывающий — авторизованный суперадмин
+    if (action !== 'login') {
+      const supabaseAuth = createClient(
+        Deno.env.get("SUPABASE_URL") ?? "",
+        Deno.env.get("SUPABASE_ANON_KEY") ?? "",
+        { global: { headers: { Authorization: req.headers.get('Authorization') || '' } } }
+      );
+
+      const { data: { user }, error: userError } = await supabaseAuth.auth.getUser();
+      if (userError || !user) {
+        return new Response(
+          JSON.stringify({ error: "Не авторизован" }),
+          { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+
+      const { data: isSuperadmin, error: roleError } = await supabaseAdmin.rpc('has_role', { _user_id: user.id, _role: 'superadmin' });
+      if (roleError || !isSuperadmin) {
+        return new Response(
+          JSON.stringify({ error: "Недостаточно прав" }),
+          { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+    }
+
     if (action === 'login') {
+      // Проверка параметров логина
+      if (!username || !password) {
+        return new Response(
+          JSON.stringify({ error: "Требуется логин и пароль" }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+
       // Аутентификация администратора
       const { data: adminData, error: authError } = await supabaseAdmin
         .rpc('authenticate_admin', {
