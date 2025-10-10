@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -11,9 +11,15 @@ import {
   Star, Lock, Trophy, Shuffle, Clock, Users, 
   DollarSign, Target, BarChart3, Shield
 } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 
 const Investments = () => {
+  const { toast } = useToast();
   const [selectedTab, setSelectedTab] = useState('secondary');
+  const [dbSandboxProjects, setDbSandboxProjects] = useState<any[]>([]);
+  const [dbGoldProjects, setDbGoldProjects] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
   // Secondary Market Opportunities
   const secondaryMarketDeals = [
@@ -67,10 +73,59 @@ const Investments = () => {
     }
   ];
 
+  useEffect(() => {
+    fetchInvestmentProjects();
+  }, []);
+
+  const fetchInvestmentProjects = async () => {
+    try {
+      const { data: sandbox, error: sandboxError } = await supabase
+        .from('projects')
+        .select('*')
+        .eq('project_category', 'sandbox')
+        .in('moderation_status', ['approved']);
+
+      const { data: gold, error: goldError } = await supabase
+        .from('projects')
+        .select('*')
+        .eq('project_category', 'gold_fund')
+        .in('moderation_status', ['approved']);
+
+      if (sandboxError) throw sandboxError;
+      if (goldError) throw goldError;
+
+      setDbSandboxProjects(sandbox || []);
+      setDbGoldProjects(gold || []);
+    } catch (error: any) {
+      console.error('Error fetching investment projects:', error);
+      toast({
+        title: 'Ошибка загрузки проектов',
+        description: error.message,
+        variant: 'destructive'
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Sandbox Projects
   const sandboxProjects = [
+    ...dbSandboxProjects.map(p => ({
+      id: p.id,
+      company: p.title,
+      description: p.description || 'Нет описания',
+      stage: p.project_stage || 'Неизвестно',
+      seeking: p.funding_goal || 0,
+      minInvestment: p.min_investment || 0,
+      earlyBirdBonus: '15% bonus shares',
+      restrictedAccess: true,
+      investorsCount: 8,
+      spotsLeft: 12,
+      verificationRequired: 'Квалифицированный инвестор',
+      potentialROI: '10x-50x'
+    })),
     {
-      id: 1,
+      id: 'demo1',
       company: 'AI Healthcare Diagnostic',
       description: 'Платформа ранней диагностики заболеваний с использованием AI',
       stage: 'Beta Testing',
@@ -84,7 +139,7 @@ const Investments = () => {
       potentialROI: '10x-50x'
     },
     {
-      id: 2,
+      id: 'demo2',
       company: 'BlockChain Logistics',
       description: 'Децентрализованная платформа для управления цепочками поставок',
       stage: 'MVP Ready',
@@ -101,8 +156,23 @@ const Investments = () => {
 
   // Gold Fund Projects
   const goldFundProjects = [
+    ...dbGoldProjects.map(p => ({
+      id: p.id,
+      company: p.title,
+      description: p.description || 'Нет описания',
+      provenROI: '+380%',
+      yearlyGrowth: '+145%',
+      fundingRounds: 4,
+      totalRaised: p.funding_goal || 0,
+      currentValuation: (p.funding_goal || 0) * 5,
+      nextRound: 'Series C',
+      seeking: p.funding_goal || 0,
+      minInvestment: p.min_investment || 0,
+      leadInvestors: ['Top Venture Fund', 'Strategic Partner'],
+      achievements: ['Top 10 StartUp 2024', 'Profitable', '500K+ Users']
+    })),
     {
-      id: 1,
+      id: 'demo_gold1',
       company: 'SuperApp Platform',
       description: 'Экосистема суперприложений для B2B и B2C',
       provenROI: '+380%',
@@ -117,7 +187,7 @@ const Investments = () => {
       achievements: ['Top 10 StartUp 2024', 'Profitable', '500K+ Users']
     },
     {
-      id: 2,
+      id: 'demo_gold2',
       company: 'BioTech Innovation',
       description: 'Разработка персонализированной медицины на основе генетики',
       provenROI: '+520%',

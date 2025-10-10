@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
@@ -11,15 +11,64 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Search, Eye } from 'lucide-react';
 import ProjectModal from '@/components/ProjectModal';
 import { allProjects } from '@/data/projectsData';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 
 const Projects = () => {
+  const { toast } = useToast();
   const [selectedProject, setSelectedProject] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [projectCategory, setProjectCategory] = useState('active');
+  const [dbProjects, setDbProjects] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const filteredProjects = allProjects.filter(project => {
+  useEffect(() => {
+    fetchProjects();
+  }, []);
+
+  const fetchProjects = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('projects')
+        .select('*')
+        .in('moderation_status', ['approved'])
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setDbProjects(data || []);
+    } catch (error: any) {
+      console.error('Error fetching projects:', error);
+      toast({ 
+        title: 'Ошибка загрузки проектов', 
+        description: error.message, 
+        variant: 'destructive' 
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const allProjectsCombined = [
+    ...allProjects,
+    ...dbProjects.map(p => ({
+      id: p.id,
+      title: p.title,
+      description: p.description || '',
+      category: p.industry || 'Прочее',
+      status: p.status || 'active',
+      budget: `${(p.funding_goal || 0).toLocaleString()} ₽`,
+      timeline: p.project_stage || 'Неизвестно',
+      team: p.team_size || 1,
+      image: '/placeholder.svg',
+      technologies: [],
+      projectCategory: p.project_category || 'active',
+      isPitch: p.project_category === 'pitch',
+    }))
+  ];
+
+  const filteredProjects = allProjectsCombined.filter(project => {
     const matchesSearch = project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          project.description.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory = selectedCategory === 'all' || project.category === selectedCategory;
