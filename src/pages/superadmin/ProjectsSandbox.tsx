@@ -323,7 +323,7 @@ export default function ProjectsSandbox() {
                           <Button
                             size="sm"
                             variant="outline"
-                            onClick={() => navigate(`/projects/${project.id}`)}
+                            onClick={() => navigate(`/project/${project.id}`)}
                           >
                             <Eye className="mr-2 h-4 w-4" />
                             Просмотр
