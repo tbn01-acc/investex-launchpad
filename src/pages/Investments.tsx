@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { Link } from 'react-router-dom';
 
 const Investments = () => {
   const { toast } = useToast();
@@ -457,9 +458,13 @@ const Investments = () => {
                         <Lock className="w-4 h-4 mr-2" />
                         Запросить доступ
                       </Button>
-                      <Button variant="outline">
-                        Подробнее
-                      </Button>
+                      {typeof project.id === 'string' && project.id.length > 20 ? (
+                        <Button variant="outline" asChild>
+                          <Link to={`/project/${project.id}`}>Подробнее</Link>
+                        </Button>
+                      ) : (
+                        <Button variant="outline">Подробнее</Button>
+                      )}
                     </div>
                   </CardContent>
                 </Card>
@@ -562,9 +567,13 @@ const Investments = () => {
                         <DollarSign className="w-4 h-4 mr-2" />
                         Инвестировать
                       </Button>
-                      <Button variant="outline">
-                        Полный отчет
-                      </Button>
+                      {typeof project.id === 'string' && project.id.length > 20 ? (
+                        <Button variant="outline" asChild>
+                          <Link to={`/project/${project.id}`}>Подробнее</Link>
+                        </Button>
+                      ) : (
+                        <Button variant="outline">Полный отчет</Button>
+                      )}
                     </div>
                   </CardContent>
                 </Card>

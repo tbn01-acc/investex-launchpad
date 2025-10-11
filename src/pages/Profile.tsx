@@ -87,17 +87,35 @@ export default function Profile() {
     if (!user) return;
     setSaving(true);
     try {
-      const { error } = await supabase
+      // Ensure profile exists; if not, create it, else update
+      const { data: existing, error: selectError } = await supabase
         .from('profiles')
-        .update({
-          first_name: firstName || null,
-          last_name: lastName || null,
-          bio: bio || null,
-          role: (currentRole || profile?.role) as any,
-        })
-        .eq('user_id', user.id);
+        .select('id')
+        .eq('user_id', user.id)
+        .maybeSingle();
 
-      if (error) throw error;
+      if (selectError) throw selectError;
+
+      const payload = {
+        first_name: firstName || null,
+        last_name: lastName || null,
+        bio: bio || null,
+        role: (currentRole || profile?.role) as any,
+      };
+
+      if (!existing) {
+        const { error: insertError } = await supabase
+          .from('profiles')
+          .insert([{ user_id: user.id, ...payload }]);
+        if (insertError) throw insertError;
+      } else {
+        const { error: updateError } = await supabase
+          .from('profiles')
+          .update(payload)
+          .eq('user_id', user.id);
+        if (updateError) throw updateError;
+      }
+
       await refreshProfile();
       toast({ title: t('common.success'), description: 'Профиль обновлен' });
     } catch (e: any) {
@@ -182,7 +200,7 @@ export default function Profile() {
                   </Select>
                 </div>
                 <Button className="w-full md:w-auto" onClick={handleSave} disabled={saving}>
-                  {saving ? 'Сохранение...' : t('common.save')}
+                  {saving ? 'Сохранение...' : 'Сохранить'}
                 </Button>
               </CardContent>
             </Card>

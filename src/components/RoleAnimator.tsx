@@ -222,7 +222,7 @@ const RoleAnimator = () => {
               {filteredRoles.map((role, index) => (
                 <CarouselItem key={role.name}>
                   <div className="p-1">
-                    <div className="bg-background border-2 border-border rounded-xl shadow-lg p-4 h-[320px] flex flex-col justify-between">
+                    <div className="bg-background border-2 border-border rounded-xl shadow-lg p-4 h-[160px] flex flex-col justify-between">
                       <div>
                         <h3 className="text-xl font-bold mb-4 text-primary text-center">
                           {role.name}
