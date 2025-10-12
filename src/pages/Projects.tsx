@@ -33,7 +33,6 @@ const Projects = () => {
       const { data, error } = await supabase
         .from('projects')
         .select('*')
-        .in('moderation_status', ['approved'])
         .order('created_at', { ascending: false });
 
       if (error) throw error;

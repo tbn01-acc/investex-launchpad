@@ -83,14 +83,12 @@ const Investments = () => {
       const { data: sandbox, error: sandboxError } = await supabase
         .from('projects')
         .select('*')
-        .eq('project_category', 'sandbox')
-        .in('moderation_status', ['approved']);
+        .eq('project_category', 'sandbox');
 
       const { data: gold, error: goldError } = await supabase
         .from('projects')
         .select('*')
-        .eq('project_category', 'gold_fund')
-        .in('moderation_status', ['approved']);
+        .eq('project_category', 'gold_fund');
 
       if (sandboxError) throw sandboxError;
       if (goldError) throw goldError;

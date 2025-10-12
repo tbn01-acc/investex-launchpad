@@ -99,8 +99,7 @@ const ProjectDetail = () => {
           .from('projects')
           .select('*')
           .eq('id', id)
-          .in('moderation_status', ['approved'])
-          .single();
+          .maybeSingle();
         if (!active) return;
         if (error) {
           setDbRecord(null);
