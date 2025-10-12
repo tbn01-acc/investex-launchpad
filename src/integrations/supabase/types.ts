@@ -1177,6 +1177,7 @@ export type Database = {
           bio: string | null
           company: string | null
           company_size: number | null
+          counterparty_contacts: Json
           created_at: string
           currency: string | null
           documents_status: string | null
@@ -1236,6 +1237,7 @@ export type Database = {
           bio?: string | null
           company?: string | null
           company_size?: number | null
+          counterparty_contacts?: Json
           created_at?: string
           currency?: string | null
           documents_status?: string | null
@@ -1295,6 +1297,7 @@ export type Database = {
           bio?: string | null
           company?: string | null
           company_size?: number | null
+          counterparty_contacts?: Json
           created_at?: string
           currency?: string | null
           documents_status?: string | null
