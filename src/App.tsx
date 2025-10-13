@@ -23,6 +23,10 @@ import Dashboard from "./pages/Dashboard";
 import Projects from "./pages/Projects";
 import ProjectDetail from "./pages/ProjectDetail";
 import Investments from "./pages/Investments";
+import InvestmentStartups from "./pages/InvestmentStartups";
+import IdeaExchange from "./pages/IdeaExchange";
+import SecondaryMarket from "./pages/SecondaryMarket";
+import ManagementFranchises from "./pages/ManagementFranchises";
 import NotFound from "./pages/NotFound";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
@@ -92,6 +96,10 @@ const App = () => (
                 <Route path="/project/:id" element={<ProjectDetail />} />
                 <Route path="/projects/:id" element={<ProjectDetail />} />
                 <Route path="/investments" element={<Investments />} />
+                <Route path="/investments/startups" element={<InvestmentStartups />} />
+                <Route path="/investments/ideas" element={<IdeaExchange />} />
+                <Route path="/investments/secondary" element={<SecondaryMarket />} />
+                <Route path="/investments/franchises" element={<ManagementFranchises />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
