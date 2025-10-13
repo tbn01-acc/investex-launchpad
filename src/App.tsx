@@ -23,7 +23,6 @@ import Dashboard from "./pages/Dashboard";
 import Projects from "./pages/Projects";
 import ProjectDetail from "./pages/ProjectDetail";
 import Investments from "./pages/Investments";
-import AdminPanel from "./pages/AdminPanel";
 import NotFound from "./pages/NotFound";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
@@ -95,7 +94,6 @@ const App = () => (
                 <Route path="/investments" element={<Investments />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/profile" element={<Profile />} />
-                <Route path="/admin" element={<AdminPanel />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/reset-password/:token" element={<ResetPassword />} />
                 <Route path="/terms" element={<Terms />} />
