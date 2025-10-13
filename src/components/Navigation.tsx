@@ -15,6 +15,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { LanguageCurrencySelector } from "@/components/LanguageCurrencySelector";
+import UserAvatar from "@/components/UserAvatar";
 import AppBreadcrumbs from "@/components/AppBreadcrumbs";
 
 const Navigation = () => {
