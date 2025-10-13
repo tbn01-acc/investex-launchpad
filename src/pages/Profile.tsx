@@ -87,34 +87,19 @@ export default function Profile() {
     if (!user) return;
     setSaving(true);
     try {
-      // Ensure profile exists; if not, create it, else update
-      const { data: existing, error: selectError } = await supabase
-        .from('profiles')
-        .select('id')
-        .eq('user_id', user.id)
-        .maybeSingle();
-
-      if (selectError) throw selectError;
-
       const payload = {
+        user_id: user.id,
         first_name: firstName || null,
         last_name: lastName || null,
         bio: bio || null,
         role: (currentRole || profile?.role) as any,
       };
 
-      if (!existing) {
-        const { error: insertError } = await supabase
-          .from('profiles')
-          .insert([{ user_id: user.id, ...payload }]);
-        if (insertError) throw insertError;
-      } else {
-        const { error: updateError } = await supabase
-          .from('profiles')
-          .update(payload)
-          .eq('user_id', user.id);
-        if (updateError) throw updateError;
-      }
+      const { error } = await supabase
+        .from('profiles')
+        .upsert(payload, { onConflict: 'user_id' });
+
+      if (error) throw error;
 
       await refreshProfile();
       toast({ title: t('common.success'), description: 'Профиль обновлен' });
