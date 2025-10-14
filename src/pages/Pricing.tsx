@@ -1,14 +1,14 @@
 import React from 'react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
-import PricingSection from '@/components/PricingSection';
+import PricingSectionNew from '@/components/PricingSectionNew';
 
 const Pricing = () => {
   return (
     <div className="min-h-screen">
       <Navigation />
       <main className="pt-24">
-        <PricingSection />
+        <PricingSectionNew />
       </main>
       <Footer />
     </div>

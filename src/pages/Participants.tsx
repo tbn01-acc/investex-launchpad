@@ -51,6 +51,14 @@ const Participants = () => {
       color: 'bg-yellow-500',
       features: ['Учредительство', 'Долевое участие', 'Стратегические решения'],
       href: '/dashboard?role=co-founder'
+    },
+    {
+      title: 'Франчайзер',
+      description: 'Развивайте франчайзинговую сеть и масштабируйте бизнес',
+      icon: Building,
+      color: 'bg-teal-500',
+      features: ['Управление сетью', 'Поиск франчайзи', 'Пассивный доход'],
+      href: '/dashboard?role=franchiser'
     }
   ];
 
