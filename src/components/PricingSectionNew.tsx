@@ -1,13 +1,16 @@
 import { useState } from 'react';
-import { Check } from 'lucide-react';
+import { Check, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { useNavigate } from 'react-router-dom';
 
 const PricingSectionNew = () => {
   const [selectedCategory, setSelectedCategory] = useState('Участники');
   const [selectedRole, setSelectedRole] = useState('Инвестор');
   const [selectedPeriod, setSelectedPeriod] = useState(1);
+  const navigate = useNavigate();
 
   const categories = ['Участники', 'Исполнители', 'Сотрудники', 'Партнеры'];
   
@@ -28,23 +31,305 @@ const PricingSectionNew = () => {
   const calculatePrice = (basePrice: number) => {
     const period = periods.find(p => p.months === selectedPeriod);
     const discount = period?.discount || 0;
-    return Math.round(basePrice * (1 - discount / 100) * 100);
+    const discountedPrice = basePrice * (1 - discount / 100);
+    return Math.round(discountedPrice * 100); // конвертация из $ в ₽ (1$=100₽)
   };
 
+  // Данные тарифов (в долларах, будут конвертированы в рубли)
   const tariffs = {
-    'Инвестор': [
-      { name: 'Начинающий', price: 0, features: ['Просмотр проектов: до 20/мес', 'Базовая аналитика', 'До 2 инвестиций/мес от $100', 'Email-поддержка'] },
-      { name: 'Профессионал', price: 9900, trial: true, features: ['Неограниченный просмотр', 'AI-аналитика и Due Diligence', 'До 10 инвестиций/мес', '24/7 поддержка', 'Вторичный рынок'] },
-      { name: 'Элитный', price: 49900, features: ['Все функции Профессионал', 'Неограниченные инвестиции', 'Персональный менеджер', 'Эксклюзивные сделки', 'VIP-мероприятия'] }
-    ],
-    'Франчайзер': [
-      { name: 'Базовый', price: 0, features: ['1 франчайзинговая программа', 'Базовые шаблоны', 'Размещение в базе', 'Базовые инструменты'] },
-      { name: 'Рост', price: 9900, trial: true, features: ['До 3 программ', 'Сеть до 50 франчайзи', 'AI-подбор партнеров', 'CRM система', 'SEO-размещение'] },
-      { name: 'Масштаб', price: 29900, features: ['Неограниченные программы', 'Персональный менеджер', 'Юр. сопровождение', 'Приоритетное размещение'] }
-    ]
+    'Инвестор': {
+      plans: [
+        { name: 'Начинающий', price: 0, trial: false },
+        { name: 'Профессионал', price: 99, trial: true },
+        { name: 'Элитный', price: 499, trial: false }
+      ],
+      features: [
+        ['Просмотр проектов', 'до 20/мес', 'неограниченно', 'неограниченно'],
+        ['Аналитика', 'базовая', 'AI-аналитика', 'AI + персональный менеджер'],
+        ['Инвестиции/мес', 'до 2 от $100', 'до 10', 'неограниченно'],
+        ['Поддержка', 'email 9-18', '24/7', '24/7 + персональный менеджер'],
+        ['Вторичный рынок', false, true, true],
+        ['Закрытые раунды', false, true, true],
+        ['Эксклюзивные сделки', false, false, true],
+        ['VIP-мероприятия', false, false, true]
+      ]
+    },
+    'Соинвестор': {
+      plans: [
+        { name: 'Участник', price: 0, trial: false },
+        { name: 'Клуб', price: 49, trial: true },
+        { name: 'Синдикат', price: 249, trial: false }
+      ],
+      features: [
+        ['Синдикаты/мес', '1', 'неограниченно', 'неограниченно + создание'],
+        ['Порог входа', 'стандартный', 'снижен в 5 раз', 'минимальный'],
+        ['Due Diligence', 'базовый', 'коллективный', 'профессиональный'],
+        ['Закрытые синдикаты', false, true, true],
+        ['Управление группой', false, false, 'до 50 чел'],
+        ['Комиссия с инвестиций', false, false, '2%'],
+        ['Юр. сопровождение', false, false, true]
+      ]
+    },
+    'Фаундер': {
+      plans: [
+        { name: 'Стартап', price: 0, trial: false },
+        { name: 'Рост', price: 99, trial: true },
+        { name: 'Масштаб', price: 499, trial: false }
+      ],
+      features: [
+        ['Активные проекты', 'до 2', 'до 10', 'неограниченно'],
+        ['Управление командой', 'до 3 чел', 'до 25 чел', 'неограниченно'],
+        ['AI-конструктор команды', false, true, true],
+        ['Финансовые модели', 'базовые', 'расширенные', 'полные'],
+        ['Data Room', false, true, true],
+        ['Персональный консультант', false, false, true],
+        ['Приоритетное размещение', false, false, true],
+        ['Связи с топ-инвесторами', false, false, true]
+      ]
+    },
+    'Ко-фаундер': {
+      plans: [
+        { name: 'Искатель', price: 0, trial: false },
+        { name: 'Поиск', price: 49, trial: true },
+        { name: 'Партнер', price: 249, trial: false }
+      ],
+      features: [
+        ['Отклики на проекты/мес', '3', 'неограниченно', 'неограниченно'],
+        ['AI-подбор проектов', false, true, true],
+        ['Аналитика стартапов', 'базовая', 'углубленная', 'полная'],
+        ['Закрытые проекты', false, true, true],
+        ['Юридические шаблоны', false, false, true],
+        ['Оценка доли', false, false, true],
+        ['Юр. сопровождение', false, false, true]
+      ]
+    },
+    'Соучредитель': {
+      plans: [
+        { name: 'Наблюдатель', price: 0, trial: false },
+        { name: 'Продвинутый', price: 79, trial: true },
+        { name: 'Стратегический', price: 349, trial: false }
+      ],
+      features: [
+        ['Запросов на анализ/мес', '2', '10', 'неограниченно'],
+        ['M&A анализ', 'базовый', 'расширенный', 'профессиональный'],
+        ['Закрытые сделки', false, true, true],
+        ['Due Diligence', false, true, true],
+        ['Токенизация долей', false, false, true],
+        ['Советы директоров', false, false, true],
+        ['Комплексное сопровождение', false, false, true]
+      ]
+    },
+    'Франчайзер': {
+      plans: [
+        { name: 'Базовый', price: 0, trial: false },
+        { name: 'Рост', price: 99, trial: true },
+        { name: 'Масштаб', price: 299, trial: false }
+      ],
+      features: [
+        ['Франчайзинговые программы', '1', 'до 3', 'неограниченно'],
+        ['Сеть франчайзи', 'базовая', 'до 50', 'неограниченно'],
+        ['AI-подбор партнеров', false, true, true],
+        ['CRM система', false, true, true],
+        ['SEO-размещение', false, true, true],
+        ['Персональный менеджер', false, false, true],
+        ['Юр. сопровождение', false, false, true],
+        ['Приоритетное размещение', false, false, true]
+      ]
+    },
+    'Фрилансер': {
+      plans: [
+        { name: 'Новичок', price: 0, trial: false },
+        { name: 'Профессионал', price: 9, trial: true },
+        { name: 'Эксперт', price: 29, trial: false }
+      ],
+      features: [
+        ['Отклики/мес', '5', 'неограниченно', 'неограниченно'],
+        ['Активные проекты', '2', 'до 10', 'неограниченно'],
+        ['Комиссия платформы', '10%', '7%', '5%'],
+        ['Приоритет в поиске', false, true, true],
+        ['Time tracking', false, true, true],
+        ['Equity участие', false, false, true],
+        ['Высокобюджетные проекты', false, false, true],
+        ['Персональный менеджер', false, false, true]
+      ]
+    },
+    'Эксперт': {
+      plans: [
+        { name: 'Консультант-стажер', price: 0, trial: false },
+        { name: 'Консультант', price: 49, trial: true },
+        { name: 'Сениор', price: 99, trial: false }
+      ],
+      features: [
+        ['Консультации/мес', '2', 'неограниченно', 'неограниченно'],
+        ['Почасовая ставка', 'от $25/час', 'от $50/час', 'от $100/час'],
+        ['Технические аудиты', false, true, true],
+        ['Due Diligence', false, true, true],
+        ['Менторство', false, false, true],
+        ['Инвестиционные комитеты', false, false, true],
+        ['Персональный менеджер', false, false, true]
+      ]
+    },
+    'Консультант': {
+      plans: [
+        { name: 'Бизнес-аналитик', price: 0, trial: false },
+        { name: 'Бизнес-консультант', price: 79, trial: true },
+        { name: 'Стратегический', price: 149, trial: false }
+      ],
+      features: [
+        ['Сессии/мес', '2', 'неограниченно', 'неограниченно'],
+        ['Ставка', 'от $30/час', 'от $75/час', 'от $150/час'],
+        ['Стратегические планы', false, true, true],
+        ['Процессная оптимизация', false, true, true],
+        ['C-level консультирование', false, false, true],
+        ['Стратегические сессии', false, false, true],
+        ['Проекты трансформации', false, false, true]
+      ]
+    },
+    'Аутсорсер': {
+      plans: [
+        { name: 'Команда', price: 0, trial: false },
+        { name: 'Агентство', price: 99, trial: true },
+        { name: 'Предприятие', price: 249, trial: false }
+      ],
+      features: [
+        ['Команда', 'до 5 чел', 'до 20 чел', 'неограниченно'],
+        ['Комиссия', '12%', '8%', '5%'],
+        ['CRM интеграция', false, true, true],
+        ['Белый лейбл', false, true, true],
+        ['Приоритет в тендерах', false, true, true],
+        ['Персональный менеджер', false, false, true],
+        ['Enterprise контракты', false, false, true],
+        ['Индивидуальные SLA', false, false, true]
+      ]
+    },
+    'Подрядчик': {
+      plans: [
+        { name: 'Подрядчик', price: 0, trial: false },
+        { name: 'Сертифицированный', price: 99, trial: true },
+        { name: 'Премиум', price: 299, trial: false }
+      ],
+      features: [
+        ['Контракты одновременно', '1', '3', 'неограниченно'],
+        ['B2B контракты', false, true, true],
+        ['Сеть субподрядчиков', false, true, true],
+        ['Контроль качества', false, true, true],
+        ['Приоритет в тендерах', false, true, true],
+        ['Эксклюзивные контракты', false, false, true],
+        ['Персональный менеджер', false, false, true],
+        ['Индивидуальное страхование', false, false, true]
+      ]
+    },
+    'Администратор проекта': {
+      plans: [
+        { name: 'Администратор', price: 0, trial: false }
+      ],
+      features: [
+        ['Управление проектами', 'неограниченно'],
+        ['Команда', 'любой размер'],
+        ['Система KPI', 'полная аналитика'],
+        ['AI-советник', true],
+        ['Автоматизация отчетности', true],
+        ['C-level дашборды', true],
+        ['Системные интеграции', true],
+        ['Карьерный трек', true],
+        ['Токенизированные опционы', true]
+      ]
+    },
+    'Сотрудник проекта': {
+      plans: [
+        { name: 'Сотрудник', price: 0, trial: false }
+      ],
+      features: [
+        ['Карьерный трек', 'Junior до Lead'],
+        ['Токенизированные доли', true],
+        ['Система обучения', true],
+        ['База знаний', true],
+        ['Персональное менторство', true],
+        ['Прозрачная система KPI', true],
+        ['Участие в решениях', true],
+        ['Внутренние переводы', true],
+        ['Социальные программы', true]
+      ]
+    },
+    'Соискатель': {
+      plans: [
+        { name: 'Базовый', price: 0, trial: false },
+        { name: 'Премиум', price: 9, trial: true },
+        { name: 'Профи', price: 29, trial: false }
+      ],
+      features: [
+        ['Отклики/мес', '10', 'неограниченно', 'неограниченно'],
+        ['AI-оптимизация резюме', false, true, true],
+        ['Персональные рекомендации', false, true, true],
+        ['Подготовка к собеседованиям', false, true, true],
+        ['Закрытые вакансии', false, false, true],
+        ['Networking с лидерами', false, false, true],
+        ['Персональный консультант', false, false, true],
+        ['Закрытые мероприятия', false, false, true]
+      ]
+    },
+    'Партнёр (Affiliate)': {
+      plans: [
+        { name: 'Партнер', price: 0, trial: false }
+      ],
+      features: [
+        ['Комиссия', 'до 25%'],
+        ['Аналитика', 'в реальном времени'],
+        ['Персональный менеджер', true],
+        ['Готовые материалы', true],
+        ['Многоуровневые вознаграждения', true],
+        ['Эксклюзивные кампании', true],
+        ['Закрытые предложения', true],
+        ['Ежемесячные бонусы', true],
+        ['Бонус при оплате', '25%']
+      ]
+    },
+    'Амбассадор проекта': {
+      plans: [
+        { name: 'Амбассадор', price: 0, trial: false }
+      ],
+      features: [
+        ['Представление проектов', true],
+        ['Токены проектов', true],
+        ['Эксклюзивный контент', true],
+        ['Прямая связь с командами', true],
+        ['Участие в стратегических решениях', true],
+        ['Закрытые мероприятия', true],
+        ['Персональный менеджер', true],
+        ['Влияние на развитие', true],
+        ['Коллекционные активы', true]
+      ]
+    },
+    'Лидер мнений/Блогер': {
+      plans: [
+        { name: 'Блогер', price: 0, trial: false }
+      ],
+      features: [
+        ['Эксклюзивные данные', true],
+        ['Приоритетное сотрудничество', true],
+        ['Монетизация экспертизы', true],
+        ['Партнерские доходы', true],
+        ['Инсайдерская информация', true],
+        ['Интервью с фаундерами', true],
+        ['Поддержка контент-менеджера', true],
+        ['Экспертные панели', true],
+        ['Брендированные материалы', true]
+      ]
+    }
   };
 
-  const currentTariffs = tariffs[selectedRole as keyof typeof tariffs] || tariffs['Инвестор'];
+  const currentTariff = tariffs[selectedRole as keyof typeof tariffs] || tariffs['Инвестор'];
+
+  const handleSelectPlan = (planName: string, price: number) => {
+    navigate(`/payment?plan=${encodeURIComponent(planName)}&price=${calculatePrice(price)}&role=${encodeURIComponent(selectedRole)}&period=${selectedPeriod}`);
+  };
+
+  const renderFeatureValue = (value: any) => {
+    if (typeof value === 'boolean') {
+      return value ? <Check className="h-5 w-5 text-green-500 mx-auto" /> : <X className="h-5 w-5 text-muted-foreground mx-auto" />;
+    }
+    return <span className="text-sm">{value}</span>;
+  };
 
   return (
     <div className="py-16 px-4">
@@ -57,7 +342,14 @@ const PricingSectionNew = () => {
         {/* Категории */}
         <div className="flex flex-wrap gap-3 justify-center mb-6">
           {categories.map(cat => (
-            <Button key={cat} variant={selectedCategory === cat ? 'default' : 'outline'} onClick={() => { setSelectedCategory(cat); setSelectedRole(rolesByCategory[cat][0]); }}>
+            <Button 
+              key={cat} 
+              variant={selectedCategory === cat ? 'default' : 'outline'} 
+              onClick={() => { 
+                setSelectedCategory(cat); 
+                setSelectedRole(rolesByCategory[cat as keyof typeof rolesByCategory][0]); 
+              }}
+            >
               {cat}
             </Button>
           ))}
@@ -65,8 +357,13 @@ const PricingSectionNew = () => {
 
         {/* Роли */}
         <div className="flex flex-wrap gap-2 justify-center mb-6">
-          {rolesByCategory[selectedCategory].map(role => (
-            <Badge key={role} variant={selectedRole === role ? 'default' : 'outline'} className="cursor-pointer px-4 py-2" onClick={() => setSelectedRole(role)}>
+          {rolesByCategory[selectedCategory as keyof typeof rolesByCategory].map(role => (
+            <Badge 
+              key={role} 
+              variant={selectedRole === role ? 'default' : 'outline'} 
+              className="cursor-pointer px-4 py-2 text-sm" 
+              onClick={() => setSelectedRole(role)}
+            >
               {role}
             </Badge>
           ))}
@@ -75,37 +372,90 @@ const PricingSectionNew = () => {
         {/* Периоды */}
         <div className="flex flex-wrap gap-3 justify-center mb-12">
           {periods.map(p => (
-            <Button key={p.months} variant={selectedPeriod === p.months ? 'default' : 'outline'} onClick={() => setSelectedPeriod(p.months)}>
+            <Button 
+              key={p.months} 
+              variant={selectedPeriod === p.months ? 'default' : 'outline'} 
+              onClick={() => setSelectedPeriod(p.months)}
+            >
               {p.label} {p.discount > 0 && <span className="ml-2 text-green-400">-{p.discount}%</span>}
             </Button>
           ))}
         </div>
 
         {/* Тарифы */}
-        <div className="grid md:grid-cols-3 gap-8 mb-12">
-          {currentTariffs.map((tariff, idx) => (
-            <Card key={idx} className={idx === 1 ? 'border-primary shadow-lg' : ''}>
+        <div className={`grid gap-8 mb-12 ${currentTariff.plans.length === 3 ? 'md:grid-cols-3' : 'md:grid-cols-1 max-w-md mx-auto'}`}>
+          {currentTariff.plans.map((plan, idx) => (
+            <Card key={idx} className={idx === 1 && currentTariff.plans.length === 3 ? 'border-primary shadow-lg scale-105' : ''}>
               <CardHeader>
-                <CardTitle className="text-2xl">{tariff.name}</CardTitle>
+                <CardTitle className="text-2xl">{plan.name}</CardTitle>
                 <div className="mt-4">
-                  <span className="text-4xl font-bold">{calculatePrice(tariff.price)} ₽</span>
+                  <span className="text-4xl font-bold">{calculatePrice(plan.price).toLocaleString('ru-RU')} ₽</span>
                   <span className="text-muted-foreground">/мес</span>
-                  {tariff.trial && <Badge className="ml-2">7 дней пробно</Badge>}
+                  {plan.trial && <Badge className="ml-2" variant="secondary">7 дней пробно</Badge>}
                 </div>
               </CardHeader>
               <CardContent>
-                <ul className="space-y-3 mb-6">
-                  {tariff.features.map((f, i) => (
-                    <li key={i} className="flex gap-2">
-                      <Check className="h-5 w-5 text-green-500 flex-shrink-0" />
-                      <span className="text-sm">{f}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Button className="w-full">Выбрать</Button>
+                <Button 
+                  className="w-full mb-6" 
+                  onClick={() => handleSelectPlan(plan.name, plan.price)}
+                >
+                  Выбрать
+                </Button>
               </CardContent>
             </Card>
           ))}
+        </div>
+
+        {/* Таблица сравнения */}
+        <div className="mt-16">
+          <h3 className="text-2xl font-bold text-center mb-8">Сравнение тарифов</h3>
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="min-w-[200px]">Возможности</TableHead>
+                  {currentTariff.plans.map((plan, idx) => (
+                    <TableHead key={idx} className="text-center min-w-[150px]">
+                      <div className="font-bold">{plan.name}</div>
+                      <div className="text-sm font-normal text-muted-foreground">
+                        {calculatePrice(plan.price).toLocaleString('ru-RU')} ₽/мес
+                      </div>
+                    </TableHead>
+                  ))}
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {currentTariff.features.map((feature, idx) => (
+                  <TableRow key={idx}>
+                    <TableCell className="font-medium">{feature[0]}</TableCell>
+                    {feature.slice(1).map((value, valIdx) => (
+                      <TableCell key={valIdx} className="text-center">
+                        {renderFeatureValue(value)}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        </div>
+
+        {/* CTA Section */}
+        <div className="mt-16 text-center">
+          <Button 
+            variant="outline" 
+            size="lg" 
+            onClick={() => {
+              const allPlans = currentTariff.plans.map((plan, idx) => ({
+                name: plan.name,
+                price: calculatePrice(plan.price),
+                features: currentTariff.features.map(f => ({ name: f[0], value: f[idx + 1] }))
+              }));
+              console.log('All plans:', allPlans);
+            }}
+          >
+            Подробнее о возможностях
+          </Button>
         </div>
       </div>
     </div>

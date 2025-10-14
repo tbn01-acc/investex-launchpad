@@ -53,6 +53,7 @@ const Navigation = () => {
             { title: "Фаундеры", href: "/participants", description: "Создание стартапов" },
             { title: "Ко-фаундеры", href: "/participants", description: "Партнерство в проектах" },
             { title: "Соучредители", href: "/participants", description: "Совместное учредительство" },
+            { title: "Франчайзеры", href: "/participants", description: "Франчайзинговый бизнес" },
           ]
         },
         {

@@ -19,6 +19,7 @@ const titles: Record<string, string> = {
   ideas: 'Биржа идей',
   secondary: 'Вторичный рынок',
   franchises: 'Управленческие франшизы',
+  'management-franchises': 'Управленческие франшизы',
   pricing: 'Тарифы',
   about: 'О платформе',
   profile: 'Профиль',
