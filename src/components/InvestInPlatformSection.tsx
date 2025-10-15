@@ -107,26 +107,42 @@ const InvestInPlatformSection = () => {
                   Инвестиционное предложение
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="flex justify-between items-center">
-                  <span className="text-muted-foreground">Минимальная инвестиция:</span>
-                  <span className="font-semibold">от 1 250 000₽</span>
+              <CardContent className="space-y-4">
+                <div className="rounded-lg p-3 border">
+                  <div className="text-sm text-muted-foreground mb-1">Общее предложение</div>
+                  <div className="font-semibold">18% доли</div>
                 </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-muted-foreground">Целевой раунд:</span>
-                  <span className="font-semibold">Pre-Seed / Seed</span>
+
+                <div className="grid gap-4">
+                  <div className="p-4 border rounded-xl">
+                    <div className="text-sm text-muted-foreground">До 15.11.2025</div>
+                    <ul className="mt-2 space-y-1 text-sm">
+                      <li>€500k (5 BTC) за 3%</li>
+                      <li>€1M (10 BTC) за 10%</li>
+                      <li>€1.5M (15 BTC) за 18%</li>
+                    </ul>
+                  </div>
+                  <div className="p-4 border rounded-xl">
+                    <div className="text-sm text-muted-foreground">До 25.12.2025</div>
+                    <ul className="mt-2 space-y-1 text-sm">
+                      <li>€650k (6.5 BTC) за 3%</li>
+                      <li>€1.2M (12 BTC) за 10%</li>
+                      <li>€1.8M (18 BTC) за 18%</li>
+                    </ul>
+                  </div>
+                  <div className="p-4 border rounded-xl">
+                    <div className="text-sm text-muted-foreground">До 01.03.2026</div>
+                    <ul className="mt-2 space-y-1 text-sm">
+                      <li>€1M (10 BTC) за 3%</li>
+                      <li>€1.8M (18 BTC) за 10%</li>
+                      <li>€2.5M (25 BTC) за 18%</li>
+                    </ul>
+                  </div>
                 </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-muted-foreground">Использование средств:</span>
-                  <span className="font-semibold">Разработка, маркетинг</span>
-                </div>
-                <div className="pt-4 border-t">
-                  <Button className="w-full" size="lg">
-                    Получить инвестиционный пакет
-                  </Button>
-                  <p className="text-xs text-muted-foreground text-center mt-2">
-                    Бизнес-план, финмодель, презентация и комната данных
-                  </p>
+
+                <div className="pt-2">
+                  <Button className="w-full" size="lg">Получить инвестиционный пакет</Button>
+                  <p className="text-xs text-muted-foreground text-center mt-2">Бизнес-план, финмодель, презентация и Data Room</p>
                 </div>
               </CardContent>
             </Card>

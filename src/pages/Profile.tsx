@@ -88,20 +88,34 @@ export default function Profile() {
     if (!user) return;
     setSaving(true);
     try {
-      const payload = {
+      const basePayload = {
         first_name: firstName || null,
         last_name: lastName || null,
         bio: bio || null,
-        role: (currentRole || profile?.role) as any,
         updated_at: new Date().toISOString(),
       };
 
-      const { error } = await supabase
+      // Проверяем, есть ли профиль
+      const { data: existing, error: fetchError } = await supabase
         .from('profiles')
-        .update(payload)
-        .eq('user_id', user.id);
+        .select('id')
+        .eq('user_id', user.id)
+        .maybeSingle();
 
-      if (error) throw error;
+      if (fetchError && fetchError.code !== 'PGRST116') throw fetchError;
+
+      if (existing) {
+        const { error: updError } = await supabase
+          .from('profiles')
+          .update({ ...basePayload, role: (currentRole || profile?.role) as any })
+          .eq('user_id', user.id);
+        if (updError) throw updError;
+      } else {
+        const { error: insError } = await supabase
+          .from('profiles')
+          .insert([{ user_id: user.id, ...basePayload, role: (currentRole || null) as any }]);
+        if (insError) throw insError;
+      }
 
       await refreshProfile();
       toast({ title: t('common.success'), description: 'Профиль обновлен' });

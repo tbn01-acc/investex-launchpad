@@ -337,12 +337,31 @@ const Navigation = () => {
           </div>
         </div>
 
-        {/* Мобильное меню */}
+        {/* Мобильное меню (слайдер) */}
         {isOpen && (
-          <div className="md:hidden fixed inset-0 top-16 bg-background z-50 overflow-y-auto">
-            <div className="flex flex-col h-full">
-              {/* Крестик для закрытия */}
-              <div className="flex justify-end p-4 border-b border-border">
+          <div className="md:hidden fixed inset-0 z-[100]">
+            {/* Бэкдроп */}
+            <div
+              className="absolute inset-0 bg-background/70 backdrop-blur-sm"
+              onClick={() => setIsOpen(false)}
+            />
+
+            {/* Панель меню */}
+            <div
+              className={cn(
+                "absolute top-0 left-0 h-full w-11/12 max-w-sm bg-background border-r border-border shadow-xl",
+                "transform transition-transform duration-300",
+                isOpen ? "translate-x-0" : "-translate-x-full"
+              )}
+            >
+              {/* Хедер панели */}
+              <div className="flex items-center justify-between p-4 border-b border-border">
+                <Link to="/" onClick={() => setIsOpen(false)} className="flex items-center space-x-2">
+                  <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
+                    <span className="text-white font-bold text-lg">I</span>
+                  </div>
+                  <span className="text-lg font-bold bg-gradient-primary bg-clip-text text-transparent">InvestEx</span>
+                </Link>
                 <Button
                   variant="ghost"
                   size="icon"
@@ -363,7 +382,7 @@ const Navigation = () => {
                   />
                 ))}
               </div>
-              
+
               {/* Футер меню */}
               <div className="border-t border-border p-4 space-y-3">
                 <LanguageCurrencySelector />
