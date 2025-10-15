@@ -1,183 +1,169 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { TrendingUp, Users, Globe, Shield, Zap, Target } from 'lucide-react';
+import { TrendingUp, Users, Target, Zap, Bitcoin, Euro } from 'lucide-react';
 
-const InvestInPlatformSection = () => {
-  return (
-    <section className="py-16 bg-gradient-to-br from-primary/5 via-background to-secondary/5">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <Badge className="mb-4 px-6 py-2 text-base">Инвестиционное предложение</Badge>
-          <h2 className="text-4xl font-bold mb-4">Инвестируй в платформу Invest-Ex</h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Присоединяйтесь к революции в сфере инвестиций и стартапов. Станьте частью экосистемы будущего.
-          </p>
-        </div>
-
-        <div className="grid lg:grid-cols-2 gap-12 items-center mb-12">
-          <div>
-            <h3 className="text-3xl font-bold mb-6">Почему Invest-Ex?</h3>
-            <div className="space-y-4">
-              <div className="flex items-start gap-3">
-                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
-                  <TrendingUp className="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <h4 className="font-semibold text-lg mb-1">AI-Driven Due Diligence</h4>
-                  <p className="text-muted-foreground">
-                    Анализ 1000+ параметров за секунды. Точность прогнозов 85%+ на основе исторических данных. 
-                    Снижение затрат на Due Diligence на 90%.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <div className="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Users className="w-6 h-6 text-secondary" />
-                </div>
-                <div>
-                  <h4 className="font-semibold text-lg mb-1">Мультиролевая экосистема</h4>
-                  <p className="text-muted-foreground">
-                    Инвесторы, стартапы, фрилансеры, консультанты на одной платформе. 
-                    Network Effect: каждый новый участник увеличивает ценность для всех.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <div className="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Globe className="w-6 h-6 text-accent" />
-                </div>
-                <div>
-                  <h4 className="font-semibold text-lg mb-1">Глобальный масштаб</h4>
-                  <p className="text-muted-foreground">
-                    Выход на международные рынки: Россия, СНГ, EMEA, NA, LATAM, APAC. 
-                    Региональные хабы для локализации и готовность к международному IPO.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Shield className="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <h4 className="font-semibold text-lg mb-1">Блокчейн и смартконтракты</h4>
-                  <p className="text-muted-foreground">
-                    Прозрачность сделок через распределенный реестр. 
-                    Автоматизация процессов и снижение транзакционных издержек.
-                  </p>
-                </div>
-              </div>
+const InvestmentTier = ({ 
+  period, 
+  deadline, 
+  offers 
+}: { 
+  period: string; 
+  deadline: string; 
+  offers: { amount: string; btc: string; equity: string }[] 
+}) => (
+  <Card>
+    <CardHeader>
+      <div className="flex items-center justify-between">
+        <CardTitle className="text-lg">{period}</CardTitle>
+        <Badge variant="secondary">{deadline}</Badge>
+      </div>
+    </CardHeader>
+    <CardContent className="space-y-3">
+      {offers.map((offer, idx) => (
+        <div key={idx} className="p-4 border rounded-lg bg-muted/50">
+          <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center gap-2">
+              <Euro className="w-4 h-4 text-primary" />
+              <span className="font-bold text-lg">{offer.amount}</span>
+            </div>
+            <div className="text-sm text-muted-foreground">или</div>
+            <div className="flex items-center gap-2">
+              <Bitcoin className="w-4 h-4 text-primary" />
+              <span className="font-semibold">{offer.btc}</span>
             </div>
           </div>
+          <div className="text-center">
+            <span className="text-sm text-muted-foreground">за </span>
+            <span className="text-xl font-bold text-primary">{offer.equity}</span>
+            <span className="text-sm text-muted-foreground"> доли</span>
+          </div>
+        </div>
+      ))}
+    </CardContent>
+  </Card>
+);
 
-          <div className="space-y-6">
-            <Card className="border-2 border-primary/20">
-              <CardHeader>
-                <CardTitle>Финансовые показатели</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <div className="text-2xl font-bold text-primary">12%</div>
-                    <div className="text-sm text-muted-foreground">TAM рост рынка</div>
-                  </div>
-                  <div>
-                    <div className="text-2xl font-bold text-secondary">85%+</div>
-                    <div className="text-sm text-muted-foreground">Точность AI-прогнозов</div>
-                  </div>
-                  <div>
-                    <div className="text-2xl font-bold text-accent">90%</div>
-                    <div className="text-sm text-muted-foreground">Снижение затрат DD</div>
-                  </div>
-                  <div>
-                    <div className="text-2xl font-bold text-primary">50-70%</div>
-                    <div className="text-sm text-muted-foreground">Экономия каждого</div>
-                  </div>
+const InvestInPlatformSection = () => {
+  const investmentPeriods = [
+    {
+      period: 'Раунд 1',
+      deadline: 'До 15.11.2025',
+      offers: [
+        { amount: '€500k', btc: '5 BTC', equity: '3%' },
+        { amount: '€1M', btc: '10 BTC', equity: '10%' },
+        { amount: '€1.5M', btc: '15 BTC', equity: '18%' }
+      ]
+    },
+    {
+      period: 'Раунд 2',
+      deadline: 'До 25.12.2025',
+      offers: [
+        { amount: '€650k', btc: '6.5 BTC', equity: '3%' },
+        { amount: '€1.2M', btc: '12 BTC', equity: '10%' },
+        { amount: '€1.8M', btc: '18 BTC', equity: '18%' }
+      ]
+    },
+    {
+      period: 'Раунд 3',
+      deadline: 'До 01.03.2026',
+      offers: [
+        { amount: '€1M', btc: '10 BTC', equity: '3%' },
+        { amount: '€1.8M', btc: '18 BTC', equity: '10%' },
+        { amount: '€2.5M', btc: '25 BTC', equity: '18%' }
+      ]
+    }
+  ];
+
+  return (
+    <div className="space-y-6">
+      <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-transparent">
+        <CardHeader>
+          <CardTitle className="text-2xl flex items-center gap-3">
+            <TrendingUp className="w-8 h-8 text-primary" />
+            Инвестируйте в будущее венчурного рынка
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <p className="text-lg text-muted-foreground">
+            Станьте частью революции в венчурных инвестициях. Invest-Ex — это не просто платформа, 
+            это новая эра в мире стартапов и инвестиций.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <Card>
+              <CardContent className="pt-6">
+                <div className="flex items-center gap-3 mb-2">
+                  <Users className="w-5 h-5 text-primary" />
+                  <div className="text-sm font-medium">Огромный рынок</div>
                 </div>
+                <div className="text-2xl font-bold">$17.5B</div>
+                <div className="text-xs text-muted-foreground">TAM венчурного рынка</div>
               </CardContent>
             </Card>
 
             <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Target className="w-5 h-5" />
-                  Инвестиционное предложение
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="rounded-lg p-3 border">
-                  <div className="text-sm text-muted-foreground mb-1">Общее предложение</div>
-                  <div className="font-semibold">18% доли</div>
+              <CardContent className="pt-6">
+                <div className="flex items-center gap-3 mb-2">
+                  <Target className="w-5 h-5 text-primary" />
+                  <div className="text-sm font-medium">Точность AI</div>
                 </div>
+                <div className="text-2xl font-bold">92.3%</div>
+                <div className="text-xs text-muted-foreground">Точность прогнозов</div>
+              </CardContent>
+            </Card>
 
-                <div className="grid gap-4">
-                  <div className="p-4 border rounded-xl">
-                    <div className="text-sm text-muted-foreground">До 15.11.2025</div>
-                    <ul className="mt-2 space-y-1 text-sm">
-                      <li>€500k (5 BTC) за 3%</li>
-                      <li>€1M (10 BTC) за 10%</li>
-                      <li>€1.5M (15 BTC) за 18%</li>
-                    </ul>
-                  </div>
-                  <div className="p-4 border rounded-xl">
-                    <div className="text-sm text-muted-foreground">До 25.12.2025</div>
-                    <ul className="mt-2 space-y-1 text-sm">
-                      <li>€650k (6.5 BTC) за 3%</li>
-                      <li>€1.2M (12 BTC) за 10%</li>
-                      <li>€1.8M (18 BTC) за 18%</li>
-                    </ul>
-                  </div>
-                  <div className="p-4 border rounded-xl">
-                    <div className="text-sm text-muted-foreground">До 01.03.2026</div>
-                    <ul className="mt-2 space-y-1 text-sm">
-                      <li>€1M (10 BTC) за 3%</li>
-                      <li>€1.8M (18 BTC) за 10%</li>
-                      <li>€2.5M (25 BTC) за 18%</li>
-                    </ul>
-                  </div>
+            <Card>
+              <CardContent className="pt-6">
+                <div className="flex items-center gap-3 mb-2">
+                  <Zap className="w-5 h-5 text-primary" />
+                  <div className="text-sm font-medium">Быстрая окупаемость</div>
                 </div>
-
-                <div className="pt-2">
-                  <Button className="w-full" size="lg">Получить инвестиционный пакет</Button>
-                  <p className="text-xs text-muted-foreground text-center mt-2">Бизнес-план, финмодель, презентация и Data Room</p>
-                </div>
+                <div className="text-2xl font-bold">24 мес</div>
+                <div className="text-xs text-muted-foreground">Путь к прибыльности</div>
               </CardContent>
             </Card>
           </div>
+        </CardContent>
+      </Card>
+
+      {/* Инвестиционное предложение */}
+      <div className="space-y-4">
+        <div className="text-center">
+          <h3 className="text-2xl font-bold mb-2">Инвестиционное предложение</h3>
+          <p className="text-muted-foreground">Общее предложение: до 18% доли</p>
         </div>
 
-        <Card className="bg-gradient-to-r from-primary/10 via-secondary/10 to-accent/10 border-2">
-          <CardContent className="p-8">
-            <div className="grid md:grid-cols-3 gap-8">
-              <div className="text-center">
-                <Zap className="w-12 h-12 mx-auto mb-3 text-primary" />
-                <h4 className="font-semibold mb-2">Комплексный инструментарий</h4>
-                <p className="text-sm text-muted-foreground">
-                  Все необходимое в едином интерфейсе: от подачи заявки до exit
-                </p>
-              </div>
-              <div className="text-center">
-                <Users className="w-12 h-12 mx-auto mb-3 text-secondary" />
-                <h4 className="font-semibold mb-2">Real-time аналитика</h4>
-                <p className="text-sm text-muted-foreground">
-                  Панели KPI, автоматизированные отчеты и актуальные данные 24/7
-                </p>
-              </div>
-              <div className="text-center">
-                <Shield className="w-12 h-12 mx-auto mb-3 text-accent" />
-                <h4 className="font-semibold mb-2">Безопасная Data Room</h4>
-                <p className="text-sm text-muted-foreground">
-                  Защищенное хранилище документов с гибким управлением доступом
-                </p>
-              </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {investmentPeriods.map((period, idx) => (
+            <InvestmentTier key={idx} {...period} />
+          ))}
+        </div>
+
+        <Card className="bg-muted/30">
+          <CardContent className="pt-6">
+            <div className="text-center space-y-2">
+              <p className="text-sm text-muted-foreground">
+                Прогнозируемая оценка при выходе
+              </p>
+              <p className="text-3xl font-bold text-primary">15-20x</p>
+              <p className="text-sm text-muted-foreground">
+                ROI через 3-5 лет
+              </p>
             </div>
           </CardContent>
         </Card>
+
+        <div className="flex flex-col sm:flex-row gap-4 pt-4">
+          <Button size="lg" className="flex-1">
+            Стать инвестором
+          </Button>
+          <Button size="lg" variant="outline" className="flex-1">
+            Скачать презентацию
+          </Button>
+        </div>
       </div>
-    </section>
+    </div>
   );
 };
 
