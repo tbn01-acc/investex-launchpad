@@ -48,6 +48,7 @@ import DashboardPage from "./pages/bi/DashboardPage";
 import ProjectsSandbox from "./pages/superadmin/ProjectsSandbox";
 import StaffManagement from "./pages/superadmin/StaffManagement";
 import SuperadminAnalytics from "./pages/superadmin/SuperadminAnalytics";
+import FranchiserDashboard from "./pages/dashboards/FranchiserDashboard";
 import ProjectsOverviewPage from "./pages/pm/ProjectsOverviewPage";
 import TimelinePage from "./pages/pm/TimelinePage";
 import TeamPage from "./pages/hr/TeamPage";
@@ -101,6 +102,7 @@ const App = () => (
                 <Route path="/investments/secondary" element={<SecondaryMarket />} />
                 <Route path="/investments/franchises" element={<ManagementFranchises />} />
                 <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/dashboards/franchiser" element={<FranchiserDashboard />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/reset-password/:token" element={<ResetPassword />} />

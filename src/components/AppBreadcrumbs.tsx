@@ -24,6 +24,7 @@ const titles: Record<string, string> = {
   about: 'О платформе',
   profile: 'Профиль',
   dashboard: 'Личный кабинет',
+  dashboards: 'Личные кабинеты',
   contacts: 'Контакты',
   partners: 'Партнеры',
   auth: 'Вход',

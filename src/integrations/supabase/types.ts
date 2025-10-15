@@ -2397,6 +2397,7 @@ export type Database = {
         | "blogger"
         | "co_investor"
         | "superadmin"
+        | "franchiser"
       organization_type: "individual" | "company" | "fund" | "organization"
       project_category_type: "active" | "sandbox" | "gold_fund" | "archived"
       project_stage: "idea" | "mvp" | "traction" | "scale" | "exit"
@@ -2615,6 +2616,7 @@ export const Constants = {
         "blogger",
         "co_investor",
         "superadmin",
+        "franchiser",
       ],
       organization_type: ["individual", "company", "fund", "organization"],
       project_category_type: ["active", "sandbox", "gold_fund", "archived"],

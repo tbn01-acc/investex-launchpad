@@ -19,6 +19,7 @@ const ROLE_CATEGORIES = {
     { value: 'founder', label: 'Фаундер' },
     { value: 'co_founder', label: 'Ко-фаундер' },
     { value: 'co_partner', label: 'Соучредитель' },
+    { value: 'franchiser', label: 'Франчайзер' },
   ],
   "Исполнители": [
     { value: 'freelancer', label: 'Фрилансер' },
@@ -87,28 +88,18 @@ export default function Profile() {
     if (!user) return;
     setSaving(true);
     try {
-      // Получаем текущий профиль для сохранения всех полей
-      const { data: currentProfile } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('user_id', user.id)
-        .single();
-
       const payload = {
-        user_id: user.id,
         first_name: firstName || null,
         last_name: lastName || null,
         bio: bio || null,
         role: (currentRole || profile?.role) as any,
-        // Сохраняем существующие значения для обязательных полей
-        counterparty_contacts: currentProfile?.counterparty_contacts || {},
-        created_at: currentProfile?.created_at || new Date().toISOString(),
         updated_at: new Date().toISOString(),
       };
 
       const { error } = await supabase
         .from('profiles')
-        .upsert(payload, { onConflict: 'user_id' });
+        .update(payload)
+        .eq('user_id', user.id);
 
       if (error) throw error;
 
