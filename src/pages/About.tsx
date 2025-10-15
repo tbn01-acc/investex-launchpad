@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Users, Zap, Shield, Globe } from 'lucide-react';
 import RoadmapSection from '@/components/RoadmapSection';
+import InvestInPlatformSection from '@/components/InvestInPlatformSection';
 
 const About = () => {
   return (
@@ -163,6 +164,11 @@ const About = () => {
 
           {/* Roadmap Section */}
           <RoadmapSection />
+
+          {/* Invest in Platform Section */}
+          <div id="invest">
+            <InvestInPlatformSection />
+          </div>
 
           {/* Platform Analytics Section */}
           <section className="mb-16">

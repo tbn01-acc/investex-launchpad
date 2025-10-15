@@ -15,6 +15,7 @@ const roles = [
   { name: "Фаундер", description: "Запускаю стартап, управляю командой, презентуюсь инвесторам.", category: "creators" as RoleCategory },
   { name: "Ко-фаундер", description: "Вхожу в перспективные проекты, улучшаю профиль команды, развиваю идеи.", category: "creators" as RoleCategory },
   { name: "Соучредитель", description: "Вхожу в проекты, получая долю, работаю с лидерами, строю бизнес.", category: "creators" as RoleCategory },
+  { name: "Франчайзер", description: "Создаю и управляю франшизами, строю сеть партнеров, масштабирую бизнес.", category: "creators" as RoleCategory },
   { name: "Фрилансер", description: "Работаю над проектами удаленно, выбираю интересные задачи, строю карьеру.", category: "executors" as RoleCategory },
   { name: "Эксперт", description: "Консультирую по узкой специализации, решаю сложные технические задачи.", category: "executors" as RoleCategory },
   { name: "Консультант", description: "Помогаю бизнесу в стратегических вопросах, оптимизирую процессы.", category: "executors" as RoleCategory },

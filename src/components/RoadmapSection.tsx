@@ -4,37 +4,49 @@ const RoadmapSection = () => {
       title: "Платформа MVP",
       description: "Запуск базового функционала для инвесторов и фаундеров",
       status: "done",
-      quarter: "Q1 2024"
+      quarter: "Q4 2025"
     },
     {
       title: "AI-Аналитика",
-      description: "Внедрение системы анализа проектов и подбора команд",
-      status: "done",
-      quarter: "Q2 2024"
+      description: "Внедрение AI-системы анализа проектов и подбора команд",
+      status: "in-progress",
+      quarter: "Q1-Q2 2026"
     },
     {
       title: "Вторичный рынок",
       description: "Запуск торговли токенизированными долями в стартапах",
       status: "in-progress",
-      quarter: "Q3 2024"
+      quarter: "Q1-Q2 2026"
     },
     {
-      title: "Мобильное приложение",
-      description: "Разработка iOS и Android приложений",
-      status: "in-progress",
-      quarter: "Q4 2024"
-    },
-    {
-      title: "Международная экспансия",
-      description: "Запуск в странах СНГ и Европе",
+      title: "Блокчейн и Смартконтракты",
+      description: "Реализация реестра данных на Блокчейне и унификация сделок через Смартконтракты",
       status: "planned",
-      quarter: "Q1 2025"
+      quarter: "Q1-Q3 2026"
     },
     {
-      title: "DeFi интеграция",
-      description: "Внедрение децентрализованных финансовых инструментов",
+      title: "Мультиязычная версия и регистрация",
+      description: "Выпуск полнофункциональной мультиязычной версии, регистрация холдинга (Эстония), запуск в России",
       status: "planned",
-      quarter: "Q2 2025"
+      quarter: "Q2-Q3 2026"
+    },
+    {
+      title: "Экспансия СНГ и мобильные приложения",
+      description: "Расширение в СНГ (Казахстан, Беларусь, Грузия). Создание мобильных приложений (Android, iOS)",
+      status: "planned",
+      quarter: "Q2 2026 - Q3 2027"
+    },
+    {
+      title: "Хаб ОАЭ и глобальные рынки",
+      description: "Открытие хаба в ОАЭ, запуск рынков EMEA, NA, LATAM",
+      status: "planned",
+      quarter: "Q3 2026 - Q3 2027"
+    },
+    {
+      title: "IPO/Exit и APAC",
+      description: "Подготовка к IPO/Exit, выход на рынок APAC",
+      status: "planned",
+      quarter: "Q3 2027 - Q2 2029"
     }
   ];
 

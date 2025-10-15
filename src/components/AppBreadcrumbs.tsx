@@ -71,6 +71,7 @@ const titles: Record<string, string> = {
   'knowledge-base': 'База знаний',
   contact: 'Контакты',
   payment: 'Оплата',
+  franchiser: 'Франчайзер',
   new: 'Создать',
 };
 
