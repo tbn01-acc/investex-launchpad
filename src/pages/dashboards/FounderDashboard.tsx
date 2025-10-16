@@ -8,10 +8,11 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { CreateProjectModal } from '@/components/CreateProjectModal';
 import { PitchModal } from '@/components/PitchModal';
 import { MessagesTab } from '@/components/MessagesTab';
+import { RoleSelector } from '@/components/RoleSelector';
 import { useNavigate } from 'react-router-dom';
 import { 
   Rocket, Users, DollarSign, TrendingUp, 
-  Plus, Eye, Target, Lightbulb, Calendar, MessageSquare
+  Plus, Eye, Target, Lightbulb, Calendar, MessageSquare, Settings
 } from 'lucide-react';
 
 export default function FounderDashboard() {
@@ -208,7 +209,7 @@ export default function FounderDashboard() {
 
         {/* Detailed Tabs */}
         <Tabs defaultValue="projects" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-5">
+          <TabsList className="grid w-full grid-cols-6">
             <TabsTrigger value="projects">
               <Rocket className="h-4 w-4 mr-2" />
               Проекты
@@ -224,6 +225,10 @@ export default function FounderDashboard() {
             <TabsTrigger value="events">
               <Calendar className="h-4 w-4 mr-2" />
               События
+            </TabsTrigger>
+            <TabsTrigger value="settings">
+              <Settings className="h-4 w-4 mr-2" />
+              Настройки
             </TabsTrigger>
             <TabsTrigger value="messages">
               <MessageSquare className="h-4 w-4 mr-2" />
@@ -430,6 +435,10 @@ export default function FounderDashboard() {
                 </CardContent>
               </Card>
             </div>
+          </TabsContent>
+
+          <TabsContent value="settings">
+            <RoleSelector />
           </TabsContent>
 
           <TabsContent value="messages">

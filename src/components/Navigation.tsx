@@ -349,7 +349,7 @@ const Navigation = () => {
             {/* Панель меню */}
             <div
               className={cn(
-                "absolute top-0 left-0 h-full w-11/12 max-w-sm bg-background border-r border-border shadow-xl",
+                "absolute top-0 left-0 h-full w-11/12 max-w-sm bg-background/95 backdrop-blur-md border-r border-border shadow-xl",
                 "transform transition-transform duration-300",
                 isOpen ? "translate-x-0" : "-translate-x-full"
               )}

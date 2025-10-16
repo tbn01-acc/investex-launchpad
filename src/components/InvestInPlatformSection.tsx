@@ -1,37 +1,26 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { TrendingUp, Users, Target, Zap, Bitcoin, Euro } from 'lucide-react';
+import { TrendingUp, Users, Target, Zap } from 'lucide-react';
 
 const InvestmentTier = ({ 
-  period, 
   deadline, 
   offers 
 }: { 
-  period: string; 
   deadline: string; 
   offers: { amount: string; btc: string; equity: string }[] 
 }) => (
   <Card>
     <CardHeader>
-      <div className="flex items-center justify-between">
-        <CardTitle className="text-lg">{period}</CardTitle>
-        <Badge variant="secondary">{deadline}</Badge>
-      </div>
+      <Badge variant="secondary" className="w-fit">{deadline}</Badge>
     </CardHeader>
     <CardContent className="space-y-3">
       {offers.map((offer, idx) => (
         <div key={idx} className="p-4 border rounded-lg bg-muted/50">
           <div className="flex items-center justify-between mb-2">
-            <div className="flex items-center gap-2">
-              <Euro className="w-4 h-4 text-primary" />
-              <span className="font-bold text-lg">{offer.amount}</span>
-            </div>
+            <span className="font-bold text-lg">{offer.amount}</span>
             <div className="text-sm text-muted-foreground">или</div>
-            <div className="flex items-center gap-2">
-              <Bitcoin className="w-4 h-4 text-primary" />
-              <span className="font-semibold">{offer.btc}</span>
-            </div>
+            <span className="font-semibold">{offer.btc}</span>
           </div>
           <div className="text-center">
             <span className="text-sm text-muted-foreground">за </span>
@@ -47,8 +36,7 @@ const InvestmentTier = ({
 const InvestInPlatformSection = () => {
   const investmentPeriods = [
     {
-      period: 'Раунд 1',
-      deadline: 'До 15.11.2025',
+      deadline: 'Доступно до 15.11.2025',
       offers: [
         { amount: '€500k', btc: '5 BTC', equity: '3%' },
         { amount: '€1M', btc: '10 BTC', equity: '10%' },
@@ -56,8 +44,7 @@ const InvestInPlatformSection = () => {
       ]
     },
     {
-      period: 'Раунд 2',
-      deadline: 'До 25.12.2025',
+      deadline: 'Доступно до 25.12.2025',
       offers: [
         { amount: '€650k', btc: '6.5 BTC', equity: '3%' },
         { amount: '€1.2M', btc: '12 BTC', equity: '10%' },
@@ -65,8 +52,7 @@ const InvestInPlatformSection = () => {
       ]
     },
     {
-      period: 'Раунд 3',
-      deadline: 'До 01.03.2026',
+      deadline: 'Доступно до 01.03.2026',
       offers: [
         { amount: '€1M', btc: '10 BTC', equity: '3%' },
         { amount: '€1.8M', btc: '18 BTC', equity: '10%' },
@@ -130,7 +116,7 @@ const InvestInPlatformSection = () => {
       {/* Инвестиционное предложение */}
       <div className="space-y-4">
         <div className="text-center">
-          <h3 className="text-2xl font-bold mb-2">Инвестиционное предложение</h3>
+          <h3 className="text-3xl font-bold mb-2">Инвестиционное предложение</h3>
           <p className="text-muted-foreground">Общее предложение: до 18% доли</p>
         </div>
 
@@ -158,8 +144,10 @@ const InvestInPlatformSection = () => {
           <Button size="lg" className="flex-1">
             Стать инвестором
           </Button>
-          <Button size="lg" variant="outline" className="flex-1">
-            Скачать презентацию
+          <Button size="lg" variant="outline" className="flex-1" asChild>
+            <a href="/Invest-Ex.pdf" download="Invest-Ex-Presentation.pdf">
+              Скачать презентацию
+            </a>
           </Button>
         </div>
       </div>

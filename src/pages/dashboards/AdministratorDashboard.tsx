@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/hooks/useAuth';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { MessagesTab } from '@/components/MessagesTab';
+import { RoleSelector } from '@/components/RoleSelector';
 import { Users, Settings, FileText, Activity, Shield, AlertCircle, MessageSquare } from 'lucide-react';
 
 const AdministratorDashboard = () => {
@@ -208,6 +209,7 @@ const AdministratorDashboard = () => {
         </TabsContent>
 
         <TabsContent value="settings" className="space-y-4">
+          <RoleSelector />
           <Card>
             <CardHeader>
               <CardTitle>Настройки платформы</CardTitle>

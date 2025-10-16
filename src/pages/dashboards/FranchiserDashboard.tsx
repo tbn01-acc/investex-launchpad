@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import FranchiseModal from '@/components/FranchiseModal';
+import { RoleSelector } from '@/components/RoleSelector';
 import { CheckCircle, Users, Store, LineChart, Settings } from 'lucide-react';
 
 const MetricCard = ({ title, value, hint }: { title: string; value: string; hint?: string }) => (
@@ -63,9 +64,24 @@ const FranchiserDashboard: React.FC = () => {
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <MetricCard title="Рост заявок" value="+38%" />
-                    <MetricCard title="Конверсия в сделку" value="12%" />
-                    <MetricCard title="Срок окупаемости" value="14 мес" />
+                    <Card>
+                      <CardContent className="pt-6">
+                        <div className="text-sm font-medium text-muted-foreground mb-2">Рост заявок</div>
+                        <div className="text-3xl font-bold text-green-600">+38%</div>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardContent className="pt-6">
+                        <div className="text-sm font-medium text-muted-foreground mb-2">Конверсия в сделку</div>
+                        <div className="text-3xl font-bold">12%</div>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardContent className="pt-6">
+                        <div className="text-sm font-medium text-muted-foreground mb-2">Срок окупаемости</div>
+                        <div className="text-3xl font-bold">14 мес</div>
+                      </CardContent>
+                    </Card>
                   </div>
                 </CardContent>
               </Card>
@@ -116,9 +132,24 @@ const FranchiserDashboard: React.FC = () => {
                 <CardContent>
                   <div className="text-sm text-muted-foreground mb-3">Интеграция с CRM для автоматической обработки заявок</div>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <MetricCard title="Новые за 7 дней" value="12" />
-                    <MetricCard title="В работе" value="31" />
-                    <MetricCard title="Закрыто" value="7" />
+                    <Card>
+                      <CardContent className="pt-6">
+                        <div className="text-sm font-medium text-muted-foreground mb-2">Новые за 7 дней</div>
+                        <div className="text-3xl font-bold">12</div>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardContent className="pt-6">
+                        <div className="text-sm font-medium text-muted-foreground mb-2">В работе</div>
+                        <div className="text-3xl font-bold">31</div>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardContent className="pt-6">
+                        <div className="text-sm font-medium text-muted-foreground mb-2">Закрыто</div>
+                        <div className="text-3xl font-bold text-green-600">7</div>
+                      </CardContent>
+                    </Card>
                   </div>
                 </CardContent>
               </Card>
@@ -130,14 +161,30 @@ const FranchiserDashboard: React.FC = () => {
                   <CardTitle>Финансы сети</CardTitle>
                 </CardHeader>
                 <CardContent className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <MetricCard title="Роялти (мес)" value="3.8 млн₽" />
-                  <MetricCard title="Маркетинг (мес)" value="1.1 млн₽" />
-                  <MetricCard title="Чистая прибыль (мес)" value="2.2 млн₽" />
+                  <Card>
+                    <CardContent className="pt-6">
+                      <div className="text-sm font-medium text-muted-foreground mb-2">Роялти (мес)</div>
+                      <div className="text-2xl font-bold">3.8 млн₽</div>
+                    </CardContent>
+                  </Card>
+                  <Card>
+                    <CardContent className="pt-6">
+                      <div className="text-sm font-medium text-muted-foreground mb-2">Маркетинг (мес)</div>
+                      <div className="text-2xl font-bold">1.1 млн₽</div>
+                    </CardContent>
+                  </Card>
+                  <Card>
+                    <CardContent className="pt-6">
+                      <div className="text-sm font-medium text-muted-foreground mb-2">Чистая прибыль (мес)</div>
+                      <div className="text-2xl font-bold text-green-600">2.2 млн₽</div>
+                    </CardContent>
+                  </Card>
                 </CardContent>
               </Card>
             </TabsContent>
 
             <TabsContent value="tools">
+              <RoleSelector />
               <Card>
                 <CardHeader>
                   <CardTitle>Инструменты</CardTitle>
