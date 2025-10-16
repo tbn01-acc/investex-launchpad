@@ -26,7 +26,7 @@ const Participants = () => {
       icon: Users,
       color: 'bg-blue-500',
       features: ['Групповые инвестиции', 'Снижение рисков', 'Коллективные решения'],
-      href: '/dashboard?role=collective-investor'
+      href: '/dashboard?role=co_investor'
     },
     {
       title: 'Фаундер',

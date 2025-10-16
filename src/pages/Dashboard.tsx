@@ -141,8 +141,7 @@ const Dashboard = () => {
     const roleMap: { [key: string]: string } = {
       // Участники
       investor: 'Инвестор',
-      co_investor: 'Со-инвестор',
-      collective_investor: 'Коллективный инвестор',
+      co_investor: 'Соинвестор',
       founder: 'Фаундер',
       co_founder: 'Со-фаундер',
       co_partner: 'Со-партнер',
@@ -207,14 +206,10 @@ const Dashboard = () => {
       case 'investor':
         return <InvestorAnalytics />;
       case 'co_investor':
-      case 'collective-investor':
-      case 'collective_investor':
         return <CoInvestorAnalytics />;
       case 'founder':
         return <FounderAnalytics />;
       case 'co_founder':
-      case 'co-founder':
-      case 'co-owner':
       case 'co_partner':
         return <FounderAnalytics />;
       case 'freelancer':
@@ -293,15 +288,11 @@ const Dashboard = () => {
       case 'investor':
         return <InvestorDashboard />;
       case 'co_investor':
-      case 'collective-investor':
-      case 'collective_investor':
         return <CoInvestorDashboard />;
       case 'founder':
         return <FounderDashboard />;
       case 'co_founder':
-      case 'co-founder':
         return <CoFounderDashboard />;
-      case 'co-owner':
       case 'co_partner':
         return <CoPartnerDashboard />;
       case 'freelancer':

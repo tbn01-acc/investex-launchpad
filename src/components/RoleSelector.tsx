@@ -10,8 +10,7 @@ import { Loader2 } from 'lucide-react';
 const ROLE_LABELS: Record<string, string> = {
   founder: 'Фаундер',
   investor: 'Инвестор',
-  co_investor: 'Со-инвестор',
-  collective_investor: 'Коллективный инвестор',
+  co_investor: 'Соинвестор',
   freelancer: 'Фрилансер',
   job_seeker: 'Соискатель',
   expert: 'Эксперт',
