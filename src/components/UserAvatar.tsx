@@ -37,26 +37,12 @@ const UserAvatar = () => {
 
   const handleRoleChange = async (newRole: string) => {
     try {
-      // Сбрасываем текущую роль и устанавливаем новую в user_roles
-      const { error: clearErr } = await supabase
-        .from('user_roles')
-        .update({ is_current: false })
-        .eq('user_id', user.id);
-      if (clearErr) throw clearErr;
+      // Use secure RPC function for role switching
+      const { error } = await (supabase.rpc as any)('switch_user_role', {
+        p_role: newRole
+      });
 
-      const { error: setErr } = await supabase
-        .from('user_roles')
-        .update({ is_current: true })
-        .eq('user_id', user.id)
-        .eq('role', newRole as any);
-      if (setErr) throw setErr;
-
-      // Синхронизируем profiles.role для совместимости
-      const { error: profileErr } = await supabase
-        .from('profiles')
-        .update({ role: newRole as any })
-        .eq('user_id', user.id);
-      if (profileErr) throw profileErr;
+      if (error) throw error;
 
       setSelectedRole(newRole);
       await refreshProfile();
@@ -69,7 +55,7 @@ const UserAvatar = () => {
       console.error('Error updating role:', error);
       toast({
         title: "Ошибка",
-        description: "Не удалось обновить роль",
+        description: error.message || "Не удалось обновить роль. Возможно, у вас нет доступа к этой роли.",
         variant: "destructive",
       });
     }

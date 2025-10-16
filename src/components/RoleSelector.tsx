@@ -73,36 +73,20 @@ export const RoleSelector = () => {
     
     setSaving(true);
     try {
-      // Сначала сбросим все is_current
-      await supabase
-        .from('user_roles')
-        .update({ is_current: false })
-        .eq('user_id', user.id);
+      // Use secure RPC function for role switching
+      const { error } = await (supabase.rpc as any)('switch_user_role', {
+        p_role: currentRole
+      });
 
-      // Установим новую текущую роль
-      const { error: setErr } = await supabase
-        .from('user_roles')
-        .update({ is_current: true })
-        .eq('user_id', user.id)
-        .eq('role', currentRole as any);
-
-      if (setErr) throw setErr;
-
-      // Синхронизируем profiles.role для совместимости
-      const { error: profileErr } = await supabase
-        .from('profiles')
-        .update({ role: currentRole as any })
-        .eq('user_id', user.id);
-
-      if (profileErr) throw profileErr;
+      if (error) throw error;
 
       toast.success('Роль успешно изменена');
       
       // Перезагрузим страницу для применения изменений
       setTimeout(() => window.location.reload(), 500);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error updating role:', error);
-      toast.error('Ошибка при изменении роли');
+      toast.error(error.message || 'Ошибка при изменении роли. Возможно, у вас нет доступа к этой роли.');
     } finally {
       setSaving(false);
     }
