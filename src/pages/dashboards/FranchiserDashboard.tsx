@@ -184,24 +184,26 @@ const FranchiserDashboard: React.FC = () => {
             </TabsContent>
 
             <TabsContent value="tools">
-              <RoleSelector />
-              <Card>
-                <CardHeader>
-                  <CardTitle>Инструменты</CardTitle>
-                </CardHeader>
-                <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="p-4 border rounded-xl">
-                    <div className="font-semibold mb-1">Конструктор франшиз</div>
-                    <div className="text-sm text-muted-foreground mb-3">Шаблоны договоров, чек-листы, требования, P&L</div>
-                    <Button variant="outline" size="sm">Открыть</Button>
-                  </div>
-                  <div className="p-4 border rounded-xl">
-                    <div className="font-semibold mb-1">AI-подбор франчайзи</div>
-                    <div className="text-sm text-muted-foreground mb-3">Оценка лидов и автоматический скоринг кандидатов</div>
-                    <Button variant="outline" size="sm">Запустить</Button>
-                  </div>
-                </CardContent>
-              </Card>
+              <div className="space-y-6">
+                <RoleSelector />
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Инструменты франчайзера</CardTitle>
+                  </CardHeader>
+                  <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="p-4 border rounded-xl hover:border-primary/50 transition-colors cursor-pointer">
+                      <div className="font-semibold mb-1">Конструктор франшиз</div>
+                      <div className="text-sm text-muted-foreground mb-3">Шаблоны договоров, чек-листы, требования, P&L</div>
+                      <Button variant="outline" size="sm">Открыть</Button>
+                    </div>
+                    <div className="p-4 border rounded-xl hover:border-primary/50 transition-colors cursor-pointer">
+                      <div className="font-semibold mb-1">AI-подбор франчайзи</div>
+                      <div className="text-sm text-muted-foreground mb-3">Оценка лидов и автоматический скоринг кандидатов</div>
+                      <Button variant="outline" size="sm">Запустить</Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
             </TabsContent>
           </Tabs>
         </div>
