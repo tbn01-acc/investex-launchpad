@@ -141,14 +141,11 @@ const Dashboard = () => {
     const roleMap: { [key: string]: string } = {
       // Участники
       investor: 'Инвестор',
-      co_investor: 'Соинвестор',
-      'collective-investor': 'Соинвестор',
-      'collective_investor': 'Соинвестор',
+      co_investor: 'Со-инвестор',
+      collective_investor: 'Коллективный инвестор',
       founder: 'Фаундер',
-      co_founder: 'Ко-фаундер',
-      'co-founder': 'Ко-фаундер',
-      'co-owner': 'Соучредитель',
-      'co_partner': 'Соучредитель',
+      co_founder: 'Со-фаундер',
+      co_partner: 'Со-партнер',
       // Исполнители
       freelancer: 'Фрилансер',
       expert: 'Эксперт',
@@ -157,16 +154,14 @@ const Dashboard = () => {
       contractor: 'Подрядчик',
       // Сотрудники
       administrator: 'Администратор',
-      'project-admin': 'Администратор',
-      'project_admin': 'Администратор',
+      project_admin: 'Администратор проекта',
       employee: 'Сотрудник',
-      'project-employee': 'Сотрудник',
       job_seeker: 'Соискатель',
-      'job-seeker': 'Соискатель',
       // Партнеры
       ambassador: 'Амбассадор',
       partner: 'Партнер',
       blogger: 'Блогер',
+      franchiser: 'Франчайзер',
       superadmin: 'Суперадмин'
     };
     return roleMap[role] || 'Пользователь';

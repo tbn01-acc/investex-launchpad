@@ -17,7 +17,7 @@ const ROLE_LABELS: Record<string, string> = {
   expert: 'Эксперт',
   consultant: 'Консультант',
   partner: 'Партнер',
-  co_partner: 'Соучредитель',
+  co_partner: 'Со-партнер',
   co_founder: 'Со-фаундер',
   contractor: 'Подрядчик',
   outsourcer: 'Аутсорсер',
