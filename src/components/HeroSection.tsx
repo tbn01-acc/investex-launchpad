@@ -7,9 +7,9 @@ import logoSilver from "@/assets/logo_silver.png";
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-[70vh] flex items-end justify-center bg-gradient-to-br from-blue-600 via-green-500 to-yellow-400 pt-1 pb-12">
+    <section className="relative min-h-[70vh] flex items-center justify-center bg-gradient-to-br from-blue-600 via-green-500 to-yellow-400 pt-4 pb-12">
       <div className="container mx-auto px-4 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-8 items-end">
+        <div className="grid lg:grid-cols-2 gap-8 items-center">
           
           {/* Left Content */}
           <div className="text-center lg:text-left space-y-2">
