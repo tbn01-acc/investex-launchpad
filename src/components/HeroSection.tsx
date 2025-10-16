@@ -13,11 +13,6 @@ const HeroSection = () => {
           
           {/* Left Content */}
           <div className="text-center lg:text-left space-y-2">
-            {/* Logo */}
-            <div className="flex justify-center lg:justify-start">
-              <img src={logoSilver} alt="Invest-Ex Logo" className="w-64 h-auto" />
-            </div>
-            
             <div className="space-y-4">
               <div className="inline-flex items-center gap-2 bg-card border border-border rounded-full px-4 py-2 text-sm font-medium text-foreground">
                 <TrendingUp className="w-4 h-4 text-primary" />
