@@ -17,6 +17,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { LanguageCurrencySelector } from "@/components/LanguageCurrencySelector";
 import UserAvatar from "@/components/UserAvatar";
 import AppBreadcrumbs from "@/components/AppBreadcrumbs";
+import { CreateProjectModal } from "@/components/CreateProjectModal";
 
 type NavigationItem = {
   title: string;
@@ -117,6 +118,7 @@ const MobileMenuItem = ({ item, onClose }: { item: NavigationItem; onClose: () =
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isCreateOpen, setIsCreateOpen] = useState(false);
   const navigate = useNavigate();
   const { user } = useAuth();
   const { t } = useLanguage();
@@ -277,6 +279,9 @@ const Navigation = () => {
             </NavigationMenu>
 
             <div className="flex items-center space-x-3">
+              <Button variant="outline" onClick={() => setIsCreateOpen(true)} className="hidden sm:inline-flex">
+                Добавить
+              </Button>
               <LanguageCurrencySelector />
               {user && (
                 <Button
@@ -308,6 +313,13 @@ const Navigation = () => {
 
           {/* Мобильное меню кнопка */}
           <div className="md:hidden flex items-center gap-2">
+            <Button
+              size="sm"
+              onClick={() => setIsCreateOpen(true)}
+              className="bg-gradient-primary text-primary-foreground"
+            >
+              Добавить
+            </Button>
             {user && (
               <Button
                 variant="ghost"
@@ -342,14 +354,14 @@ const Navigation = () => {
           <div className="md:hidden fixed inset-0 z-[100]">
             {/* Бэкдроп */}
             <div
-              className="absolute inset-0 bg-background/70 backdrop-blur-sm"
+              className="absolute inset-0 bg-background"
               onClick={() => setIsOpen(false)}
             />
 
             {/* Панель меню */}
             <div
               className={cn(
-                "absolute top-0 left-0 h-full w-11/12 max-w-sm bg-background/95 backdrop-blur-md border-r border-border shadow-xl",
+                "absolute top-0 left-0 h-full w-11/12 max-w-sm bg-background border-r border-border shadow-xl",
                 "transform transition-transform duration-300",
                 isOpen ? "translate-x-0" : "-translate-x-full"
               )}
@@ -400,6 +412,7 @@ const Navigation = () => {
           </div>
         )}
       </div>
+      <CreateProjectModal open={isCreateOpen} onOpenChange={setIsCreateOpen} />
     </nav>
     <AppBreadcrumbs />
     </>

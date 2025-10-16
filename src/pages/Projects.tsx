@@ -13,6 +13,7 @@ import ProjectModal from '@/components/ProjectModal';
 import { allProjects } from '@/data/projectsData';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { CreateProjectModal } from '@/components/CreateProjectModal';
 
 const Projects = () => {
   const { toast } = useToast();

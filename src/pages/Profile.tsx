@@ -18,7 +18,7 @@ const ROLE_CATEGORIES = {
     { value: 'co_investor', label: 'Соинвестор' },
     { value: 'founder', label: 'Фаундер' },
     { value: 'co_founder', label: 'Ко-фаундер' },
-    { value: 'co_partner', label: 'Соучредитель' },
+    { value: 'co_founder', label: 'Соучредитель' },
     { value: 'franchiser', label: 'Франчайзер' },
   ],
   "Исполнители": [
@@ -107,13 +107,13 @@ export default function Profile() {
       if (existing) {
         const { error: updError } = await supabase
           .from('profiles')
-          .update({ ...basePayload, role: (currentRole || profile?.role) as any })
+          .update({ ...basePayload })
           .eq('user_id', user.id);
         if (updError) throw updError;
       } else {
         const { error: insError } = await supabase
           .from('profiles')
-          .insert([{ user_id: user.id, ...basePayload, role: (currentRole || null) as any }]);
+          .insert([{ user_id: user.id, ...basePayload }]);
         if (insError) throw insError;
       }
 
