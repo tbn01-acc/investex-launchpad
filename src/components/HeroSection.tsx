@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, TrendingUp, Users, Briefcase, Building } from "lucide-react";
 import heroImage from "@/assets/hero-realistic.jpg";
 import collaborationImage from "@/assets/collaboration-realistic.jpg";
+import logoSilver from "@/assets/logo_silver.png";
 
 const HeroSection = () => {
   return (
@@ -12,6 +13,11 @@ const HeroSection = () => {
           
           {/* Left Content */}
           <div className="text-center lg:text-left space-y-6">
+            {/* Logo */}
+            <div className="flex justify-center lg:justify-start">
+              <img src={logoSilver} alt="Invest-Ex Logo" className="w-32 h-auto" />
+            </div>
+            
             <div className="space-y-4">
               <div className="inline-flex items-center gap-2 bg-card border border-border rounded-full px-4 py-2 text-sm font-medium text-foreground">
                 <TrendingUp className="w-4 h-4 text-primary" />
@@ -19,15 +25,14 @@ const HeroSection = () => {
               </div>
               
               <h1 className="text-4xl lg:text-6xl font-bold text-white leading-tight">
-                <span className="block">InvestEx</span>
+                <span className="block">Invest-Ex</span>
                 <span className="block text-xl lg:text-2xl font-normal text-gray-200 mt-2">
                   Единая инвестиционная платформа проектов и инвестиций
                 </span>
               </h1>
               
               <p className="text-lg text-orange-300 max-w-full sm:max-w-2xl leading-relaxed px-4 sm:px-0">
-                Объединяем фрилансеров, аутсорсеров, фаундеров и инвесторов в единой платформе. 
-                От идеи до реализации проекта и привлечения инвестиций.
+                Объединяем инвесторов, фаундеров, исполнителей, партнеров и др. - всех участников венчурного и инвестиционного рынка в единой платформе. От идеи до реализации проекта и привлечения инвестиций.
               </p>
             </div>
             

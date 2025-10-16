@@ -8,6 +8,7 @@ import InvestInPlatformSection from '@/components/InvestInPlatformSection';
 import RoadmapSection from '@/components/RoadmapSection';
 import PlatformAnalyticsSection from '@/components/PlatformAnalyticsSection';
 import { Info, Award, TrendingUp, Map, BarChart } from 'lucide-react';
+import logoBlue from '@/assets/logo_blue.png';
 
 const About = () => {
   return (
@@ -16,7 +17,10 @@ const About = () => {
       
       <main className="pt-24 pb-16">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-bold text-center mb-4">О платформе InvestEx</h1>
+          <div className="flex justify-center mb-6">
+            <img src={logoBlue} alt="Invest-Ex Logo" className="w-48 h-auto" />
+          </div>
+          <h1 className="text-4xl font-bold text-center mb-4">О платформе Invest-Ex</h1>
           <p className="text-center text-muted-foreground max-w-3xl mx-auto mb-8">
             Революционизируем весь венчурный рынок
           </p>

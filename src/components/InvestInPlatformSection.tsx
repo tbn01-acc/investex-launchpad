@@ -4,14 +4,27 @@ import { Badge } from '@/components/ui/badge';
 import { TrendingUp, Users, Target, Zap } from 'lucide-react';
 
 const InvestmentTier = ({ 
+  title,
   deadline, 
-  offers 
+  offers,
+  isBestOffer = false
 }: { 
+  title: string;
   deadline: string; 
-  offers: { amount: string; btc: string; equity: string }[] 
+  offers: { amount: string; btc: string; equity: string }[];
+  isBestOffer?: boolean;
 }) => (
-  <Card>
+  <Card className="relative">
+    {isBestOffer && (
+      <div className="absolute -top-4 -right-4 w-24 h-24 bg-red-500 rounded-full flex items-center justify-center shadow-lg z-10 rotate-12">
+        <div className="text-white text-center">
+          <div className="text-xs font-bold leading-tight">BEST</div>
+          <div className="text-xs font-bold leading-tight">OFFER</div>
+        </div>
+      </div>
+    )}
     <CardHeader>
+      <h3 className="text-xl font-bold text-left mb-2">{title}</h3>
       <Badge variant="secondary" className="w-fit">{deadline}</Badge>
     </CardHeader>
     <CardContent className="space-y-3">
@@ -36,14 +49,17 @@ const InvestmentTier = ({
 const InvestInPlatformSection = () => {
   const investmentPeriods = [
     {
+      title: 'Early Bird',
       deadline: 'Доступно до 15.11.2025',
       offers: [
         { amount: '€500k', btc: '5 BTC', equity: '3%' },
         { amount: '€1.2M', btc: '12 BTC', equity: '10%' },
         { amount: '€1.8M', btc: '18 BTC', equity: '18%' }
-      ]
+      ],
+      isBestOffer: true
     },
     {
+      title: 'Christmas Gift',
       deadline: 'Доступно до 25.12.2025',
       offers: [
         { amount: '€700k', btc: '7 BTC', equity: '3%' },
@@ -52,6 +68,7 @@ const InvestInPlatformSection = () => {
       ]
     },
     {
+      title: 'Last Chance',
       deadline: 'Доступно до 01.03.2026',
       offers: [
         { amount: '€1M', btc: '10 BTC', equity: '3%' },
