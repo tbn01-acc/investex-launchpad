@@ -9,23 +9,27 @@ import { Loader2 } from 'lucide-react';
 
 const ROLE_LABELS: Record<string, string> = {
   founder: 'Фаундер',
+  co_founder: 'Ко-фаундер',
+  co_owner: 'Соучредитель',
   investor: 'Инвестор',
   co_investor: 'Соинвестор',
-  freelancer: 'Фрилансер',
-  job_seeker: 'Соискатель',
-  expert: 'Эксперт',
-  consultant: 'Консультант',
   partner: 'Партнер',
   co_partner: 'Со-партнер',
-  co_founder: 'Со-фаундер',
-  contractor: 'Подрядчик',
+  franchiser: 'Франчайзер',
+  // Исполнители
+  freelancer: 'Фрилансер',
+  expert: 'Эксперт',
+  consultant: 'Консультант',
   outsourcer: 'Аутсорсер',
-  employee: 'Сотрудник',
-  blogger: 'Блогер',
-  ambassador: 'Амбассадор',
+  contractor: 'Подрядчик',
+  // Сотрудники и администрирование
   administrator: 'Администратор',
   project_admin: 'Администратор проекта',
-  franchiser: 'Франчайзер',
+  employee: 'Сотрудник',
+  job_seeker: 'Соискатель',
+  // Партнеры и медиа
+  ambassador: 'Амбассадор',
+  blogger: 'Блогер',
   superadmin: 'Суперадмин'
 };
 
@@ -76,18 +80,26 @@ export const RoleSelector = () => {
         .eq('user_id', user.id);
 
       // Установим новую текущую роль
-      const { error } = await supabase
+      const { error: setErr } = await supabase
         .from('user_roles')
         .update({ is_current: true })
         .eq('user_id', user.id)
         .eq('role', currentRole as any);
 
-      if (error) throw error;
+      if (setErr) throw setErr;
+
+      // Синхронизируем profiles.role для совместимости
+      const { error: profileErr } = await supabase
+        .from('profiles')
+        .update({ role: currentRole as any })
+        .eq('user_id', user.id);
+
+      if (profileErr) throw profileErr;
 
       toast.success('Роль успешно изменена');
       
       // Перезагрузим страницу для применения изменений
-      setTimeout(() => window.location.reload(), 1000);
+      setTimeout(() => window.location.reload(), 500);
     } catch (error) {
       console.error('Error updating role:', error);
       toast.error('Ошибка при изменении роли');

@@ -41,16 +41,16 @@ const Participants = () => {
       description: 'Присоединяйтесь к команде основателей проектов',
       icon: Target,
       color: 'bg-orange-500',
-      features: ['Партнерство', 'Совместное развитие', 'Разделение ответственности'],
-      href: '/dashboard?role=co-founder'
+          features: ['Партнерство', 'Совместное развитие', 'Разделение ответственности'],
+          href: '/dashboard?role=co_founder'
     },
     {
       title: 'Соучредитель',
       description: 'Станьте частью учредительской команды',
       icon: Crown,
       color: 'bg-yellow-500',
-      features: ['Учредительство', 'Долевое участие', 'Стратегические решения'],
-      href: '/dashboard?role=co-founder'
+          features: ['Учредительство', 'Долевое участие', 'Стратегические решения'],
+          href: '/dashboard?role=co_owner'
     },
     {
       title: 'Франчайзер',

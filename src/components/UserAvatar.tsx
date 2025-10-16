@@ -37,12 +37,26 @@ const UserAvatar = () => {
 
   const handleRoleChange = async (newRole: string) => {
     try {
-      const { error } = await supabase
+      // Сбрасываем текущую роль и устанавливаем новую в user_roles
+      const { error: clearErr } = await supabase
+        .from('user_roles')
+        .update({ is_current: false })
+        .eq('user_id', user.id);
+      if (clearErr) throw clearErr;
+
+      const { error: setErr } = await supabase
+        .from('user_roles')
+        .update({ is_current: true })
+        .eq('user_id', user.id)
+        .eq('role', newRole as any);
+      if (setErr) throw setErr;
+
+      // Синхронизируем profiles.role для совместимости
+      const { error: profileErr } = await supabase
         .from('profiles')
         .update({ role: newRole as any })
         .eq('user_id', user.id);
-
-      if (error) throw error;
+      if (profileErr) throw profileErr;
 
       setSelectedRole(newRole);
       await refreshProfile();
@@ -68,7 +82,7 @@ const UserAvatar = () => {
       co_investor: 'Соинвестор',
       founder: 'Фаундер',
       co_founder: 'Ко-фаундер',
-      'co-owner': 'Соучредитель',
+      co_owner: 'Соучредитель',
       // Исполнители
       freelancer: 'Фрилансер',
       expert: 'Эксперт',
@@ -157,7 +171,7 @@ const UserAvatar = () => {
               <SelectItem value="co_investor">Соинвестор</SelectItem>
               <SelectItem value="founder">Фаундер</SelectItem>
               <SelectItem value="co_founder">Ко-фаундер</SelectItem>
-              <SelectItem value="co-owner">Соучредитель</SelectItem>
+              <SelectItem value="co_owner">Соучредитель</SelectItem>
               
               <div className="px-2 py-1.5 text-sm font-semibold text-muted-foreground mt-2">Исполнители</div>
               <SelectItem value="freelancer">Фрилансер</SelectItem>

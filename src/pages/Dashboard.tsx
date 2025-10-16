@@ -65,11 +65,6 @@ const Dashboard = () => {
     }
   }, [user, loading, navigate]);
 
-  useEffect(() => {
-    if (profile?.role) {
-      setSelectedRole(profile.role);
-    }
-  }, [profile]);
 
   useEffect(() => {
     const fetchCurrentRole = async () => {
@@ -104,6 +99,13 @@ const Dashboard = () => {
         .eq('user_id', user.id)
         .eq('role', newRole as any);
       if (setErr) throw setErr;
+
+      // Синхронизируем profiles.role для совместимости
+      const { error: profileErr } = await supabase
+        .from('profiles')
+        .update({ role: newRole as any })
+        .eq('user_id', user.id);
+      if (profileErr) throw profileErr;
 
       setSelectedRole(newRole);
       await refreshProfile();
@@ -143,7 +145,8 @@ const Dashboard = () => {
       investor: 'Инвестор',
       co_investor: 'Соинвестор',
       founder: 'Фаундер',
-      co_founder: 'Со-фаундер',
+      co_founder: 'Ко-фаундер',
+      co_owner: 'Соучредитель',
       co_partner: 'Со-партнер',
       // Исполнители
       freelancer: 'Фрилансер',
@@ -210,6 +213,7 @@ const Dashboard = () => {
       case 'founder':
         return <FounderAnalytics />;
       case 'co_founder':
+      case 'co_owner':
       case 'co_partner':
         return <FounderAnalytics />;
       case 'freelancer':
@@ -292,6 +296,7 @@ const Dashboard = () => {
       case 'founder':
         return <FounderDashboard />;
       case 'co_founder':
+      case 'co_owner':
         return <CoFounderDashboard />;
       case 'co_partner':
         return <CoPartnerDashboard />;
@@ -357,7 +362,7 @@ const Dashboard = () => {
                       <SelectItem value="co_investor">Соинвестор</SelectItem>
                       <SelectItem value="founder">Фаундер</SelectItem>
                       <SelectItem value="co_founder">Ко-фаундер</SelectItem>
-                      <SelectItem value="co-owner">Соучредитель</SelectItem>
+                      <SelectItem value="co_owner">Соучредитель</SelectItem>
                       
                       <div className="px-2 py-1.5 text-sm font-semibold text-muted-foreground mt-2">Исполнители</div>
                       <SelectItem value="freelancer">Фрилансер</SelectItem>
