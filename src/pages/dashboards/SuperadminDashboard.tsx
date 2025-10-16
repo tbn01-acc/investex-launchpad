@@ -45,19 +45,32 @@ export default function SuperadminDashboard() {
 
   const fetchPlatformStats = async () => {
     try {
+      // Use secured RPC function that validates superadmin role server-side
       const { data, error } = await supabase
-        .from('platform_statistics')
-        .select('*')
-        .single();
+        .rpc('get_platform_stats_secured');
 
-      if (error) throw error;
-      setStats(data);
+      if (error) {
+        console.error('Platform stats error:', error);
+        throw error;
+      }
+      
+      // RPC returns array, get first item
+      if (data && data.length > 0) {
+        setStats(data[0]);
+      }
     } catch (error: any) {
       toast({
         title: t('common.error'),
-        description: 'Ошибка загрузки статистики',
+        description: error.message?.includes('Access denied') 
+          ? 'Доступ запрещен: требуются права суперадмина'
+          : 'Ошибка загрузки статистики',
         variant: 'destructive',
       });
+      
+      // Redirect to main page if access denied
+      if (error.message?.includes('Access denied')) {
+        navigate('/');
+      }
     } finally {
       setLoading(false);
     }

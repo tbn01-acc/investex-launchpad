@@ -30,10 +30,31 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    // Валидация пароля
+    // Enhanced password validation
+    const passwordErrors: string[] = [];
+    
     if (newPassword.length < 8) {
+      passwordErrors.push("Password must be at least 8 characters long");
+    }
+    if (!/[A-Z]/.test(newPassword)) {
+      passwordErrors.push("Password must contain at least one uppercase letter");
+    }
+    if (!/[a-z]/.test(newPassword)) {
+      passwordErrors.push("Password must contain at least one lowercase letter");
+    }
+    if (!/[0-9]/.test(newPassword)) {
+      passwordErrors.push("Password must contain at least one number");
+    }
+    if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(newPassword)) {
+      passwordErrors.push("Password must contain at least one special character");
+    }
+    
+    if (passwordErrors.length > 0) {
       return new Response(
-        JSON.stringify({ error: "Password must be at least 8 characters long" }),
+        JSON.stringify({ 
+          error: "Password does not meet complexity requirements",
+          details: passwordErrors 
+        }),
         {
           status: 400,
           headers: { "Content-Type": "application/json", ...corsHeaders },

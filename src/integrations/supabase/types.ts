@@ -2397,6 +2397,18 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: Json
       }
+      get_platform_stats_secured: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          active_freelancers: number
+          active_investors: number
+          successful_projects: number
+          total_funding_raised: number
+          total_investments: number
+          total_projects: number
+          total_users: number
+        }[]
+      }
       get_user_api_config: {
         Args: { p_user_id: string }
         Returns: {
