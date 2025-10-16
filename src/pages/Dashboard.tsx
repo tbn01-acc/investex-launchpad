@@ -71,16 +71,39 @@ const Dashboard = () => {
     }
   }, [profile]);
 
+  useEffect(() => {
+    const fetchCurrentRole = async () => {
+      if (!user) return;
+      const { data, error } = await supabase
+        .from('user_roles')
+        .select('role, is_current')
+        .eq('user_id', user.id);
+      if (!error && data) {
+        const current = (data as any[]).find(r => r.is_current);
+        if (current?.role) {
+          setSelectedRole(current.role);
+        }
+      }
+    };
+    fetchCurrentRole();
+  }, [user]);
+
   const handleRoleChange = async (newRole: string) => {
     if (!user) return;
     
     try {
-      const { error } = await supabase
-        .from('profiles')
-        .update({ role: newRole as any })
+      const { error: clearErr } = await supabase
+        .from('user_roles')
+        .update({ is_current: false })
         .eq('user_id', user.id);
+      if (clearErr) throw clearErr;
 
-      if (error) throw error;
+      const { error: setErr } = await supabase
+        .from('user_roles')
+        .update({ is_current: true })
+        .eq('user_id', user.id)
+        .eq('role', newRole as any);
+      if (setErr) throw setErr;
 
       setSelectedRole(newRole);
       await refreshProfile();

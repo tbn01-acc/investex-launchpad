@@ -31,7 +31,7 @@ const About = () => {
                 <Award className="w-4 h-4" />
                 <span className="hidden sm:inline">Преимущества</span>
               </TabsTrigger>
-              <TabsTrigger value="investment" className="gap-2 text-base sm:text-lg font-semibold">
+              <TabsTrigger value="investment" className="gap-2 text-lg sm:text-xl font-semibold">
                 <TrendingUp className="w-4 h-4" />
                 <span className="hidden sm:inline">Инвестиционное предложение</span>
               </TabsTrigger>

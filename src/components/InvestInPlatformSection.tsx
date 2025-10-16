@@ -39,24 +39,24 @@ const InvestInPlatformSection = () => {
       deadline: 'Доступно до 15.11.2025',
       offers: [
         { amount: '€500k', btc: '5 BTC', equity: '3%' },
-        { amount: '€1.2M', btc: '10 BTC', equity: '10%' },
-        { amount: '€1.8M', btc: '15 BTC', equity: '18%' }
+        { amount: '€1.2M', btc: '12 BTC', equity: '10%' },
+        { amount: '€1.8M', btc: '18 BTC', equity: '18%' }
       ]
     },
     {
       deadline: 'Доступно до 25.12.2025',
       offers: [
-        { amount: '€650k', btc: '6.5 BTC', equity: '3%' },
-        { amount: '€1.8M', btc: '12 BTC', equity: '10%' },
-        { amount: '€2.5M', btc: '18 BTC', equity: '18%' }
+        { amount: '€700k', btc: '7 BTC', equity: '3%' },
+        { amount: '€1.8M', btc: '18 BTC', equity: '10%' },
+        { amount: '€2.5M', btc: '25 BTC', equity: '18%' }
       ]
     },
     {
       deadline: 'Доступно до 01.03.2026',
       offers: [
         { amount: '€1M', btc: '10 BTC', equity: '3%' },
-        { amount: '€2.5M', btc: '18 BTC', equity: '10%' },
-        { amount: '€3.5M', btc: '25 BTC', equity: '18%' }
+        { amount: '€2.5M', btc: '25 BTC', equity: '10%' },
+        { amount: '€3.5M', btc: '35 BTC', equity: '18%' }
       ]
     }
   ];
