@@ -1953,6 +1953,45 @@ export type Database = {
         }
         Relationships: []
       }
+      security_audit_log: {
+        Row: {
+          action: string
+          created_at: string
+          id: string
+          ip_address: unknown | null
+          new_value: Json | null
+          old_value: Json | null
+          target_id: string | null
+          target_table: string
+          user_agent: string | null
+          user_id: string
+        }
+        Insert: {
+          action: string
+          created_at?: string
+          id?: string
+          ip_address?: unknown | null
+          new_value?: Json | null
+          old_value?: Json | null
+          target_id?: string | null
+          target_table: string
+          user_agent?: string | null
+          user_id: string
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          id?: string
+          ip_address?: unknown | null
+          new_value?: Json | null
+          old_value?: Json | null
+          target_id?: string | null
+          target_table?: string
+          user_agent?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       skill_categories: {
         Row: {
           created_at: string | null
@@ -2423,6 +2462,10 @@ export type Database = {
           _user_id: string
         }
         Returns: boolean
+      }
+      switch_user_role: {
+        Args: { p_role: Database["public"]["Enums"]["new_user_role"] }
+        Returns: undefined
       }
     }
     Enums: {
