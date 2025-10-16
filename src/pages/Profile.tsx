@@ -119,22 +119,13 @@ export default function Profile() {
         if (insError) throw insError;
       }
 
-      // Обновляем текущую роль через таблицу user_roles (не храним роль в profiles)
+      // Обновляем текущую роль через безопасную RPC-функцию
       if (currentRole) {
-        // Сбрасываем все текущие роли
-        const { error: clearErr } = await supabase
-          .from('user_roles')
-          .update({ is_current: false })
-          .eq('user_id', user.id);
-        if (clearErr) throw clearErr;
-
-        // Устанавливаем выбранную роль как текущую
-        const { error: setErr } = await supabase
-          .from('user_roles')
-          .update({ is_current: true })
-          .eq('user_id', user.id)
-          .eq('role', currentRole as any);
-        if (setErr) throw setErr;
+        if (!userRoles.includes(currentRole)) {
+          throw new Error('Выбранная роль не добавлена пользователю');
+        }
+        const { error: switchErr } = await (supabase.rpc as any)('switch_user_role', { p_role: currentRole as any });
+        if (switchErr) throw switchErr;
       }
 
       await refreshProfile();
