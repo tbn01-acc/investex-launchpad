@@ -12,7 +12,7 @@ const HeroSection = () => {
         <div className="grid lg:grid-cols-2 gap-8 items-center">
           
           {/* Left Content */}
-          <div className="text-center lg:text-left space-y-6">
+          <div className="text-center lg:text-left space-y-2">
             {/* Logo */}
             <div className="flex justify-center lg:justify-start">
               <img src={logoSilver} alt="Invest-Ex Logo" className="w-64 h-auto" />
