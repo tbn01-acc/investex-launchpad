@@ -18,7 +18,7 @@ const ROLE_CATEGORIES = {
     { value: 'co_investor', label: 'Соинвестор' },
     { value: 'founder', label: 'Фаундер' },
     { value: 'co_founder', label: 'Ко-фаундер' },
-    { value: 'co_founder', label: 'Соучредитель' },
+    { value: 'co_partner', label: 'Соучредитель' },
     { value: 'franchiser', label: 'Франчайзер' },
   ],
   "Исполнители": [
@@ -73,11 +73,13 @@ export default function Profile() {
       if (!user) return;
       const { data, error } = await supabase
         .from('user_roles')
-        .select('role')
+        .select('role, is_current')
         .eq('user_id', user.id);
       if (!error && data) {
         const roles = data.map(r => r.role as Role);
         setUserRoles(roles);
+        const current = (data as any[]).find(r => r.is_current);
+        if (current) setCurrentRole(current.role as Role);
         setIsSuperadmin(roles.includes('superadmin' as Role));
       }
     };
@@ -115,6 +117,24 @@ export default function Profile() {
           .from('profiles')
           .insert([{ user_id: user.id, ...basePayload }]);
         if (insError) throw insError;
+      }
+
+      // Обновляем текущую роль через таблицу user_roles (не храним роль в profiles)
+      if (currentRole) {
+        // Сбрасываем все текущие роли
+        const { error: clearErr } = await supabase
+          .from('user_roles')
+          .update({ is_current: false })
+          .eq('user_id', user.id);
+        if (clearErr) throw clearErr;
+
+        // Устанавливаем выбранную роль как текущую
+        const { error: setErr } = await supabase
+          .from('user_roles')
+          .update({ is_current: true })
+          .eq('user_id', user.id)
+          .eq('role', currentRole as any);
+        if (setErr) throw setErr;
       }
 
       await refreshProfile();
