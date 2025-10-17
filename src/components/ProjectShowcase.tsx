@@ -55,9 +55,12 @@ const ProjectShowcase = () => {
             >
               <div className="relative">
                 <img 
-                  src={project.image} 
+                  src={project.image || "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=400&fit=crop"} 
                   alt={project.title}
                   className="w-full h-48 object-cover"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=400&fit=crop";
+                  }}
                 />
                 <Badge className="absolute top-4 left-4 bg-primary text-primary-foreground">
                   {project.category}
