@@ -13,7 +13,7 @@ const AdvantageCard = ({
   points: string[];
   index: number;
 }) => (
-  <Card className={`h-full relative overflow-hidden ${index === 0 ? 'lg:col-span-2' : ''}`}>
+  <Card className="h-full relative overflow-hidden">
     <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-primary opacity-5 rounded-full -mr-16 -mt-16" />
     <CardHeader>
       <div className="flex items-center gap-3">
