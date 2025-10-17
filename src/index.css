@@ -18,16 +18,16 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 217 91% 60%;
+    --primary: 142 76% 45%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 142 76% 45%;
+    --secondary: 217 91% 60%;
     --secondary-foreground: 0 0% 100%;
 
     --muted: 210 40% 98%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 25 95% 53%;
+    --accent: 142 76% 45%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
@@ -35,15 +35,15 @@ All colors MUST be HSL.
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 217 91% 60%;
+    --ring: 142 76% 45%;
 
     --radius: 0.5rem;
 
     /* Professional Design Tokens */
-    --gradient-primary: linear-gradient(135deg, hsl(217 91% 60%), hsl(142 76% 45%));
+    --gradient-primary: linear-gradient(135deg, hsl(142 76% 45%), hsl(142 84% 55%));
     --gradient-secondary: linear-gradient(135deg, hsl(142 76% 45%), hsl(25 95% 53%));
     --gradient-accent: linear-gradient(45deg, hsl(210 40% 98%), hsl(214.3 31.8% 91.4%));
-    --gradient-hero: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(217 91% 50%) 50%, hsl(142 76% 45%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(142 76% 45%) 0%, hsl(142 84% 55%) 50%, hsl(160 84% 39%) 100%);
     
     --investment-green: 142 76% 45%;
     --investment-red: 0 84% 60%;
@@ -52,9 +52,9 @@ All colors MUST be HSL.
     --success-emerald: 160 84% 39%;
     --business-navy: 217 33% 17%;
     
-    --shadow-elegant: 0 4px 20px -2px hsl(217 91% 60% / 0.08);
-    --shadow-glow: 0 0 20px hsl(217 91% 60% / 0.15);
-    --shadow-card: 0 1px 3px 0 hsl(217 91% 60% / 0.1);
+    --shadow-elegant: 0 4px 20px -2px hsl(142 76% 45% / 0.08);
+    --shadow-glow: 0 0 20px hsl(142 76% 45% / 0.15);
+    --shadow-card: 0 1px 3px 0 hsl(142 76% 45% / 0.1);
     
     --transition-smooth: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
