@@ -10,15 +10,13 @@ const InvestCTABanner = () => {
           <Button 
             asChild
             size="lg"
-            className="bg-orange-500 hover:bg-orange-600 text-white font-bold text-2xl px-12 py-6 h-auto"
+            className="bg-orange-500 hover:bg-orange-600 text-white font-bold text-xl px-12 py-6 h-auto"
           >
-            <Link to="/about#invest">Ограниченное предложение</Link>
+            <Link to="/about#invest">Инвестируй в будущее инноваций</Link>
           </Button>
           <div className="text-primary-foreground space-y-2">
-            <div className="text-lg opacity-90">
-              Инвестируйте в будущее инноваций прямо сейчас,<br />
-              чтобы зафиксировать наиболее выгодные условия
-            </div>
+            <div className="text-base opacity-90">Инвестируйте сейчас, чтобы зафиксировать наиболее выгодные условия</div>
+            <div className="text-lg font-semibold">Ограниченное предложение</div>
           </div>
         </div>
       </div>
