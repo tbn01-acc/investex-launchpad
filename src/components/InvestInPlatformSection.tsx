@@ -130,6 +130,37 @@ const InvestInPlatformSection = () => {
         </CardContent>
       </Card>
 
+      {/* Преимущество из вкладки Преимущества */}
+      <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-transparent mb-6">
+        <CardHeader>
+          <CardTitle className="text-2xl">Налогово-оптимизированная холдинговая структура</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ul className="space-y-2">
+            <li className="flex items-start gap-2">
+              <span className="text-primary mt-1">•</span>
+              <span>Максимальная эффективность для международных инвестиций</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-primary mt-1">•</span>
+              <span>Материнский холдинг в Эстонии: 0% налог на реинвестируемую прибыль</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-primary mt-1">•</span>
+              <span>Региональные хабы для локализации (Кипр, ОАЭ, Сингапур, США)</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-primary mt-1">•</span>
+              <span>Экономия 50-70% налогов vs стандартных структур</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-primary mt-1">•</span>
+              <span>Полная готовность к международному IPO</span>
+            </li>
+          </ul>
+        </CardContent>
+      </Card>
+
 
       {/* Инвестиционное предложение */}
       <div className="space-y-4">
