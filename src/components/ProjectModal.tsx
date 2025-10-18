@@ -5,6 +5,8 @@ import { Badge } from '@/components/ui/badge';
 import { Calendar, DollarSign, Users, Clock, Building } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Project } from '@/data/projectsData';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { formatCurrency } from '@/lib/utils';
 
 interface ProjectModalProps {
   project: Project | null;
@@ -13,6 +15,8 @@ interface ProjectModalProps {
 }
 
 const ProjectModal: React.FC<ProjectModalProps> = ({ project, open, onOpenChange }) => {
+  const { currency } = useLanguage();
+  
   if (!project) return null;
 
   return (
@@ -62,7 +66,9 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, open, onOpenChange
                   <DollarSign className="w-4 h-4 text-muted-foreground" />
                   <div>
                     <p className="text-xs text-muted-foreground">Бюджет</p>
-                    <p className="text-sm font-semibold">{project.budget}</p>
+                    <p className="text-sm font-semibold">
+                      {formatCurrency(parseInt(project.budget.replace(/[^\d]/g, '')) || 0, currency)}
+                    </p>
                   </div>
                 </div>
               )}

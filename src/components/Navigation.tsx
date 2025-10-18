@@ -170,11 +170,12 @@ const Navigation = () => {
     { title: "Проекты", href: "/projects" },
     { 
       title: "Инвестиции",
+      href: "/investments",
       items: [
-        { title: "Инвестиционные стартапы", href: "/investments/startups", description: "Песочница и золотой фонд проектов" },
+        { title: "Стартапы", href: "/investments/startups", description: "Песочница и золотой фонд проектов" },
         { title: "Биржа идей", href: "/investments/ideas", description: "Для аккредитованных инвесторов" },
         { title: "Вторичный рынок", href: "/investments/secondary", description: "Для профессиональных инвесторов" },
-        { title: "Управленческие франшизы", href: "/investments/franchises", description: "Пассивный доход от бизнеса" },
+        { title: "Франшизы", href: "/investments/franchises", description: "Пассивный доход от бизнеса" },
       ]
     },
     { title: "Тарифы", href: "/pricing" },

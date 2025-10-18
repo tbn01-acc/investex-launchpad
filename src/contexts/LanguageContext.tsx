@@ -246,9 +246,9 @@ const translations = {
 };
 
 const currencyRates: Record<string, Record<string, number>> = {
-  USD: { RUB: 95.50, EUR: 0.92 },
-  EUR: { RUB: 104.30, USD: 1.09 },
-  RUB: { USD: 0.0105, EUR: 0.0096 }
+  USD: { RUB: 100, EUR: 0.92 },
+  EUR: { RUB: 109, USD: 1.09 },
+  RUB: { USD: 0.01, EUR: 0.0092 }
 };
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {

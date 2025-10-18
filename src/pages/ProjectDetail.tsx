@@ -8,6 +8,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { DollarSign, Users, Clock, Building, ArrowLeft, Star, Share2 } from 'lucide-react';
 import { getProjectById, Project as LocalProject } from '@/data/projectsData';
 import { supabase } from '@/integrations/supabase/client';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { formatCurrency } from '@/lib/utils';
 
 // ViewModel to render both local demo projects and DB projects uniformly
 type ProjectVM = {
@@ -63,6 +65,7 @@ const mapDbToVM = (p: any): ProjectVM => ({
 
 const ProjectDetail = () => {
   const { id } = useParams<{ id: string }>();
+  const { currency } = useLanguage();
   const [dbRecord, setDbRecord] = useState<any | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -296,7 +299,9 @@ const ProjectDetail = () => {
                   {project.budget && (
                     <div className="flex items-center gap-2">
                       <DollarSign className="w-4 h-4 text-muted-foreground" />
-                      <span className="text-sm">Бюджет: {project.budget}</span>
+                      <span className="text-sm">
+                        Бюджет: {formatCurrency(parseInt(project.budget.replace(/[^\d]/g, '')) || 0, currency)}
+                      </span>
                     </div>
                   )}
                   {project.timeline && (

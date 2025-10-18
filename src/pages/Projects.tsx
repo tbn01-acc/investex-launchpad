@@ -14,9 +14,12 @@ import { allProjects } from '@/data/projectsData';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { CreateProjectModal } from '@/components/CreateProjectModal';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { formatCurrency } from '@/lib/utils';
 
 const Projects = () => {
   const { toast } = useToast();
+  const { currency } = useLanguage();
   const [selectedProject, setSelectedProject] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -180,7 +183,9 @@ const Projects = () => {
                 <div className="grid grid-cols-2 gap-3 mb-4">
                   <div>
                     <p className="text-xs text-muted-foreground mb-1">Бюджет</p>
-                    <p className="font-semibold text-sm">{project.budget}</p>
+                    <p className="font-semibold text-sm">
+                      {formatCurrency(parseInt(project.budget.replace(/[^\d]/g, '')) || 0, currency)}
+                    </p>
                   </div>
                   <div>
                     <p className="text-xs text-muted-foreground mb-1">Команда</p>
@@ -309,6 +314,16 @@ const Projects = () => {
                     <div>
                       <p className="text-sm font-medium mb-2">Диапазон инвестиций:</p>
                       <div className="flex flex-wrap gap-2">
+                        <Button
+                          variant={investmentRange === 'all' ? 'default' : 'outline'}
+                          size="sm"
+                          onClick={() => {
+                            setInvestmentRange('all');
+                            setDisplayedItems(itemsPerPage);
+                          }}
+                        >
+                          Все
+                        </Button>
                         <Button
                           variant={investmentRange === 'under_1m' ? 'default' : 'outline'}
                           size="sm"

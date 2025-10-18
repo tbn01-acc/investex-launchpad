@@ -7,8 +7,11 @@ import { TrendingUp, Lightbulb, Building2, Shuffle } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { formatCurrency } from '@/lib/utils';
 
 const InvestmentsNew = () => {
+  const { currency } = useLanguage();
   const [itemsPerPage, setItemsPerPage] = useState(15);
   const [displayedItemsStartups, setDisplayedItemsStartups] = useState(15);
   const [displayedItemsSecondary, setDisplayedItemsSecondary] = useState(15);
@@ -59,10 +62,14 @@ const InvestmentsNew = () => {
   };
 
   const formatAmount = (amount: number) => {
-    if (amount >= 1000000) {
-      return (amount / 1000000).toFixed(1) + 'M₽';
+    const converted = formatCurrency(amount, currency);
+    const numericValue = parseInt(converted.replace(/[^\d]/g, '')) || 0;
+    const symbol = converted.replace(/[\d,\s]/g, '');
+    
+    if (numericValue >= 1000000) {
+      return (numericValue / 1000000).toFixed(1) + 'M' + symbol;
     }
-    return amount.toLocaleString() + '₽';
+    return numericValue.toLocaleString() + symbol;
   };
 
   return (
