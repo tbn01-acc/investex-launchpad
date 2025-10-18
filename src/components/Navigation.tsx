@@ -224,7 +224,9 @@ const Navigation = () => {
                                     {category.title}
                                   </h3>
                                   <div className="space-y-2 flex-1">
+                                    {category.items.map((subItem) => (
                                       <Link
+                                        key={subItem.title}
                                         to={subItem.href}
                                         className={cn(
                                           "block select-none space-y-1 rounded-md p-2 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
@@ -235,6 +237,7 @@ const Navigation = () => {
                                           {subItem.description}
                                         </p>
                                       </Link>
+                                    ))}
                                   </div>
                                 </div>
                               ))}
