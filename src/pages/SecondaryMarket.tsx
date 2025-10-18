@@ -6,9 +6,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { TrendingUp, TrendingDown, Shuffle, Lock, Target, Shield } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const SecondaryMarket = () => {
   const { profile } = useAuth();
+  const { t } = useLanguage();
 
   const isProfessional = profile?.verification_level === 'professional' || 
                         profile?.verification_level === 'qualified';
@@ -112,10 +114,10 @@ const SecondaryMarket = () => {
           <section className="mb-12">
             <h1 className="text-4xl font-bold mb-4 flex items-center">
               <Shuffle className="w-10 h-10 mr-3 text-primary" />
-              Вторичный рынок инвестиций
+              {t('investments.secondaryMarket')}
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mb-6">
-              Покупайте доли в уже работающих компаниях от ранних инвесторов. Меньше рисков, больше ликвидности, прозрачная оценка.
+              {t('investments.secondaryMarket')} - покупайте доли в уже работающих компаниях от ранних инвесторов
             </p>
 
             {!isProfessional && (
@@ -123,14 +125,13 @@ const SecondaryMarket = () => {
                 <div className="flex items-start gap-4">
                   <Lock className="w-6 h-6 text-destructive mt-1" />
                   <div className="flex-1">
-                    <h3 className="font-semibold mb-2">Требуется повышенная верификация</h3>
+                    <h3 className="font-semibold mb-2">{t('investments.accessRestricted')}</h3>
                     <p className="text-sm text-muted-foreground mb-3">
-                      Участие во вторичном рынке инвестиций доступно только профессиональным и квалифицированным инвесторам.
-                      Для доступа к сделкам необходимо пройти расширенную верификацию.
+                      {t('investments.accessRestricted')}
                     </p>
                     <Button size="sm" variant="destructive">
                       <Shield className="w-4 h-4 mr-2" />
-                      Стать профессиональным инвестором
+                      {t('investments.becomeInvestor')}
                     </Button>
                   </div>
                 </div>
@@ -201,14 +202,14 @@ const SecondaryMarket = () => {
                       <>
                         <Button className="flex-1">
                           <Target className="w-4 h-4 mr-2" />
-                          Купить долю
+                          {t('investments.buyShare')}
                         </Button>
-                        <Button variant="outline">Подробнее</Button>
+                        <Button variant="outline">{t('investments.moreDetails')}</Button>
                       </>
                     ) : (
                       <Button className="flex-1" variant="outline" disabled>
                         <Lock className="w-4 h-4 mr-2" />
-                        Требуется статус профессионального инвестора
+                        {t('investments.accessRestricted')}
                       </Button>
                     )}
                   </div>

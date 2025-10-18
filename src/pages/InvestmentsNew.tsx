@@ -11,7 +11,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { formatCurrency } from '@/lib/utils';
 
 const InvestmentsNew = () => {
-  const { currency } = useLanguage();
+  const { currency, t } = useLanguage();
   const [itemsPerPage, setItemsPerPage] = useState(15);
   const [displayedItemsStartups, setDisplayedItemsStartups] = useState(9);
   const [displayedItemsSecondary, setDisplayedItemsSecondary] = useState(9);
@@ -98,9 +98,9 @@ const InvestmentsNew = () => {
       <main className="pt-24 pb-16">
         <div className="container mx-auto px-4">
           <section className="mb-12 text-center">
-            <h1 className="text-4xl font-bold mb-4">Инвестиции</h1>
+            <h1 className="text-4xl font-bold mb-4">{t('investments.title')}</h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Эксклюзивный доступ к инвестиционным возможностям
+              {t('investments.title')} - эксклюзивный доступ к инвестиционным возможностям
             </p>
           </section>
 
@@ -108,12 +108,12 @@ const InvestmentsNew = () => {
             <Card>
               <CardContent className="p-6">
                 <div className="flex items-center justify-between mb-2">
-                  <div className="text-sm text-muted-foreground">Всего проектов</div>
+                  <div className="text-sm text-muted-foreground">{t('investments.totalProjects')}</div>
                   <TrendingUp className="w-4 h-4 text-primary" />
                 </div>
                 <div className="text-2xl font-bold">325</div>
                 <div className="text-xs text-muted-foreground mt-1">
-                  Активных сейчас
+                  {t('investments.activeNow')}
                 </div>
               </CardContent>
             </Card>
@@ -121,12 +121,12 @@ const InvestmentsNew = () => {
             <Card>
               <CardContent className="p-6">
                 <div className="flex items-center justify-between mb-2">
-                  <div className="text-sm text-muted-foreground">Средний ROI</div>
+                  <div className="text-sm text-muted-foreground">{t('investments.averageROI')}</div>
                   <TrendingUp className="w-4 h-4 text-secondary" />
                 </div>
                 <div className="text-2xl font-bold">+280%</div>
                 <div className="text-xs text-secondary mt-1">
-                  За последние 3 года
+                  {t('investments.lastThreeYears')}
                 </div>
               </CardContent>
             </Card>
@@ -134,12 +134,12 @@ const InvestmentsNew = () => {
             <Card>
               <CardContent className="p-6">
                 <div className="flex items-center justify-between mb-2">
-                  <div className="text-sm text-muted-foreground">Всего инвестиций</div>
+                  <div className="text-sm text-muted-foreground">{t('investments.totalInvestments')}</div>
                   <TrendingUp className="w-4 h-4 text-primary" />
                 </div>
                 <div className="text-2xl font-bold">12.5B₽</div>
                 <div className="text-xs text-muted-foreground mt-1">
-                  Привлечено капитала
+                  {t('investments.capitalRaised')}
                 </div>
               </CardContent>
             </Card>
@@ -147,12 +147,12 @@ const InvestmentsNew = () => {
             <Card>
               <CardContent className="p-6">
                 <div className="flex items-center justify-between mb-2">
-                  <div className="text-sm text-muted-foreground">Успешных выходов</div>
+                  <div className="text-sm text-muted-foreground">{t('investments.successfulExits')}</div>
                   <TrendingUp className="w-4 h-4 text-secondary" />
                 </div>
                 <div className="text-2xl font-bold">87</div>
                 <div className="text-xs text-muted-foreground mt-1">
-                  IPO и M&A сделок
+                  {t('investments.ipoMaDeals')}
                 </div>
               </CardContent>
             </Card>
@@ -162,37 +162,37 @@ const InvestmentsNew = () => {
             <TabsList className="grid w-full grid-cols-4 mb-8">
               <TabsTrigger value="startups">
                 <TrendingUp className="w-4 h-4 mr-2" />
-                Стартапы
+                {t('investments.startups')}
               </TabsTrigger>
               <TabsTrigger value="secondary">
                 <Shuffle className="w-4 h-4 mr-2" />
-                Вторичный рынок
+                {t('investments.secondaryMarket')}
               </TabsTrigger>
               <TabsTrigger value="ideas">
                 <Lightbulb className="w-4 h-4 mr-2" />
-                Биржа идей
+                {t('investments.ideaExchange')}
               </TabsTrigger>
               <TabsTrigger value="franchises">
                 <Building2 className="w-4 h-4 mr-2" />
-                Франшизы
+                {t('investments.franchises')}
               </TabsTrigger>
             </TabsList>
 
             <TabsContent value="startups">
               <div className="mb-4 flex justify-between items-center">
                 <p className="text-muted-foreground">
-                  Показано {displayedItemsStartups} из {mockStartups.length}
+                  {t('investments.showing')} {displayedItemsStartups} {t('investments.of')} {mockStartups.length}
                 </p>
                 <Select value={itemsPerPage.toString()} onValueChange={handleItemsPerPageChange}>
                   <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Показывать по" />
+                    <SelectValue placeholder={t('investments.showPer')} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="9">Показывать по 9</SelectItem>
-                    <SelectItem value="15">Показывать по 15</SelectItem>
-                    <SelectItem value="30">Показывать по 30</SelectItem>
-                    <SelectItem value="60">Показывать по 60</SelectItem>
-                    <SelectItem value="90">Показывать по 90</SelectItem>
+                    <SelectItem value="9">{t('investments.showPer')} 9</SelectItem>
+                    <SelectItem value="15">{t('investments.showPer')} 15</SelectItem>
+                    <SelectItem value="30">{t('investments.showPer')} 30</SelectItem>
+                    <SelectItem value="60">{t('investments.showPer')} 60</SelectItem>
+                    <SelectItem value="90">{t('investments.showPer')} 90</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -215,16 +215,16 @@ const InvestmentsNew = () => {
                       <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{startup.description}</p>
                       <div className="grid grid-cols-2 gap-3 mt-auto">
                         <div>
-                          <p className="text-xs text-muted-foreground mb-1">Финансирование</p>
+                          <p className="text-xs text-muted-foreground mb-1">{t('investments.funding')}</p>
                           <p className="font-semibold text-sm">{formatAmount(startup.funding)}</p>
                         </div>
                         <div>
-                          <p className="text-xs text-muted-foreground mb-1">Этап</p>
+                          <p className="text-xs text-muted-foreground mb-1">{t('investments.stage')}</p>
                           <p className="font-semibold text-sm">{startup.stage}</p>
                         </div>
                         <div className="col-span-2">
-                          <p className="text-xs text-muted-foreground mb-1">Команда</p>
-                          <p className="font-semibold text-sm">{startup.team} человек</p>
+                          <p className="text-xs text-muted-foreground mb-1">{t('investments.team')}</p>
+                          <p className="font-semibold text-sm">{startup.team} {t('investments.people')}</p>
                         </div>
                       </div>
                     </CardContent>
@@ -235,7 +235,7 @@ const InvestmentsNew = () => {
               {displayedItemsStartups < mockStartups.length && (
                 <div className="mt-8 text-center">
                   <Button onClick={() => handleShowMore(setDisplayedItemsStartups)} size="lg">
-                    Показать еще
+                    {t('investments.showMore')}
                   </Button>
                 </div>
               )}
@@ -244,18 +244,18 @@ const InvestmentsNew = () => {
             <TabsContent value="secondary">
               <div className="mb-4 flex justify-between items-center">
                 <p className="text-muted-foreground">
-                  Показано {displayedItemsSecondary} из {mockSecondary.length}
+                  {t('investments.showing')} {displayedItemsSecondary} {t('investments.of')} {mockSecondary.length}
                 </p>
                 <Select value={itemsPerPage.toString()} onValueChange={handleItemsPerPageChange}>
                   <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Показывать по" />
+                    <SelectValue placeholder={t('investments.showPer')} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="9">Показывать по 9</SelectItem>
-                    <SelectItem value="15">Показывать по 15</SelectItem>
-                    <SelectItem value="30">Показывать по 30</SelectItem>
-                    <SelectItem value="60">Показывать по 60</SelectItem>
-                    <SelectItem value="90">Показывать по 90</SelectItem>
+                    <SelectItem value="9">{t('investments.showPer')} 9</SelectItem>
+                    <SelectItem value="15">{t('investments.showPer')} 15</SelectItem>
+                    <SelectItem value="30">{t('investments.showPer')} 30</SelectItem>
+                    <SelectItem value="60">{t('investments.showPer')} 60</SelectItem>
+                    <SelectItem value="90">{t('investments.showPer')} 90</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -277,15 +277,15 @@ const InvestmentsNew = () => {
                       <h3 className="text-lg font-semibold mb-4 line-clamp-2">{deal.company}</h3>
                       <div className="grid grid-cols-2 gap-3 mt-auto">
                         <div>
-                          <p className="text-xs text-muted-foreground mb-1">Цена пакета</p>
+                          <p className="text-xs text-muted-foreground mb-1">{t('investments.price')}</p>
                           <p className="font-semibold text-sm">{formatAmount(deal.price)}</p>
                         </div>
                         <div>
-                          <p className="text-xs text-muted-foreground mb-1">Доля</p>
+                          <p className="text-xs text-muted-foreground mb-1">{t('investments.shares')}</p>
                           <p className="font-semibold text-sm">{deal.shares}</p>
                         </div>
                         <div className="col-span-2">
-                          <p className="text-xs text-muted-foreground mb-1">Оценка компании</p>
+                          <p className="text-xs text-muted-foreground mb-1">{t('investments.valuation')}</p>
                           <p className="font-semibold text-sm">{deal.valuation}</p>
                         </div>
                       </div>
@@ -297,7 +297,7 @@ const InvestmentsNew = () => {
               {displayedItemsSecondary < mockSecondary.length && (
                 <div className="mt-8 text-center">
                   <Button onClick={() => handleShowMore(setDisplayedItemsSecondary)} size="lg">
-                    Показать еще
+                    {t('investments.showMore')}
                   </Button>
                 </div>
               )}
@@ -306,18 +306,18 @@ const InvestmentsNew = () => {
             <TabsContent value="ideas">
               <div className="mb-4 flex justify-between items-center">
                 <p className="text-muted-foreground">
-                  Показано {displayedItemsIdeas} из {mockIdeas.length}
+                  {t('investments.showing')} {displayedItemsIdeas} {t('investments.of')} {mockIdeas.length}
                 </p>
                 <Select value={itemsPerPage.toString()} onValueChange={handleItemsPerPageChange}>
                   <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Показывать по" />
+                    <SelectValue placeholder={t('investments.showPer')} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="9">Показывать по 9</SelectItem>
-                    <SelectItem value="15">Показывать по 15</SelectItem>
-                    <SelectItem value="30">Показывать по 30</SelectItem>
-                    <SelectItem value="60">Показывать по 60</SelectItem>
-                    <SelectItem value="90">Показывать по 90</SelectItem>
+                    <SelectItem value="9">{t('investments.showPer')} 9</SelectItem>
+                    <SelectItem value="15">{t('investments.showPer')} 15</SelectItem>
+                    <SelectItem value="30">{t('investments.showPer')} 30</SelectItem>
+                    <SelectItem value="60">{t('investments.showPer')} 60</SelectItem>
+                    <SelectItem value="90">{t('investments.showPer')} 90</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -339,15 +339,15 @@ const InvestmentsNew = () => {
                       <h3 className="text-lg font-semibold mb-4 line-clamp-2">{idea.title}</h3>
                       <div className="grid grid-cols-2 gap-3 mt-auto">
                         <div>
-                          <p className="text-xs text-muted-foreground mb-1">Автор</p>
+                          <p className="text-xs text-muted-foreground mb-1">{t('investments.author')}</p>
                           <p className="font-semibold text-sm">{idea.author}</p>
                         </div>
                         <div>
-                          <p className="text-xs text-muted-foreground mb-1">Голосов</p>
+                          <p className="text-xs text-muted-foreground mb-1">{t('investments.votes')}</p>
                           <p className="font-semibold text-sm">{idea.votes}</p>
                         </div>
                         <div className="col-span-2">
-                          <p className="text-xs text-muted-foreground mb-1">Оценка идеи</p>
+                          <p className="text-xs text-muted-foreground mb-1">{t('investments.estimatedPrice')}</p>
                           <p className="font-semibold text-sm">{formatAmount(idea.price)}</p>
                         </div>
                       </div>
@@ -359,7 +359,7 @@ const InvestmentsNew = () => {
               {displayedItemsIdeas < mockIdeas.length && (
                 <div className="mt-8 text-center">
                   <Button onClick={() => handleShowMore(setDisplayedItemsIdeas)} size="lg">
-                    Показать еще
+                    {t('investments.showMore')}
                   </Button>
                 </div>
               )}
@@ -368,18 +368,18 @@ const InvestmentsNew = () => {
             <TabsContent value="franchises">
               <div className="mb-4 flex justify-between items-center">
                 <p className="text-muted-foreground">
-                  Показано {displayedItemsFranchises} из {mockFranchises.length}
+                  {t('investments.showing')} {displayedItemsFranchises} {t('investments.of')} {mockFranchises.length}
                 </p>
                 <Select value={itemsPerPage.toString()} onValueChange={handleItemsPerPageChange}>
                   <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Показывать по" />
+                    <SelectValue placeholder={t('investments.showPer')} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="9">Показывать по 9</SelectItem>
-                    <SelectItem value="15">Показывать по 15</SelectItem>
-                    <SelectItem value="30">Показывать по 30</SelectItem>
-                    <SelectItem value="60">Показывать по 60</SelectItem>
-                    <SelectItem value="90">Показывать по 90</SelectItem>
+                    <SelectItem value="9">{t('investments.showPer')} 9</SelectItem>
+                    <SelectItem value="15">{t('investments.showPer')} 15</SelectItem>
+                    <SelectItem value="30">{t('investments.showPer')} 30</SelectItem>
+                    <SelectItem value="60">{t('investments.showPer')} 60</SelectItem>
+                    <SelectItem value="90">{t('investments.showPer')} 90</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -401,15 +401,15 @@ const InvestmentsNew = () => {
                       <h3 className="text-lg font-semibold mb-4 line-clamp-2">{franchise.name}</h3>
                       <div className="grid grid-cols-2 gap-3 mt-auto">
                         <div>
-                          <p className="text-xs text-muted-foreground mb-1">Инвестиции</p>
+                          <p className="text-xs text-muted-foreground mb-1">{t('investments.investment')}</p>
                           <p className="font-semibold text-sm">{formatAmount(franchise.investment)}</p>
                         </div>
                         <div>
-                          <p className="text-xs text-muted-foreground mb-1">ROI</p>
+                          <p className="text-xs text-muted-foreground mb-1">{t('investments.roi')}</p>
                           <p className="font-semibold text-sm">{franchise.roi}</p>
                         </div>
                         <div className="col-span-2">
-                          <p className="text-xs text-muted-foreground mb-1">Локаций</p>
+                          <p className="text-xs text-muted-foreground mb-1">{t('investments.locations')}</p>
                           <p className="font-semibold text-sm">{franchise.locations}</p>
                         </div>
                       </div>
@@ -421,7 +421,7 @@ const InvestmentsNew = () => {
               {displayedItemsFranchises < mockFranchises.length && (
                 <div className="mt-8 text-center">
                   <Button onClick={() => handleShowMore(setDisplayedItemsFranchises)} size="lg">
-                    Показать еще
+                    {t('investments.showMore')}
                   </Button>
                 </div>
               )}

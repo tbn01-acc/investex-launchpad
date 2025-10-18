@@ -9,10 +9,12 @@ import { Lock, Trophy, Clock, Users, DollarSign, Target, Shield } from 'lucide-r
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/useAuth';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const InvestmentStartups = () => {
   const { toast } = useToast();
   const { profile } = useAuth();
+  const { t } = useLanguage();
   const [dbSandboxProjects, setDbSandboxProjects] = useState<any[]>([]);
   const [dbGoldProjects, setDbGoldProjects] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -161,9 +163,9 @@ const InvestmentStartups = () => {
       <main className="pt-24 pb-16">
         <div className="container mx-auto px-4">
           <section className="mb-12">
-            <h1 className="text-4xl font-bold mb-4">Инвестиционные стартапы</h1>
+            <h1 className="text-4xl font-bold mb-4">{t('investments.startups')}</h1>
             <p className="text-xl text-muted-foreground max-w-3xl">
-              Эксклюзивный доступ к песочнице ранних стартапов и золотому фонду проверенных проектов
+              {t('investments.startups')} - эксклюзивный доступ к песочнице ранних стартапов и золотому фонду проверенных проектов
             </p>
           </section>
 
