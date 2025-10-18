@@ -50,6 +50,12 @@ verify_jwt = false
 [functions.password-reset-verify]
 verify_jwt = false
 
+[functions.send-contact-email]
+verify_jwt = false
+
+[functions.update-resend-key]
+verify_jwt = true
+
 [edge_runtime]
 enabled = true
 ip_version = "dual"
