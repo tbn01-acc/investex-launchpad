@@ -65,10 +65,6 @@ const handler = async (req: Request): Promise<Response> => {
       throw new Error("Invalid Resend API key format. Key should start with 're_'");
     }
 
-    // Update the secret using Supabase Management API
-    // Note: In production, you would use Supabase CLI or Management API
-    // For now, we'll store it in a secure way that edge functions can access
-    
     // Log the security event
     await supabase
       .from('security_audit_log')
@@ -80,12 +76,12 @@ const handler = async (req: Request): Promise<Response> => {
         new_value: { updated: true, timestamp: new Date().toISOString() }
       });
 
-    console.log(`RESEND_API_KEY updated by user ${user.id} at ${new Date().toISOString()}`);
+    console.log(`RESEND_API_KEY update requested by user ${user.id} at ${new Date().toISOString()}`);
 
     return new Response(
       JSON.stringify({ 
         success: true,
-        message: "API key updated successfully. Please update the RESEND_API_KEY secret in Supabase Dashboard > Project Settings > Edge Functions."
+        message: "Для обновления RESEND_API_KEY перейдите в Supabase Dashboard > Project Settings > Edge Functions и обновите секрет вручную. Текущее значение используется всеми edge functions автоматически."
       }),
       {
         status: 200,

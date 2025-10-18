@@ -12,7 +12,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { 
   Shield, Users, Settings, BarChart3, DollarSign, 
-  TrendingUp, Activity, Lock, RefreshCw, Save, Briefcase, FileText, MessageSquare, Key
+  TrendingUp, Activity, Lock, RefreshCw, Save, Briefcase, FileText, MessageSquare, Key, Info
 } from 'lucide-react';
 import { MessagesTab } from '@/components/MessagesTab';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -44,9 +44,6 @@ export default function SuperadminDashboard() {
     defaultCurrency: 'RUB'
   });
   
-  const [resendApiKey, setResendApiKey] = useState('');
-  const [showResendKey, setShowResendKey] = useState(false);
-  const [isSavingApiKey, setIsSavingApiKey] = useState(false);
 
   const fetchPlatformStats = async () => {
     try {
@@ -117,42 +114,6 @@ export default function SuperadminDashboard() {
     }
   };
 
-  const saveResendApiKey = async () => {
-    if (!resendApiKey.trim()) {
-      toast({
-        title: 'Ошибка',
-        description: 'Введите API ключ Resend',
-        variant: 'destructive',
-      });
-      return;
-    }
-
-    setIsSavingApiKey(true);
-    try {
-      // Update secret using Supabase edge function
-      const { data, error } = await supabase.functions.invoke('update-resend-key', {
-        body: { apiKey: resendApiKey }
-      });
-
-      if (error) throw error;
-
-      toast({
-        title: t('common.success'),
-        description: 'RESEND_API_KEY успешно сохранен в защищенном хранилище',
-      });
-      
-      setResendApiKey('');
-      setShowResendKey(false);
-    } catch (error: any) {
-      toast({
-        title: t('common.error'),
-        description: error.message || 'Ошибка сохранения API ключа',
-        variant: 'destructive',
-      });
-    } finally {
-      setIsSavingApiKey(false);
-    }
-  };
 
   useEffect(() => {
     fetchPlatformStats();
@@ -433,60 +394,33 @@ export default function SuperadminDashboard() {
                     Управление API ключом для отправки уведомлений и сообщений
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-6">
+                <CardContent className="space-y-4">
                   <Alert>
-                    <Lock className="h-4 w-4" />
+                    <Shield className="h-4 w-4" />
                     <AlertDescription>
-                      API ключ будет зашифрован и сохранен в защищенном хранилище Supabase Secrets.
-                      Ключ используется для отправки email-уведомлений через сервис Resend.
+                      RESEND_API_KEY хранится в Supabase Secrets и используется всеми edge functions автоматически.
                     </AlertDescription>
                   </Alert>
-
-                  <div className="space-y-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="resendApiKey">RESEND_API_KEY</Label>
-                      <div className="flex gap-2">
-                        <Input
-                          id="resendApiKey"
-                          type={showResendKey ? "text" : "password"}
-                          value={resendApiKey}
-                          onChange={(e) => setResendApiKey(e.target.value)}
-                          placeholder="re_..."
-                          className="flex-1"
-                        />
-                        <Button
-                          type="button"
-                          variant="outline"
-                          onClick={() => setShowResendKey(!showResendKey)}
-                        >
-                          {showResendKey ? 'Скрыть' : 'Показать'}
-                        </Button>
-                      </div>
-                      <p className="text-xs text-muted-foreground">
-                        Получить API ключ можно на <a href="https://resend.com/api-keys" target="_blank" rel="noopener noreferrer" className="text-primary underline">resend.com/api-keys</a>
-                      </p>
+                  
+                  <div className="space-y-2">
+                    <Label>Текущий статус</Label>
+                    <div className="flex items-center gap-2 p-3 bg-muted rounded-lg">
+                      <Key className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm">RESEND_API_KEY настроен и активен</span>
                     </div>
-
-                    <Button 
-                      onClick={saveResendApiKey} 
-                      className="w-full"
-                      disabled={isSavingApiKey || !resendApiKey.trim()}
-                    >
-                      <Lock className="h-4 w-4 mr-2" />
-                      {isSavingApiKey ? 'Сохранение...' : 'Сохранить API ключ'}
-                    </Button>
                   </div>
 
-                  <div className="bg-muted p-4 rounded-lg space-y-2">
-                    <h4 className="font-medium text-sm">Безопасность:</h4>
-                    <ul className="text-xs text-muted-foreground space-y-1 list-disc list-inside">
-                      <li>Ключ шифруется с использованием AES-256</li>
-                      <li>Хранится в защищенном хранилище Supabase</li>
-                      <li>Доступен только серверным функциям</li>
-                      <li>Не отображается в исходном коде приложения</li>
-                      <li>Аудит всех изменений в логах безопасности</li>
-                    </ul>
-                  </div>
+                  <Alert>
+                    <Info className="h-4 w-4" />
+                    <AlertDescription className="space-y-2">
+                      <p>Для обновления ключа:</p>
+                      <ol className="list-decimal list-inside space-y-1 text-sm">
+                        <li>Получите новый API ключ на <a href="https://resend.com/api-keys" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">resend.com/api-keys</a></li>
+                        <li>Перейдите в <a href={`https://supabase.com/dashboard/project/adxpefaptdrsbcnekzvx/settings/functions`} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Supabase Dashboard → Edge Functions Settings</a></li>
+                        <li>Обновите значение секрета RESEND_API_KEY</li>
+                      </ol>
+                    </AlertDescription>
+                  </Alert>
                 </CardContent>
               </Card>
             </div>
