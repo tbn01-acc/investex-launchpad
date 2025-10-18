@@ -1641,6 +1641,74 @@ export const allProjects: Project[] = [
   }
 ];
 
+// Resolve project images to bundled asset URLs and ensure local fallbacks
+const projectImages = import.meta.glob('@/assets/projects/*', { eager: true, as: 'url' }) as Record<string, string>;
+
+function resolveProjectImage(path: string): string {
+  if (!path) return path;
+  if (/^https?:\/\//.test(path)) return path; // external URL stays as-is (will be overridden by fallback below)
+  let key = path;
+  // Normalize different notations to '/src/assets/projects/...'
+  if (key.startsWith('@/assets/')) key = key.replace('@', '/src');
+  if (key.startsWith('src/')) key = `/${key}`;
+  if (!key.startsWith('/src/assets/projects/')) {
+    const filename = key.split('/').pop() ?? key;
+    key = `/src/assets/projects/${filename}`;
+  }
+  return projectImages[key] ?? path;
+}
+
+// Fallbacks for categories to guarantee local images everywhere
+const categoryFallback: Record<string, string> = {
+  'AI/ML': 'ai-code-assistant.jpg',
+  'Blockchain': 'supply-chain-blockchain.jpg',
+  'FinTech': 'fintech-mobile-app.jpg',
+  'HealthTech': 'healthtech-platform.jpg',
+  'EdTech': 'edtech-platform.jpg',
+  'GreenTech': 'greentech-energy.jpg',
+  'FoodTech': 'foodtech-automation.jpg',
+  'PropTech': 'proptech-solution.jpg',
+  'IoT': 'iot-smart-home.jpg',
+  'SaaS': 'saas-project-management.jpg',
+  'Marketplace': 'freelance-marketplace.jpg',
+  'AgriTech': 'agritech-farming.jpg',
+  'Gaming': 'gaming-esports.jpg',
+  'Security': 'cybersecurity-platform.jpg',
+  'LegalTech': 'legal-tech.jpg',
+  'Music': 'music-streaming.jpg',
+  'FashionTech': 'fashion-tech-ar.jpg',
+  'Travel': 'travel-ai-assistant.jpg',
+  'Energy': 'renewable-energy-trading.jpg',
+  'Pets': 'pet-care-platform.jpg',
+  'Mentorship': 'career-mentorship.jpg',
+  'VR/AR': 'vr-medical-training.jpg',
+  'Social': 'social-commerce.jpg',
+  'Insurance': 'insurance-tech.jpg',
+  'Language': 'language-learning-ai.jpg',
+  'Logistics': 'blockchain-logistics.jpg',
+  'Delivery': 'autonomous-delivery.jpg',
+  'Wellness': 'wellness-meditation.jpg',
+  'Recruitment': 'recruitment-ai.jpg',
+  'Local': 'local-business-marketplace.jpg',
+  '3D Printing': '3d-printing-service.jpg',
+  'ElderlyCare': 'elderly-care-tech.jpg',
+  'Translation': 'realtime-translation.jpg',
+  'Parking': 'smart-parking.jpg',
+  'Creators': 'creator-monetization.jpg',
+  'Waste': 'waste-management.jpg',
+};
+
+// Enforce local images for all projects
+allProjects.forEach((p) => {
+  const isExternal = /^https?:\/\//.test(p.image);
+  if (isExternal) {
+    const fallback = categoryFallback[p.category] || 'saas-project-management.jpg';
+    p.image = resolveProjectImage(`/src/assets/projects/${fallback}`);
+  } else {
+    p.image = resolveProjectImage(p.image);
+  }
+});
+
 // Helper function to get project by ID
 export const getProjectById = (id: number): Project | undefined => {
   return allProjects.find(project => project.id === id);
@@ -1648,6 +1716,6 @@ export const getProjectById = (id: number): Project | undefined => {
 
 // Helper function to get projects by category
 export const getProjectsByCategory = (category: string): Project[] => {
-  if (category === "Все") return allProjects;
+  if (category === 'Все') return allProjects;
   return allProjects.filter(project => project.category === category);
 };
