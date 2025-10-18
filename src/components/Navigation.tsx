@@ -80,11 +80,18 @@ const MobileMenuItem = ({ item, onClose }: { item: NavigationItem; onClose: () =
   if (item.items) {
     return (
       <div>
+        <Link
+          to={item.href!}
+          className="flex items-center justify-between w-full px-4 py-2 text-sm font-medium text-muted-foreground hover:bg-accent/10 rounded-md transition-colors"
+          onClick={onClose}
+        >
+          {item.title}
+        </Link>
         <button
           onClick={() => setIsExpanded(!isExpanded)}
           className="flex items-center justify-between w-full px-4 py-2 text-sm font-medium text-muted-foreground hover:bg-accent/10 rounded-md transition-colors"
         >
-          {item.title}
+          Подразделы
           <ChevronDown size={16} className={cn("transition-transform", isExpanded && "rotate-180")} />
         </button>
         {isExpanded && (
@@ -241,8 +248,10 @@ const Navigation = () => {
                       </>
                     ) : item.items ? (
                       <>
-                        <NavigationMenuTrigger className="bg-transparent hover:bg-accent/10">
-                          {item.title}
+                        <NavigationMenuTrigger className="bg-transparent hover:bg-accent/10" asChild>
+                          <Link to={item.href!}>
+                            {item.title}
+                          </Link>
                         </NavigationMenuTrigger>
                          <NavigationMenuContent>
                            <div className="grid w-full max-w-[600px] grid-cols-1 sm:grid-cols-2 gap-3 p-4">
