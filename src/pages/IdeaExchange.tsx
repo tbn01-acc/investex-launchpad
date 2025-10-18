@@ -7,11 +7,18 @@ import { Badge } from '@/components/ui/badge';
 import { Lightbulb, Lock, Users, ThumbsUp, MessageSquare, TrendingUp, Shield } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import edtech from '@/assets/projects/edtech-platform.jpg';
+import agritech from '@/assets/projects/agritech-farming.jpg';
+import marketplace from '@/assets/projects/local-business-marketplace.jpg';
+import healthtech from '@/assets/projects/healthtech-platform.jpg';
+import vr from '@/assets/projects/vr-medical-training.jpg';
 
 const IdeaExchange = () => {
   const { profile } = useAuth();
   const [itemsPerPage, setItemsPerPage] = useState(15);
   const [displayedItems, setDisplayedItems] = useState(15);
+
+  const localImages = [edtech, agritech, marketplace, healthtech, vr];
 
   const isAccredited = profile?.verification_level === 'accredited' || 
                        profile?.verification_level === 'professional' || 
@@ -154,13 +161,14 @@ const IdeaExchange = () => {
           </div>
 
           <div className="grid lg:grid-cols-3 gap-6">
-            {ideas.slice(0, displayedItems).map((idea) => (
+            {ideas.slice(0, displayedItems).map((idea, idx) => (
               <Card key={idea.id} className={`flex flex-col ${!isAccredited ? 'opacity-75' : ''}`}>
                 <div className="relative h-48">
                   <img 
-                    src="/placeholder.svg" 
+                    src={localImages[idx % localImages.length]} 
                     alt={idea.title}
                     className="w-full h-full object-cover rounded-t-lg"
+                    loading="lazy"
                   />
                   <Badge variant="outline" className="absolute top-4 left-4 bg-background/80">
                     {idea.category}

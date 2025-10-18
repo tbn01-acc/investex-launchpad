@@ -212,7 +212,10 @@ const Navigation = () => {
                   <NavigationMenuItem key={item.title}>
                     {item.categories ? (
                       <>
-                        <NavigationMenuTrigger className="bg-transparent hover:bg-accent/10">
+                        <NavigationMenuTrigger
+                          className="bg-transparent hover:bg-accent/10"
+                          onClick={() => navigate('/community')}
+                        >
                           {item.title}
                         </NavigationMenuTrigger>
                         <NavigationMenuContent>

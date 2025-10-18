@@ -7,11 +7,18 @@ import { Badge } from '@/components/ui/badge';
 import { TrendingUp, TrendingDown, Shuffle, Lock, Target, Shield } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import aiCode from '@/assets/projects/ai-code-assistant.jpg';
+import fintech from '@/assets/projects/fintech-mobile-app.jpg';
+import greentech from '@/assets/projects/greentech-energy.jpg';
+import iot from '@/assets/projects/iot-smart-home.jpg';
+import music from '@/assets/projects/music-streaming.jpg';
 
 const SecondaryMarket = () => {
   const { profile } = useAuth();
   const [itemsPerPage, setItemsPerPage] = useState(15);
   const [displayedItems, setDisplayedItems] = useState(15);
+
+  const localImages = [aiCode, fintech, greentech, iot, music];
 
   const isProfessional = profile?.verification_level === 'professional' || 
                         profile?.verification_level === 'qualified';
@@ -163,13 +170,14 @@ const SecondaryMarket = () => {
           </div>
 
           <div className="grid lg:grid-cols-3 gap-6">
-            {secondaryMarketDeals.slice(0, displayedItems).map((deal) => (
+            {secondaryMarketDeals.slice(0, displayedItems).map((deal, idx) => (
               <Card key={deal.id} className={`hover:shadow-lg transition-shadow flex flex-col ${!isProfessional ? 'opacity-75' : ''}`}>
                 <div className="relative h-48">
                   <img 
-                    src="/placeholder.svg" 
+                    src={localImages[idx % localImages.length]} 
                     alt={deal.company}
                     className="w-full h-full object-cover rounded-t-lg"
+                    loading="lazy"
                   />
                   <Badge variant="outline" className="absolute top-4 left-4 bg-background/80">
                     {deal.sector}

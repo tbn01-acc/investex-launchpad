@@ -310,6 +310,7 @@ const Projects = () => {
                           className="pl-10"
                           value={searchQuery}
                           onChange={(e) => setSearchQuery(e.target.value)}
+                          style={{ display: 'none' }}
                         />
                       </div>
                     </div>

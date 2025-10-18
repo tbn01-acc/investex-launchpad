@@ -7,6 +7,12 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Lock, Trophy, Clock, Users, DollarSign, Target, Shield } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import aiCode from '@/assets/projects/ai-code-assistant.jpg';
+import biotech from '@/assets/projects/biotech-lab-platform.jpg';
+import fintech from '@/assets/projects/fintech-mobile-app.jpg';
+import iot from '@/assets/projects/iot-smart-home.jpg';
+import greentech from '@/assets/projects/greentech-energy.jpg';
+import healthtech from '@/assets/projects/healthtech-platform.jpg';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/useAuth';
@@ -21,6 +27,8 @@ const InvestmentStartups = () => {
   const [sandboxDisplayedItems, setSandboxDisplayedItems] = useState(15);
   const [goldItemsPerPage, setGoldItemsPerPage] = useState(15);
   const [goldDisplayedItems, setGoldDisplayedItems] = useState(15);
+
+  const localImages = [aiCode, biotech, fintech, iot, greentech, healthtech];
 
   useEffect(() => {
     fetchInvestmentProjects();
@@ -210,13 +218,14 @@ const InvestmentStartups = () => {
             </div>
 
             <div className="grid lg:grid-cols-3 gap-6">
-              {sandboxProjects.slice(0, sandboxDisplayedItems).map((project) => (
+              {sandboxProjects.slice(0, sandboxDisplayedItems).map((project, idx) => (
                 <Card key={project.id} className="border-accent/50 flex flex-col">
                   <div className="relative h-48">
                     <img 
-                      src="/placeholder.svg" 
+                      src={localImages[idx % localImages.length]} 
                       alt={project.company}
                       className="w-full h-full object-cover rounded-t-lg"
+                      loading="lazy"
                     />
                     <Badge className="absolute top-4 left-4 bg-accent text-accent-foreground">
                       <Lock className="w-3 h-3 mr-1" />
@@ -322,13 +331,14 @@ const InvestmentStartups = () => {
             </div>
 
             <div className="grid lg:grid-cols-3 gap-6">
-              {goldFundProjects.slice(0, goldDisplayedItems).map((project) => (
+              {goldFundProjects.slice(0, goldDisplayedItems).map((project, idx) => (
                 <Card key={project.id} className="border-yellow-500/30 flex flex-col">
                   <div className="relative h-48">
                     <img 
-                      src="/placeholder.svg" 
+                      src={localImages[idx % localImages.length]} 
                       alt={project.company}
                       className="w-full h-full object-cover rounded-t-lg"
+                      loading="lazy"
                     />
                     <Badge className="absolute top-4 left-4 bg-yellow-500 text-yellow-950">
                       <Trophy className="w-3 h-3 mr-1" />

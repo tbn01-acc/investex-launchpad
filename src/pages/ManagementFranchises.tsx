@@ -7,10 +7,17 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Building2, TrendingUp, Users, DollarSign, Calendar, MapPin, Award, CheckCircle2 } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import coffee from '@/assets/projects/foodtech-automation.jpg';
+import clinic from '@/assets/projects/healthtech-platform.jpg';
+import kids from '@/assets/projects/kids-education.jpg';
+import fitness from '@/assets/projects/ai-fitness-trainer.jpg';
+import laundry from '@/assets/projects/smart-city-iot.jpg';
 
 const ManagementFranchises = () => {
   const [itemsPerPage, setItemsPerPage] = useState(15);
   const [displayedItems, setDisplayedItems] = useState(15);
+  
+  const localImages = [coffee, clinic, kids, fitness, laundry];
   
   const franchises = [
     {
@@ -189,13 +196,14 @@ const ManagementFranchises = () => {
           </div>
 
           <div className="grid lg:grid-cols-3 gap-6">
-            {franchises.slice(0, displayedItems).map((franchise) => (
+            {franchises.slice(0, displayedItems).map((franchise, idx) => (
               <Card key={franchise.id} className="hover:shadow-lg transition-shadow flex flex-col">
                 <div className="relative h-48">
                   <img 
-                    src="/placeholder.svg" 
+                    src={localImages[idx % localImages.length]} 
                     alt={franchise.name}
                     className="w-full h-full object-cover rounded-t-lg"
+                    loading="lazy"
                   />
                   <Badge variant="outline" className="absolute top-4 left-4 bg-background/80">
                     {franchise.category}
