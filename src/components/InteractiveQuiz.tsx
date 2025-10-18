@@ -120,9 +120,8 @@ const InteractiveQuiz = () => {
           
           <div className="p-8 text-center min-h-[400px]">
             <h2 className="text-4xl font-bold mb-4">Не знаете, с чего начать?</h2>
-            <p className="text-xl text-muted-foreground mb-2 relative inline-block">
+            <p className="text-xl text-muted-foreground mb-8">
               Ответьте на 5 вопросов, и мы определим ваш идеальный путь в экосистеме Invest-Ex.
-              <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary"></span>
             </p>
             <div className="mb-8"></div>
 
