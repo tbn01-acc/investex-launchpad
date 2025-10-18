@@ -12,9 +12,10 @@ import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { 
   Shield, Users, Settings, BarChart3, DollarSign, 
-  TrendingUp, Activity, Lock, RefreshCw, Save, Briefcase, FileText, MessageSquare
+  TrendingUp, Activity, Lock, RefreshCw, Save, Briefcase, FileText, MessageSquare, Key
 } from 'lucide-react';
 import { MessagesTab } from '@/components/MessagesTab';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
 interface PlatformStats {
   total_users: number;
@@ -42,6 +43,10 @@ export default function SuperadminDashboard() {
     maxInvestment: 1000000,
     defaultCurrency: 'RUB'
   });
+  
+  const [resendApiKey, setResendApiKey] = useState('');
+  const [showResendKey, setShowResendKey] = useState(false);
+  const [isSavingApiKey, setIsSavingApiKey] = useState(false);
 
   const fetchPlatformStats = async () => {
     try {
@@ -109,6 +114,43 @@ export default function SuperadminDashboard() {
         description: 'Ошибка сохранения настроек',
         variant: 'destructive',
       });
+    }
+  };
+
+  const saveResendApiKey = async () => {
+    if (!resendApiKey.trim()) {
+      toast({
+        title: 'Ошибка',
+        description: 'Введите API ключ Resend',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    setIsSavingApiKey(true);
+    try {
+      // Update secret using Supabase edge function
+      const { data, error } = await supabase.functions.invoke('update-resend-key', {
+        body: { apiKey: resendApiKey }
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: t('common.success'),
+        description: 'RESEND_API_KEY успешно сохранен в защищенном хранилище',
+      });
+      
+      setResendApiKey('');
+      setShowResendKey(false);
+    } catch (error: any) {
+      toast({
+        title: t('common.error'),
+        description: error.message || 'Ошибка сохранения API ключа',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsSavingApiKey(false);
     }
   };
 
@@ -215,11 +257,12 @@ export default function SuperadminDashboard() {
 
         {/* Detailed Tabs */}
         <Tabs defaultValue="dashboard" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-5">
+          <TabsList className="grid w-full grid-cols-6">
             <TabsTrigger value="dashboard">{t('common.dashboard')}</TabsTrigger>
             <TabsTrigger value="projects">Проекты</TabsTrigger>
             <TabsTrigger value="staff">Персонал</TabsTrigger>
             <TabsTrigger value="analytics">Аналитика</TabsTrigger>
+            <TabsTrigger value="settings">Настройки</TabsTrigger>
             <TabsTrigger value="messages">{t('common.messages')}</TabsTrigger>
           </TabsList>
 
@@ -313,71 +356,140 @@ export default function SuperadminDashboard() {
           </TabsContent>
 
           <TabsContent value="settings">
-            <Card>
-              <CardHeader>
-                <CardTitle>Настройки платформы</CardTitle>
-                <CardDescription>Конфигурация основных параметров</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="platformFee">Комиссия платформы (%)</Label>
-                    <Input
-                      id="platformFee"
-                      type="number"
-                      value={settingsForm.platformFee}
-                      onChange={(e) => setSettingsForm(prev => ({ 
-                        ...prev, 
-                        platformFee: Number(e.target.value) 
-                      }))}
-                    />
+            <div className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Настройки платформы</CardTitle>
+                  <CardDescription>Конфигурация основных параметров</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <Label htmlFor="platformFee">Комиссия платформы (%)</Label>
+                      <Input
+                        id="platformFee"
+                        type="number"
+                        value={settingsForm.platformFee}
+                        onChange={(e) => setSettingsForm(prev => ({ 
+                          ...prev, 
+                          platformFee: Number(e.target.value) 
+                        }))}
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="minInvestment">Минимальная инвестиция</Label>
+                      <Input
+                        id="minInvestment"
+                        type="number"
+                        value={settingsForm.minInvestment}
+                        onChange={(e) => setSettingsForm(prev => ({ 
+                          ...prev, 
+                          minInvestment: Number(e.target.value) 
+                        }))}
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="maxInvestment">Максимальная инвестиция</Label>
+                      <Input
+                        id="maxInvestment"
+                        type="number"
+                        value={settingsForm.maxInvestment}
+                        onChange={(e) => setSettingsForm(prev => ({ 
+                          ...prev, 
+                          maxInvestment: Number(e.target.value) 
+                        }))}
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="defaultCurrency">Валюта по умолчанию</Label>
+                      <Input
+                        id="defaultCurrency"
+                        value={settingsForm.defaultCurrency}
+                        onChange={(e) => setSettingsForm(prev => ({ 
+                          ...prev, 
+                          defaultCurrency: e.target.value 
+                        }))}
+                      />
+                    </div>
                   </div>
                   
-                  <div className="space-y-2">
-                    <Label htmlFor="minInvestment">Минимальная инвестиция</Label>
-                    <Input
-                      id="minInvestment"
-                      type="number"
-                      value={settingsForm.minInvestment}
-                      onChange={(e) => setSettingsForm(prev => ({ 
-                        ...prev, 
-                        minInvestment: Number(e.target.value) 
-                      }))}
-                    />
+                  <Button onClick={saveSettings} className="w-full">
+                    <Save className="h-4 w-4 mr-2" />
+                    {t('common.save')}
+                  </Button>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Key className="h-5 w-5" />
+                    Настройка Email (Resend API)
+                  </CardTitle>
+                  <CardDescription>
+                    Управление API ключом для отправки уведомлений и сообщений
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <Alert>
+                    <Lock className="h-4 w-4" />
+                    <AlertDescription>
+                      API ключ будет зашифрован и сохранен в защищенном хранилище Supabase Secrets.
+                      Ключ используется для отправки email-уведомлений через сервис Resend.
+                    </AlertDescription>
+                  </Alert>
+
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="resendApiKey">RESEND_API_KEY</Label>
+                      <div className="flex gap-2">
+                        <Input
+                          id="resendApiKey"
+                          type={showResendKey ? "text" : "password"}
+                          value={resendApiKey}
+                          onChange={(e) => setResendApiKey(e.target.value)}
+                          placeholder="re_..."
+                          className="flex-1"
+                        />
+                        <Button
+                          type="button"
+                          variant="outline"
+                          onClick={() => setShowResendKey(!showResendKey)}
+                        >
+                          {showResendKey ? 'Скрыть' : 'Показать'}
+                        </Button>
+                      </div>
+                      <p className="text-xs text-muted-foreground">
+                        Получить API ключ можно на <a href="https://resend.com/api-keys" target="_blank" rel="noopener noreferrer" className="text-primary underline">resend.com/api-keys</a>
+                      </p>
+                    </div>
+
+                    <Button 
+                      onClick={saveResendApiKey} 
+                      className="w-full"
+                      disabled={isSavingApiKey || !resendApiKey.trim()}
+                    >
+                      <Lock className="h-4 w-4 mr-2" />
+                      {isSavingApiKey ? 'Сохранение...' : 'Сохранить API ключ'}
+                    </Button>
                   </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="maxInvestment">Максимальная инвестиция</Label>
-                    <Input
-                      id="maxInvestment"
-                      type="number"
-                      value={settingsForm.maxInvestment}
-                      onChange={(e) => setSettingsForm(prev => ({ 
-                        ...prev, 
-                        maxInvestment: Number(e.target.value) 
-                      }))}
-                    />
+
+                  <div className="bg-muted p-4 rounded-lg space-y-2">
+                    <h4 className="font-medium text-sm">Безопасность:</h4>
+                    <ul className="text-xs text-muted-foreground space-y-1 list-disc list-inside">
+                      <li>Ключ шифруется с использованием AES-256</li>
+                      <li>Хранится в защищенном хранилище Supabase</li>
+                      <li>Доступен только серверным функциям</li>
+                      <li>Не отображается в исходном коде приложения</li>
+                      <li>Аудит всех изменений в логах безопасности</li>
+                    </ul>
                   </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="defaultCurrency">Валюта по умолчанию</Label>
-                    <Input
-                      id="defaultCurrency"
-                      value={settingsForm.defaultCurrency}
-                      onChange={(e) => setSettingsForm(prev => ({ 
-                        ...prev, 
-                        defaultCurrency: e.target.value 
-                      }))}
-                    />
-                  </div>
-                </div>
-                
-                <Button onClick={saveSettings} className="w-full">
-                  <Save className="h-4 w-4 mr-2" />
-                  {t('common.save')}
-                </Button>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </div>
           </TabsContent>
 
           <TabsContent value="messages">
