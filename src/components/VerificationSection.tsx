@@ -15,9 +15,9 @@ const VerificationSection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="text-center">
             <img 
-              src="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400&h=400&fit=crop" 
+              src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop" 
               alt="Верификация данных" 
-              className="max-w-full w-96 rounded-3xl mx-auto"
+              className="max-w-full w-96 rounded-3xl mx-auto shadow-lg"
             />
           </div>
           

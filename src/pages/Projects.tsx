@@ -117,6 +117,29 @@ const Projects = () => {
 
   const categories = ['Все категории', 'AI/ML', 'Blockchain', 'FinTech', 'HealthTech', 'EdTech', 'GreenTech', 'FoodTech', 'PropTech'];
 
+  const getCategoryCount = (category: string) => {
+    if (category === 'Все категории') {
+      return allProjectsCombined.filter(p => {
+        if (projectCategory === 'active') return (p.projectCategory === 'active' || !p.projectCategory);
+        if (projectCategory === 'sandbox') return p.projectCategory === 'sandbox';
+        if (projectCategory === 'gold_fund') return p.projectCategory === 'gold_fund';
+        if (projectCategory === 'archived') return p.projectCategory === 'archived';
+        if (projectCategory === 'pitch') return p.isPitch === true;
+        return true;
+      }).length;
+    }
+    return allProjectsCombined.filter(p => {
+      const matchesCategory = p.category === category;
+      let matchesTab = true;
+      if (projectCategory === 'active') matchesTab = (p.projectCategory === 'active' || !p.projectCategory);
+      else if (projectCategory === 'sandbox') matchesTab = p.projectCategory === 'sandbox';
+      else if (projectCategory === 'gold_fund') matchesTab = p.projectCategory === 'gold_fund';
+      else if (projectCategory === 'archived') matchesTab = p.projectCategory === 'archived';
+      else if (projectCategory === 'pitch') matchesTab = p.isPitch === true;
+      return matchesCategory && matchesTab;
+    }).length;
+  };
+
   const handleShowMore = () => {
     setDisplayedItems(prev => Math.min(prev + itemsPerPage, filteredProjects.length));
   };
@@ -299,13 +322,16 @@ const Projects = () => {
                           <Badge
                             key={category}
                             variant={selectedCategory === (category === 'Все категории' ? 'all' : category) ? 'default' : 'outline'}
-                            className="cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors"
+                            className="cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors relative"
                             onClick={() => {
                               setSelectedCategory(category === 'Все категории' ? 'all' : category);
                               setDisplayedItems(itemsPerPage);
                             }}
                           >
                             {category}
+                            <span className="ml-1.5 inline-flex items-center justify-center min-w-[20px] h-5 px-1 text-xs font-medium rounded-full bg-primary-foreground text-primary">
+                              {getCategoryCount(category)}
+                            </span>
                           </Badge>
                         ))}
                       </div>

@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Lock, Trophy, Clock, Users, DollarSign, Target, Shield } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/useAuth';
@@ -16,6 +17,10 @@ const InvestmentStartups = () => {
   const [dbSandboxProjects, setDbSandboxProjects] = useState<any[]>([]);
   const [dbGoldProjects, setDbGoldProjects] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [sandboxItemsPerPage, setSandboxItemsPerPage] = useState(15);
+  const [sandboxDisplayedItems, setSandboxDisplayedItems] = useState(15);
+  const [goldItemsPerPage, setGoldItemsPerPage] = useState(15);
+  const [goldDisplayedItems, setGoldDisplayedItems] = useState(15);
 
   useEffect(() => {
     fetchInvestmentProjects();
@@ -161,7 +166,7 @@ const InvestmentStartups = () => {
       <main className="pt-24 pb-16">
         <div className="container mx-auto px-4">
           <section className="mb-12">
-            <h1 className="text-4xl font-bold mb-4">Инвестиционные стартапы</h1>
+            <h1 className="text-4xl font-bold mb-4">Стартапы</h1>
             <p className="text-xl text-muted-foreground max-w-3xl">
               Эксклюзивный доступ к песочнице ранних стартапов и золотому фонду проверенных проектов
             </p>
@@ -183,77 +188,104 @@ const InvestmentStartups = () => {
               </div>
             </div>
 
-            <div className="grid gap-6">
-              {sandboxProjects.map((project) => (
-                <Card key={project.id} className="border-accent/50">
-                  <CardHeader>
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Badge className="bg-accent text-accent-foreground">
-                            <Lock className="w-3 h-3 mr-1" />
-                            Ограниченный доступ
-                          </Badge>
-                          <Badge variant="secondary">{project.stage}</Badge>
-                        </div>
-                        <CardTitle className="text-2xl">{project.company}</CardTitle>
-                        <CardDescription className="mt-2">
-                          {project.description}
-                        </CardDescription>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  
-                  <CardContent>
-                    <div className="grid md:grid-cols-3 gap-6 mb-6">
-                      <div>
-                        <div className="text-sm text-muted-foreground mb-1">Цель привлечения</div>
-                        <div className="text-xl font-bold text-primary">{formatAmount(project.seeking)}</div>
-                      </div>
-                      <div>
-                        <div className="text-sm text-muted-foreground mb-1">Мин. инвестиция</div>
-                        <div className="text-xl font-bold">{formatAmount(project.minInvestment)}</div>
-                      </div>
-                      <div>
-                        <div className="text-sm text-muted-foreground mb-1">Потенциальная доходность</div>
-                        <div className="text-xl font-bold text-secondary">{project.potentialROI}</div>
-                      </div>
-                    </div>
+            <div className="mb-4 flex justify-between items-center">
+              <p className="text-muted-foreground">
+                Показано <span className="font-semibold">{Math.min(sandboxDisplayedItems, sandboxProjects.length)}</span> из <span className="font-semibold">{sandboxProjects.length}</span> проектов
+              </p>
+              <Select value={sandboxItemsPerPage.toString()} onValueChange={(value) => {
+                setSandboxItemsPerPage(parseInt(value));
+                setSandboxDisplayedItems(parseInt(value));
+              }}>
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Показывать по" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="9">Показывать по 9</SelectItem>
+                  <SelectItem value="15">Показывать по 15</SelectItem>
+                  <SelectItem value="30">Показывать по 30</SelectItem>
+                  <SelectItem value="60">Показывать по 60</SelectItem>
+                  <SelectItem value="90">Показывать по 90</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
-                    <div className="bg-muted/50 p-4 rounded-lg mb-4">
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="flex items-center gap-4">
+            <div className="grid lg:grid-cols-3 gap-6">
+              {sandboxProjects.slice(0, sandboxDisplayedItems).map((project) => (
+                <Card key={project.id} className="border-accent/50 flex flex-col">
+                  <div className="relative h-48">
+                    <img 
+                      src="/placeholder.svg" 
+                      alt={project.company}
+                      className="w-full h-full object-cover rounded-t-lg"
+                    />
+                    <Badge className="absolute top-4 left-4 bg-accent text-accent-foreground">
+                      <Lock className="w-3 h-3 mr-1" />
+                      Ограниченный доступ
+                    </Badge>
+                  </div>
+                  
+                  <div className="p-6 flex flex-col flex-1">
+                    <CardHeader className="p-0 mb-4">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Badge variant="secondary">{project.stage}</Badge>
+                      </div>
+                      <CardTitle className="text-lg line-clamp-2">{project.company}</CardTitle>
+                      <CardDescription className="text-sm line-clamp-2 mt-2">
+                        {project.description}
+                      </CardDescription>
+                    </CardHeader>
+                    
+                    <CardContent className="p-0 mt-auto">
+                      <div className="grid grid-cols-2 gap-3 mb-4">
+                        <div>
+                          <div className="text-xs text-muted-foreground mb-1">Цель</div>
+                          <div className="text-sm font-bold text-primary">{formatAmount(project.seeking)}</div>
+                        </div>
+                        <div>
+                          <div className="text-xs text-muted-foreground mb-1">Мин. инвестиция</div>
+                          <div className="text-sm font-bold">{formatAmount(project.minInvestment)}</div>
+                        </div>
+                      </div>
+
+                      <div className="bg-muted/50 p-3 rounded-lg mb-3">
+                        <div className="flex items-center justify-between text-xs">
                           <div className="flex items-center gap-1">
-                            <Users className="w-4 h-4 text-muted-foreground" />
-                            <span className="text-sm">{project.investorsCount} инвесторов</span>
+                            <Users className="w-3 h-3 text-muted-foreground" />
+                            <span>{project.investorsCount} инв.</span>
                           </div>
                           <div className="flex items-center gap-1">
-                            <Clock className="w-4 h-4 text-muted-foreground" />
-                            <span className="text-sm">{project.spotsLeft} мест</span>
+                            <Clock className="w-3 h-3 text-muted-foreground" />
+                            <span>{project.spotsLeft} мест</span>
                           </div>
                         </div>
-                        <Badge variant="outline">{project.earlyBirdBonus}</Badge>
                       </div>
-                    </div>
-                    
-                    <div className="flex gap-3">
-                      {isAccredited ? (
-                        <Button className="flex-1">
-                          <Target className="w-4 h-4 mr-2" />
-                          Инвестировать
-                        </Button>
-                      ) : (
-                        <Button className="flex-1" variant="outline" disabled>
-                          <Lock className="w-4 h-4 mr-2" />
-                          Требуется аккредитация
-                        </Button>
-                      )}
-                      <Button variant="outline">Подробнее</Button>
-                    </div>
-                  </CardContent>
+                      
+                      <div className="flex gap-2">
+                        {isAccredited ? (
+                          <Button size="sm" className="flex-1">
+                            <Target className="w-3 h-3 mr-1" />
+                            Инвестировать
+                          </Button>
+                        ) : (
+                          <Button size="sm" className="flex-1" variant="outline" disabled>
+                            <Lock className="w-3 h-3 mr-1" />
+                            Требуется аккредитация
+                          </Button>
+                        )}
+                      </div>
+                    </CardContent>
+                  </div>
                 </Card>
               ))}
             </div>
+
+            {sandboxDisplayedItems < sandboxProjects.length && (
+              <div className="mt-8 text-center">
+                <Button onClick={() => setSandboxDisplayedItems(prev => Math.min(prev + sandboxItemsPerPage, sandboxProjects.length))} size="lg">
+                  Показать еще
+                </Button>
+              </div>
+            )}
           </section>
 
           {/* Gold Fund Projects */}
@@ -268,78 +300,106 @@ const InvestmentStartups = () => {
               </p>
             </div>
 
-            <div className="grid gap-6">
-              {goldFundProjects.map((project) => (
-                <Card key={project.id} className="border-yellow-500/30">
-                  <CardHeader>
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Badge className="bg-yellow-500 text-yellow-950">
-                            <Trophy className="w-3 h-3 mr-1" />
-                            Золотой фонд
-                          </Badge>
-                          <Badge variant="secondary">{project.nextRound}</Badge>
-                          {project.achievements.slice(0, 1).map((achievement, idx) => (
-                            <Badge key={idx} variant="outline">{achievement}</Badge>
-                          ))}
-                        </div>
-                        <CardTitle className="text-2xl">{project.company}</CardTitle>
-                        <CardDescription className="mt-2">
-                          {project.description}
-                        </CardDescription>
-                      </div>
-                      <div className="text-right ml-6">
-                        <div className="text-sm text-muted-foreground">Доказанный ROI</div>
-                        <div className="text-2xl font-bold text-secondary">{project.provenROI}</div>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  
-                  <CardContent>
-                    <div className="grid md:grid-cols-4 gap-4 mb-6">
-                      <div>
-                        <div className="text-xs text-muted-foreground mb-1">Текущая оценка</div>
-                        <div className="text-lg font-bold">{formatAmount(project.currentValuation)}</div>
-                      </div>
-                      <div>
-                        <div className="text-xs text-muted-foreground mb-1">Привлечено</div>
-                        <div className="text-lg font-bold">{formatAmount(project.totalRaised)}</div>
-                      </div>
-                      <div>
-                        <div className="text-xs text-muted-foreground mb-1">Рост в год</div>
-                        <div className="text-lg font-bold text-secondary">{project.yearlyGrowth}</div>
-                      </div>
-                      <div>
-                        <div className="text-xs text-muted-foreground mb-1">Раундов</div>
-                        <div className="text-lg font-bold">{project.fundingRounds}</div>
-                      </div>
-                    </div>
+            <div className="mb-4 flex justify-between items-center">
+              <p className="text-muted-foreground">
+                Показано <span className="font-semibold">{Math.min(goldDisplayedItems, goldFundProjects.length)}</span> из <span className="font-semibold">{goldFundProjects.length}</span> проектов
+              </p>
+              <Select value={goldItemsPerPage.toString()} onValueChange={(value) => {
+                setGoldItemsPerPage(parseInt(value));
+                setGoldDisplayedItems(parseInt(value));
+              }}>
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Показывать по" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="9">Показывать по 9</SelectItem>
+                  <SelectItem value="15">Показывать по 15</SelectItem>
+                  <SelectItem value="30">Показывать по 30</SelectItem>
+                  <SelectItem value="60">Показывать по 60</SelectItem>
+                  <SelectItem value="90">Показывать по 90</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
-                    <div className="bg-muted/50 p-4 rounded-lg mb-4">
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <div>
-                          <div className="text-xs text-muted-foreground mb-1">Текущий раунд</div>
-                          <div className="font-semibold">{formatAmount(project.seeking)}</div>
-                        </div>
-                        <div>
-                          <div className="text-xs text-muted-foreground mb-1">Мин. инвестиция</div>
-                          <div className="font-semibold">{formatAmount(project.minInvestment)}</div>
+            <div className="grid lg:grid-cols-3 gap-6">
+              {goldFundProjects.slice(0, goldDisplayedItems).map((project) => (
+                <Card key={project.id} className="border-yellow-500/30 flex flex-col">
+                  <div className="relative h-48">
+                    <img 
+                      src="/placeholder.svg" 
+                      alt={project.company}
+                      className="w-full h-full object-cover rounded-t-lg"
+                    />
+                    <Badge className="absolute top-4 left-4 bg-yellow-500 text-yellow-950">
+                      <Trophy className="w-3 h-3 mr-1" />
+                      Золотой фонд
+                    </Badge>
+                  </div>
+                  
+                  <div className="p-6 flex flex-col flex-1">
+                    <CardHeader className="p-0 mb-4">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Badge variant="secondary">{project.nextRound}</Badge>
+                        {project.achievements.slice(0, 1).map((achievement, idx) => (
+                          <Badge key={idx} variant="outline" className="text-xs">{achievement}</Badge>
+                        ))}
+                      </div>
+                      <div className="flex items-start justify-between">
+                        <CardTitle className="text-lg line-clamp-2 flex-1">{project.company}</CardTitle>
+                        <div className="text-right ml-2">
+                          <div className="text-xs text-muted-foreground">ROI</div>
+                          <div className="text-lg font-bold text-secondary">{project.provenROI}</div>
                         </div>
                       </div>
-                    </div>
+                      <CardDescription className="text-sm line-clamp-2 mt-2">
+                        {project.description}
+                      </CardDescription>
+                    </CardHeader>
                     
-                    <div className="flex gap-3">
-                      <Button className="flex-1">
-                        <DollarSign className="w-4 h-4 mr-2" />
-                        Инвестировать
-                      </Button>
-                      <Button variant="outline">Подробнее</Button>
-                    </div>
-                  </CardContent>
+                    <CardContent className="p-0 mt-auto">
+                      <div className="grid grid-cols-2 gap-3 mb-4">
+                        <div>
+                          <div className="text-xs text-muted-foreground mb-1">Оценка</div>
+                          <div className="text-sm font-bold">{formatAmount(project.currentValuation)}</div>
+                        </div>
+                        <div>
+                          <div className="text-xs text-muted-foreground mb-1">Рост/год</div>
+                          <div className="text-sm font-bold text-secondary">{project.yearlyGrowth}</div>
+                        </div>
+                      </div>
+
+                      <div className="bg-muted/50 p-3 rounded-lg mb-3">
+                        <div className="grid grid-cols-2 gap-2 text-xs">
+                          <div>
+                            <div className="text-muted-foreground mb-0.5">Раунд</div>
+                            <div className="font-semibold">{formatAmount(project.seeking)}</div>
+                          </div>
+                          <div>
+                            <div className="text-muted-foreground mb-0.5">Мин.</div>
+                            <div className="font-semibold">{formatAmount(project.minInvestment)}</div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="flex gap-2">
+                        <Button size="sm" className="flex-1">
+                          <DollarSign className="w-3 h-3 mr-1" />
+                          Инвестировать
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </div>
                 </Card>
               ))}
             </div>
+
+            {goldDisplayedItems < goldFundProjects.length && (
+              <div className="mt-8 text-center">
+                <Button onClick={() => setGoldDisplayedItems(prev => Math.min(prev + goldItemsPerPage, goldFundProjects.length))} size="lg">
+                  Показать еще
+                </Button>
+              </div>
+            )}
           </section>
         </div>
       </main>

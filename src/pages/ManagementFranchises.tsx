@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -6,8 +6,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Building2, TrendingUp, Users, DollarSign, Calendar, MapPin, Award, CheckCircle2 } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 const ManagementFranchises = () => {
+  const [itemsPerPage, setItemsPerPage] = useState(15);
+  const [displayedItems, setDisplayedItems] = useState(15);
+  
   const franchises = [
     {
       id: 1,
@@ -163,96 +167,127 @@ const ManagementFranchises = () => {
             </div>
           </section>
 
-          <div className="grid gap-6">
-            {franchises.map((franchise) => (
-              <Card key={franchise.id} className="hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Badge variant="outline">{franchise.category}</Badge>
-                        <Badge className="bg-secondary text-secondary-foreground">
-                          <Award className="w-3 h-3 mr-1" />
-                          Управляемая франшиза
-                        </Badge>
-                        <Badge variant={franchise.risks === 'Низкий' ? 'secondary' : 'default'}>
-                          Риск: {franchise.risks}
-                        </Badge>
-                      </div>
-                      <CardTitle className="text-2xl mb-2">{franchise.name}</CardTitle>
-                      <CardDescription>
-                        <div className="flex items-center gap-4 mt-2">
-                          <span className="flex items-center gap-1">
-                            <MapPin className="w-4 h-4" />
-                            {franchise.locations} локаций
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <Calendar className="w-4 h-4" />
-                            На рынке с {franchise.yearEstablished}
-                          </span>
-                        </div>
-                      </CardDescription>
-                    </div>
-                    <div className="text-right ml-6">
-                      <div className="text-sm text-muted-foreground">Доходность</div>
-                      <div className="text-2xl font-bold text-secondary">{franchise.roi}</div>
-                    </div>
-                  </div>
-                </CardHeader>
+          <div className="mb-4 flex justify-between items-center">
+            <p className="text-muted-foreground">
+              Показано <span className="font-semibold">{Math.min(displayedItems, franchises.length)}</span> из <span className="font-semibold">{franchises.length}</span> франшиз
+            </p>
+            <Select value={itemsPerPage.toString()} onValueChange={(value) => {
+              setItemsPerPage(parseInt(value));
+              setDisplayedItems(parseInt(value));
+            }}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Показывать по" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="9">Показывать по 9</SelectItem>
+                <SelectItem value="15">Показывать по 15</SelectItem>
+                <SelectItem value="30">Показывать по 30</SelectItem>
+                <SelectItem value="60">Показывать по 60</SelectItem>
+                <SelectItem value="90">Показывать по 90</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="grid lg:grid-cols-3 gap-6">
+            {franchises.slice(0, displayedItems).map((franchise) => (
+              <Card key={franchise.id} className="hover:shadow-lg transition-shadow flex flex-col">
+                <div className="relative h-48">
+                  <img 
+                    src="/placeholder.svg" 
+                    alt={franchise.name}
+                    className="w-full h-full object-cover rounded-t-lg"
+                  />
+                  <Badge variant="outline" className="absolute top-4 left-4 bg-background/80">
+                    {franchise.category}
+                  </Badge>
+                </div>
                 
-                <CardContent>
-                  <div className="grid md:grid-cols-3 gap-6 mb-6">
-                    <div>
-                      <div className="text-sm text-muted-foreground mb-1">Размер инвестиции</div>
-                      <div className="text-xl font-bold text-primary">{formatAmount(franchise.investmentSize)}</div>
+                <div className="p-6 flex flex-col flex-1">
+                  <CardHeader className="p-0 mb-4">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Badge className="bg-secondary text-secondary-foreground text-xs">
+                        <Award className="w-3 h-3 mr-1" />
+                        Управляемая
+                      </Badge>
+                      <Badge variant={franchise.risks === 'Низкий' ? 'secondary' : 'default'} className="text-xs">
+                        Риск: {franchise.risks}
+                      </Badge>
                     </div>
-                    <div>
-                      <div className="text-sm text-muted-foreground mb-1">Месячный доход</div>
-                      <div className="text-xl font-bold">{formatAmount(franchise.monthlyIncome)}</div>
+                    <div className="flex items-start justify-between">
+                      <CardTitle className="text-lg line-clamp-2 flex-1">{franchise.name}</CardTitle>
+                      <div className="text-right ml-2">
+                        <div className="text-xs text-muted-foreground">ROI</div>
+                        <div className="text-lg font-bold text-secondary">{franchise.roi}</div>
+                      </div>
                     </div>
-                    <div>
-                      <div className="text-sm text-muted-foreground mb-1">Окупаемость</div>
-                      <div className="text-xl font-bold">{franchise.paybackPeriod}</div>
-                    </div>
-                  </div>
-
-                  <div className="mb-6">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm text-muted-foreground">Загрузка мощностей</span>
-                      <span className="text-sm font-semibold">{franchise.occupancy}%</span>
-                    </div>
-                    <Progress value={franchise.occupancy} className="h-2" />
-                  </div>
-
-                  <div className="bg-muted/50 p-4 rounded-lg mb-4">
-                    <h4 className="font-semibold mb-3 flex items-center">
-                      <CheckCircle2 className="w-4 h-4 mr-2 text-secondary" />
-                      Преимущества
-                    </h4>
-                    <ul className="grid md:grid-cols-2 gap-2">
-                      {franchise.benefits.map((benefit, idx) => (
-                        <li key={idx} className="text-sm flex items-start gap-2">
-                          <CheckCircle2 className="w-4 h-4 text-secondary mt-0.5 flex-shrink-0" />
-                          <span>{benefit}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                    <CardDescription className="mt-2">
+                      <div className="flex items-center gap-3 text-xs">
+                        <span className="flex items-center gap-1">
+                          <MapPin className="w-3 h-3" />
+                          {franchise.locations}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Calendar className="w-3 h-3" />
+                          С {franchise.yearEstablished}
+                        </span>
+                      </div>
+                    </CardDescription>
+                  </CardHeader>
                   
-                  <div className="flex gap-3">
-                    <Button className="flex-1">
-                      <DollarSign className="w-4 h-4 mr-2" />
-                      Инвестировать
-                    </Button>
-                    <Button variant="outline">
-                      <Users className="w-4 h-4 mr-2" />
-                      Подробнее
-                    </Button>
-                  </div>
-                </CardContent>
+                  <CardContent className="p-0 mt-auto">
+                    <div className="grid grid-cols-2 gap-3 mb-4">
+                      <div>
+                        <div className="text-xs text-muted-foreground mb-1">Инвестиция</div>
+                        <div className="text-sm font-bold text-primary">{formatAmount(franchise.investmentSize)}</div>
+                      </div>
+                      <div>
+                        <div className="text-xs text-muted-foreground mb-1">Мес. доход</div>
+                        <div className="text-sm font-bold">{formatAmount(franchise.monthlyIncome)}</div>
+                      </div>
+                    </div>
+
+                    <div className="mb-3">
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-xs text-muted-foreground">Загрузка</span>
+                        <span className="text-xs font-semibold">{franchise.occupancy}%</span>
+                      </div>
+                      <Progress value={franchise.occupancy} className="h-1.5" />
+                    </div>
+
+                    <div className="bg-muted/50 p-3 rounded-lg mb-3">
+                      <h4 className="text-xs font-semibold mb-2 flex items-center">
+                        <CheckCircle2 className="w-3 h-3 mr-1 text-secondary" />
+                        Преимущества
+                      </h4>
+                      <ul className="space-y-1">
+                        {franchise.benefits.slice(0, 2).map((benefit, idx) => (
+                          <li key={idx} className="text-xs flex items-start gap-1">
+                            <CheckCircle2 className="w-3 h-3 text-secondary mt-0.5 flex-shrink-0" />
+                            <span className="line-clamp-1">{benefit}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    
+                    <div className="flex gap-2">
+                      <Button size="sm" className="flex-1">
+                        <DollarSign className="w-3 h-3 mr-1" />
+                        Инвестировать
+                      </Button>
+                    </div>
+                  </CardContent>
+                </div>
               </Card>
             ))}
           </div>
+
+          {displayedItems < franchises.length && (
+            <div className="mt-8 text-center">
+              <Button onClick={() => setDisplayedItems(prev => Math.min(prev + itemsPerPage, franchises.length))} size="lg">
+                Показать еще
+              </Button>
+            </div>
+          )}
 
           <section className="mt-16">
             <Card className="bg-gradient-to-br from-primary/10 to-accent/10 border-primary/20">

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -6,9 +6,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { TrendingUp, TrendingDown, Shuffle, Lock, Target, Shield } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 const SecondaryMarket = () => {
   const { profile } = useAuth();
+  const [itemsPerPage, setItemsPerPage] = useState(15);
+  const [displayedItems, setDisplayedItems] = useState(15);
 
   const isProfessional = profile?.verification_level === 'professional' || 
                         profile?.verification_level === 'qualified';
@@ -138,84 +141,118 @@ const SecondaryMarket = () => {
             )}
           </section>
 
-          <div className="grid gap-6">
-            {secondaryMarketDeals.map((deal) => (
-              <Card key={deal.id} className={`hover:shadow-lg transition-shadow ${!isProfessional ? 'opacity-75' : ''}`}>
-                <CardHeader>
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Badge variant="outline">{deal.sector}</Badge>
-                        <Badge className={deal.trending === 'up' ? 'bg-secondary' : 'bg-destructive'}>
-                          {deal.trending === 'up' ? (
-                            <><TrendingUp className="w-3 h-3 mr-1" /> Растет</>
-                          ) : (
-                            <><TrendingDown className="w-3 h-3 mr-1" /> Снижение</>
-                          )}
-                        </Badge>
-                        <Badge variant="secondary">Ликвидность: {deal.liquidity}</Badge>
-                      </div>
-                      <CardTitle className="text-2xl">{deal.company}</CardTitle>
-                      <CardDescription className="mt-2">
-                        Продавец: {deal.originalInvestor} • Причина: {deal.reason}
-                      </CardDescription>
-                    </div>
-                    <div className="text-right ml-6">
-                      <div className="text-sm text-muted-foreground">ROI</div>
-                      <div className={`text-2xl font-bold ${deal.roi.includes('+') ? 'text-secondary' : 'text-destructive'}`}>
-                        {deal.roi}
-                      </div>
-                    </div>
-                  </div>
-                </CardHeader>
-                
-                <CardContent>
-                  <div className="grid md:grid-cols-3 gap-6 mb-6">
-                    <div>
-                      <div className="text-sm text-muted-foreground mb-1">Размер доли</div>
-                      <div className="text-xl font-bold">{deal.shareSize}</div>
-                    </div>
-                    <div>
-                      <div className="text-sm text-muted-foreground mb-1">Запрашиваемая цена</div>
-                      <div className="text-xl font-bold text-primary">{formatAmount(deal.askingPrice)}</div>
-                    </div>
-                    <div>
-                      <div className="text-sm text-muted-foreground mb-1">Текущая оценка</div>
-                      <div className="text-xl font-bold">{formatAmount(deal.currentValuation)}</div>
-                    </div>
-                  </div>
+          <div className="mb-4 flex justify-between items-center">
+            <p className="text-muted-foreground">
+              Показано <span className="font-semibold">{Math.min(displayedItems, secondaryMarketDeals.length)}</span> из <span className="font-semibold">{secondaryMarketDeals.length}</span> предложений
+            </p>
+            <Select value={itemsPerPage.toString()} onValueChange={(value) => {
+              setItemsPerPage(parseInt(value));
+              setDisplayedItems(parseInt(value));
+            }}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Показывать по" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="9">Показывать по 9</SelectItem>
+                <SelectItem value="15">Показывать по 15</SelectItem>
+                <SelectItem value="30">Показывать по 30</SelectItem>
+                <SelectItem value="60">Показывать по 60</SelectItem>
+                <SelectItem value="90">Показывать по 90</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
 
-                  <div className="bg-muted/50 p-4 rounded-lg mb-4 grid md:grid-cols-2 gap-4">
-                    <div>
-                      <div className="text-xs text-muted-foreground mb-1">Мин. инвестиция</div>
-                      <div className="font-semibold">{formatAmount(deal.minInvestment)}</div>
+          <div className="grid lg:grid-cols-3 gap-6">
+            {secondaryMarketDeals.slice(0, displayedItems).map((deal) => (
+              <Card key={deal.id} className={`hover:shadow-lg transition-shadow flex flex-col ${!isProfessional ? 'opacity-75' : ''}`}>
+                <div className="relative h-48">
+                  <img 
+                    src="/placeholder.svg" 
+                    alt={deal.company}
+                    className="w-full h-full object-cover rounded-t-lg"
+                  />
+                  <Badge variant="outline" className="absolute top-4 left-4 bg-background/80">
+                    {deal.sector}
+                  </Badge>
+                </div>
+                
+                <div className="p-6 flex flex-col flex-1">
+                  <CardHeader className="p-0 mb-4">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Badge className={deal.trending === 'up' ? 'bg-secondary' : 'bg-destructive'}>
+                        {deal.trending === 'up' ? (
+                          <><TrendingUp className="w-3 h-3 mr-1" /> Растет</>
+                        ) : (
+                          <><TrendingDown className="w-3 h-3 mr-1" /> Снижение</>
+                        )}
+                      </Badge>
+                      <Badge variant="secondary" className="text-xs">Ликв.: {deal.liquidity}</Badge>
                     </div>
-                    <div>
-                      <div className="text-xs text-muted-foreground mb-1">Период блокировки</div>
-                      <div className="font-semibold">{deal.lockupPeriod}</div>
+                    <div className="flex items-start justify-between">
+                      <CardTitle className="text-lg line-clamp-2 flex-1">{deal.company}</CardTitle>
+                      <div className="text-right ml-2">
+                        <div className="text-xs text-muted-foreground">ROI</div>
+                        <div className={`text-lg font-bold ${deal.roi.includes('+') ? 'text-secondary' : 'text-destructive'}`}>
+                          {deal.roi}
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                    <CardDescription className="text-xs mt-2 line-clamp-2">
+                      Продавец: {deal.originalInvestor}
+                    </CardDescription>
+                  </CardHeader>
                   
-                  <div className="flex gap-3">
-                    {isProfessional ? (
-                      <>
-                        <Button className="flex-1">
-                          <Target className="w-4 h-4 mr-2" />
+                  <CardContent className="p-0 mt-auto">
+                    <div className="grid grid-cols-2 gap-3 mb-4">
+                      <div>
+                        <div className="text-xs text-muted-foreground mb-1">Доля</div>
+                        <div className="text-sm font-bold">{deal.shareSize}</div>
+                      </div>
+                      <div>
+                        <div className="text-xs text-muted-foreground mb-1">Цена</div>
+                        <div className="text-sm font-bold text-primary">{formatAmount(deal.askingPrice)}</div>
+                      </div>
+                    </div>
+
+                    <div className="bg-muted/50 p-3 rounded-lg mb-3">
+                      <div className="grid grid-cols-2 gap-2 text-xs">
+                        <div>
+                          <div className="text-muted-foreground mb-0.5">Мин. инв.</div>
+                          <div className="font-semibold">{formatAmount(deal.minInvestment)}</div>
+                        </div>
+                        <div>
+                          <div className="text-muted-foreground mb-0.5">Блокировка</div>
+                          <div className="font-semibold">{deal.lockupPeriod}</div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="flex gap-2">
+                      {isProfessional ? (
+                        <Button size="sm" className="flex-1">
+                          <Target className="w-3 h-3 mr-1" />
                           Купить долю
                         </Button>
-                        <Button variant="outline">Подробнее</Button>
-                      </>
-                    ) : (
-                      <Button className="flex-1" variant="outline" disabled>
-                        <Lock className="w-4 h-4 mr-2" />
-                        Требуется статус профессионального инвестора
-                      </Button>
-                    )}
-                  </div>
-                </CardContent>
+                      ) : (
+                        <Button size="sm" className="flex-1" variant="outline" disabled>
+                          <Lock className="w-3 h-3 mr-1" />
+                          Требуется статус
+                        </Button>
+                      )}
+                    </div>
+                  </CardContent>
+                </div>
               </Card>
             ))}
           </div>
+
+          {displayedItems < secondaryMarketDeals.length && (
+            <div className="mt-8 text-center">
+              <Button onClick={() => setDisplayedItems(prev => Math.min(prev + itemsPerPage, secondaryMarketDeals.length))} size="lg">
+                Показать еще
+              </Button>
+            </div>
+          )}
         </div>
       </main>
 

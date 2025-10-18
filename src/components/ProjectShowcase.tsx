@@ -17,6 +17,11 @@ const ProjectShowcase = () => {
     ? allProjects.slice(0, 8)
     : allProjects.filter(project => project.category === selectedCategory).slice(0, 8);
 
+  const getCategoryCount = (category: string) => {
+    if (category === "Все") return allProjects.length;
+    return allProjects.filter(project => project.category === category).length;
+  };
+
   const handleProjectClick = (project: any) => {
     setSelectedProject(project);
     setIsModalOpen(true);
@@ -38,9 +43,12 @@ const ProjectShowcase = () => {
               variant={selectedCategory === category ? "default" : "outline"}
               size="sm"
               onClick={() => setSelectedCategory(category)}
-              className="min-w-0 text-xs sm:text-sm px-2 sm:px-3"
+              className="min-w-0 text-xs sm:text-sm px-2 sm:px-3 relative"
             >
               {category}
+              <span className="ml-1.5 inline-flex items-center justify-center w-5 h-5 text-xs font-medium rounded-full bg-primary-foreground text-primary">
+                {getCategoryCount(category)}
+              </span>
             </Button>
           ))}
         </div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -6,9 +6,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Lightbulb, Lock, Users, ThumbsUp, MessageSquare, TrendingUp, Shield } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 const IdeaExchange = () => {
   const { profile } = useAuth();
+  const [itemsPerPage, setItemsPerPage] = useState(15);
+  const [displayedItems, setDisplayedItems] = useState(15);
 
   const isAccredited = profile?.verification_level === 'accredited' || 
                        profile?.verification_level === 'professional' || 
@@ -129,79 +132,110 @@ const IdeaExchange = () => {
             )}
           </section>
 
-          <div className="grid gap-6">
-            {ideas.map((idea) => (
-              <Card key={idea.id} className={!isAccredited ? 'opacity-75' : ''}>
-                <CardHeader>
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Badge variant="outline">{idea.category}</Badge>
-                        <Badge variant="secondary">{idea.stage}</Badge>
-                        {idea.seekingCoFounders && (
-                          <Badge className="bg-primary text-primary-foreground">
-                            <Users className="w-3 h-3 mr-1" />
-                            Ищет ко-фаундеров
-                          </Badge>
-                        )}
-                      </div>
-                      <CardTitle className="text-2xl mb-2">{idea.title}</CardTitle>
-                      <CardDescription className="text-sm text-muted-foreground mb-2">
-                        Автор: {idea.author}
-                      </CardDescription>
-                      <p className="text-muted-foreground mt-2">
-                        {idea.description}
-                      </p>
-                    </div>
-                  </div>
-                </CardHeader>
-                
-                <CardContent>
-                  <div className="grid md:grid-cols-3 gap-6 mb-4">
-                    <div>
-                      <div className="text-sm text-muted-foreground mb-1">Требуется инвестиций</div>
-                      <div className="text-xl font-bold text-primary">{formatAmount(idea.seekingInvestment)}</div>
-                    </div>
-                    <div>
-                      <div className="text-sm text-muted-foreground mb-1">Потенциал рынка</div>
-                      <div className="text-xl font-bold">{idea.potentialMarket}</div>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <div className="flex items-center gap-1">
-                        <ThumbsUp className="w-4 h-4 text-muted-foreground" />
-                        <span className="font-semibold">{idea.votes}</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <MessageSquare className="w-4 h-4 text-muted-foreground" />
-                        <span className="font-semibold">{idea.comments}</span>
-                      </div>
-                    </div>
-                  </div>
+          <div className="mb-4 flex justify-between items-center">
+            <p className="text-muted-foreground">
+              Показано <span className="font-semibold">{Math.min(displayedItems, ideas.length)}</span> из <span className="font-semibold">{ideas.length}</span> идей
+            </p>
+            <Select value={itemsPerPage.toString()} onValueChange={(value) => {
+              setItemsPerPage(parseInt(value));
+              setDisplayedItems(parseInt(value));
+            }}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Показывать по" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="9">Показывать по 9</SelectItem>
+                <SelectItem value="15">Показывать по 15</SelectItem>
+                <SelectItem value="30">Показывать по 30</SelectItem>
+                <SelectItem value="60">Показывать по 60</SelectItem>
+                <SelectItem value="90">Показывать по 90</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
 
-                  <div className="flex gap-3">
-                    {isAccredited ? (
-                      <>
-                        <Button className="flex-1">
-                          <TrendingUp className="w-4 h-4 mr-2" />
-                          Поддержать идею
+          <div className="grid lg:grid-cols-3 gap-6">
+            {ideas.slice(0, displayedItems).map((idea) => (
+              <Card key={idea.id} className={`flex flex-col ${!isAccredited ? 'opacity-75' : ''}`}>
+                <div className="relative h-48">
+                  <img 
+                    src="/placeholder.svg" 
+                    alt={idea.title}
+                    className="w-full h-full object-cover rounded-t-lg"
+                  />
+                  <Badge variant="outline" className="absolute top-4 left-4 bg-background/80">
+                    {idea.category}
+                  </Badge>
+                </div>
+                
+                <div className="p-6 flex flex-col flex-1">
+                  <CardHeader className="p-0 mb-4">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Badge variant="secondary">{idea.stage}</Badge>
+                      {idea.seekingCoFounders && (
+                        <Badge className="bg-primary text-primary-foreground text-xs">
+                          <Users className="w-3 h-3 mr-1" />
+                          Ко-фаундеры
+                        </Badge>
+                      )}
+                    </div>
+                    <CardTitle className="text-lg line-clamp-2 mb-2">{idea.title}</CardTitle>
+                    <CardDescription className="text-xs text-muted-foreground mb-2">
+                      Автор: {idea.author}
+                    </CardDescription>
+                    <p className="text-sm text-muted-foreground line-clamp-2 mt-2">
+                      {idea.description}
+                    </p>
+                  </CardHeader>
+                  
+                  <CardContent className="p-0 mt-auto">
+                    <div className="grid grid-cols-2 gap-3 mb-4">
+                      <div>
+                        <div className="text-xs text-muted-foreground mb-1">Требуется</div>
+                        <div className="text-sm font-bold text-primary">{formatAmount(idea.seekingInvestment)}</div>
+                      </div>
+                      <div>
+                        <div className="text-xs text-muted-foreground mb-1">Потенциал</div>
+                        <div className="text-sm font-bold">{idea.potentialMarket}</div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-4 mb-3">
+                      <div className="flex items-center gap-1">
+                        <ThumbsUp className="w-3 h-3 text-muted-foreground" />
+                        <span className="text-sm font-semibold">{idea.votes}</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <MessageSquare className="w-3 h-3 text-muted-foreground" />
+                        <span className="text-sm font-semibold">{idea.comments}</span>
+                      </div>
+                    </div>
+
+                    <div className="flex gap-2">
+                      {isAccredited ? (
+                        <Button size="sm" className="flex-1">
+                          <TrendingUp className="w-3 h-3 mr-1" />
+                          Поддержать
                         </Button>
-                        <Button variant="outline">
-                          <MessageSquare className="w-4 h-4 mr-2" />
-                          Обсудить
+                      ) : (
+                        <Button size="sm" className="flex-1" variant="outline" disabled>
+                          <Lock className="w-3 h-3 mr-1" />
+                          Требуется аккредитация
                         </Button>
-                      </>
-                    ) : (
-                      <Button className="flex-1" variant="outline" disabled>
-                        <Lock className="w-4 h-4 mr-2" />
-                        Требуется аккредитация
-                      </Button>
-                    )}
-                    <Button variant="outline">Подробнее</Button>
-                  </div>
-                </CardContent>
+                      )}
+                    </div>
+                  </CardContent>
+                </div>
               </Card>
             ))}
           </div>
+
+          {displayedItems < ideas.length && (
+            <div className="mt-8 text-center">
+              <Button onClick={() => setDisplayedItems(prev => Math.min(prev + itemsPerPage, ideas.length))} size="lg">
+                Показать еще
+              </Button>
+            </div>
+          )}
 
           {isAccredited && (
             <div className="mt-12 text-center">
