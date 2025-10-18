@@ -6,7 +6,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
 import { AuthProvider } from "@/hooks/useAuth";
 import { LanguageProvider } from "@/contexts/LanguageContext";
+import ScrollToTop from "@/components/ScrollToTop";
+import GoToTop from "@/components/GoToTop";
 import Index from "./pages/Index";
+import Community from "./pages/Community";
 import Auth from "./pages/Auth";
 import About from "./pages/About";
 import ForFreelancers from "./pages/ForFreelancers";
@@ -76,8 +79,11 @@ const App = () => (
         <BrowserRouter>
           <LanguageProvider>
             <AuthProvider>
+              <ScrollToTop />
+              <GoToTop />
               <Routes>
                 <Route path="/" element={<Index />} />
+                <Route path="/community" element={<Community />} />
                 <Route path="/auth" element={<Auth />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/freelancers" element={<ForFreelancers />} />

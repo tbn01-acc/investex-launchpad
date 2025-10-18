@@ -5,6 +5,7 @@ import {
   CarouselItem,
   type CarouselApi,
 } from "@/components/ui/carousel";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Autoplay from "embla-carousel-autoplay";
 
 const TestimonialsSection = () => {
@@ -14,26 +15,26 @@ const TestimonialsSection = () => {
       text: "Платформа превзошла все ожидания. За месяц мы нашли двух ключевых инвесторов и закрыли раунд. Аналитика и поддержка на высшем уровне!",
       author: "Анна Ветрова",
       role: "CEO, \"Nova AI\"",
-      avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b601?w=100&h=100&fit=crop&crop=face"
+      avatar: "/src/assets/projects/healthtech-platform.jpg"
     },
     {
       text: "Благодаря Invest-Ex я смог диверсифицировать портфель и найти проекты с отличным потенциалом. Прозрачность процессов впечатляет.",
       author: "Михаил Орлов",
       role: "Частный инвестор",
-      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face"
+      avatar: "/src/assets/projects/fintech-mobile-app.jpg"
     },
     {
       text: "Как фрилансер, я нашел здесь проекты мечты. Команда платформы действительно заботится о качестве взаимодействия между всеми участниками.",
       author: "Елена Соколова",
       role: "UX/UI Дизайнер",
-      avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face"
+      avatar: "/src/assets/projects/edtech-platform.jpg"
     }
   ];
 
   return (
     <section className="py-16 bg-background">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center text-foreground mb-4">Что о нас говорят</h2>
+        <h2 className="text-3xl font-bold text-center text-foreground mb-4">Нам доверяют</h2>
         <p className="text-lg text-muted-foreground text-center max-w-3xl mx-auto mb-12">
           Доверие — наша главная ценность. Вот мнения тех, кто уже использует Invest-Ex для своего роста.
         </p>
@@ -66,11 +67,10 @@ const TestimonialsSection = () => {
                       </div>
                       
                       <div className="flex items-center mt-4">
-                        <img 
-                          src={testimonial.avatar} 
-                          alt={testimonial.author}
-                          className="w-8 h-8 rounded-full object-cover mr-3"
-                        />
+                        <Avatar className="h-8 w-8 mr-3">
+                          <AvatarImage src={testimonial.avatar} alt={testimonial.author} />
+                          <AvatarFallback>{testimonial.author[0]}</AvatarFallback>
+                        </Avatar>
                         <div>
                           <div className="font-bold text-sm">{testimonial.author}</div>
                           <div className="text-muted-foreground text-xs">{testimonial.role}</div>
@@ -96,11 +96,10 @@ const TestimonialsSection = () => {
                 </div>
                 
                 <div className="flex items-center">
-                  <img 
-                    src={testimonial.avatar} 
-                    alt={testimonial.author}
-                    className="w-10 h-10 rounded-full object-cover mr-3"
-                  />
+                  <Avatar className="h-10 w-10 mr-3">
+                    <AvatarImage src={testimonial.avatar} alt={testimonial.author} />
+                    <AvatarFallback>{testimonial.author[0]}</AvatarFallback>
+                  </Avatar>
                   <div>
                     <div className="font-bold">{testimonial.author}</div>
                     <div className="text-muted-foreground text-sm">{testimonial.role}</div>
