@@ -3,6 +3,9 @@ import { Resend } from "npm:resend@2.0.0";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
+const FROM_SENDER = Deno.env.get("RESEND_FROM") || "Invest-Ex Support <onboarding@resend.dev>";
+const ADMIN_EMAIL = "invest.exch@gmail.com";
+
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers":
@@ -36,11 +39,12 @@ const handler = async (req: Request): Promise<Response> => {
     }: ContactEmailRequest = await req.json();
 
     const fullName = `${firstName} ${lastName}`;
+    let copyEmailError: { message?: string; statusCode?: number } | null = null;
     
     // Email to admin
     const adminEmailResponse = await resend.emails.send({
-      from: "Invest-Ex Support <onboarding@resend.dev>",
-      to: ["invest.exch@gmail.com"],
+      from: FROM_SENDER,
+      to: [ADMIN_EMAIL],
       subject: `Новое обращение: ${subject}`,
       html: `
         <h2>Новое обращение от ${fullName}</h2>
@@ -53,12 +57,32 @@ const handler = async (req: Request): Promise<Response> => {
       `,
     });
 
-    console.log("Admin email sent successfully:", adminEmailResponse);
+    console.log("Admin email response:", adminEmailResponse);
+    if (adminEmailResponse.error) {
+      console.error("Admin email send error:", adminEmailResponse.error);
+      const messageText = adminEmailResponse.error.message || "Email send failed";
+      const statusCode = (adminEmailResponse.error as any).statusCode || 500;
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: messageText,
+          code: statusCode,
+          hint:
+            statusCode === 403
+              ? "Verify your domain at resend.com/domains and set RESEND_FROM to an address on that domain."
+              : undefined,
+        }),
+        {
+          status: 502,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
+    }
 
     // Send copy to sender if requested
     if (sendCopy) {
       const copyEmailResponse = await resend.emails.send({
-        from: "Invest-Ex Support <onboarding@resend.dev>",
+        from: FROM_SENDER,
         to: [email],
         subject: `Копия вашего обращения: ${subject}`,
         html: `
@@ -73,11 +97,19 @@ const handler = async (req: Request): Promise<Response> => {
           <p>Мы ответим вам в течение 48 часов в рабочее время.</p>
           <p>С уважением,<br>Команда Invest-Ex</p>
         `,
+        reply_to: email,
       });
-      console.log("Copy email sent successfully:", copyEmailResponse);
+      console.log("Copy email response:", copyEmailResponse);
+      if (copyEmailResponse.error) {
+        copyEmailError = {
+          message: copyEmailResponse.error.message,
+          statusCode: (copyEmailResponse.error as any).statusCode,
+        };
+        console.error("Copy email send error:", copyEmailResponse.error);
+      }
     }
 
-    return new Response(JSON.stringify({ success: true }), {
+    return new Response(JSON.stringify({ success: true, copyEmailError }), {
       status: 200,
       headers: {
         "Content-Type": "application/json",
