@@ -208,8 +208,7 @@ const Contact = () => {
                       </div>
                       <div>
                         <h3 className="font-semibold text-lg mb-1">{contact.title}</h3>
-                        <p className="font-medium mb-1">{contact.value}</p>
-                        <p className="text-muted-foreground text-sm">{contact.description}</p>
+                        <p className="font-medium">{contact.value}</p>
                       </div>
                     </div>
                   </CardContent>
