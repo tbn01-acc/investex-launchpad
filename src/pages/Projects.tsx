@@ -142,6 +142,7 @@ const Projects = () => {
             <SelectValue placeholder="Показывать по" />
           </SelectTrigger>
           <SelectContent>
+            <SelectItem value="9">Показывать по 9</SelectItem>
             <SelectItem value="15">Показывать по 15</SelectItem>
             <SelectItem value="30">Показывать по 30</SelectItem>
             <SelectItem value="60">Показывать по 60</SelectItem>
