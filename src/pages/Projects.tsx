@@ -93,18 +93,18 @@ const Projects = () => {
     // Filter by investment range
     const budgetValue = parseInt(project.budget.replace(/[^\d]/g, '')) || 0;
     let matchesInvestment = true;
-    if (investmentRange === 'up_to_1m') {
-      matchesInvestment = budgetValue <= 1000000;
-    } else if (investmentRange === 'up_to_5m') {
-      matchesInvestment = budgetValue <= 5000000;
-    } else if (investmentRange === 'up_to_10m') {
-      matchesInvestment = budgetValue <= 10000000;
-    } else if (investmentRange === 'up_to_50m') {
-      matchesInvestment = budgetValue <= 50000000;
-    } else if (investmentRange === 'up_to_100m') {
-      matchesInvestment = budgetValue <= 100000000;
+    if (investmentRange === 'under_1m') {
+      matchesInvestment = budgetValue < 1000000;
+    } else if (investmentRange === '1m_to_5m') {
+      matchesInvestment = budgetValue >= 1000000 && budgetValue < 5000000;
+    } else if (investmentRange === '5m_to_10m') {
+      matchesInvestment = budgetValue >= 5000000 && budgetValue < 10000000;
+    } else if (investmentRange === '10m_to_50m') {
+      matchesInvestment = budgetValue >= 10000000 && budgetValue < 50000000;
+    } else if (investmentRange === '50m_to_100m') {
+      matchesInvestment = budgetValue >= 50000000 && budgetValue < 100000000;
     } else if (investmentRange === 'over_100m') {
-      matchesInvestment = budgetValue > 100000000;
+      matchesInvestment = budgetValue >= 100000000;
     }
     
     return matchesSearch && matchesCategory && matchesTab && matchesInvestment;
@@ -310,64 +310,54 @@ const Projects = () => {
                       <p className="text-sm font-medium mb-2">Диапазон инвестиций:</p>
                       <div className="flex flex-wrap gap-2">
                         <Button
-                          variant={investmentRange === 'all' ? 'default' : 'outline'}
+                          variant={investmentRange === 'under_1m' ? 'default' : 'outline'}
                           size="sm"
                           onClick={() => {
-                            setInvestmentRange('all');
+                            setInvestmentRange('under_1m');
                             setDisplayedItems(itemsPerPage);
                           }}
                         >
-                          Все
+                          &lt;1 млн ₽
                         </Button>
                         <Button
-                          variant={investmentRange === 'up_to_1m' ? 'default' : 'outline'}
+                          variant={investmentRange === '1m_to_5m' ? 'default' : 'outline'}
                           size="sm"
                           onClick={() => {
-                            setInvestmentRange('up_to_1m');
+                            setInvestmentRange('1m_to_5m');
                             setDisplayedItems(itemsPerPage);
                           }}
                         >
-                          до 1 млн ₽
+                          1-5 млн ₽
                         </Button>
                         <Button
-                          variant={investmentRange === 'up_to_5m' ? 'default' : 'outline'}
+                          variant={investmentRange === '5m_to_10m' ? 'default' : 'outline'}
                           size="sm"
                           onClick={() => {
-                            setInvestmentRange('up_to_5m');
+                            setInvestmentRange('5m_to_10m');
                             setDisplayedItems(itemsPerPage);
                           }}
                         >
-                          до 5 млн ₽
+                          5-10 млн ₽
                         </Button>
                         <Button
-                          variant={investmentRange === 'up_to_10m' ? 'default' : 'outline'}
+                          variant={investmentRange === '10m_to_50m' ? 'default' : 'outline'}
                           size="sm"
                           onClick={() => {
-                            setInvestmentRange('up_to_10m');
+                            setInvestmentRange('10m_to_50m');
                             setDisplayedItems(itemsPerPage);
                           }}
                         >
-                          до 10 млн ₽
+                          10-50 млн ₽
                         </Button>
                         <Button
-                          variant={investmentRange === 'up_to_50m' ? 'default' : 'outline'}
+                          variant={investmentRange === '50m_to_100m' ? 'default' : 'outline'}
                           size="sm"
                           onClick={() => {
-                            setInvestmentRange('up_to_50m');
+                            setInvestmentRange('50m_to_100m');
                             setDisplayedItems(itemsPerPage);
                           }}
                         >
-                          до 50 млн ₽
-                        </Button>
-                        <Button
-                          variant={investmentRange === 'up_to_100m' ? 'default' : 'outline'}
-                          size="sm"
-                          onClick={() => {
-                            setInvestmentRange('up_to_100m');
-                            setDisplayedItems(itemsPerPage);
-                          }}
-                        >
-                          до 100 млн ₽
+                          50-100 млн ₽
                         </Button>
                         <Button
                           variant={investmentRange === 'over_100m' ? 'default' : 'outline'}
@@ -377,7 +367,7 @@ const Projects = () => {
                             setDisplayedItems(itemsPerPage);
                           }}
                         >
-                          более 100 млн ₽
+                          &gt;100 млн ₽
                         </Button>
                       </div>
                     </div>
