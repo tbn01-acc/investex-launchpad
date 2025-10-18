@@ -19,7 +19,7 @@ import { formatCurrency } from '@/lib/utils';
 
 const Projects = () => {
   const { toast } = useToast();
-  const { currency, t } = useLanguage();
+  const { currency } = useLanguage();
   const [selectedProject, setSelectedProject] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -135,18 +135,18 @@ const Projects = () => {
     <>
       <div className="mb-4 flex justify-between items-center">
         <p className="text-muted-foreground">
-          {t('investments.showing')} <span className="font-semibold">{paginatedProjects.length}</span> {t('investments.of')} <span className="font-semibold">{filteredProjects.length}</span>
+          Показано <span className="font-semibold">{paginatedProjects.length}</span> из <span className="font-semibold">{filteredProjects.length}</span> проектов
         </p>
         <Select value={itemsPerPage.toString()} onValueChange={handleItemsPerPageChange}>
           <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder={t('investments.showPer')} />
+            <SelectValue placeholder="Показывать по" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="9">{t('investments.showPer')} 9</SelectItem>
-            <SelectItem value="15">{t('investments.showPer')} 15</SelectItem>
-            <SelectItem value="30">{t('investments.showPer')} 30</SelectItem>
-            <SelectItem value="60">{t('investments.showPer')} 60</SelectItem>
-            <SelectItem value="90">{t('investments.showPer')} 90</SelectItem>
+            <SelectItem value="9">Показывать по 9</SelectItem>
+            <SelectItem value="15">Показывать по 15</SelectItem>
+            <SelectItem value="30">Показывать по 30</SelectItem>
+            <SelectItem value="60">Показывать по 60</SelectItem>
+            <SelectItem value="90">Показывать по 90</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -183,13 +183,13 @@ const Projects = () => {
               <CardContent className="p-0 mt-auto">
                 <div className="grid grid-cols-2 gap-3 mb-4">
                   <div>
-                    <p className="text-xs text-muted-foreground mb-1">{t('projects.budget')}</p>
+                    <p className="text-xs text-muted-foreground mb-1">Бюджет</p>
                     <p className="font-semibold text-sm">
                       {formatCurrency(parseInt(project.budget.replace(/[^\d]/g, '')) || 0, currency)}
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs text-muted-foreground mb-1">{t('investments.team')}</p>
+                    <p className="text-xs text-muted-foreground mb-1">Команда</p>
                     <p className="font-semibold text-sm">{project.team}</p>
                   </div>
                 </div>
@@ -221,7 +221,7 @@ const Projects = () => {
                     }}
                   >
                     <Link to={`/project/${project.id}`}>
-                      {t('investments.moreDetails')}
+                      Подробнее
                     </Link>
                   </Button>
                 </div>
@@ -235,7 +235,7 @@ const Projects = () => {
         <Card>
           <CardContent className="p-12 text-center">
             <p className="text-muted-foreground">
-              {t('projects.notFound')}
+              Проекты не найдены. Попробуйте изменить параметры поиска.
             </p>
           </CardContent>
         </Card>
@@ -244,7 +244,7 @@ const Projects = () => {
       {paginatedProjects.length < filteredProjects.length && (
         <div className="mt-8 text-center">
           <Button onClick={handleShowMore} size="lg">
-            {t('investments.showMore')}
+            Показать еще
           </Button>
         </div>
       )}
@@ -276,12 +276,24 @@ const Projects = () => {
               </TabsList>
 
               <TabsContent value="active" className="space-y-6">
-                {/* Category Filters */}
+                {/* Search and Filters */}
                 <Card>
                   <CardContent className="p-6 space-y-4">
+                    <div className="flex justify-between items-center gap-4">
+                      <div className="relative flex-1">
+                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+                        <Input 
+                          placeholder="Поиск проектов..." 
+                          className="pl-10"
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                        />
+                      </div>
+                    </div>
+
                     {/* Category Tags Cloud */}
                     <div>
-                      <p className="text-sm font-medium mb-2">{t('projects.categories')}:</p>
+                      <p className="text-sm font-medium mb-2">Категории проектов:</p>
                       <div className="flex flex-wrap gap-2">
                         {categories.map((category) => (
                           <Badge
@@ -301,7 +313,7 @@ const Projects = () => {
 
                     {/* Investment Range Filters */}
                     <div>
-                      <p className="text-sm font-medium mb-2">{t('projects.investmentRange')}:</p>
+                      <p className="text-sm font-medium mb-2">Диапазон инвестиций:</p>
                       <div className="flex flex-wrap gap-2">
                         <Button
                           variant={investmentRange === 'all' ? 'default' : 'outline'}
@@ -311,7 +323,7 @@ const Projects = () => {
                             setDisplayedItems(itemsPerPage);
                           }}
                         >
-                          {t('projects.all')}
+                          Все
                         </Button>
                         <Button
                           variant={investmentRange === 'under_1m' ? 'default' : 'outline'}
@@ -382,18 +394,78 @@ const Projects = () => {
               </TabsContent>
 
               <TabsContent value="sandbox" className="space-y-6">
+                <Card>
+                  <CardContent className="p-6">
+                    <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-4">
+                      <div className="relative lg:col-span-2">
+                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+                        <Input 
+                          placeholder="Поиск проектов..." 
+                          className="pl-10"
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                        />
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
                 <ProjectList />
               </TabsContent>
 
               <TabsContent value="gold_fund" className="space-y-6">
+                <Card>
+                  <CardContent className="p-6">
+                    <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-4">
+                      <div className="relative lg:col-span-2">
+                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+                        <Input 
+                          placeholder="Поиск проектов..." 
+                          className="pl-10"
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                        />
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
                 <ProjectList />
               </TabsContent>
 
               <TabsContent value="pitch" className="space-y-6">
+                <Card>
+                  <CardContent className="p-6">
+                    <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-4">
+                      <div className="relative lg:col-span-2">
+                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+                        <Input 
+                          placeholder="Поиск питчей..." 
+                          className="pl-10"
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                        />
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
                 <ProjectList />
               </TabsContent>
 
               <TabsContent value="archived" className="space-y-6">
+                <Card>
+                  <CardContent className="p-6">
+                    <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-4">
+                      <div className="relative lg:col-span-2">
+                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+                        <Input 
+                          placeholder="Поиск проектов..." 
+                          className="pl-10"
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                        />
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
                 <ProjectList />
               </TabsContent>
             </Tabs>
