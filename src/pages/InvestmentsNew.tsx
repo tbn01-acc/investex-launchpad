@@ -18,6 +18,9 @@ const InvestmentsNew = () => {
   const [displayedItemsIdeas, setDisplayedItemsIdeas] = useState(9);
   const [displayedItemsFranchises, setDisplayedItemsFranchises] = useState(9);
 
+  // Map project images to URLs for safe usage in Vite
+  const projectImages = import.meta.glob('/src/assets/projects/*', { eager: true, as: 'url' }) as Record<string, string>;
+
   // Mock data with real details similar to project cards
   const mockStartups = [
     { id: 1, title: 'HealthTech AI Диагностика', category: 'HealthTech', funding: 35000000, stage: 'MVP', description: 'ИИ-платформа для ранней диагностики заболеваний', team: 12, image: '/src/assets/projects/healthtech-platform.jpg' },
@@ -201,10 +204,11 @@ const InvestmentsNew = () => {
                 {mockStartups.slice(0, displayedItemsStartups).map((startup) => (
                   <Card key={startup.id} className="hover:shadow-lg transition-shadow cursor-pointer flex flex-col">
                     <div className="relative h-48">
-                      <img 
-                        src={startup.image} 
+                      <img
+                        src={projectImages[startup.image] ?? startup.image}
                         alt={startup.title}
                         className="w-full h-full object-cover rounded-t-lg"
+                        loading="lazy"
                       />
                       <Badge className="absolute top-4 left-4 bg-primary text-primary-foreground">
                         {startup.category}
@@ -264,10 +268,11 @@ const InvestmentsNew = () => {
                 {mockSecondary.slice(0, displayedItemsSecondary).map((deal) => (
                   <Card key={deal.id} className="hover:shadow-lg transition-shadow cursor-pointer flex flex-col">
                     <div className="relative h-48">
-                      <img 
-                        src={deal.image} 
+                      <img
+                        src={projectImages[deal.image] ?? deal.image}
                         alt={deal.company}
                         className="w-full h-full object-cover rounded-t-lg"
+                        loading="lazy"
                       />
                       <Badge className="absolute top-4 left-4 bg-secondary text-secondary-foreground">
                         {deal.sector}
@@ -326,10 +331,11 @@ const InvestmentsNew = () => {
                 {mockIdeas.slice(0, displayedItemsIdeas).map((idea) => (
                   <Card key={idea.id} className="hover:shadow-lg transition-shadow cursor-pointer flex flex-col">
                     <div className="relative h-48">
-                      <img 
-                        src={idea.image} 
+                      <img
+                        src={projectImages[idea.image] ?? idea.image}
                         alt={idea.title}
                         className="w-full h-full object-cover rounded-t-lg"
+                        loading="lazy"
                       />
                       <Badge className="absolute top-4 left-4 bg-primary text-primary-foreground">
                         {idea.category}
@@ -388,10 +394,11 @@ const InvestmentsNew = () => {
                 {mockFranchises.slice(0, displayedItemsFranchises).map((franchise) => (
                   <Card key={franchise.id} className="hover:shadow-lg transition-shadow cursor-pointer flex flex-col">
                     <div className="relative h-48">
-                      <img 
-                        src={franchise.image} 
+                      <img
+                        src={projectImages[franchise.image] ?? franchise.image}
                         alt={franchise.name}
                         className="w-full h-full object-cover rounded-t-lg"
+                        loading="lazy"
                       />
                       <Badge className="absolute top-4 left-4 bg-primary text-primary-foreground">
                         {franchise.category}
