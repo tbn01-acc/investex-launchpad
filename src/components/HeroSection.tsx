@@ -14,30 +14,30 @@ const HeroSection = () => {
           <img src={logoSilver} alt="Invest-Ex Logo" className="w-48 h-auto" />
         </div>
       </div>
-      
+
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid lg:grid-cols-2 gap-8 items-center">
-          
           {/* Left Content */}
           <div className="text-center lg:text-left space-y-2">
             <div className="space-y-4">
               <div className="inline-flex items-center gap-2 bg-card border border-border rounded-full px-4 py-2 text-sm font-medium text-foreground">
                 <TrendingUp className="w-4 h-4 text-primary" />
-                Платформа №1 для проектов и инвестиций
+                Платформа №1 для стартапов и инвестиций
               </div>
-              
+
               <h1 className="text-4xl lg:text-6xl font-bold text-white leading-tight">
                 <span className="block">Invest-Ex</span>
                 <span className="block text-xl lg:text-2xl font-normal text-gray-200 mt-2">
-                  Единая инвестиционная платформа проектов и инвестиций
+                  Единая инвестиционная платформа стартапов и инвестиций
                 </span>
               </h1>
-              
+
               <p className="text-lg text-orange-300 max-w-full sm:max-w-2xl leading-relaxed px-4 sm:px-0">
-                Объединяем инвесторов, фаундеров, исполнителей, партнеров и др. - всех участников венчурного и инвестиционного рынка в единой платформе. От идеи до реализации проекта и привлечения инвестиций.
+                Объединяем инвесторов, фаундеров, исполнителей, партнеров и др. - всех участников венчурного и
+                инвестиционного рынка в единой платформе. От идеи до реализации проекта и привлечения инвестиций.
               </p>
             </div>
-            
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <Button size="lg" className="text-base px-6 py-3" asChild>
                 <Link to="/auth?mode=signup">
@@ -46,12 +46,10 @@ const HeroSection = () => {
                 </Link>
               </Button>
               <Button variant="outline" size="lg" className="text-base px-6 py-3" asChild>
-                <Link to="/about">
-                  Узнать больше
-                </Link>
+                <Link to="/about">Узнать больше</Link>
               </Button>
             </div>
-            
+
             {/* Stats */}
             <div className="grid grid-cols-3 gap-6 pt-6 border-t border-white/20">
               <div className="text-center lg:text-left">
@@ -68,17 +66,17 @@ const HeroSection = () => {
               </div>
             </div>
           </div>
-          
+
           {/* Right Content - Hero Image */}
           <div className="relative">
             <div className="relative rounded-lg overflow-hidden shadow-card border border-border">
-              <img 
-                src={collaborationImage} 
-                alt="InvestEx Platform - Платформа для бизнес-коллабораций и инвестиций" 
+              <img
+                src={collaborationImage}
+                alt="InvestEx Platform - Платформа для бизнес-коллабораций и инвестиций"
                 className="w-full h-auto object-cover"
               />
             </div>
-            
+
             {/* Floating Cards */}
             <div className="absolute -top-4 -left-4 bg-card border border-border rounded-lg p-3 shadow-card">
               <div className="flex items-center gap-2">
@@ -86,12 +84,12 @@ const HeroSection = () => {
                   <Users className="w-3 h-3 text-white" />
                 </div>
                 <div>
-                  <div className="text-xs font-semibold text-foreground">Фрилансеры</div>
-                  <div className="text-xs text-muted-foreground">15,847 активных</div>
+                  <div className="text-xs font-semibold text-foreground">Стартапы</div>
+                  <div className="text-xs text-muted-foreground">847 активных</div>
                 </div>
               </div>
             </div>
-            
+
             <div className="absolute -bottom-4 -right-4 bg-card border border-border rounded-lg p-3 shadow-card">
               <div className="flex items-center gap-2">
                 <div className="w-6 h-6 bg-primary rounded-md flex items-center justify-center">
@@ -99,7 +97,7 @@ const HeroSection = () => {
                 </div>
                 <div>
                   <div className="text-xs font-semibold text-foreground">Инвесторы</div>
-                  <div className="text-xs text-muted-foreground">$2.3M готовы инвестировать</div>
+                  <div className="text-xs text-muted-foreground">$24.3M готовы инвестировать</div>
                 </div>
               </div>
             </div>
