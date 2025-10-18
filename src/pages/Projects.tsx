@@ -24,6 +24,9 @@ const Projects = () => {
   const [projectCategory, setProjectCategory] = useState('active');
   const [dbProjects, setDbProjects] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [itemsPerPage, setItemsPerPage] = useState(15);
+  const [displayedItems, setDisplayedItems] = useState(15);
+  const [investmentRange, setInvestmentRange] = useState('all');
 
   useEffect(() => {
     fetchProjects();
@@ -86,9 +89,39 @@ const Projects = () => {
     } else if (projectCategory === 'pitch') {
       matchesTab = project.isPitch === true;
     }
+
+    // Filter by investment range
+    const budgetValue = parseInt(project.budget.replace(/[^\d]/g, '')) || 0;
+    let matchesInvestment = true;
+    if (investmentRange === 'up_to_1m') {
+      matchesInvestment = budgetValue <= 1000000;
+    } else if (investmentRange === 'up_to_5m') {
+      matchesInvestment = budgetValue <= 5000000;
+    } else if (investmentRange === 'up_to_10m') {
+      matchesInvestment = budgetValue <= 10000000;
+    } else if (investmentRange === 'up_to_50m') {
+      matchesInvestment = budgetValue <= 50000000;
+    } else if (investmentRange === 'up_to_100m') {
+      matchesInvestment = budgetValue <= 100000000;
+    } else if (investmentRange === 'over_100m') {
+      matchesInvestment = budgetValue > 100000000;
+    }
     
-    return matchesSearch && matchesCategory && matchesTab;
+    return matchesSearch && matchesCategory && matchesTab && matchesInvestment;
   });
+
+  const paginatedProjects = filteredProjects.slice(0, displayedItems);
+
+  const categories = ['Все категории', 'AI/ML', 'Blockchain', 'FinTech', 'HealthTech', 'EdTech', 'GreenTech', 'FoodTech', 'PropTech'];
+
+  const handleShowMore = () => {
+    setDisplayedItems(prev => Math.min(prev + itemsPerPage, filteredProjects.length));
+  };
+
+  const handleItemsPerPageChange = (value: string) => {
+    setItemsPerPage(parseInt(value));
+    setDisplayedItems(parseInt(value));
+  };
 
   const handleProjectClick = (project: any) => {
     setSelectedProject(project);
@@ -97,105 +130,96 @@ const Projects = () => {
 
   const ProjectList = () => (
     <>
-      <div className="mb-4">
+      <div className="mb-4 flex justify-between items-center">
         <p className="text-muted-foreground">
-          Найдено проектов: <span className="font-semibold">{filteredProjects.length}</span>
+          Показано <span className="font-semibold">{paginatedProjects.length}</span> из <span className="font-semibold">{filteredProjects.length}</span> проектов
         </p>
+        <Select value={itemsPerPage.toString()} onValueChange={handleItemsPerPageChange}>
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Показывать по" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="15">Показывать по 15</SelectItem>
+            <SelectItem value="30">Показывать по 30</SelectItem>
+            <SelectItem value="60">Показывать по 60</SelectItem>
+            <SelectItem value="90">Показывать по 90</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
 
-      <div className="grid gap-6">
-        {filteredProjects.map((project) => (
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {paginatedProjects.map((project) => (
           <Card 
             key={project.id} 
-            className="hover:shadow-lg transition-shadow cursor-pointer"
+            className="hover:shadow-lg transition-shadow cursor-pointer flex flex-col"
             onClick={() => handleProjectClick(project)}
           >
-            <div className="grid md:grid-cols-4 gap-6">
-              <div className="relative md:col-span-1">
-                <img 
-                  src={project.image} 
-                  alt={project.title}
-                  className="w-full h-full object-cover rounded-l-lg"
-                />
-                <Badge className="absolute top-4 left-4 bg-primary text-primary-foreground">
-                  {project.category}
-                </Badge>
-              </div>
+            <div className="relative h-48">
+              <img 
+                src={project.image} 
+                alt={project.title}
+                className="w-full h-full object-cover rounded-t-lg"
+              />
+              <Badge className="absolute top-4 left-4 bg-primary text-primary-foreground">
+                {project.category}
+              </Badge>
+            </div>
 
-              <div className="md:col-span-3 p-6">
-                <CardHeader className="p-0 mb-4">
-                  <div className="flex justify-between items-start gap-4">
-                    <div className="flex-1">
-                      <CardTitle className="text-xl mb-2">{project.title}</CardTitle>
-                      <CardDescription className="text-base">
-                        {project.description}
-                      </CardDescription>
-                    </div>
-                    
-                    <div className="text-right">
-                      <Badge variant="outline">{project.status}</Badge>
-                    </div>
+            <div className="p-6 flex flex-col flex-1">
+              <CardHeader className="p-0 mb-4">
+                <div className="flex justify-between items-start gap-2 mb-2">
+                  <CardTitle className="text-lg line-clamp-2">{project.title}</CardTitle>
+                  <Badge variant="outline" className="shrink-0">{project.status}</Badge>
+                </div>
+                <CardDescription className="text-sm line-clamp-3">
+                  {project.description}
+                </CardDescription>
+              </CardHeader>
+              
+              <CardContent className="p-0 mt-auto">
+                <div className="grid grid-cols-2 gap-3 mb-4">
+                  <div>
+                    <p className="text-xs text-muted-foreground mb-1">Бюджет</p>
+                    <p className="font-semibold text-sm">{project.budget}</p>
                   </div>
-                </CardHeader>
-                
-                <CardContent className="p-0">
-                  <div className="grid md:grid-cols-3 gap-4 mb-4">
-                    <div>
-                      <p className="text-sm text-muted-foreground mb-1">Бюджет</p>
-                      <p className="font-semibold">{project.budget}</p>
-                    </div>
-                    <div>
-                      <p className="text-sm text-muted-foreground mb-1">Срок</p>
-                      <p className="font-semibold">{project.timeline}</p>
-                    </div>
-                    <div>
-                      <p className="text-sm text-muted-foreground mb-1">Команда</p>
-                      <p className="font-semibold">{project.team}</p>
-                    </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground mb-1">Команда</p>
+                    <p className="font-semibold text-sm">{project.team}</p>
                   </div>
+                </div>
 
+                {project.technologies.length > 0 && (
                   <div className="mb-4">
-                    <p className="text-sm text-muted-foreground mb-2">Технологии:</p>
-                    <div className="flex flex-wrap gap-2">
-                      {project.technologies.slice(0, 5).map((tech, index) => (
+                    <div className="flex flex-wrap gap-1">
+                      {project.technologies.slice(0, 3).map((tech, index) => (
                         <Badge key={index} variant="secondary" className="text-xs">
                           {tech}
                         </Badge>
                       ))}
-                      {project.technologies.length > 5 && (
+                      {project.technologies.length > 3 && (
                         <Badge variant="secondary" className="text-xs">
-                          +{project.technologies.length - 5}
+                          +{project.technologies.length - 3}
                         </Badge>
                       )}
                     </div>
                   </div>
+                )}
 
-                  <div className="flex gap-3">
-                    <Button 
-                      asChild 
-                      size="sm"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                      }}
-                    >
-                      <Link to={`/project/${project.id}`}>
-                        <Eye className="w-4 w-4 mr-2" />
-                        Подробнее
-                      </Link>
-                    </Button>
-                    <Button 
-                      variant="outline" 
-                      size="sm"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleProjectClick(project);
-                      }}
-                    >
-                      Быстрый просмотр
-                    </Button>
-                  </div>
-                </CardContent>
-              </div>
+                <div className="flex gap-2">
+                  <Button 
+                    asChild 
+                    size="sm"
+                    className="flex-1"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                  >
+                    <Link to={`/project/${project.id}`}>
+                      Подробнее
+                    </Link>
+                  </Button>
+                </div>
+              </CardContent>
             </div>
           </Card>
         ))}
@@ -209,6 +233,14 @@ const Projects = () => {
             </p>
           </CardContent>
         </Card>
+      )}
+
+      {paginatedProjects.length < filteredProjects.length && (
+        <div className="mt-8 text-center">
+          <Button onClick={handleShowMore} size="lg">
+            Показать еще
+          </Button>
+        </div>
       )}
     </>
   );
@@ -240,9 +272,9 @@ const Projects = () => {
               <TabsContent value="active" className="space-y-6">
                 {/* Search and Filters */}
                 <Card>
-                  <CardContent className="p-6">
-                    <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-4">
-                      <div className="relative lg:col-span-2">
+                  <CardContent className="p-6 space-y-4">
+                    <div className="flex justify-between items-center gap-4">
+                      <div className="relative flex-1">
                         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
                         <Input 
                           placeholder="Поиск проектов..." 
@@ -251,23 +283,103 @@ const Projects = () => {
                           onChange={(e) => setSearchQuery(e.target.value)}
                         />
                       </div>
-                      
-                      <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Категория" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="all">Все категории</SelectItem>
-                          <SelectItem value="AI/ML">AI/ML</SelectItem>
-                          <SelectItem value="Blockchain">Blockchain</SelectItem>
-                          <SelectItem value="FinTech">FinTech</SelectItem>
-                          <SelectItem value="HealthTech">HealthTech</SelectItem>
-                          <SelectItem value="EdTech">EdTech</SelectItem>
-                          <SelectItem value="GreenTech">GreenTech</SelectItem>
-                          <SelectItem value="FoodTech">FoodTech</SelectItem>
-                          <SelectItem value="PropTech">PropTech</SelectItem>
-                        </SelectContent>
-                      </Select>
+                    </div>
+
+                    {/* Category Tags Cloud */}
+                    <div>
+                      <p className="text-sm font-medium mb-2">Категории проектов:</p>
+                      <div className="flex flex-wrap gap-2">
+                        {categories.map((category) => (
+                          <Badge
+                            key={category}
+                            variant={selectedCategory === (category === 'Все категории' ? 'all' : category) ? 'default' : 'outline'}
+                            className="cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors"
+                            onClick={() => {
+                              setSelectedCategory(category === 'Все категории' ? 'all' : category);
+                              setDisplayedItems(itemsPerPage);
+                            }}
+                          >
+                            {category}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Investment Range Filters */}
+                    <div>
+                      <p className="text-sm font-medium mb-2">Диапазон инвестиций:</p>
+                      <div className="flex flex-wrap gap-2">
+                        <Button
+                          variant={investmentRange === 'all' ? 'default' : 'outline'}
+                          size="sm"
+                          onClick={() => {
+                            setInvestmentRange('all');
+                            setDisplayedItems(itemsPerPage);
+                          }}
+                        >
+                          Все
+                        </Button>
+                        <Button
+                          variant={investmentRange === 'up_to_1m' ? 'default' : 'outline'}
+                          size="sm"
+                          onClick={() => {
+                            setInvestmentRange('up_to_1m');
+                            setDisplayedItems(itemsPerPage);
+                          }}
+                        >
+                          до 1 млн ₽
+                        </Button>
+                        <Button
+                          variant={investmentRange === 'up_to_5m' ? 'default' : 'outline'}
+                          size="sm"
+                          onClick={() => {
+                            setInvestmentRange('up_to_5m');
+                            setDisplayedItems(itemsPerPage);
+                          }}
+                        >
+                          до 5 млн ₽
+                        </Button>
+                        <Button
+                          variant={investmentRange === 'up_to_10m' ? 'default' : 'outline'}
+                          size="sm"
+                          onClick={() => {
+                            setInvestmentRange('up_to_10m');
+                            setDisplayedItems(itemsPerPage);
+                          }}
+                        >
+                          до 10 млн ₽
+                        </Button>
+                        <Button
+                          variant={investmentRange === 'up_to_50m' ? 'default' : 'outline'}
+                          size="sm"
+                          onClick={() => {
+                            setInvestmentRange('up_to_50m');
+                            setDisplayedItems(itemsPerPage);
+                          }}
+                        >
+                          до 50 млн ₽
+                        </Button>
+                        <Button
+                          variant={investmentRange === 'up_to_100m' ? 'default' : 'outline'}
+                          size="sm"
+                          onClick={() => {
+                            setInvestmentRange('up_to_100m');
+                            setDisplayedItems(itemsPerPage);
+                          }}
+                        >
+                          до 100 млн ₽
+                        </Button>
+                        <Button
+                          variant={investmentRange === 'over_100m' ? 'default' : 'outline'}
+                          size="sm"
+                          onClick={() => {
+                            setInvestmentRange('over_100m');
+                            setDisplayedItems(itemsPerPage);
+                          }}
+                        >
+                          более 100 млн ₽
+                        </Button>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
