@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, TrendingUp, Users, Briefcase, Building } from "lucide-react";
 import heroImage from "@/assets/hero-realistic.jpg";
 import collaborationImage from "@/assets/collaboration-realistic.jpg";
-import logoSilver from "@/assets/logo_silver.png";
+import logoSilver from "@/assets/logo_silver_no_text_trans.png";
 
 const HeroSection = () => {
   return (

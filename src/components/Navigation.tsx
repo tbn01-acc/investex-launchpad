@@ -18,6 +18,7 @@ import { LanguageCurrencySelector } from "@/components/LanguageCurrencySelector"
 import UserAvatar from "@/components/UserAvatar";
 import AppBreadcrumbs from "@/components/AppBreadcrumbs";
 import { CreateProjectModal } from "@/components/CreateProjectModal";
+import logoIcon from "@/assets/logo_silver_no_text_trans.png";
 
 type NavigationItem = {
   title: string;
@@ -196,11 +197,11 @@ const Navigation = () => {
         <div className="flex justify-between items-center h-16">
           {/* Логотип */}
           <Link to="/" className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">I</span>
+            <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center p-1">
+              <img src={logoIcon} alt="Invest-Ex" className="w-full h-full object-contain" />
             </div>
             <span className="text-xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-              InvestEx
+              Invest-Ex
             </span>
           </Link>
 
@@ -382,10 +383,10 @@ const Navigation = () => {
               {/* Хедер панели */}
               <div className="flex items-center justify-between p-4 border-b border-border">
                 <Link to="/" onClick={() => setIsOpen(false)} className="flex items-center space-x-2">
-                  <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
-                    <span className="text-white font-bold text-lg">I</span>
+                  <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center p-1">
+                    <img src={logoIcon} alt="Invest-Ex" className="w-full h-full object-contain" />
                   </div>
-                  <span className="text-lg font-bold bg-gradient-primary bg-clip-text text-transparent">InvestEx</span>
+                  <span className="text-lg font-bold bg-gradient-primary bg-clip-text text-transparent">Invest-Ex</span>
                 </Link>
                 <Button
                   variant="ghost"

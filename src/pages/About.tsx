@@ -15,7 +15,7 @@ const About = () => {
     <div className="min-h-screen">
       <Navigation />
       
-      <main className="pt-24 pb-16">
+      <main className="pt-12 pb-16">
         <div className="container mx-auto px-4">
           <div className="flex justify-center mb-6">
             <img src={logoBlue} alt="Invest-Ex Logo" className="w-48 h-auto" />
