@@ -27,25 +27,20 @@ const About = () => {
 
           <Tabs defaultValue="about" className="w-full" id="invest">
             <TabsList className="grid grid-cols-2 lg:grid-cols-5 w-full mb-8">
-              <TabsTrigger value="about" className="gap-2">
-                <Info className="w-4 h-4" />
-                <span className="hidden sm:inline">О проекте</span>
+              <TabsTrigger value="about" className="text-xs sm:text-sm">
+                О проекте
               </TabsTrigger>
-              <TabsTrigger value="advantages" className="gap-2">
-                <Award className="w-4 h-4" />
-                <span className="hidden sm:inline">Преимущества</span>
+              <TabsTrigger value="advantages" className="text-xs sm:text-sm">
+                Преимущества
               </TabsTrigger>
-              <TabsTrigger value="investment" className="gap-2 text-lg sm:text-xl font-semibold">
-                <TrendingUp className="w-4 h-4" />
-                <span className="hidden sm:inline">Инвестиционное предложение</span>
+              <TabsTrigger value="investment" className="text-xs sm:text-sm lg:text-lg font-semibold">
+                Инвестиции
               </TabsTrigger>
-              <TabsTrigger value="roadmap" className="gap-2">
-                <Map className="w-4 h-4" />
-                <span className="hidden sm:inline">Дорожная карта</span>
+              <TabsTrigger value="roadmap" className="text-xs sm:text-sm">
+                Дорожная карта
               </TabsTrigger>
-              <TabsTrigger value="analytics" className="gap-2">
-                <BarChart className="w-4 h-4" />
-                <span className="hidden sm:inline">Аналитика</span>
+              <TabsTrigger value="analytics" className="text-xs sm:text-sm">
+                Аналитика
               </TabsTrigger>
             </TabsList>
 
