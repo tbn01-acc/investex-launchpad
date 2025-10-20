@@ -55,6 +55,19 @@ export function CreateProjectModal({ open, onOpenChange }: CreateProjectModalPro
   };
 
   const handleSubmit = async () => {
+    if (!user) {
+      toast({
+        title: "Войдите на платформу",
+        description: "",
+        className: "bg-green-500 text-white border-green-600",
+        duration: 3000,
+      });
+      setTimeout(() => {
+        window.location.href = "/auth";
+      }, 3000);
+      return;
+    }
+
     setLoading(true);
     try {
       const { error } = await supabase.from('projects').insert([{
