@@ -347,7 +347,7 @@ const RolePathSection = () => {
               >
                 <div 
                   className={`p-4 cursor-pointer font-semibold text-lg flex justify-between items-center transition-all duration-300 ${
-                    activeGroup === groupName && activeRole ? 'hidden' : 'block'
+                    activeGroup === groupName && activeRole ? 'hidden lg:flex' : 'flex'
                   } hover:bg-muted/50`}
                   onClick={() => handleGroupClick(groupName)}
                 >
@@ -358,20 +358,69 @@ const RolePathSection = () => {
                 </div>
                 
                 <div className={`transition-all duration-400 overflow-hidden ${
-                  activeGroup === groupName ? (groupName === 'Участники' ? 'max-h-[500px]' : 'max-h-96') : 'max-h-0'
+                  activeGroup === groupName ? 'max-h-[2000px]' : 'max-h-0'
                 }`}>
                   <div className="p-2 space-y-2">
-                    {getReorderedRoles(group.roles).map((role) => (
-                      <div 
-                        key={role.name}
-                        className={`p-2 md:p-4 rounded-lg cursor-pointer transition-all duration-300 ${
-                          activeRole === role.name 
-                            ? 'bg-primary text-primary-foreground font-semibold text-base'
-                            : 'bg-background border border-border hover:border-primary hover:bg-muted/50 text-base'
-                        }`}
-                        onClick={() => handleRoleClick(role.name, role)}
-                      >
-                        {role.name}
+                    {group.roles.map((role) => (
+                      <div key={role.name}>
+                        <div 
+                          className={`p-2 md:p-4 rounded-lg cursor-pointer transition-all duration-300 ${
+                            activeRole === role.name 
+                              ? 'bg-primary text-primary-foreground font-semibold text-base'
+                              : 'bg-background border border-border hover:border-primary hover:bg-muted/50 text-base'
+                          }`}
+                          onClick={() => handleRoleClick(role.name, role)}
+                        >
+                          {role.name}
+                        </div>
+                        
+                        {/* Mobile content - показывается сразу под выбранной ролью */}
+                        {activeRole === role.name && (
+                          <div className="lg:hidden bg-card p-4 mt-2 rounded-lg shadow-card">
+                            <h3 className="text-xl font-bold text-foreground mb-4">Вы сможете</h3>
+                            
+                            <ul className="space-y-2 mb-6">
+                              {role.capabilities.map((capability: string, index: number) => (
+                                <li key={index} className="flex items-start gap-2">
+                                  <CheckCircle className="text-primary mt-1 flex-shrink-0" size={16} />
+                                  <span className="text-sm text-foreground">{capability}</span>
+                                </li>
+                              ))}
+                            </ul>
+
+                            <div className="border-t border-border pt-4 mb-4">
+                              <h4 className="text-base font-semibold mb-3 text-foreground">Возможности</h4>
+                              <div className="text-center space-y-2">
+                                <div className="bg-secondary/10 border border-secondary/20 p-2 rounded-lg text-sm font-medium text-foreground">
+                                  {role.actions[0]}
+                                </div>
+                                <div className="flex justify-center gap-2 flex-wrap">
+                                  {role.actions.slice(1).map((action: string, index: number) => (
+                                    <div key={index} className="bg-muted border border-border p-2 rounded-lg text-xs text-foreground">
+                                      {action}
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="text-center">
+                              <h4 className="text-base font-semibold mb-3 text-foreground">Популярное</h4>
+                              <div className="flex justify-center gap-2 flex-wrap">
+                                {role.requests.map((request: string, index: number) => (
+                                  <Button 
+                                    key={index}
+                                    variant="outline"
+                                    size="sm" 
+                                    className="rounded-full px-3 text-xs hover:bg-primary hover:text-primary-foreground transition-all duration-200"
+                                  >
+                                    {request}
+                                  </Button>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        )}
                       </div>
                     ))}
                   </div>
@@ -380,8 +429,8 @@ const RolePathSection = () => {
             ))}
           </div>
 
-          {/* Правая колонка - Детали роли */}
-          <div className="w-full lg:flex-1 bg-card p-4 sm:p-6 lg:p-8 rounded-lg shadow-card min-h-[400px] lg:min-h-[600px] lg:sticky lg:top-24">
+          {/* Правая колонка - Детали роли (только на desktop) */}
+          <div className="hidden lg:block w-full lg:flex-1 bg-card p-4 sm:p-6 lg:p-8 rounded-lg shadow-card min-h-[400px] lg:min-h-[600px] lg:sticky lg:top-24">
             {selectedRoleData ? (
               <div>
                 <h3 className="text-2xl font-bold text-foreground mb-6">Вы сможете</h3>
