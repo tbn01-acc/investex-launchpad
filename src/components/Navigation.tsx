@@ -13,6 +13,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { LanguageCurrencySelector } from "@/components/LanguageCurrencySelector";
 import UserAvatar from "@/components/UserAvatar";
@@ -123,7 +124,24 @@ const Navigation = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { t } = useLanguage();
+  const { toast } = useToast();
   const [unreadMessages] = useState(2);
+
+  const handleOpenCreate = () => {
+    if (!user) {
+      toast({
+        title: "Войдите на платформу",
+        description: "",
+        className: "bg-green-500 text-white border-green-600",
+        duration: 3000,
+      });
+      setTimeout(() => {
+        navigate('/auth');
+      }, 3000);
+      return;
+    }
+    setIsCreateOpen(true);
+  };
 
   const navigationItems: NavigationItem[] = [
     {
@@ -286,7 +304,7 @@ const Navigation = () => {
             </NavigationMenu>
 
             <div className="flex items-center space-x-3">
-              <Button variant="outline" onClick={() => setIsCreateOpen(true)} className="hidden sm:inline-flex">
+              <Button variant="outline" onClick={handleOpenCreate} className="hidden sm:inline-flex">
                 Добавить
               </Button>
               <LanguageCurrencySelector />
@@ -322,7 +340,7 @@ const Navigation = () => {
           <div className="md:hidden flex items-center gap-2">
             <Button
               size="sm"
-              onClick={() => setIsCreateOpen(true)}
+              onClick={handleOpenCreate}
               className="bg-gradient-primary text-primary-foreground"
             >
               Добавить

@@ -9,6 +9,7 @@ import { CreateProjectModal } from '@/components/CreateProjectModal';
 import { PitchModal } from '@/components/PitchModal';
 import { MessagesTab } from '@/components/MessagesTab';
 import { RoleSelector } from '@/components/RoleSelector';
+import { useToast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
 import { 
   Rocket, Users, DollarSign, TrendingUp, 
@@ -19,9 +20,26 @@ export default function FounderDashboard() {
   const { user, profile } = useAuth();
   const { t, formatCurrency } = useLanguage();
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [createProjectOpen, setCreateProjectOpen] = useState(false);
   const [pitchModalOpen, setPitchModalOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<{ id: number; name: string } | null>(null);
+  
+  const handleOpenCreate = () => {
+    if (!user) {
+      toast({
+        title: 'Войдите на платформу',
+        description: '',
+        className: 'bg-green-500 text-white border-green-600',
+        duration: 3000,
+      });
+      setTimeout(() => {
+        navigate('/auth');
+      }, 3000);
+      return;
+    }
+    setCreateProjectOpen(true);
+  };
   
   const [stats] = useState({
     activeProjects: 3,
@@ -147,7 +165,7 @@ export default function FounderDashboard() {
               {t('common.welcome')}, {profile?.first_name || 'Фаундер'}
             </p>
           </div>
-          <Button onClick={() => setCreateProjectOpen(true)}>
+          <Button onClick={handleOpenCreate}>
             <Plus className="h-4 w-4 mr-2" />
             Создать проект
           </Button>
