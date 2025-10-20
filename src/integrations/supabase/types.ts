@@ -1046,6 +1046,36 @@ export type Database = {
           },
         ]
       }
+      platform_api_configs: {
+        Row: {
+          config_key: string
+          config_value: string
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          config_key: string
+          config_value: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          updated_at?: string
+        }
+        Update: {
+          config_key?: string
+          config_value?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       platform_settings: {
         Row: {
           created_at: string | null
