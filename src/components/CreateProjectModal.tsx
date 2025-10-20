@@ -55,15 +55,6 @@ export function CreateProjectModal({ open, onOpenChange }: CreateProjectModalPro
   };
 
   const handleSubmit = async () => {
-    if (!user) {
-      toast({
-        variant: "destructive",
-        title: "Ошибка",
-        description: "Необходимо войти в систему"
-      });
-      return;
-    }
-
     setLoading(true);
     try {
       const { error } = await supabase.from('projects').insert([{
@@ -142,8 +133,29 @@ export function CreateProjectModal({ open, onOpenChange }: CreateProjectModalPro
     }
   };
 
+  const checkAuthAndProceed = () => {
+    if (!user) {
+      toast({
+        title: "Войдите на платформу",
+        description: "",
+        className: "bg-green-500 text-white border-green-600",
+        duration: 3000,
+      });
+      setTimeout(() => {
+        window.location.href = "/auth";
+      }, 3000);
+      return false;
+    }
+    return true;
+  };
+
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={(newOpen) => {
+      if (newOpen && !checkAuthAndProceed()) {
+        return;
+      }
+      onOpenChange(newOpen);
+    }}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Создать новый проект</DialogTitle>

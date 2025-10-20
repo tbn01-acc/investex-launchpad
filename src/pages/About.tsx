@@ -26,7 +26,7 @@ const About = () => {
           </p>
 
           <Tabs defaultValue="about" className="w-full" id="invest">
-            <TabsList className="grid grid-cols-2 lg:grid-cols-5 w-full mb-8">
+            <TabsList className="grid grid-cols-2 lg:grid-cols-5 w-full mb-8 gap-2 h-auto p-2">
               <TabsTrigger value="about" className="text-xs sm:text-sm">
                 О проекте
               </TabsTrigger>

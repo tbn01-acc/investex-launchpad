@@ -81,18 +81,11 @@ const MobileMenuItem = ({ item, onClose }: { item: NavigationItem; onClose: () =
   if (item.items) {
     return (
       <div>
-        <Link
-          to={item.href!}
-          className="flex items-center justify-between w-full px-4 py-2 text-sm font-medium text-muted-foreground hover:bg-accent/10 rounded-md transition-colors"
-          onClick={onClose}
-        >
-          {item.title}
-        </Link>
         <button
           onClick={() => setIsExpanded(!isExpanded)}
           className="flex items-center justify-between w-full px-4 py-2 text-sm font-medium text-muted-foreground hover:bg-accent/10 rounded-md transition-colors"
         >
-          Подразделы
+          {item.title}
           <ChevronDown size={16} className={cn("transition-transform", isExpanded && "rotate-180")} />
         </button>
         {isExpanded && (

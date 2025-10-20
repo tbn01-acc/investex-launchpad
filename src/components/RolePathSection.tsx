@@ -395,13 +395,13 @@ const RolePathSection = () => {
                   ))}
                 </ul>
 
-                <div className="hidden lg:block border-t border-border pt-6 mb-6">
-                  <h4 className="text-lg font-semibold mb-4 text-foreground">Варианты действий</h4>
+                <div className="border-t border-border pt-6 mb-6">
+                  <h4 className="text-lg font-semibold mb-4 text-foreground">Возможности</h4>
                   <div className="text-center space-y-3">
                     <div className="bg-secondary/10 border border-secondary/20 p-3 rounded-lg text-base font-medium text-foreground">
                       {selectedRoleData.actions[0]}
                     </div>
-                    <div className="flex justify-center gap-3">
+                    <div className="flex justify-center gap-3 flex-wrap">
                       {selectedRoleData.actions.slice(1).map((action: string, index: number) => (
                         <div key={index} className="bg-muted border border-border p-2 rounded-lg text-sm text-foreground">
                           {action}
@@ -411,8 +411,8 @@ const RolePathSection = () => {
                   </div>
                 </div>
 
-                <div className="hidden lg:block text-center">
-                  <h4 className="text-lg font-semibold mb-4 text-foreground">Популярные запросы</h4>
+                <div className="text-center">
+                  <h4 className="text-lg font-semibold mb-4 text-foreground">Популярное</h4>
                   <div className="flex justify-center gap-3 flex-wrap">
                     {selectedRoleData.requests.map((request: string, index: number) => (
                       <Button 
@@ -427,39 +427,6 @@ const RolePathSection = () => {
                   </div>
                 </div>
 
-                {/* Mobile accordion sections */}
-                <div className="lg:hidden space-y-4 mt-6">
-                  <div className="border border-border rounded-lg overflow-hidden">
-                    <h4 className="text-base font-semibold p-4 bg-muted text-foreground border-b border-border">
-                      Варианты действий
-                    </h4>
-                    <div className="p-4 space-y-2">
-                      {selectedRoleData.actions.map((action: string, index: number) => (
-                        <div key={index} className="bg-background border border-border p-2 rounded text-sm text-foreground">
-                          {action}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="border border-border rounded-lg overflow-hidden">
-                    <h4 className="text-base font-semibold p-4 bg-muted text-foreground border-b border-border">
-                      Популярные запросы
-                    </h4>
-                    <div className="p-4 space-y-2">
-                      {selectedRoleData.requests.map((request: string, index: number) => (
-                        <Button 
-                          key={index}
-                          variant="outline"
-                          size="sm" 
-                          className="w-full justify-start text-left rounded px-3 py-2 text-sm hover:bg-primary hover:text-primary-foreground transition-all duration-200"
-                        >
-                          {request}
-                        </Button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
               </div>
             ) : (
               <div className="flex items-center justify-center h-full text-center">

@@ -1,8 +1,55 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Mail, MessageCircle, Github, Twitter, Linkedin, Globe, Shield, FileText, HelpCircle } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const Footer = () => {
+  const { toast } = useToast();
+  const [email, setEmail] = useState("");
+  const [isSubscribing, setIsSubscribing] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!email || !email.includes('@')) {
+      toast({
+        title: "Ошибка",
+        description: "Введите корректный email",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSubscribing(true);
+
+    try {
+      const { error } = await supabase.functions.invoke('newsletter-subscribe', {
+        body: { email },
+      });
+
+      if (error) throw error;
+
+      setShowSuccess(true);
+      setEmail("");
+      
+      setTimeout(() => {
+        setShowSuccess(false);
+      }, 3000);
+    } catch (error) {
+      console.error("Newsletter subscription error:", error);
+      toast({
+        title: "Ошибка",
+        description: "Не удалось подписаться. Попробуйте позже.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubscribing(false);
+    }
+  };
+
   return (
     <footer className="bg-gradient-secondary text-white py-16">
       <div className="container mx-auto px-4 sm:px-6">
@@ -106,16 +153,30 @@ const Footer = () => {
 
             <div className="mt-6">
               <h5 className="font-medium mb-3">Новости и обновления</h5>
-              <div className="flex gap-2">
-                <input
-                  type="email"
-                  placeholder="Ваш email"
-                  className="flex-1 min-w-0 px-2 sm:px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder:text-white/60 focus:outline-none focus:border-white/40 text-sm"
-                />
-                <Button variant="secondary" size="sm">
-                  <Mail className="w-4 h-4" />
-                </Button>
-              </div>
+              {showSuccess ? (
+                <div className="bg-green-500/20 border border-green-500/40 rounded-lg px-4 py-3 text-center">
+                  <p className="text-sm font-medium">Спасибо! Вы подписались на рассылку</p>
+                </div>
+              ) : (
+                <form onSubmit={handleNewsletterSubmit} className="flex gap-2">
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Ваш email"
+                    className="flex-1 min-w-0 px-2 sm:px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder:text-white/60 focus:outline-none focus:border-white/40 text-sm"
+                    disabled={isSubscribing}
+                  />
+                  <Button 
+                    type="submit" 
+                    variant="secondary" 
+                    size="sm"
+                    disabled={isSubscribing}
+                  >
+                    <Mail className="w-4 h-4" />
+                  </Button>
+                </form>
+              )}
             </div>
           </div>
         </div>
