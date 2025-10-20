@@ -90,6 +90,15 @@ export default function Profile() {
     if (!user) return;
     setSaving(true);
     try {
+      // Обновляем текущую роль через безопасную RPC-функцию
+      if (currentRole) {
+        if (!userRoles.includes(currentRole)) {
+          throw new Error('Выбранная роль не добавлена пользователю');
+        }
+        const { error: switchErr } = await (supabase.rpc as any)('switch_user_role', { p_role: currentRole as any });
+        if (switchErr) throw switchErr;
+      }
+
       const basePayload = {
         first_name: firstName || null,
         last_name: lastName || null,
@@ -117,15 +126,6 @@ export default function Profile() {
           .from('profiles')
           .insert([{ user_id: user.id, ...basePayload }]);
         if (insError) throw insError;
-      }
-
-      // Обновляем текущую роль через безопасную RPC-функцию
-      if (currentRole) {
-        if (!userRoles.includes(currentRole)) {
-          throw new Error('Выбранная роль не добавлена пользователю');
-        }
-        const { error: switchErr } = await (supabase.rpc as any)('switch_user_role', { p_role: currentRole as any });
-        if (switchErr) throw switchErr;
       }
 
       await refreshProfile();
