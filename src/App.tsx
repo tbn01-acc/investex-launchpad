@@ -67,6 +67,10 @@ import TaskNew from './pages/pm/TaskNew';
 import VacancyNew from './pages/hr/VacancyNew';
 import ContactNew from './pages/crm/ContactNew';
 import ArticleNew from './pages/kb/ArticleNew';
+import IVIIndex from './pages/IVIIndex';
+import SupervisoryBoard from './pages/SupervisoryBoard';
+import MediationCenter from './pages/MediationCenter';
+import Favorites from './pages/Favorites';
 
 const queryClient = new QueryClient();
 
@@ -86,6 +90,10 @@ const App = () => (
                 <Route path="/community" element={<Community />} />
                 <Route path="/auth" element={<Auth />} />
                 <Route path="/about" element={<About />} />
+                <Route path="/ivi-index" element={<IVIIndex />} />
+                <Route path="/supervisory-board" element={<SupervisoryBoard />} />
+                <Route path="/mediation-center" element={<MediationCenter />} />
+                <Route path="/favorites" element={<Favorites />} />
                 <Route path="/freelancers" element={<ForFreelancers />} />
                 <Route path="/for-freelancers" element={<ForFreelancers />} />
                 <Route path="/outsourcers" element={<ForOutsourcers />} />

@@ -435,6 +435,30 @@ export type Database = {
           },
         ]
       }
+      favorites: {
+        Row: {
+          created_at: string
+          id: string
+          item_id: string
+          item_type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          item_id: string
+          item_type: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          item_id?: string
+          item_type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       investment_expressions: {
         Row: {
           conditions: string[] | null
@@ -877,6 +901,33 @@ export type Database = {
           },
         ]
       }
+      notes: {
+        Row: {
+          content: string | null
+          created_at: string
+          id: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          content?: string | null
+          created_at?: string
+          id?: string
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          content?: string | null
+          created_at?: string
+          id?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       notifications: {
         Row: {
           action_url: string | null
@@ -951,7 +1002,7 @@ export type Database = {
           email: string
           expires_at: string
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           token: string
           used_at: string | null
           user_agent: string | null
@@ -962,7 +1013,7 @@ export type Database = {
           email: string
           expires_at: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           token: string
           used_at?: string | null
           user_agent?: string | null
@@ -973,7 +1024,7 @@ export type Database = {
           email?: string
           expires_at?: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           token?: string
           used_at?: string | null
           user_agent?: string | null
@@ -1988,7 +2039,7 @@ export type Database = {
           action: string
           created_at: string
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           new_value: Json | null
           old_value: Json | null
           target_id: string | null
@@ -2000,7 +2051,7 @@ export type Database = {
           action: string
           created_at?: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           new_value?: Json | null
           old_value?: Json | null
           target_id?: string | null
@@ -2012,7 +2063,7 @@ export type Database = {
           action?: string
           created_at?: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           new_value?: Json | null
           old_value?: Json | null
           target_id?: string | null
@@ -2454,20 +2505,14 @@ export type Database = {
         Args: { p_investor_id: string; p_project_id: string }
         Returns: number
       }
-      clean_expired_password_reset_tokens: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
+      clean_expired_password_reset_tokens: { Args: never; Returns: undefined }
       get_current_user_role: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: Database["public"]["Enums"]["new_user_role"]
       }
-      get_platform_stats: {
-        Args: Record<PropertyKey, never>
-        Returns: Json
-      }
+      get_platform_stats: { Args: never; Returns: Json }
       get_platform_stats_secured: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: {
           active_freelancers: number
           active_investors: number
