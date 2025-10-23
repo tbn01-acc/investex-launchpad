@@ -198,7 +198,16 @@ const Navigation = () => {
       ]
     },
     { title: "Тарифы", href: "/pricing" },
-    { title: "О платформе", href: "/about" },
+    { 
+      title: "О платформе",
+      href: "/about",
+      items: [
+        { title: "О нас", href: "/about", description: "История и миссия платформы" },
+        { title: "IVI Индекс", href: "/ivi-index", description: "Методология оценки стартапов" },
+        { title: "Наблюдательный совет", href: "/supervisory-board", description: "Управление и контроль" },
+        { title: "Центр медиации", href: "/mediation-center", description: "Разрешение споров" },
+      ]
+    },
   ];
 
   return (
@@ -304,10 +313,22 @@ const Navigation = () => {
             </NavigationMenu>
 
             <div className="flex items-center space-x-3">
-              <Button variant="outline" onClick={handleOpenCreate} className="hidden sm:inline-flex">
-                Добавить
-              </Button>
-              <LanguageCurrencySelector />
+              {user && (
+                <>
+                  <Link
+                    to="/favorites"
+                    className="text-sm font-medium transition-colors hover:text-primary hidden lg:inline-flex"
+                  >
+                    Избранное
+                  </Link>
+                  <Link
+                    to="/dashboard"
+                    className="text-sm font-medium transition-colors hover:text-primary hidden lg:inline-flex"
+                  >
+                    Личный кабинет
+                  </Link>
+                </>
+              )}
               {user && (
                 <Button
                   variant="ghost"
@@ -418,6 +439,26 @@ const Navigation = () => {
                     onClose={() => setIsOpen(false)}
                   />
                 ))}
+                
+                {user && (
+                  <>
+                    <div className="border-t border-border my-4"></div>
+                    <Link
+                      to="/favorites"
+                      className="block px-4 py-2 text-sm hover:bg-accent/10 rounded-md transition-colors"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Избранное
+                    </Link>
+                    <Link
+                      to="/dashboard"
+                      className="block px-4 py-2 text-sm hover:bg-accent/10 rounded-md transition-colors"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Личный кабинет
+                    </Link>
+                  </>
+                )}
               </div>
 
               {/* Футер меню */}

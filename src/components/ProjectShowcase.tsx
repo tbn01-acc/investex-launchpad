@@ -1,15 +1,18 @@
 import { useState } from "react";
-import { Eye } from "lucide-react";
+import { Eye, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import ProjectModal from "./ProjectModal";
 import { allProjects } from "@/data/projectsData";
+import { useFavorites } from "@/hooks/useFavorites";
+import { cn } from "@/lib/utils";
 
 const ProjectShowcase = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("Все");
   const [selectedProject, setSelectedProject] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { toggleFavorite, isFavorite } = useFavorites('project');
   
   const categories = ["Все", "AI/ML", "Blockchain", "FinTech", "HealthTech", "EdTech", "GreenTech", "FoodTech", "PropTech", "IoT", "SaaS", "Marketplace", "AgriTech", "LegalTech"];
   
@@ -25,6 +28,11 @@ const ProjectShowcase = () => {
   const handleProjectClick = (project: any) => {
     setSelectedProject(project);
     setIsModalOpen(true);
+  };
+
+  const handleFavoriteClick = (e: React.MouseEvent, projectId: string) => {
+    e.stopPropagation();
+    toggleFavorite(projectId);
   };
 
   return (
@@ -58,7 +66,7 @@ const ProjectShowcase = () => {
           {filteredProjects.map((project, index) => (
             <div 
               key={index} 
-              className="bg-card rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow border border-border cursor-pointer"
+              className="bg-card rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow border border-border cursor-pointer group"
               onClick={() => handleProjectClick(project)}
             >
               <div className="relative">
@@ -73,6 +81,24 @@ const ProjectShowcase = () => {
                 <Badge className="absolute top-4 left-4 bg-primary text-primary-foreground">
                   {project.category}
                 </Badge>
+                <Button
+                  size="icon"
+                  variant="secondary"
+                  className={cn(
+                    "absolute top-4 right-4 rounded-full shadow-lg transition-all",
+                    isFavorite(String(project.id)) 
+                      ? "bg-primary text-primary-foreground hover:bg-primary/90" 
+                      : "bg-background/80 hover:bg-background"
+                  )}
+                  onClick={(e) => handleFavoriteClick(e, String(project.id))}
+                >
+                  <Heart 
+                    className={cn(
+                      "w-5 h-5 transition-all",
+                      isFavorite(String(project.id)) && "fill-current"
+                    )} 
+                  />
+                </Button>
               </div>
               <div className="p-6 flex flex-col h-56">
                 <h3 className="text-xl font-semibold mb-3 text-foreground line-clamp-2 h-14">{project.title}</h3>
