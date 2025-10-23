@@ -173,9 +173,10 @@ const IVIIndex = () => {
                     <Card className="bg-muted">
                       <CardHeader>
                         <CardTitle className="text-2xl">Базовая</CardTitle>
-                        <p className="text-3xl font-bold text-primary">$499</p><br>Включено в тариф Фаундер-Рост и выше</p>
+                        <p className="text-3xl font-bold text-primary">49999 ₽</p>
                       </CardHeader>
                       <CardContent className="space-y-2 text-sm">
+                        <p>✓ <b><Включено в тариф Фаундер-Рост и выше</b>
                         <p>✓ Расчет IVI индекса</p>
                         <p>✓ Краткий отчет (5 страниц)</p>
                         <p>✓ Срок: 5 рабочих дней</p>
@@ -185,9 +186,10 @@ const IVIIndex = () => {
                     <Card className="bg-primary text-primary-foreground">
                       <CardHeader>
                         <CardTitle className="text-2xl">Премиум</CardTitle>
-                        <p className="text-3xl font-bold">$1,499</p>br>Drk.xtyj в тариф Фаундер-Масштаб</p>
+                        <p className="text-3xl font-bold">$149999 ₽</p>
                       </CardHeader>
                       <CardContent className="space-y-2 text-sm">
+                        <p>✓ <b>Включено в тариф Фаундер-Масштаб</b>
                         <p>✓ Расчет IVI индекса</p>
                         <p>✓ Подробный отчет (20+ страниц)</p>
                         <p>✓ Консультация эксперта (1 час)</p>
