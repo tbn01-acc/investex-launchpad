@@ -1,16 +1,41 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Check, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const PricingSectionNew = () => {
+  const [searchParams] = useSearchParams();
   const [selectedCategory, setSelectedCategory] = useState('Участники');
   const [selectedRole, setSelectedRole] = useState('Инвестор');
   const [selectedPeriod, setSelectedPeriod] = useState(1);
   const navigate = useNavigate();
+
+  // Handle URL parameters for pre-selected role and period
+  useEffect(() => {
+    const roleParam = searchParams.get('role');
+    const periodParam = searchParams.get('period');
+    
+    if (roleParam) {
+      setSelectedRole(roleParam);
+      // Determine category based on role
+      for (const [category, roles] of Object.entries(rolesByCategory)) {
+        if (roles.includes(roleParam)) {
+          setSelectedCategory(category);
+          break;
+        }
+      }
+    }
+    
+    if (periodParam) {
+      const period = parseInt(periodParam);
+      if ([1, 3, 6, 12].includes(period)) {
+        setSelectedPeriod(period);
+      }
+    }
+  }, [searchParams]);
 
   const categories = ['Участники', 'Исполнители', 'Сотрудники', 'Партнеры'];
   

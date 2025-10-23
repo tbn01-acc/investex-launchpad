@@ -1013,55 +1013,175 @@ const quizTree: Record<string, Question> = {
     ]
   },
 
-  // ============ ВЕТКА СОИНВЕСТОРОВ (из invest_amount) ============
+  // ============ ВЕТКА СОИНВЕСТОРОВ (расширенная до 7+) ============
   coinvest_interest: {
     id: "coinvest_interest",
     stage: "Шаг 2 из 7+",
     question: "Интересует ли вас совместное инвестирование в синдикате?",
     answers: [
-      { text: "Да, хочу участвовать в синдикате", next: "coinvest_role" },
+      { text: "Да, хочу участвовать в синдикате", next: "coinvest_experience" },
       { text: "Нет, предпочитаю самостоятельные инвестиции", next: "invest_amount" }
     ]
   },
 
-  coinvest_role: {
-    id: "coinvest_role",
+  coinvest_experience: {
+    id: "coinvest_experience",
     stage: "Шаг 3 из 7+",
-    question: "Какую роль вы хотите играть в синдикате?",
+    question: "Есть ли у вас опыт синдицированных инвестиций?",
     answers: [
-      { text: "Участник", next: "coinvest_participation_level" },
-      { text: "Лид-инвестор", next: "coinvest_lead_requirements" },
-      { text: "Клуб инвесторов", next: "coinvest_club_benefits" }
+      { text: "Нет, я новичок", next: "coinvest_learn" },
+      { text: "Да, есть опыт", next: "coinvest_role_experienced" }
     ]
   },
 
-  coinvest_participation_level: {
-    id: "coinvest_participation_level",
+  coinvest_learn: {
+    id: "coinvest_learn",
     stage: "Шаг 4 из 7+",
-    question: "Какой уровень участия вас интересует?",
+    question: "Хотите ли изучить механику синдикатов?",
     answers: [
-      { text: "Минимальный вклад", result: { role: "coinvestor", tariff: "participant" } },
-      { text: "Активное участие", result: { role: "coinvestor", tariff: "participant" } }
+      { text: "Да, нужна помощь в обучении", next: "coinvest_capital_small" },
+      { text: "Нет, разберусь самостоятельно", next: "coinvest_capital_small" }
     ]
   },
 
-  coinvest_lead_requirements: {
-    id: "coinvest_lead_requirements",
-    stage: "Шаг 4 из 7+",
-    question: "Какие требования к лид-инвестору для вас важны?",
+  coinvest_capital_small: {
+    id: "coinvest_capital_small",
+    stage: "Шаг 5 из 7+",
+    question: "Каким капиталом вы располагаете?",
     answers: [
-      { text: "Опыт и экспертиза", result: { role: "coinvestor", tariff: "syndicate" } },
-      { text: "Нетворкинг и связи", result: { role: "coinvestor", tariff: "syndicate" } }
+      { text: "До $5,000", next: "coinvest_frequency" },
+      { text: "$5,000 - $20,000", next: "coinvest_diversification" },
+      { text: "Более $20,000", next: "coinvest_lead_interest" }
     ]
   },
 
-  coinvest_club_benefits: {
-    id: "coinvest_club_benefits",
-    stage: "Шаг 4 из 7+",
-    question: "Что для вас важнее в клубе инвесторов?",
+  coinvest_frequency: {
+    id: "coinvest_frequency",
+    stage: "Шаг 6 из 7+",
+    question: "Как часто планируете участвовать?",
     answers: [
-      { text: "Образование и поддержка", result: { role: "coinvestor", tariff: "club" } },
-      { text: "Доступ к сделкам", result: { role: "coinvestor", tariff: "club" } }
+      { text: "1-2 раза в год", next: "coinvest_support_level" },
+      { text: "Ежеквартально", next: "coinvest_support_level" }
+    ]
+  },
+
+  coinvest_support_level: {
+    id: "coinvest_support_level",
+    stage: "Шаг 7 из 7",
+    question: "Нужна ли поддержка в принятии решений?",
+    answers: [
+      { text: "Да, хочу следовать за лид-инвестором", result: { role: "coinvestor", tariff: "participant" } },
+      { text: "Хочу самостоятельно анализировать", result: { role: "coinvestor", tariff: "club" } }
+    ]
+  },
+
+  coinvest_diversification: {
+    id: "coinvest_diversification",
+    stage: "Шаг 6 из 7+",
+    question: "Хотите ли диверсифицировать через синдикат?",
+    answers: [
+      { text: "Да, хочу участвовать в нескольких проектах", next: "coinvest_dd_level" },
+      { text: "Нет, сфокусируюсь на 1-2", result: { role: "coinvestor", tariff: "participant" } }
+    ]
+  },
+
+  coinvest_dd_level: {
+    id: "coinvest_dd_level",
+    stage: "Шаг 7 из 7",
+    question: "Нужен ли коллективный due diligence?",
+    answers: [
+      { text: "Да, это важно", result: { role: "coinvestor", tariff: "club" } },
+      { text: "Нет, доверюсь лид-инвестору", result: { role: "coinvestor", tariff: "participant" } }
+    ]
+  },
+
+  coinvest_lead_interest: {
+    id: "coinvest_lead_interest",
+    stage: "Шаг 6 из 7+",
+    question: "Хотите ли стать лид-инвестором?",
+    answers: [
+      { text: "Да, хочу формировать синдикаты", next: "coinvest_lead_scale" },
+      { text: "Нет, буду участником", result: { role: "coinvestor", tariff: "club" } }
+    ]
+  },
+
+  coinvest_lead_scale: {
+    id: "coinvest_lead_scale",
+    stage: "Шаг 7 из 7",
+    question: "Сколько участников планируете привлекать?",
+    answers: [
+      { text: "До 10 человек", result: { role: "coinvestor", tariff: "syndicate" } },
+      { text: "10-50 человек", result: { role: "coinvestor", tariff: "syndicate" } }
+    ]
+  },
+
+  coinvest_role_experienced: {
+    id: "coinvest_role_experienced",
+    stage: "Шаг 4 из 7+",
+    question: "Какую роль вы играли в синдикатах?",
+    answers: [
+      { text: "Участник", next: "coinvest_upgrade" },
+      { text: "Лид-инвестор", next: "coinvest_lead_tools" }
+    ]
+  },
+
+  coinvest_upgrade: {
+    id: "coinvest_upgrade",
+    stage: "Шаг 5 из 7+",
+    question: "Хотите ли стать более активным?",
+    answers: [
+      { text: "Да, хочу больше участвовать", next: "coinvest_club_interest" },
+      { text: "Нет, устраивает текущая роль", result: { role: "coinvestor", tariff: "participant" } }
+    ]
+  },
+
+  coinvest_club_interest: {
+    id: "coinvest_club_interest",
+    stage: "Шаг 6 из 7+",
+    question: "Интересует ли закрытый клуб инвесторов?",
+    answers: [
+      { text: "Да, хочу нетворкинг", next: "coinvest_education" },
+      { text: "Нет, достаточно сделок", result: { role: "coinvestor", tariff: "club" } }
+    ]
+  },
+
+  coinvest_education: {
+    id: "coinvest_education",
+    stage: "Шаг 7 из 7",
+    question: "Нужны ли образовательные программы?",
+    answers: [
+      { text: "Да, хочу развиваться", result: { role: "coinvestor", tariff: "club" } },
+      { text: "Нет, есть опыт", result: { role: "coinvestor", tariff: "club" } }
+    ]
+  },
+
+  coinvest_lead_tools: {
+    id: "coinvest_lead_tools",
+    stage: "Шаг 5 из 7+",
+    question: "Какие инструменты вам нужны?",
+    answers: [
+      { text: "CRM для управления синдикатом", next: "coinvest_commission" },
+      { text: "Аналитика и отчётность", next: "coinvest_commission" }
+    ]
+  },
+
+  coinvest_commission: {
+    id: "coinvest_commission",
+    stage: "Шаг 6 из 7+",
+    question: "Планируете ли брать комиссию?",
+    answers: [
+      { text: "Да, это часть бизнес-модели", next: "coinvest_legal" },
+      { text: "Нет, для сообщества", result: { role: "coinvestor", tariff: "syndicate" } }
+    ]
+  },
+
+  coinvest_legal: {
+    id: "coinvest_legal",
+    stage: "Шаг 7 из 7",
+    question: "Нужно ли юридическое сопровождение?",
+    answers: [
+      { text: "Да, это важно", result: { role: "coinvestor", tariff: "syndicate" } },
+      { text: "У меня есть юристы", result: { role: "coinvestor", tariff: "syndicate" } }
     ]
   },
 
@@ -1300,8 +1420,30 @@ const InteractiveQuiz = ({ onComplete }: InteractiveQuizProps) => {
     setQuizResult(null);
   };
 
+  // Mapping quiz role to display role names
+  const ROLE_NAMES: Record<string, string> = {
+    investor: "Инвестор",
+    coinvestor: "Соинвестор",
+    founder: "Фаундер",
+    cofounder: "Ко-фаундер",
+    copartner: "Соучредитель",
+    franchiser: "Франчайзер",
+    freelancer: "Фрилансер",
+    expert: "Эксперт",
+    consultant: "Консультант",
+    outsourcer: "Аутсорсер",
+    contractor: "Подрядчик",
+    projectadmin: "Администратор проекта",
+    employee: "Сотрудник проекта",
+    jobseeker: "Соискатель",
+    partner: "Партнёр (Affiliate)",
+    ambassador: "Амбассадор проекта",
+    blogger: "Лидер мнений/Блогер"
+  };
+
   if (quizResult) {
     const leadMagnet = LEAD_MAGNETS[quizResult.role]?.[quizResult.tariff];
+    const roleName = ROLE_NAMES[quizResult.role] || quizResult.role;
     
     return (
       <section className="py-16 bg-gradient-to-br from-primary/5 via-background to-secondary/5">
@@ -1319,17 +1461,24 @@ const InteractiveQuiz = ({ onComplete }: InteractiveQuizProps) => {
               </h3>
               
               <div className="bg-accent/10 rounded-lg p-6 space-y-4">
-                <div className="flex items-center justify-between">
-                  <span className="text-muted-foreground font-medium">Рекомендуемый тариф:</span>
-                  <span className="text-xl font-bold text-primary">{leadMagnet?.tariff}</span>
+                <div>
+                  <p className="text-muted-foreground font-medium mb-2">Рекомендованный тариф:</p>
+                  <p className="text-2xl font-bold text-primary">{roleName} - {leadMagnet?.tariff}</p>
                 </div>
+                <Button 
+                  className="w-full mt-4" 
+                  size="lg"
+                  onClick={() => window.location.href = `/pricing?role=${encodeURIComponent(roleName)}&period=1`}
+                >
+                  Посмотреть
+                </Button>
               </div>
 
               {leadMagnet && (
                 <div className="bg-card border border-border rounded-lg p-6 text-left space-y-4">
                   <h4 className="font-semibold text-lg text-foreground">Ваш бонус:</h4>
                   <p className="text-muted-foreground">{leadMagnet.title}</p>
-                  <Button className="w-full" size="lg">
+                  <Button className="w-full" size="lg" variant="secondary">
                     <Download className="w-5 h-5 mr-2" />
                     Скачать {leadMagnet.file}
                   </Button>

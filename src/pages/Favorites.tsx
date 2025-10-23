@@ -1,18 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Star, Lightbulb, Rocket, Users, StickyNote, Plus, Trash2, Edit, ExternalLink } from 'lucide-react';
-import { useAuth } from '@/hooks/useAuth';
+import { Textarea } from '@/components/ui/textarea';
 import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
-import { Badge } from '@/components/ui/badge';
+import { Heart, Trash2, ExternalLink, Plus, Edit } from 'lucide-react';
 
 interface Favorite {
   id: string;
@@ -36,8 +35,9 @@ const Favorites = () => {
   const [notes, setNotes] = useState<Note[]>([]);
   const [loading, setLoading] = useState(true);
   const [noteDialogOpen, setNoteDialogOpen] = useState(false);
-  const [editingNote, setEditingNote] = useState<Note | null>(null);
-  const [noteForm, setNoteForm] = useState({ title: '', content: '' });
+  const [currentNote, setCurrentNote] = useState<Note | null>(null);
+  const [noteTitle, setNoteTitle] = useState('');
+  const [noteContent, setNoteContent] = useState('');
 
   useEffect(() => {
     if (user) {
@@ -47,28 +47,37 @@ const Favorites = () => {
   }, [user]);
 
   const fetchFavorites = async () => {
+    if (!user) return;
+    
     try {
       const { data, error } = await supabase
         .from('favorites')
         .select('*')
-        .eq('user_id', user?.id)
+        .eq('user_id', user.id)
         .order('created_at', { ascending: false });
 
       if (error) throw error;
       setFavorites(data || []);
     } catch (error) {
       console.error('Error fetching favorites:', error);
+      toast({
+        title: 'Ошибка',
+        description: 'Не удалось загрузить избранное',
+        variant: 'destructive',
+      });
     } finally {
       setLoading(false);
     }
   };
 
   const fetchNotes = async () => {
+    if (!user) return;
+    
     try {
       const { data, error } = await supabase
         .from('notes')
         .select('*')
-        .eq('user_id', user?.id)
+        .eq('user_id', user.id)
         .order('updated_at', { ascending: false });
 
       if (error) throw error;
@@ -86,60 +95,72 @@ const Favorites = () => {
         .eq('id', id);
 
       if (error) throw error;
-      
+
+      setFavorites(favorites.filter(f => f.id !== id));
       toast({
-        title: "Удалено из избранного",
+        title: 'Удалено',
+        description: 'Элемент удалён из избранного',
       });
-      fetchFavorites();
     } catch (error) {
+      console.error('Error removing favorite:', error);
       toast({
-        title: "Ошибка",
-        description: "Не удалось удалить из избранного",
-        variant: "destructive"
+        title: 'Ошибка',
+        description: 'Не удалось удалить элемент',
+        variant: 'destructive',
       });
     }
   };
 
   const saveNote = async () => {
-    if (!noteForm.title || !noteForm.content) {
-      toast({
-        title: "Заполните все поля",
-        variant: "destructive"
-      });
-      return;
-    }
+    if (!user || !noteTitle.trim()) return;
 
     try {
-      if (editingNote) {
+      if (currentNote) {
+        // Update existing note
         const { error } = await supabase
           .from('notes')
-          .update({ title: noteForm.title, content: noteForm.content })
-          .eq('id', editingNote.id);
+          .update({ 
+            title: noteTitle, 
+            content: noteContent,
+            updated_at: new Date().toISOString()
+          })
+          .eq('id', currentNote.id);
 
         if (error) throw error;
-        toast({ title: "Заметка обновлена" });
+        
+        toast({
+          title: 'Сохранено',
+          description: 'Заметка успешно обновлена',
+        });
       } else {
+        // Create new note
         const { error } = await supabase
           .from('notes')
-          .insert({
-            user_id: user?.id,
-            title: noteForm.title,
-            content: noteForm.content
+          .insert({ 
+            user_id: user.id,
+            title: noteTitle, 
+            content: noteContent 
           });
 
         if (error) throw error;
-        toast({ title: "Заметка создана" });
+        
+        toast({
+          title: 'Создано',
+          description: 'Заметка успешно создана',
+        });
       }
 
-      setNoteDialogOpen(false);
-      setEditingNote(null);
-      setNoteForm({ title: '', content: '' });
       fetchNotes();
+      setNoteDialogOpen(false);
+      setNoteTitle('');
+      setNoteContent('');
+      setCurrentNote(null);
     } catch (error) {
+      console.error('Error saving note:', error);
       toast({
-        title: "Ошибка",
-        description: "Не удалось сохранить заметку",
-        variant: "destructive"
+        title: 'Ошибка',
+        description: 'Не удалось сохранить заметку',
+        variant: 'destructive',
       });
     }
   };
@@ -152,21 +173,26 @@ const Favorites = () => {
         .eq('id', id);
 
       if (error) throw error;
-      
-      toast({ title: "Заметка удалена" });
-      fetchNotes();
-    } catch (error) {
+
+      setNotes(notes.filter(n => n.id !== id));
       toast({
-        title: "Ошибка",
-        description: "Не удалось удалить заметку",
-        variant: "destructive"
+        title: 'Удалено',
+        description: 'Заметка удалена',
+      });
+    } catch (error) {
+      console.error('Error deleting note:', error);
+      toast({
+        title: 'Ошибка',
+        description: 'Не удалось удалить заметку',
+        variant: 'destructive',
       });
     }
   };
 
   const openEditNote = (note: Note) => {
-    setEditingNote(note);
-    setNoteForm({ title: note.title, content: note.content });
+    setCurrentNote(note);
+    setNoteTitle(note.title);
+    setNoteContent(note.content || '');
     setNoteDialogOpen(true);
   };
 
@@ -174,230 +200,243 @@ const Favorites = () => {
     return favorites.filter(f => f.item_type === type);
   };
 
+  if (!user) {
+    return (
+      <div className="min-h-screen">
+        <Navigation />
+        <main className="pt-24 pb-16">
+          <div className="container mx-auto px-4 text-center">
+            <h1 className="text-4xl font-bold mb-4">Избранное</h1>
+            <p className="text-muted-foreground mb-8">Войдите, чтобы просмотреть избранное</p>
+            <Button onClick={() => window.location.href = '/auth'}>Войти</Button>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       <Navigation />
-      
       <main className="pt-24 pb-16">
         <div className="container mx-auto px-4">
-          <div className="mb-8">
-            <h1 className="text-4xl font-bold mb-2 flex items-center gap-2">
-              <Star className="h-8 w-8 text-primary fill-primary" />
-              Избранное
-            </h1>
-            <p className="text-muted-foreground">
-              Сохраненные идеи, проекты, контакты и заметки
-            </p>
-          </div>
+          <div className="max-w-6xl mx-auto">
+            <div className="mb-8">
+              <h1 className="text-4xl font-bold mb-2">Избранное</h1>
+              <p className="text-muted-foreground">Сохранённые элементы и заметки</p>
+            </div>
 
-          <Tabs defaultValue="projects" className="w-full">
-            <TabsList className="grid grid-cols-4 w-full max-w-2xl mb-8">
-              <TabsTrigger value="ideas" className="flex items-center gap-2">
-                <Lightbulb className="h-4 w-4" />
-                <span className="hidden sm:inline">Идеи</span>
-                <Badge variant="secondary" className="ml-1">{filterFavorites('idea').length}</Badge>
-              </TabsTrigger>
-              <TabsTrigger value="projects" className="flex items-center gap-2">
-                <Rocket className="h-4 w-4" />
-                <span className="hidden sm:inline">Проекты</span>
-                <Badge variant="secondary" className="ml-1">{filterFavorites('project').length}</Badge>
-              </TabsTrigger>
-              <TabsTrigger value="contacts" className="flex items-center gap-2">
-                <Users className="h-4 w-4" />
-                <span className="hidden sm:inline">Контакты</span>
-                <Badge variant="secondary" className="ml-1">{filterFavorites('contact').length}</Badge>
-              </TabsTrigger>
-              <TabsTrigger value="notes" className="flex items-center gap-2">
-                <StickyNote className="h-4 w-4" />
-                <span className="hidden sm:inline">Заметки</span>
-                <Badge variant="secondary" className="ml-1">{notes.length}</Badge>
-              </TabsTrigger>
-            </TabsList>
+            <Tabs defaultValue="ideas" className="space-y-6">
+              <TabsList className="grid w-full grid-cols-4">
+                <TabsTrigger value="ideas">Идеи</TabsTrigger>
+                <TabsTrigger value="projects">Проекты/Стартапы</TabsTrigger>
+                <TabsTrigger value="contacts">Контакты</TabsTrigger>
+                <TabsTrigger value="notes">Заметки</TabsTrigger>
+              </TabsList>
 
-            <TabsContent value="ideas">
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filterFavorites('idea').length === 0 ? (
-                  <Card className="col-span-full">
-                    <CardContent className="text-center py-12">
-                      <Lightbulb className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                      <p className="text-muted-foreground">У вас пока нет избранных идей</p>
+              <TabsContent value="ideas" className="space-y-4">
+                {loading ? (
+                  <p className="text-center text-muted-foreground">Загрузка...</p>
+                ) : filterFavorites('idea').length === 0 ? (
+                  <Card>
+                    <CardContent className="pt-6 text-center">
+                      <Heart className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
+                      <p className="text-muted-foreground">Нет сохранённых идей</p>
                     </CardContent>
                   </Card>
                 ) : (
-                  filterFavorites('idea').map((fav) => (
+                  filterFavorites('idea').map(fav => (
                     <Card key={fav.id}>
                       <CardHeader>
-                        <CardTitle>Идея #{fav.item_id}</CardTitle>
-                        <CardDescription>Добавлено {new Date(fav.created_at).toLocaleDateString()}</CardDescription>
+                        <div className="flex items-start justify-between">
+                          <div className="flex-1">
+                            <CardTitle>Идея #{fav.item_id}</CardTitle>
+                            <CardDescription>
+                              Добавлено {new Date(fav.created_at).toLocaleDateString('ru-RU')}
+                            </CardDescription>
+                          </div>
+                          <div className="flex gap-2">
+                            <Button variant="ghost" size="icon" onClick={() => window.location.href = `/investments/ideas?id=${fav.item_id}`}>
+                              <ExternalLink className="w-4 h-4" />
+                            </Button>
+                            <Button variant="ghost" size="icon" onClick={() => removeFavorite(fav.id)}>
+                              <Trash2 className="w-4 h-4 text-destructive" />
+                            </Button>
+                          </div>
+                        </div>
                       </CardHeader>
-                      <CardContent className="space-y-2">
-                        <Button variant="outline" size="sm" className="w-full">
-                          <ExternalLink className="h-4 w-4 mr-2" />
-                          Открыть
-                        </Button>
-                        <Button variant="destructive" size="sm" className="w-full" onClick={() => removeFavorite(fav.id)}>
-                          <Trash2 className="h-4 w-4 mr-2" />
-                          Удалить
-                        </Button>
-                      </CardContent>
                     </Card>
                   ))
                 )}
-              </div>
-            </TabsContent>
+              </TabsContent>
 
-            <TabsContent value="projects">
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filterFavorites('project').length === 0 ? (
-                  <Card className="col-span-full">
-                    <CardContent className="text-center py-12">
-                      <Rocket className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                      <p className="text-muted-foreground">У вас пока нет избранных проектов</p>
+              <TabsContent value="projects" className="space-y-4">
+                {loading ? (
+                  <p className="text-center text-muted-foreground">Загрузка...</p>
+                ) : filterFavorites('project').length === 0 ? (
+                  <Card>
+                    <CardContent className="pt-6 text-center">
+                      <Heart className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
+                      <p className="text-muted-foreground">Нет сохранённых проектов</p>
                     </CardContent>
                   </Card>
                 ) : (
-                  filterFavorites('project').map((fav) => (
+                  filterFavorites('project').map(fav => (
                     <Card key={fav.id}>
                       <CardHeader>
-                        <CardTitle>Проект #{fav.item_id}</CardTitle>
-                        <CardDescription>Добавлено {new Date(fav.created_at).toLocaleDateString()}</CardDescription>
+                        <div className="flex items-start justify-between">
+                          <div className="flex-1">
+                            <CardTitle>Проект #{fav.item_id}</CardTitle>
+                            <CardDescription>
+                              Добавлено {new Date(fav.created_at).toLocaleDateString('ru-RU')}
+                            </CardDescription>
+                          </div>
+                          <div className="flex gap-2">
+                            <Button variant="ghost" size="icon" onClick={() => window.location.href = `/projects/${fav.item_id}`}>
+                              <ExternalLink className="w-4 h-4" />
+                            </Button>
+                            <Button variant="ghost" size="icon" onClick={() => removeFavorite(fav.id)}>
+                              <Trash2 className="w-4 h-4 text-destructive" />
+                            </Button>
+                          </div>
+                        </div>
                       </CardHeader>
-                      <CardContent className="space-y-2">
-                        <Button variant="outline" size="sm" className="w-full">
-                          <ExternalLink className="h-4 w-4 mr-2" />
-                          Открыть
-                        </Button>
-                        <Button variant="destructive" size="sm" className="w-full" onClick={() => removeFavorite(fav.id)}>
-                          <Trash2 className="h-4 w-4 mr-2" />
-                          Удалить
-                        </Button>
-                      </CardContent>
                     </Card>
                   ))
                 )}
-              </div>
-            </TabsContent>
+              </TabsContent>
 
-            <TabsContent value="contacts">
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filterFavorites('contact').length === 0 ? (
-                  <Card className="col-span-full">
-                    <CardContent className="text-center py-12">
-                      <Users className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                      <p className="text-muted-foreground">У вас пока нет избранных контактов</p>
+              <TabsContent value="contacts" className="space-y-4">
+                {loading ? (
+                  <p className="text-center text-muted-foreground">Загрузка...</p>
+                ) : filterFavorites('contact').length === 0 ? (
+                  <Card>
+                    <CardContent className="pt-6 text-center">
+                      <Heart className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
+                      <p className="text-muted-foreground">Нет сохранённых контактов</p>
                     </CardContent>
                   </Card>
                 ) : (
-                  filterFavorites('contact').map((fav) => (
+                  filterFavorites('contact').map(fav => (
                     <Card key={fav.id}>
                       <CardHeader>
-                        <CardTitle>Контакт #{fav.item_id}</CardTitle>
-                        <CardDescription>Добавлено {new Date(fav.created_at).toLocaleDateString()}</CardDescription>
+                        <div className="flex items-start justify-between">
+                          <div className="flex-1">
+                            <CardTitle>Контакт #{fav.item_id}</CardTitle>
+                            <CardDescription>
+                              Добавлено {new Date(fav.created_at).toLocaleDateString('ru-RU')}
+                            </CardDescription>
+                          </div>
+                          <div className="flex gap-2">
+                            <Button variant="ghost" size="icon" onClick={() => removeFavorite(fav.id)}>
+                              <Trash2 className="w-4 h-4 text-destructive" />
+                            </Button>
+                          </div>
+                        </div>
                       </CardHeader>
-                      <CardContent className="space-y-2">
-                        <Button variant="outline" size="sm" className="w-full">
-                          <ExternalLink className="h-4 w-4 mr-2" />
-                          Открыть
-                        </Button>
-                        <Button variant="destructive" size="sm" className="w-full" onClick={() => removeFavorite(fav.id)}>
-                          <Trash2 className="h-4 w-4 mr-2" />
-                          Удалить
-                        </Button>
-                      </CardContent>
                     </Card>
                   ))
                 )}
-              </div>
-            </TabsContent>
+              </TabsContent>
 
-            <TabsContent value="notes">
-              <div className="mb-6">
-                <Dialog open={noteDialogOpen} onOpenChange={setNoteDialogOpen}>
-                  <DialogTrigger asChild>
-                    <Button onClick={() => { setEditingNote(null); setNoteForm({ title: '', content: '' }); }}>
-                      <Plus className="h-4 w-4 mr-2" />
-                      Создать заметку
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent>
-                    <DialogHeader>
-                      <DialogTitle>{editingNote ? 'Редактировать заметку' : 'Новая заметка'}</DialogTitle>
-                      <DialogDescription>
-                        Создайте заметку для сохранения важной информации
-                      </DialogDescription>
-                    </DialogHeader>
-                    <div className="space-y-4">
-                      <div>
-                        <Label htmlFor="title">Название</Label>
-                        <Input
-                          id="title"
-                          value={noteForm.title}
-                          onChange={(e) => setNoteForm({...noteForm, title: e.target.value})}
-                          placeholder="Название заметки"
-                        />
-                      </div>
-                      <div>
-                        <Label htmlFor="content">Содержание</Label>
-                        <Textarea
-                          id="content"
-                          value={noteForm.content}
-                          onChange={(e) => setNoteForm({...noteForm, content: e.target.value})}
-                          placeholder="Текст заметки"
-                          rows={6}
-                        />
-                      </div>
-                      <Button onClick={saveNote} className="w-full">
-                        {editingNote ? 'Обновить' : 'Создать'}
+              <TabsContent value="notes" className="space-y-4">
+                <div className="flex justify-end mb-4">
+                  <Dialog open={noteDialogOpen} onOpenChange={(open) => {
+                    setNoteDialogOpen(open);
+                    if (!open) {
+                      setNoteTitle('');
+                      setNoteContent('');
+                      setCurrentNote(null);
+                    }
+                  }}>
+                    <DialogTrigger asChild>
+                      <Button>
+                        <Plus className="w-4 h-4 mr-2" />
+                        Новая заметка
                       </Button>
-                    </div>
-                  </DialogContent>
-                </Dialog>
-              </div>
+                    </DialogTrigger>
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle>{currentNote ? 'Редактировать заметку' : 'Новая заметка'}</DialogTitle>
+                        <DialogDescription>
+                          {currentNote ? 'Обновите содержимое заметки' : 'Создайте новую заметку для себя'}
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div className="space-y-4">
+                        <div>
+                          <Label htmlFor="note-title">Заголовок</Label>
+                          <Input 
+                            id="note-title" 
+                            value={noteTitle} 
+                            onChange={(e) => setNoteTitle(e.target.value)}
+                            placeholder="Введите заголовок..."
+                          />
+                        </div>
+                        <div>
+                          <Label htmlFor="note-content">Содержание</Label>
+                          <Textarea 
+                            id="note-content" 
+                            value={noteContent} 
+                            onChange={(e) => setNoteContent(e.target.value)}
+                            placeholder="Введите текст заметки..."
+                            rows={6}
+                          />
+                        </div>
+                      </div>
+                      <DialogFooter>
+                        <Button variant="outline" onClick={() => setNoteDialogOpen(false)}>Отмена</Button>
+                        <Button onClick={saveNote}>Сохранить</Button>
+                      </DialogFooter>
+                    </DialogContent>
+                  </Dialog>
+                </div>
 
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {notes.length === 0 ? (
-                  <Card className="col-span-full">
-                    <CardContent className="text-center py-12">
-                      <StickyNote className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                      <p className="text-muted-foreground mb-4">У вас пока нет заметок</p>
+                  <Card>
+                    <CardContent className="pt-6 text-center">
+                      <Heart className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
+                      <p className="text-muted-foreground mb-4">Нет заметок</p>
                       <Button onClick={() => setNoteDialogOpen(true)}>
-                        <Plus className="h-4 w-4 mr-2" />
+                        <Plus className="w-4 h-4 mr-2" />
                         Создать первую заметку
                       </Button>
                     </CardContent>
                   </Card>
                 ) : (
-                  notes.map((note) => (
+                  notes.map(note => (
                     <Card key={note.id}>
                       <CardHeader>
-                        <CardTitle>{note.title}</CardTitle>
-                        <CardDescription>
-                          Обновлено {new Date(note.updated_at).toLocaleDateString()}
-                        </CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
-                          {note.content}
-                        </p>
-                        <div className="flex gap-2">
-                          <Button variant="outline" size="sm" className="flex-1" onClick={() => openEditNote(note)}>
-                            <Edit className="h-4 w-4 mr-2" />
-                            Редактировать
-                          </Button>
-                          <Button variant="destructive" size="sm" onClick={() => deleteNote(note.id)}>
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
+                        <div className="flex items-start justify-between">
+                          <div className="flex-1">
+                            <CardTitle>{note.title}</CardTitle>
+                            <CardDescription>
+                              Обновлено {new Date(note.updated_at).toLocaleDateString('ru-RU')}
+                            </CardDescription>
+                          </div>
+                          <div className="flex gap-2">
+                            <Button variant="ghost" size="icon" onClick={() => openEditNote(note)}>
+                              <Edit className="w-4 h-4" />
+                            </Button>
+                            <Button variant="ghost" size="icon" onClick={() => deleteNote(note.id)}>
+                              <Trash2 className="w-4 h-4 text-destructive" />
+                            </Button>
+                          </div>
                         </div>
-                      </CardContent>
+                      </CardHeader>
+                      {note.content && (
+                        <CardContent>
+                          <p className="text-muted-foreground whitespace-pre-wrap">{note.content}</p>
+                        </CardContent>
+                      )}
                     </Card>
                   ))
                 )}
-              </div>
-            </TabsContent>
-          </Tabs>
+              </TabsContent>
+            </Tabs>
+          </div>
         </div>
       </main>
-
       <Footer />
     </div>
   );
