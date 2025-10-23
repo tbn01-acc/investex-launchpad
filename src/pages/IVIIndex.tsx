@@ -1,34 +1,34 @@
-import React from 'react';
-import Navigation from '@/components/Navigation';
-import Footer from '@/components/Footer';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { TrendingUp, Award, Target, BarChart3, Zap, CheckCircle2 } from 'lucide-react';
+import React from "react";
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { TrendingUp, Award, Target, BarChart3, Zap, CheckCircle2 } from "lucide-react";
 
 const IVIIndex = () => {
   const criteria = [
-    { name: 'Команда', weight: '30%', icon: <Award className="h-5 w-5" />, color: 'text-blue-500' },
-    { name: 'Продукт', weight: '25%', icon: <Zap className="h-5 w-5" />, color: 'text-purple-500' },
-    { name: 'Рынок', weight: '20%', icon: <Target className="h-5 w-5" />, color: 'text-green-500' },
-    { name: 'Финансы', weight: '15%', icon: <BarChart3 className="h-5 w-5" />, color: 'text-orange-500' },
-    { name: 'Тяга (Traction)', weight: '10%', icon: <TrendingUp className="h-5 w-5" />, color: 'text-red-500' }
+    { name: "Команда", weight: "30%", icon: <Award className="h-5 w-5" />, color: "text-blue-500" },
+    { name: "Продукт", weight: "25%", icon: <Zap className="h-5 w-5" />, color: "text-purple-500" },
+    { name: "Рынок", weight: "20%", icon: <Target className="h-5 w-5" />, color: "text-green-500" },
+    { name: "Финансы", weight: "15%", icon: <BarChart3 className="h-5 w-5" />, color: "text-orange-500" },
+    { name: "Тяга (Traction)", weight: "10%", icon: <TrendingUp className="h-5 w-5" />, color: "text-red-500" },
   ];
 
   const benefits = [
-    'Объективная оценка потенциала стартапа',
-    'Повышение доверия инвесторов',
-    'Бенчмаркинг с конкурентами',
-    'Выявление слабых мест для улучшения',
-    'Повышение видимости на платформе',
-    'Доступ к закрытым инвестиционным пулам'
+    "Объективная оценка потенциала стартапа",
+    "Повышение доверия инвесторов",
+    "Бенчмаркинг с конкурентами",
+    "Выявление слабых мест для улучшения",
+    "Повышение видимости на платформе",
+    "Доступ к закрытым инвестиционным пулам",
   ];
 
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      
+
       <main className="pt-24 pb-16">
         <div className="container mx-auto px-4">
           {/* Hero Section */}
@@ -59,7 +59,8 @@ const IVIIndex = () => {
                 <CardHeader>
                   <CardTitle className="text-3xl">Что такое IVI индекс?</CardTitle>
                   <CardDescription className="text-lg">
-                    IVI (InvestEx Value Index) - это комплексный показатель от 0 до 100, который оценивает инвестиционную привлекательность стартапа на основе 5 ключевых параметров
+                    IVI (InvestEx Value Index) - это комплексный показатель от 0 до 100, который оценивает
+                    инвестиционную привлекательность стартапа на основе 5 ключевых параметров
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
@@ -72,7 +73,7 @@ const IVIIndex = () => {
                         <p className="text-sm">Отличный показатель, высокий интерес инвесторов</p>
                       </CardContent>
                     </Card>
-                    
+
                     <Card className="bg-yellow-50 border-yellow-200">
                       <CardHeader>
                         <CardTitle className="text-yellow-700 text-lg">60-79</CardTitle>
@@ -81,7 +82,7 @@ const IVIIndex = () => {
                         <p className="text-sm">Хороший показатель, можно улучшить</p>
                       </CardContent>
                     </Card>
-                    
+
                     <Card className="bg-red-50 border-red-200">
                       <CardHeader>
                         <CardTitle className="text-red-700 text-lg">0-59</CardTitle>
@@ -116,11 +117,11 @@ const IVIIndex = () => {
                     </CardHeader>
                     <CardContent>
                       <p className="text-sm text-muted-foreground">
-                        {index === 0 && 'Опыт, экспертиза, комплементарность навыков команды, предыдущие успехи'}
-                        {index === 1 && 'Уникальность решения, технологичность, защищенность IP, готовность продукта'}
-                        {index === 2 && 'Размер рынка (TAM/SAM/SOM), темпы роста, конкурентная среда, барьеры входа'}
-                        {index === 3 && 'Unit-экономика, рентабельность, runway, прозрачность финансовой модели'}
-                        {index === 4 && 'Рост пользователей, выручки, метрики вовлеченности, retention, partnerships'}
+                        {index === 0 && "Опыт, экспертиза, комплементарность навыков команды, предыдущие успехи"}
+                        {index === 1 && "Уникальность решения, технологичность, защищенность IP, готовность продукта"}
+                        {index === 2 && "Размер рынка (TAM/SAM/SOM), темпы роста, конкурентная среда, барьеры входа"}
+                        {index === 3 && "Unit-экономика, рентабельность, runway, прозрачность финансовой модели"}
+                        {index === 4 && "Рост пользователей, выручки, метрики вовлеченности, retention, partnerships"}
                       </p>
                     </CardContent>
                   </Card>
@@ -152,7 +153,8 @@ const IVIIndex = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-lg mb-4">
-                    IVI индекс позволяет быстро оценить и сравнить стартапы, отфильтровать наиболее перспективные проекты и принимать обоснованные инвестиционные решения.
+                    IVI индекс позволяет быстро оценить и сравнить стартапы, отфильтровать наиболее перспективные
+                    проекты и принимать обоснованные инвестиционные решения.
                   </p>
                   <Button>Смотреть рейтинги стартапов</Button>
                 </CardContent>
@@ -176,20 +178,24 @@ const IVIIndex = () => {
                         <p className="text-3xl font-bold text-primary">49999 ₽</p>
                       </CardHeader>
                       <CardContent className="space-y-2 text-sm">
-                        <p>✓ <b><Включено в тариф Фаундер-Рост и выше</b>
+                        <p>
+                          ✓ <b>Включено в тариф Фаундер-Рост и выше</b>
+                        </p>
                         <p>✓ Расчет IVI индекса</p>
                         <p>✓ Краткий отчет (5 страниц)</p>
                         <p>✓ Срок: 5 рабочих дней</p>
                       </CardContent>
                     </Card>
-                    
+
                     <Card className="bg-primary text-primary-foreground">
                       <CardHeader>
                         <CardTitle className="text-2xl">Премиум</CardTitle>
                         <p className="text-3xl font-bold">$149999 ₽</p>
                       </CardHeader>
                       <CardContent className="space-y-2 text-sm">
-                        <p>✓ <b>Включено в тариф Фаундер-Масштаб</b>
+                        <p>
+                          ✓ <b>Включено в тариф Фаундер-Масштаб</b>
+                        </p>
                         <p>✓ Расчет IVI индекса</p>
                         <p>✓ Подробный отчет (20+ страниц)</p>
                         <p>✓ Консультация эксперта (1 час)</p>
@@ -202,7 +208,6 @@ const IVIIndex = () => {
                   <Button size="lg" className="w-full">
                     Подать заявку на IVI оценку
                   </Button>
-                  
                 </CardContent>
               </Card>
             </TabsContent>
