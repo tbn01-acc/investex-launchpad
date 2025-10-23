@@ -38,7 +38,7 @@ const IVIIndex = () => {
               IVI INDEX
             </Badge>
             <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-              Invest Value Index
+              InvestEx Value Index
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
               Универсальный показатель инвестиционной привлекательности стартапа, разработанный командой Invest-Ex
@@ -59,7 +59,7 @@ const IVIIndex = () => {
                 <CardHeader>
                   <CardTitle className="text-3xl">Что такое IVI индекс?</CardTitle>
                   <CardDescription className="text-lg">
-                    IVI (Invest Value Index) - это комплексный показатель от 0 до 100, который оценивает инвестиционную привлекательность стартапа на основе 5 ключевых параметров
+                    IVI (InvestEx Value Index) - это комплексный показатель от 0 до 100, который оценивает инвестиционную привлекательность стартапа на основе 5 ключевых параметров
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
@@ -78,7 +78,7 @@ const IVIIndex = () => {
                         <CardTitle className="text-yellow-700 text-lg">60-79</CardTitle>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-sm">Хороший показатель, средний интерес</p>
+                        <p className="text-sm">Хороший показатель, можно улучшить</p>
                       </CardContent>
                     </Card>
                     
@@ -173,7 +173,7 @@ const IVIIndex = () => {
                     <Card className="bg-muted">
                       <CardHeader>
                         <CardTitle className="text-2xl">Базовая</CardTitle>
-                        <p className="text-3xl font-bold text-primary">$499</p>
+                        <p className="text-3xl font-bold text-primary">$499</p><br>Включено в тариф Фаундер-Рост и выше</p>
                       </CardHeader>
                       <CardContent className="space-y-2 text-sm">
                         <p>✓ Расчет IVI индекса</p>
@@ -185,7 +185,7 @@ const IVIIndex = () => {
                     <Card className="bg-primary text-primary-foreground">
                       <CardHeader>
                         <CardTitle className="text-2xl">Премиум</CardTitle>
-                        <p className="text-3xl font-bold">$1,499</p>
+                        <p className="text-3xl font-bold">$1,499</p>br>Drk.xtyj в тариф Фаундер-Масштаб</p>
                       </CardHeader>
                       <CardContent className="space-y-2 text-sm">
                         <p>✓ Расчет IVI индекса</p>
@@ -201,9 +201,6 @@ const IVIIndex = () => {
                     Подать заявку на IVI оценку
                   </Button>
                   
-                  <p className="text-sm text-center text-muted-foreground">
-                    Для зарегистрированных стартапов на платформе - скидка 20%
-                  </p>
                 </CardContent>
               </Card>
             </TabsContent>
