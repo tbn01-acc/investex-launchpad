@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
 import InvestCTABanner from "@/components/InvestCTABanner";
@@ -8,13 +9,19 @@ import PowerfulFeaturesSection from "@/components/PowerfulFeaturesSection";
 import InteractiveQuiz from "@/components/InteractiveQuiz";
 import RolePathSection from "@/components/RolePathSection";
 import ProjectShowcase from "@/components/ProjectShowcase";
-import WallOfFameSection from "@/components/WallOfFameSection";
+import SuccessStoriesSection from "@/components/SuccessStoriesSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import StatsSection from "@/components/StatsSection";
 import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
 
 const Index = () => {
+  const [quizRole, setQuizRole] = useState<string | null>(null);
+
+  const handleQuizComplete = (role: string) => {
+    setQuizRole(role);
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
@@ -24,12 +31,11 @@ const Index = () => {
       <VerificationSection />
       <RoleAnimator />
       <PowerfulFeaturesSection />
-      <InteractiveQuiz />
-      <RolePathSection />
+      <InteractiveQuiz onComplete={handleQuizComplete} />
+      <RolePathSection initialRole={quizRole} />
       <ProjectShowcase />
-      <WallOfFameSection />
-      <TestimonialsSection />
-      
+      <SuccessStoriesSection filterByRole={quizRole || undefined} />
+      <TestimonialsSection filterByRole={quizRole || undefined} />
       <StatsSection />
       <CTASection />
       <Footer />

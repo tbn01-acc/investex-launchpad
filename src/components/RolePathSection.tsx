@@ -293,9 +293,13 @@ const segments = {
   }
 };
 
-const RolePathSection = () => {
+interface RolePathSectionProps {
+  initialRole?: string | null;
+}
+
+const RolePathSection = ({ initialRole }: RolePathSectionProps) => {
   const [activeGroup, setActiveGroup] = useState<string | null>("Участники");
-  const [activeRole, setActiveRole] = useState<string | null>("Инвестор");
+  const [activeRole, setActiveRole] = useState<string | null>(initialRole || "Инвестор");
   const [selectedRoleData, setSelectedRoleData] = useState<any>(segments["Участники"].roles[0]);
 
   const handleGroupClick = (groupName: string) => {
