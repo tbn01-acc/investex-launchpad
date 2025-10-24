@@ -293,14 +293,67 @@ const segments = {
   }
 };
 
+// Маппинг ключей ролей на отображаемые названия
+const roleKeyToName: Record<string, string> = {
+  investor: "Инвестор",
+  coinvestor: "Соинвестор",
+  founder: "Фаундер",
+  cofounder: "Ко-фаундер",
+  partner: "Партнёр (Affiliate)",
+  copartner: "Соучредитель",
+  expert: "Эксперт",
+  consultant: "Консультант",
+  jobseeker: "Соискатель",
+  employee: "Сотрудник проекта",
+  blogger: "Лидер мнений/Блогер",
+  ambassador: "Амбассадор проекта",
+  freelancer: "Фрилансер",
+  outsourcer: "Аутсорсер",
+  contractor: "Подрядчик",
+  franchiser: "Франчайзер",
+  administrator: "Администратор проекта"
+};
+
+// Маппинг названий ролей на их группы
+const roleToGroup: Record<string, string> = {
+  "Инвестор": "Участники",
+  "Соинвестор": "Участники",
+  "Фаундер": "Участники",
+  "Ко-фаундер": "Участники",
+  "Соучредитель": "Участники",
+  "Франчайзер": "Участники",
+  "Фрилансер": "Исполнители",
+  "Эксперт": "Исполнители",
+  "Консультант": "Исполнители",
+  "Аутсорсер": "Исполнители",
+  "Подрядчик": "Исполнители",
+  "Администратор проекта": "Сотрудники",
+  "Сотрудник проекта": "Сотрудники",
+  "Соискатель": "Сотрудники",
+  "Партнёр (Affiliate)": "Партнеры",
+  "Амбассадор проекта": "Партнеры",
+  "Лидер мнений/Блогер": "Партнеры"
+};
+
 interface RolePathSectionProps {
   initialRole?: string | null;
 }
 
 const RolePathSection = ({ initialRole }: RolePathSectionProps) => {
-  const [activeGroup, setActiveGroup] = useState<string | null>("Участники");
-  const [activeRole, setActiveRole] = useState<string | null>(initialRole || "Инвестор");
-  const [selectedRoleData, setSelectedRoleData] = useState<any>(segments["Участники"].roles[0]);
+  // Преобразуем initialRole из ключа в отображаемое название
+  const initialRoleName = initialRole ? roleKeyToName[initialRole] || null : null;
+  const initialGroupName = initialRoleName ? roleToGroup[initialRoleName] || "Участники" : "Участники";
+  
+  // Находим данные начальной роли
+  const getInitialRoleData = () => {
+    if (!initialRoleName || !initialGroupName) return segments["Участники"].roles[0];
+    const group = segments[initialGroupName as keyof typeof segments];
+    return group.roles.find(role => role.name === initialRoleName) || segments["Участники"].roles[0];
+  };
+  
+  const [activeGroup, setActiveGroup] = useState<string | null>(initialGroupName);
+  const [activeRole, setActiveRole] = useState<string | null>(initialRoleName || "Инвестор");
+  const [selectedRoleData, setSelectedRoleData] = useState<any>(getInitialRoleData());
 
   const handleGroupClick = (groupName: string) => {
     if (activeGroup === groupName) {
@@ -334,7 +387,7 @@ const RolePathSection = ({ initialRole }: RolePathSectionProps) => {
   return (
     <section className="py-16 bg-background">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center mb-4">Выберите свой путь к успеху</h2>
+        <h2 className="text-4xl font-bold text-center mb-4">Ваш путь к успеху</h2>
         <p className="text-xl text-muted-foreground text-center max-w-4xl mx-auto mb-12">
           Invest-Ex создан для каждого, кто стремится к развитию. Выберите, кто вы, и узнайте, как мы можем помочь вам достичь целей.
         </p>

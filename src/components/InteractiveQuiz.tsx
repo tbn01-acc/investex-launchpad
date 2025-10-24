@@ -1185,121 +1185,926 @@ const quizTree: Record<string, Question> = {
     ]
   },
 
-  // ============ ВЕТКА ПРЕДПРИНИМАТЕЛЕЙ ============
+  // ============ ВЕТКА ПРЕДПРИНИМАТЕЛЕЙ (Founder, CoFounder, CoPartner, Franchiser) ============
   business_stage: {
     id: "business_stage",
     stage: "Шаг 2 из 7+",
     question: "На какой стадии находится ваш бизнес или идея?",
     answers: [
-      { text: "Идея или концепция", next: "business_goal" },
-      { text: "Стартап в запуске", next: "business_funding" },
-      { text: "Развивающийся бизнес", next: "business_scale" }
+      { text: "Идея или концепция (я основатель)", next: "founder_idea_experience" },
+      { text: "Хочу присоединиться к проекту как партнер", next: "cofounder_motivation" },
+      { text: "Хочу создать франшизу или купить готовый бизнес", next: "franchiser_type" },
+      { text: "Хочу войти в готовый бизнес как соучредитель", next: "copartner_experience" }
     ]
   },
 
-  business_goal: {
-    id: "business_goal",
+  // === FOUNDER BRANCH ===
+  founder_idea_experience: {
+    id: "founder_idea_experience",
     stage: "Шаг 3 из 7+",
-    question: "Какая ваша основная цель?",
+    question: "Есть ли у вас опыт запуска стартапов?",
     answers: [
-      { text: "Поиск инвестиций", next: "business_investor_type" },
-      { text: "Разработка продукта", next: "business_team" },
-      { text: "Маркетинг и продажи", next: "business_marketing" }
+      { text: "Нет, это мой первый проект", next: "founder_first_help" },
+      { text: "Да, запускал раньше", next: "founder_prev_outcome" }
     ]
   },
 
-  business_investor_type: {
-    id: "business_investor_type",
+  founder_first_help: {
+    id: "founder_first_help",
     stage: "Шаг 4 из 7+",
-    question: "Какой тип инвестора вам интересен?",
+    question: "Нужна ли помощь в создании бизнес-плана?",
     answers: [
-      { text: "Ангел-инвестор", next: "business_pitch_ready" },
-      { text: "Венчурный фонд", next: "business_pitch_ready" },
-      { text: "Краудфандинг", next: "business_pitch_ready" }
+      { text: "Да, нужны шаблоны и консультации", next: "founder_team_status" },
+      { text: "Нет, сам разберусь", next: "founder_team_status" }
     ]
   },
 
-  business_pitch_ready: {
-    id: "business_pitch_ready",
+  founder_team_status: {
+    id: "founder_team_status",
     stage: "Шаг 5 из 7+",
-    question: "Готов ли у вас pitch deck или презентация?",
+    question: "Есть ли у вас команда?",
     answers: [
-      { text: "Да, готов", next: "business_funding_amount" },
-      { text: "Нет, нужна помощь", next: "business_pitch_help" }
+      { text: "Да, есть команда", next: "founder_funding_need" },
+      { text: "Нет, ищу команду", next: "founder_funding_need" }
     ]
   },
 
-  business_pitch_help: {
-    id: "business_pitch_help",
+  founder_funding_need: {
+    id: "founder_funding_need",
     stage: "Шаг 6 из 7+",
-    question: "Хотите ли получить шаблоны и помощь в подготовке?",
+    question: "Планируете ли привлекать инвестиции?",
     answers: [
-      { text: "Да, хочу", result: { role: "founder", tariff: "startup" } },
-      { text: "Нет, справлюсь сам", next: "business_funding_amount" }
+      { text: "Да, в ближайшие 3 месяца", next: "founder_funding_amount" },
+      { text: "Да, но позже", next: "founder_revenue_model" },
+      { text: "Нет, буду самофинансировать", result: { role: "founder", tariff: "startup" } }
     ]
   },
 
-  business_funding_amount: {
-    id: "business_funding_amount",
+  founder_funding_amount: {
+    id: "founder_funding_amount",
     stage: "Шаг 7 из 7",
     question: "Какую сумму планируете привлечь?",
     answers: [
-      { text: "До $100,000", result: { role: "founder", tariff: "startup" } },
-      { text: "$100,000 - $500,000", result: { role: "founder", tariff: "growth" } },
-      { text: "Более $500,000", result: { role: "founder", tariff: "scale" } }
+      { text: "До $50,000", result: { role: "founder", tariff: "startup" } },
+      { text: "$50,000 - $250,000", result: { role: "founder", tariff: "growth" } },
+      { text: "Более $250,000", result: { role: "founder", tariff: "scale" } }
     ]
   },
 
-  business_funding: {
-    id: "business_funding",
-    stage: "Шаг 3 из 7+",
-    question: "Как вы планируете финансировать стартап?",
-    answers: [
-      { text: "Собственные средства", next: "business_team" },
-      { text: "Инвестиции", next: "business_investor_type" },
-      { text: "Гранты и субсидии", next: "business_team" }
-    ]
-  },
-
-  business_team: {
-    id: "business_team",
-    stage: "Шаг 4 из 7+",
-    question: "Есть ли у вас команда?",
-    answers: [
-      { text: "Да, сформирована", next: "business_roles" },
-      { text: "Нет, ищу сооснователей", next: "business_roles" }
-    ]
-  },
-
-  business_roles: {
-    id: "business_roles",
-    stage: "Шаг 5 из 7+",
-    question: "Какие роли вам нужны в команде?",
-    answers: [
-      { text: "Технический сооснователь", next: "business_marketing" },
-      { text: "Маркетолог", next: "business_marketing" },
-      { text: "Финансист", next: "business_marketing" }
-    ]
-  },
-
-  business_marketing: {
-    id: "business_marketing",
-    stage: "Шаг 6 из 7+",
-    question: "Как вы планируете продвигать продукт?",
-    answers: [
-      { text: "Онлайн маркетинг", next: "business_scale" },
-      { text: "Офлайн мероприятия", next: "business_scale" },
-      { text: "Партнёрства", next: "business_scale" }
-    ]
-  },
-
-  business_scale: {
-    id: "business_scale",
+  founder_revenue_model: {
+    id: "founder_revenue_model",
     stage: "Шаг 7 из 7",
-    question: "Какие планы по масштабированию?",
+    question: "Есть ли у вас четкая бизнес-модель?",
     answers: [
-      { text: "Рост в регионе", result: { role: "founder", tariff: "growth" } },
-      { text: "Выход на международный рынок", result: { role: "founder", tariff: "scale" } }
+      { text: "Да, проработана", result: { role: "founder", tariff: "growth" } },
+      { text: "Нет, нужна помощь", result: { role: "founder", tariff: "startup" } }
+    ]
+  },
+
+  founder_prev_outcome: {
+    id: "founder_prev_outcome",
+    stage: "Шаг 4 из 7+",
+    question: "Какой был результат предыдущих проектов?",
+    answers: [
+      { text: "Успешный выход", next: "founder_serial_budget" },
+      { text: "Закрылся, но получил опыт", next: "founder_lessons" },
+      { text: "Работает, но медленно растет", next: "founder_portfolio" }
+    ]
+  },
+
+  founder_serial_budget: {
+    id: "founder_serial_budget",
+    stage: "Шаг 5 из 7+",
+    question: "Какой бюджет для нового проекта?",
+    answers: [
+      { text: "До $100,000", next: "founder_serial_speed" },
+      { text: "$100,000 - $500,000", next: "founder_serial_team" },
+      { text: "Более $500,000", next: "founder_serial_scale_plan" }
+    ]
+  },
+
+  founder_serial_speed: {
+    id: "founder_serial_speed",
+    stage: "Шаг 6 из 7+",
+    question: "Как быстро планируете запуск?",
+    answers: [
+      { text: "В течение месяца", next: "founder_serial_metrics" },
+      { text: "3-6 месяцев", next: "founder_serial_metrics" }
+    ]
+  },
+
+  founder_serial_metrics: {
+    id: "founder_serial_metrics",
+    stage: "Шаг 7 из 7",
+    question: "Нужны ли продвинутые метрики и AI?",
+    answers: [
+      { text: "Да, критически важно", result: { role: "founder", tariff: "scale" } },
+      { text: "Базовых инструментов достаточно", result: { role: "founder", tariff: "growth" } }
+    ]
+  },
+
+  founder_serial_team: {
+    id: "founder_serial_team",
+    stage: "Шаг 6 из 7+",
+    question: "Есть ли готовая команда?",
+    answers: [
+      { text: "Да, команда собрана", next: "founder_serial_investors" },
+      { text: "Нет, нужен AI-подбор", next: "founder_serial_investors" }
+    ]
+  },
+
+  founder_serial_investors: {
+    id: "founder_serial_investors",
+    stage: "Шаг 7 из 7",
+    question: "Планируете ли активно общаться с инвесторами?",
+    answers: [
+      { text: "Да, нужна база инвесторов", result: { role: "founder", tariff: "scale" } },
+      { text: "Нет, у меня есть связи", result: { role: "founder", tariff: "growth" } }
+    ]
+  },
+
+  founder_serial_scale_plan: {
+    id: "founder_serial_scale_plan",
+    stage: "Шаг 6 из 7+",
+    question: "Какой масштаб планируете?",
+    answers: [
+      { text: "Региональный рынок", next: "founder_serial_kpi" },
+      { text: "Международный рынок", next: "founder_serial_support" }
+    ]
+  },
+
+  founder_serial_kpi: {
+    id: "founder_serial_kpi",
+    stage: "Шаг 7 из 7",
+    question: "Нужна ли интеграция с комнатой данных?",
+    answers: [
+      { text: "Да, для инвесторов", result: { role: "founder", tariff: "scale" } },
+      { text: "Пока нет", result: { role: "founder", tariff: "growth" } }
+    ]
+  },
+
+  founder_serial_support: {
+    id: "founder_serial_support",
+    stage: "Шаг 7 из 7",
+    question: "Нужен ли персональный менеджер?",
+    answers: [
+      { text: "Да, нужна поддержка", result: { role: "founder", tariff: "scale" } },
+      { text: "Нет, сам справлюсь", result: { role: "founder", tariff: "scale" } }
+    ]
+  },
+
+  founder_lessons: {
+    id: "founder_lessons",
+    stage: "Шаг 5 из 7+",
+    question: "Какие выводы сделали из прошлого опыта?",
+    answers: [
+      { text: "Нужна лучшая команда", next: "founder_retry_budget" },
+      { text: "Нужно больше инвестиций", next: "founder_retry_budget" },
+      { text: "Нужен менторинг", next: "founder_retry_mentoring" }
+    ]
+  },
+
+  founder_retry_budget: {
+    id: "founder_retry_budget",
+    stage: "Шаг 6 из 7+",
+    question: "Какой бюджет сейчас доступен?",
+    answers: [
+      { text: "Минимальный (self-funded)", next: "founder_retry_timeline" },
+      { text: "Средний ($50-200k)", next: "founder_retry_support_type" },
+      { text: "Высокий ($200k+)", result: { role: "founder", tariff: "scale" } }
+    ]
+  },
+
+  founder_retry_timeline: {
+    id: "founder_retry_timeline",
+    stage: "Шаг 7 из 7",
+    question: "Как быстро нужен результат?",
+    answers: [
+      { text: "В течение года", result: { role: "founder", tariff: "startup" } },
+      { text: "2-3 года", result: { role: "founder", tariff: "growth" } }
+    ]
+  },
+
+  founder_retry_support_type: {
+    id: "founder_retry_support_type",
+    stage: "Шаг 7 из 7",
+    question: "Какая поддержка нужна больше всего?",
+    answers: [
+      { text: "Бизнес-план и финмодель", result: { role: "founder", tariff: "growth" } },
+      { text: "Подбор команды и инвесторов", result: { role: "founder", tariff: "scale" } }
+    ]
+  },
+
+  founder_retry_mentoring: {
+    id: "founder_retry_mentoring",
+    stage: "Шаг 6 из 7+",
+    question: "Какой тип менторинга нужен?",
+    answers: [
+      { text: "Базовые консультации", next: "founder_retry_final" },
+      { text: "Полное сопровождение", next: "founder_retry_premium" }
+    ]
+  },
+
+  founder_retry_final: {
+    id: "founder_retry_final",
+    stage: "Шаг 7 из 7",
+    question: "Планируете ли привлекать инвестиции?",
+    answers: [
+      { text: "Да, активно", result: { role: "founder", tariff: "growth" } },
+      { text: "Нет, органический рост", result: { role: "founder", tariff: "startup" } }
+    ]
+  },
+
+  founder_retry_premium: {
+    id: "founder_retry_premium",
+    stage: "Шаг 7 из 7",
+    question: "Готовы ли к премиум-тарифу?",
+    answers: [
+      { text: "Да, нужен полный пакет", result: { role: "founder", tariff: "scale" } },
+      { text: "Пока стандартный вариант", result: { role: "founder", tariff: "growth" } }
+    ]
+  },
+
+  founder_portfolio: {
+    id: "founder_portfolio",
+    stage: "Шаг 5 из 7+",
+    question: "Планируете ли развивать текущий или начать новый?",
+    answers: [
+      { text: "Развивать текущий", next: "founder_current_revenue" },
+      { text: "Начать новый проект", next: "founder_serial_budget" }
+    ]
+  },
+
+  founder_current_revenue: {
+    id: "founder_current_revenue",
+    stage: "Шаг 6 из 7+",
+    question: "Какая текущая выручка в месяц?",
+    answers: [
+      { text: "Менее $10,000", next: "founder_current_growth_plan" },
+      { text: "$10,000 - $50,000", next: "founder_current_investors" },
+      { text: "Более $50,000", next: "founder_current_scale" }
+    ]
+  },
+
+  founder_current_growth_plan: {
+    id: "founder_current_growth_plan",
+    stage: "Шаг 7 из 7",
+    question: "Какая основная задача?",
+    answers: [
+      { text: "Привлечь инвестиции", result: { role: "founder", tariff: "growth" } },
+      { text: "Улучшить продукт", result: { role: "founder", tariff: "startup" } }
+    ]
+  },
+
+  founder_current_investors: {
+    id: "founder_current_investors",
+    stage: "Шаг 7 из 7",
+    question: "Нужен ли доступ к инвесторам?",
+    answers: [
+      { text: "Да, нужна серия А", result: { role: "founder", tariff: "scale" } },
+      { text: "Нет, пока органический рост", result: { role: "founder", tariff: "growth" } }
+    ]
+  },
+
+  founder_current_scale: {
+    id: "founder_current_scale",
+    stage: "Шаг 7 из 7",
+    question: "Планируете ли масштабирование?",
+    answers: [
+      { text: "Да, международная экспансия", result: { role: "founder", tariff: "scale" } },
+      { text: "Да, в пределах региона", result: { role: "founder", tariff: "growth" } }
+    ]
+  },
+
+  // === COFOUNDER BRANCH ===
+  cofounder_motivation: {
+    id: "cofounder_motivation",
+    stage: "Шаг 3 из 7+",
+    question: "Что мотивирует вас стать со-основателем?",
+    answers: [
+      { text: "Хочу воплотить свои идеи", next: "cofounder_skills" },
+      { text: "Хочу работать с талантливыми людьми", next: "cofounder_skills" },
+      { text: "Хочу создать долю в перспективном проекте", next: "cofounder_skills" }
+    ]
+  },
+
+  cofounder_skills: {
+    id: "cofounder_skills",
+    stage: "Шаг 4 из 7+",
+    question: "Какие ключевые компетенции вы принесете?",
+    answers: [
+      { text: "Технические (разработка, продукт)", next: "cofounder_experience" },
+      { text: "Бизнес (маркетинг, продажи)", next: "cofounder_experience" },
+      { text: "Операционные (управление, финансы)", next: "cofounder_experience" }
+    ]
+  },
+
+  cofounder_experience: {
+    id: "cofounder_experience",
+    stage: "Шаг 5 из 7+",
+    question: "Каков ваш опыт работы в стартапах?",
+    answers: [
+      { text: "Нет опыта, хочу попробовать", next: "cofounder_commitment" },
+      { text: "Работал в стартапах", next: "cofounder_prev_role" },
+      { text: "Был со-основателем", next: "cofounder_equity_expectation" }
+    ]
+  },
+
+  cofounder_commitment: {
+    id: "cofounder_commitment",
+    stage: "Шаг 6 из 7+",
+    question: "Готовы ли работать full-time?",
+    answers: [
+      { text: "Да, готов уйти с работы", next: "cofounder_financial_runway" },
+      { text: "Нет, пока part-time", next: "cofounder_learning" }
+    ]
+  },
+
+  cofounder_financial_runway: {
+    id: "cofounder_financial_runway",
+    stage: "Шаг 7 из 7",
+    question: "Есть ли у вас финансовая подушка?",
+    answers: [
+      { text: "Да, могу 6-12 месяцев без зарплаты", result: { role: "cofounder", tariff: "partner" } },
+      { text: "Нет, нужна зарплата сразу", result: { role: "cofounder", tariff: "seeker" } }
+    ]
+  },
+
+  cofounder_learning: {
+    id: "cofounder_learning",
+    stage: "Шаг 7 из 7",
+    question: "Планируете ли переходить на full-time?",
+    answers: [
+      { text: "Да, через 3-6 месяцев", result: { role: "cofounder", tariff: "search" } },
+      { text: "Нет, останусь part-time", result: { role: "cofounder", tariff: "seeker" } }
+    ]
+  },
+
+  cofounder_prev_role: {
+    id: "cofounder_prev_role",
+    stage: "Шаг 6 из 7+",
+    question: "Какую роль вы играли?",
+    answers: [
+      { text: "Лид разработчик / Head of Product", next: "cofounder_project_stage" },
+      { text: "Маркетинг / Продажи", next: "cofounder_project_stage" },
+      { text: "Операции / Менеджмент", next: "cofounder_project_stage" }
+    ]
+  },
+
+  cofounder_project_stage: {
+    id: "cofounder_project_stage",
+    stage: "Шаг 7 из 7",
+    question: "На какой стадии ищете проект?",
+    answers: [
+      { text: "Идея / Pre-seed", result: { role: "cofounder", tariff: "partner" } },
+      { text: "Seed / Early", result: { role: "cofounder", tariff: "search" } },
+      { text: "Любая стадия", result: { role: "cofounder", tariff: "search" } }
+    ]
+  },
+
+  cofounder_equity_expectation: {
+    id: "cofounder_equity_expectation",
+    stage: "Шаг 6 из 7+",
+    question: "Какую долю ожидаете?",
+    answers: [
+      { text: "10-20%", next: "cofounder_vesting" },
+      { text: "20-40%", next: "cofounder_vesting" },
+      { text: "Более 40%", next: "cofounder_control" }
+    ]
+  },
+
+  cofounder_vesting: {
+    id: "cofounder_vesting",
+    stage: "Шаг 7 из 7",
+    question: "Понимаете ли принципы vesting?",
+    answers: [
+      { text: "Да, готов к стандартным условиям", result: { role: "cofounder", tariff: "partner" } },
+      { text: "Нет, нужна помощь юриста", result: { role: "cofounder", tariff: "search" } }
+    ]
+  },
+
+  cofounder_control: {
+    id: "cofounder_control",
+    stage: "Шаг 7 из 7",
+    question: "Нужна ли вам контрольная доля?",
+    answers: [
+      { text: "Да, хочу быть CEO", result: { role: "founder", tariff: "startup" } },
+      { text: "Нет, партнерство важнее", result: { role: "cofounder", tariff: "partner" } }
+    ]
+  },
+
+  // === COPARTNER BRANCH ===
+  copartner_experience: {
+    id: "copartner_experience",
+    stage: "Шаг 3 из 7+",
+    question: "Есть ли у вас опыт M&A или слияний?",
+    answers: [
+      { text: "Да, участвовал в сделках", next: "copartner_capital" },
+      { text: "Нет, но интересует", next: "copartner_motivation_detail" }
+    ]
+  },
+
+  copartner_capital: {
+    id: "copartner_capital",
+    stage: "Шаг 4 из 7+",
+    question: "Готовы ли внести капитал?",
+    answers: [
+      { text: "Да, $50k-$200k", next: "copartner_industry" },
+      { text: "Да, более $200k", next: "copartner_control_level" },
+      { text: "Нет, только экспертиза", next: "copartner_value_prop" }
+    ]
+  },
+
+  copartner_industry: {
+    id: "copartner_industry",
+    stage: "Шаг 5 из 7+",
+    question: "В какой индустрии ищете проект?",
+    answers: [
+      { text: "Tech / SaaS", next: "copartner_role_type" },
+      { text: "E-commerce / Retail", next: "copartner_role_type" },
+      { text: "FinTech / Blockchain", next: "copartner_role_type" },
+      { text: "Другое", next: "copartner_role_type" }
+    ]
+  },
+
+  copartner_role_type: {
+    id: "copartner_role_type",
+    stage: "Шаг 6 из 7+",
+    question: "Какую роль хотите играть?",
+    answers: [
+      { text: "Пассивный инвестор с долей", next: "copartner_board" },
+      { text: "Активный партнер (CPO/CMO)", next: "copartner_time_commitment" }
+    ]
+  },
+
+  copartner_board: {
+    id: "copartner_board",
+    stage: "Шаг 7 из 7",
+    question: "Хотите ли войти в совет директоров?",
+    answers: [
+      { text: "Да, хочу влиять на стратегию", result: { role: "copartner", tariff: "advanced" } },
+      { text: "Нет, доверяю команде", result: { role: "copartner", tariff: "observer" } }
+    ]
+  },
+
+  copartner_time_commitment: {
+    id: "copartner_time_commitment",
+    stage: "Шаг 7 из 7",
+    question: "Сколько времени готовы уделять?",
+    answers: [
+      { text: "Full-time", result: { role: "copartner", tariff: "strategic" } },
+      { text: "Part-time (20-30 часов/неделю)", result: { role: "copartner", tariff: "advanced" } }
+    ]
+  },
+
+  copartner_control_level: {
+    id: "copartner_control_level",
+    stage: "Шаг 5 из 7+",
+    question: "Какой уровень контроля вам нужен?",
+    answers: [
+      { text: "Контрольный пакет (50%+)", next: "copartner_acquisition" },
+      { text: "Существенный блокпакет (25-49%)", next: "copartner_governance" },
+      { text: "Миноритарный (до 25%)", next: "copartner_portfolio" }
+    ]
+  },
+
+  copartner_acquisition: {
+    id: "copartner_acquisition",
+    stage: "Шаг 6 из 7+",
+    question: "Планируете ли полное поглощение?",
+    answers: [
+      { text: "Да, хочу купить весь бизнес", next: "copartner_acquisition_budget" },
+      { text: "Нет, партнерство важнее", next: "copartner_governance" }
+    ]
+  },
+
+  copartner_acquisition_budget: {
+    id: "copartner_acquisition_budget",
+    stage: "Шаг 7 из 7",
+    question: "Какой бюджет для покупки?",
+    answers: [
+      { text: "$200k - $500k", result: { role: "copartner", tariff: "strategic" } },
+      { text: "$500k - $2M", result: { role: "copartner", tariff: "strategic" } },
+      { text: "Более $2M", result: { role: "copartner", tariff: "strategic" } }
+    ]
+  },
+
+  copartner_governance: {
+    id: "copartner_governance",
+    stage: "Шаг 6 из 7+",
+    question: "Нужны ли вам права на управление?",
+    answers: [
+      { text: "Да, хочу место в правлении", next: "copartner_legal_support" },
+      { text: "Нет, доверяю текущей команде", next: "copartner_reporting" }
+    ]
+  },
+
+  copartner_legal_support: {
+    id: "copartner_legal_support",
+    stage: "Шаг 7 из 7",
+    question: "Нужна ли юридическая поддержка?",
+    answers: [
+      { text: "Да, критически важно", result: { role: "copartner", tariff: "strategic" } },
+      { text: "Нет, у меня есть юристы", result: { role: "copartner", tariff: "advanced" } }
+    ]
+  },
+
+  copartner_reporting: {
+    id: "copartner_reporting",
+    stage: "Шаг 7 из 7",
+    question: "Какая отчетность вам нужна?",
+    answers: [
+      { text: "Ежемесячная финансовая", result: { role: "copartner", tariff: "advanced" } },
+      { text: "Квартальная обзорная", result: { role: "copartner", tariff: "observer" } }
+    ]
+  },
+
+  copartner_portfolio: {
+    id: "copartner_portfolio",
+    stage: "Шаг 6 из 7+",
+    question: "Планируете ли множественные инвестиции?",
+    answers: [
+      { text: "Да, формирую портфель", next: "copartner_diversification" },
+      { text: "Нет, ищу один проект", next: "copartner_involvement" }
+    ]
+  },
+
+  copartner_diversification: {
+    id: "copartner_diversification",
+    stage: "Шаг 7 из 7",
+    question: "Сколько компаний планируете в портфеле?",
+    answers: [
+      { text: "2-5 компаний", result: { role: "copartner", tariff: "advanced" } },
+      { text: "5-10 компаний", result: { role: "copartner", tariff: "strategic" } },
+      { text: "Более 10", result: { role: "investor", tariff: "professional" } }
+    ]
+  },
+
+  copartner_involvement: {
+    id: "copartner_involvement",
+    stage: "Шаг 7 из 7",
+    question: "Насколько активно хотите участвовать?",
+    answers: [
+      { text: "Очень активно, стать CEO/COO", result: { role: "copartner", tariff: "strategic" } },
+      { text: "Умеренно, консультации", result: { role: "copartner", tariff: "advanced" } },
+      { text: "Пассивно, только отчеты", result: { role: "copartner", tariff: "observer" } }
+    ]
+  },
+
+  copartner_motivation_detail: {
+    id: "copartner_motivation_detail",
+    stage: "Шаг 4 из 7+",
+    question: "Что вас больше всего привлекает?",
+    answers: [
+      { text: "Финансовая выгода", next: "copartner_learning_phase" },
+      { text: "Опыт в управлении бизнесом", next: "copartner_learning_phase" },
+      { text: "Нетворкинг и связи", next: "copartner_learning_phase" }
+    ]
+  },
+
+  copartner_learning_phase: {
+    id: "copartner_learning_phase",
+    stage: "Шаг 5 из 7+",
+    question: "Готовы ли учиться и развиваться?",
+    answers: [
+      { text: "Да, хочу менторинг", next: "copartner_budget_beginner" },
+      { text: "Нет, у меня уже есть опыт", next: "copartner_value_prop" }
+    ]
+  },
+
+  copartner_budget_beginner: {
+    id: "copartner_budget_beginner",
+    stage: "Шаг 6 из 7+",
+    question: "Какой капитал готовы вложить?",
+    answers: [
+      { text: "До $50,000", next: "copartner_entry_level" },
+      { text: "$50,000 - $100,000", next: "copartner_engagement" },
+      { text: "Более $100,000", next: "copartner_industry" }
+    ]
+  },
+
+  copartner_entry_level: {
+    id: "copartner_entry_level",
+    stage: "Шаг 7 из 7",
+    question: "Планируете ли активное участие?",
+    answers: [
+      { text: "Да, хочу быть в команде", result: { role: "copartner", tariff: "observer" } },
+      { text: "Нет, пассивное инвестирование", result: { role: "coinvestor", tariff: "participant" } }
+    ]
+  },
+
+  copartner_engagement: {
+    id: "copartner_engagement",
+    stage: "Шаг 7 из 7",
+    question: "Сколько времени готовы уделять?",
+    answers: [
+      { text: "5-10 часов в неделю", result: { role: "copartner", tariff: "observer" } },
+      { text: "20+ часов в неделю", result: { role: "copartner", tariff: "advanced" } }
+    ]
+  },
+
+  copartner_value_prop: {
+    id: "copartner_value_prop",
+    stage: "Шаг 5 из 7+",
+    question: "Какую ценность вы принесете?",
+    answers: [
+      { text: "Экспертиза в индустрии", next: "copartner_equity_for_expertise" },
+      { text: "Связи и клиентов", next: "copartner_equity_for_expertise" },
+      { text: "Операционный опыт", next: "copartner_equity_for_expertise" }
+    ]
+  },
+
+  copartner_equity_for_expertise: {
+    id: "copartner_equity_for_expertise",
+    stage: "Шаг 6 из 7+",
+    question: "Какую долю ожидаете за экспертизу?",
+    answers: [
+      { text: "5-10%", next: "copartner_advisory" },
+      { text: "10-20%", next: "copartner_active_role" },
+      { text: "Более 20%", result: { role: "cofounder", tariff: "partner" } }
+    ]
+  },
+
+  copartner_advisory: {
+    id: "copartner_advisory",
+    stage: "Шаг 7 из 7",
+    question: "Будете ли советником или активным партнером?",
+    answers: [
+      { text: "Советник", result: { role: "copartner", tariff: "observer" } },
+      { text: "Активный партнер", result: { role: "copartner", tariff: "advanced" } }
+    ]
+  },
+
+  copartner_active_role: {
+    id: "copartner_active_role",
+    stage: "Шаг 7 из 7",
+    question: "Готовы ли занять операционную роль?",
+    answers: [
+      { text: "Да, стану частью команды", result: { role: "copartner", tariff: "strategic" } },
+      { text: "Нет, буду консультировать", result: { role: "copartner", tariff: "advanced" } }
+    ]
+  },
+
+  // === FRANCHISER BRANCH ===
+  franchiser_type: {
+    id: "franchiser_type",
+    stage: "Шаг 3 из 7+",
+    question: "Вы франчайзер или франчайзи?",
+    answers: [
+      { text: "Хочу создать франшизу своего бизнеса", next: "franchiser_business_ready" },
+      { text: "Хочу купить франшизу", next: "franchisee_budget" }
+    ]
+  },
+
+  franchiser_business_ready: {
+    id: "franchiser_business_ready",
+    stage: "Шаг 4 из 7+",
+    question: "Есть ли у вас работающий бизнес?",
+    answers: [
+      { text: "Да, прибыльный бизнес", next: "franchiser_locations" },
+      { text: "Да, но только запустился", next: "franchiser_premature" },
+      { text: "Нет, только идея", result: { role: "founder", tariff: "startup" } }
+    ]
+  },
+
+  franchiser_locations: {
+    id: "franchiser_locations",
+    stage: "Шаг 5 из 7+",
+    question: "Сколько у вас локаций?",
+    answers: [
+      { text: "1 локация", next: "franchiser_expansion_plan" },
+      { text: "2-3 локации", next: "franchiser_standardization" },
+      { text: "Более 3 локаций", next: "franchiser_ready_scale" }
+    ]
+  },
+
+  franchiser_expansion_plan: {
+    id: "franchiser_expansion_plan",
+    stage: "Шаг 6 из 7+",
+    question: "Готова ли бизнес-модель к тиражированию?",
+    answers: [
+      { text: "Да, все процессы стандартизированы", next: "franchiser_geography" },
+      { text: "Нет, нужна помощь", next: "franchiser_help_needed" }
+    ]
+  },
+
+  franchiser_help_needed: {
+    id: "franchiser_help_needed",
+    stage: "Шаг 7 из 7",
+    question: "Какая помощь нужна?",
+    answers: [
+      { text: "Документация и процессы", result: { role: "franchiser", tariff: "franchisor" } },
+      { text: "Юридическая поддержка", result: { role: "franchiser", tariff: "franchisor" } },
+      { text: "Полное сопровождение", result: { role: "franchiser", tariff: "franchisor" } }
+    ]
+  },
+
+  franchiser_geography: {
+    id: "franchiser_geography",
+    stage: "Шаг 7 из 7",
+    question: "Какая география расширения?",
+    answers: [
+      { text: "Город", result: { role: "franchiser", tariff: "franchisor" } },
+      { text: "Регион", result: { role: "franchiser", tariff: "franchisor" } },
+      { text: "Вся страна", result: { role: "franchiser", tariff: "franchisor" } }
+    ]
+  },
+
+  franchiser_standardization: {
+    id: "franchiser_standardization",
+    stage: "Шаг 6 из 7+",
+    question: "Насколько стандартизированы процессы?",
+    answers: [
+      { text: "Полностью, есть документация", next: "franchiser_package" },
+      { text: "Частично, требуется доработка", next: "franchiser_support_level" }
+    ]
+  },
+
+  franchiser_package: {
+    id: "franchiser_package",
+    stage: "Шаг 7 из 7",
+    question: "Есть ли франчайзинговый пакет?",
+    answers: [
+      { text: "Да, готов к продаже", result: { role: "franchiser", tariff: "franchisor" } },
+      { text: "Нет, нужна помощь юриста", result: { role: "franchiser", tariff: "franchisor" } }
+    ]
+  },
+
+  franchiser_support_level: {
+    id: "franchiser_support_level",
+    stage: "Шаг 7 из 7",
+    question: "Какой уровень поддержки нужен?",
+    answers: [
+      { text: "Консультации", result: { role: "franchiser", tariff: "franchisor" } },
+      { text: "Полное сопровождение", result: { role: "franchiser", tariff: "franchisor" } }
+    ]
+  },
+
+  franchiser_ready_scale: {
+    id: "franchiser_ready_scale",
+    stage: "Шаг 6 из 7+",
+    question: "Сколько франчайзи планируете в 1 год?",
+    answers: [
+      { text: "5-10 франчайзи", next: "franchiser_crm_need" },
+      { text: "10-50 франчайзи", next: "franchiser_automation" },
+      { text: "Более 50", next: "franchiser_enterprise" }
+    ]
+  },
+
+  franchiser_crm_need: {
+    id: "franchiser_crm_need",
+    stage: "Шаг 7 из 7",
+    question: "Нужна ли CRM для франчайзинга?",
+    answers: [
+      { text: "Да, нужна автоматизация", result: { role: "franchiser", tariff: "franchisor" } },
+      { text: "Нет, справлюсь вручную", result: { role: "franchiser", tariff: "franchisor" } }
+    ]
+  },
+
+  franchiser_automation: {
+    id: "franchiser_automation",
+    stage: "Шаг 7 из 7",
+    question: "Нужна ли автоматизация отчетности?",
+    answers: [
+      { text: "Да, критически важно", result: { role: "franchiser", tariff: "franchisor" } },
+      { text: "Пока нет", result: { role: "franchiser", tariff: "franchisor" } }
+    ]
+  },
+
+  franchiser_enterprise: {
+    id: "franchiser_enterprise",
+    stage: "Шаг 7 из 7",
+    question: "Нужен ли персональный менеджер?",
+    answers: [
+      { text: "Да, нужна поддержка", result: { role: "franchiser", tariff: "franchisor" } },
+      { text: "Нет, сам справлюсь", result: { role: "franchiser", tariff: "franchisor" } }
+    ]
+  },
+
+  franchiser_premature: {
+    id: "franchiser_premature",
+    stage: "Шаг 5 из 7+",
+    question: "Сколько месяцев работает бизнес?",
+    answers: [
+      { text: "Менее 6 месяцев", next: "franchiser_too_early" },
+      { text: "6-12 месяцев", next: "franchiser_profitability" },
+      { text: "Более года", next: "franchiser_locations" }
+    ]
+  },
+
+  franchiser_too_early: {
+    id: "franchiser_too_early",
+    stage: "Шаг 6 из 7+",
+    question: "Бизнес прибыльный?",
+    answers: [
+      { text: "Да, стабильная прибыль", next: "franchiser_expansion_plan" },
+      { text: "Нет, еще в убытке", next: "franchiser_advice" }
+    ]
+  },
+
+  franchiser_advice: {
+    id: "franchiser_advice",
+    stage: "Шаг 7 из 7",
+    question: "Хотите ли консультацию по развитию?",
+    answers: [
+      { text: "Да, нужна помощь", result: { role: "founder", tariff: "growth" } },
+      { text: "Нет, справлюсь сам", result: { role: "founder", tariff: "startup" } }
+    ]
+  },
+
+  franchiser_profitability: {
+    id: "franchiser_profitability",
+    stage: "Шаг 6 из 7+",
+    question: "Какая прибыльность в месяц?",
+    answers: [
+      { text: "До $10,000", next: "franchiser_unit_economics" },
+      { text: "$10,000 - $50,000", next: "franchiser_expansion_plan" },
+      { text: "Более $50,000", next: "franchiser_ready_scale" }
+    ]
+  },
+
+  franchiser_unit_economics: {
+    id: "franchiser_unit_economics",
+    stage: "Шаг 7 из 7",
+    question: "Понимаете ли unit-экономику?",
+    answers: [
+      { text: "Да, все просчитано", result: { role: "franchiser", tariff: "franchisor" } },
+      { text: "Нет, нужна помощь", result: { role: "founder", tariff: "growth" } }
+    ]
+  },
+
+  franchisee_budget: {
+    id: "franchisee_budget",
+    stage: "Шаг 4 из 7+",
+    question: "Какой бюджет для покупки франшизы?",
+    answers: [
+      { text: "До $50,000", next: "franchisee_industry" },
+      { text: "$50,000 - $200,000", next: "franchisee_industry" },
+      { text: "Более $200,000", next: "franchisee_experience" }
+    ]
+  },
+
+  franchisee_industry: {
+    id: "franchisee_industry",
+    stage: "Шаг 5 из 7+",
+    question: "Какая индустрия интересна?",
+    answers: [
+      { text: "Еда и напитки", next: "franchisee_location" },
+      { text: "Услуги", next: "franchisee_location" },
+      { text: "Ретейл", next: "franchisee_location" },
+      { text: "Образование", next: "franchisee_location" }
+    ]
+  },
+
+  franchisee_location: {
+    id: "franchisee_location",
+    stage: "Шаг 6 из 7+",
+    question: "Есть ли локация?",
+    answers: [
+      { text: "Да, готова", next: "franchisee_timeline" },
+      { text: "Нет, буду искать", next: "franchisee_timeline" }
+    ]
+  },
+
+  franchisee_timeline: {
+    id: "franchisee_timeline",
+    stage: "Шаг 7 из 7",
+    question: "Когда планируете запуск?",
+    answers: [
+      { text: "В течение 3 месяцев", result: { role: "franchiser", tariff: "franchisor" } },
+      { text: "3-6 месяцев", result: { role: "franchiser", tariff: "franchisor" } },
+      { text: "Более 6 месяцев", result: { role: "franchiser", tariff: "franchisor" } }
+    ]
+  },
+
+  franchisee_experience: {
+    id: "franchisee_experience",
+    stage: "Шаг 5 из 7+",
+    question: "Есть ли опыт в бизнесе?",
+    answers: [
+      { text: "Да, владею бизнесом", next: "franchisee_multiple" },
+      { text: "Нет, первый раз", next: "franchisee_industry" }
+    ]
+  },
+
+  franchisee_multiple: {
+    id: "franchisee_multiple",
+    stage: "Шаг 6 из 7+",
+    question: "Планируете ли несколько франшиз?",
+    answers: [
+      { text: "Да, мультиюнит", next: "franchisee_scale" },
+      { text: "Нет, одну локацию", next: "franchisee_industry" }
+    ]
+  },
+
+  franchisee_scale: {
+    id: "franchisee_scale",
+    stage: "Шаг 7 из 7",
+    question: "Сколько точек планируете?",
+    answers: [
+      { text: "2-5 точек", result: { role: "franchiser", tariff: "franchisor" } },
+      { text: "5-10 точек", result: { role: "franchiser", tariff: "franchisor" } },
+      { text: "Более 10", result: { role: "franchiser", tariff: "franchisor" } }
     ]
   },
 
