@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
 import InvestCTABanner from "@/components/InvestCTABanner";
@@ -17,9 +17,14 @@ import Footer from "@/components/Footer";
 
 const Index = () => {
   const [quizRole, setQuizRole] = useState<string | null>(null);
+  const rolePathRef = useRef<HTMLDivElement>(null);
 
   const handleQuizComplete = (role: string) => {
     setQuizRole(role);
+    // Прокручиваем к секции выбора роли после завершения квиза
+    setTimeout(() => {
+      rolePathRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 300);
   };
 
   return (
@@ -32,7 +37,9 @@ const Index = () => {
       <RoleAnimator />
       <PowerfulFeaturesSection />
       <InteractiveQuiz onComplete={handleQuizComplete} />
-      <RolePathSection initialRole={quizRole} />
+      <div ref={rolePathRef}>
+        <RolePathSection initialRole={quizRole} />
+      </div>
       <ProjectShowcase />
       <SuccessStoriesSection filterByRole={quizRole || undefined} />
       <TestimonialsSection filterByRole={quizRole || undefined} />

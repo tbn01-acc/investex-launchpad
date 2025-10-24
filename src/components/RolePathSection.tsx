@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ChevronDown, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -354,6 +354,25 @@ const RolePathSection = ({ initialRole }: RolePathSectionProps) => {
   const [activeGroup, setActiveGroup] = useState<string | null>(initialGroupName);
   const [activeRole, setActiveRole] = useState<string | null>(initialRoleName || "Инвестор");
   const [selectedRoleData, setSelectedRoleData] = useState<any>(getInitialRoleData());
+
+  // Обновляем выбранную роль при изменении initialRole (после прохождения квиза)
+  useEffect(() => {
+    if (initialRole) {
+      const roleName = roleKeyToName[initialRole] || null;
+      const groupName = roleName ? roleToGroup[roleName] || "Участники" : "Участники";
+      
+      if (roleName && groupName) {
+        const group = segments[groupName as keyof typeof segments];
+        const roleData = group.roles.find(role => role.name === roleName);
+        
+        if (roleData) {
+          setActiveGroup(groupName);
+          setActiveRole(roleName);
+          setSelectedRoleData(roleData);
+        }
+      }
+    }
+  }, [initialRole]);
 
   const handleGroupClick = (groupName: string) => {
     if (activeGroup === groupName) {
