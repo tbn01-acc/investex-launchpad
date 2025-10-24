@@ -12,8 +12,9 @@ const IVIIndex = () => {
     { name: "Команда", weight: "30%", icon: <Award className="h-5 w-5" />, color: "text-blue-500" },
     { name: "Продукт", weight: "25%", icon: <Zap className="h-5 w-5" />, color: "text-purple-500" },
     { name: "Рынок", weight: "20%", icon: <Target className="h-5 w-5" />, color: "text-green-500" },
-    { name: "Финансы", weight: "15%", icon: <BarChart3 className="h-5 w-5" />, color: "text-orange-500" },
-    { name: "Тяга (Traction)", weight: "10%", icon: <TrendingUp className="h-5 w-5" />, color: "text-red-500" },
+    { name: "Финансы", weight: "10%", icon: <BarChart3 className="h-5 w-5" />, color: "text-orange-500" },
+    { name: "Тяга (Traction)", weight: "8%", icon: <TrendingUp className="h-5 w-5" />, color: "text-red-500" },
+    { name: "Психологический портрет", weight: "7%", icon: <Award className="h-5 w-5" />, color: "text-blue-500" },
   ];
 
   const benefits = [
