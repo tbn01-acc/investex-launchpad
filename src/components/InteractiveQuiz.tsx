@@ -3486,6 +3486,1374 @@ const quizTree: Record<string, Question> = {
     ]
   },
 
+  // ============ ВЕТКА ФРИЛАНСЕРА (из ecosystem) ============
+  ecosystem_freelancer_level: {
+    id: "ecosystem_freelancer_level",
+    stage: "Шаг 3 из 7+",
+    question: "Вы работаете в одиночку или с командой?",
+    answers: [
+      { text: "Работаю один как фрилансер", next: "freelancer_experience" },
+      { text: "Руковожу командой/агентством", next: "outsourcer_team_size" },
+      { text: "Ищу проекты как подрядчик", next: "contractor_specialization" }
+    ]
+  },
+
+  // === OUTSOURCER BRANCH ===
+  outsourcer_team_size: {
+    id: "outsourcer_team_size",
+    stage: "Шаг 4 из 7+",
+    question: "Какого размера ваша команда?",
+    answers: [
+      { text: "2-5 человек (студия)", next: "outsourcer_studio_focus" },
+      { text: "6-15 человек (агентство)", next: "outsourcer_agency_specialization" },
+      { text: "Более 15 человек (компания)", next: "outsourcer_company_scale" }
+    ]
+  },
+
+  outsourcer_studio_focus: {
+    id: "outsourcer_studio_focus",
+    stage: "Шаг 5 из 7+",
+    question: "На чем специализируется студия?",
+    answers: [
+      { text: "Дизайн и UX/UI", next: "outsourcer_studio_clients" },
+      { text: "Разработка (web/mobile)", next: "outsourcer_studio_clients" },
+      { text: "Маркетинг и контент", next: "outsourcer_studio_clients" },
+      { text: "Комплексные решения", next: "outsourcer_studio_revenue" }
+    ]
+  },
+
+  outsourcer_studio_clients: {
+    id: "outsourcer_studio_clients",
+    stage: "Шаг 6 из 7+",
+    question: "Сколько у вас активных клиентов?",
+    answers: [
+      { text: "1-3 клиента", next: "outsourcer_studio_growth" },
+      { text: "4-10 клиентов", next: "outsourcer_studio_revenue" },
+      { text: "Более 10 клиентов", next: "outsourcer_agency_specialization" }
+    ]
+  },
+
+  outsourcer_studio_growth: {
+    id: "outsourcer_studio_growth",
+    stage: "Шаг 7 из 7",
+    question: "Планируете ли расширение?",
+    answers: [
+      { text: "Да, хочу масштабировать", result: { role: "outsourcer", tariff: "studio" } },
+      { text: "Нет, комфортно в текущем размере", result: { role: "outsourcer", tariff: "boutique" } }
+    ]
+  },
+
+  outsourcer_studio_revenue: {
+    id: "outsourcer_studio_revenue",
+    stage: "Шаг 7 из 7",
+    question: "Какой месячный оборот?",
+    answers: [
+      { text: "До $20k/месяц", result: { role: "outsourcer", tariff: "boutique" } },
+      { text: "$20k-$50k/месяц", result: { role: "outsourcer", tariff: "studio" } },
+      { text: "Более $50k/месяц", result: { role: "outsourcer", tariff: "agency" } }
+    ]
+  },
+
+  outsourcer_agency_specialization: {
+    id: "outsourcer_agency_specialization",
+    stage: "Шаг 5 из 7+",
+    question: "Какая специализация агентства?",
+    answers: [
+      { text: "Full-cycle разработка", next: "outsourcer_agency_verticals" },
+      { text: "Digital маркетинг", next: "outsourcer_agency_services" },
+      { text: "Консалтинг + execution", next: "outsourcer_agency_clients_size" }
+    ]
+  },
+
+  outsourcer_agency_verticals: {
+    id: "outsourcer_agency_verticals",
+    stage: "Шаг 6 из 7+",
+    question: "В каких вертикалях работаете?",
+    answers: [
+      { text: "1-2 индустрии (узкая ниша)", next: "outsourcer_agency_pricing" },
+      { text: "3-5 индустрий", next: "outsourcer_agency_revenue" },
+      { text: "Любые проекты", next: "outsourcer_agency_competition" }
+    ]
+  },
+
+  outsourcer_agency_pricing: {
+    id: "outsourcer_agency_pricing",
+    stage: "Шаг 7 из 7",
+    question: "Какая модель ценообразования?",
+    answers: [
+      { text: "Почасовая", result: { role: "outsourcer", tariff: "studio" } },
+      { text: "Fixed price проекты", result: { role: "outsourcer", tariff: "agency" } },
+      { text: "Retainer + success fee", result: { role: "outsourcer", tariff: "agency" } }
+    ]
+  },
+
+  outsourcer_agency_revenue: {
+    id: "outsourcer_agency_revenue",
+    stage: "Шаг 7 из 7",
+    question: "Какой годовой оборот?",
+    answers: [
+      { text: "$200k-$500k", result: { role: "outsourcer", tariff: "studio" } },
+      { text: "$500k-$2M", result: { role: "outsourcer", tariff: "agency" } },
+      { text: "Более $2M", result: { role: "outsourcer", tariff: "enterprise" } }
+    ]
+  },
+
+  outsourcer_agency_competition: {
+    id: "outsourcer_agency_competition",
+    stage: "Шаг 7 из 7",
+    question: "Как конкурируете на рынке?",
+    answers: [
+      { text: "Цена (дешевле конкурентов)", result: { role: "outsourcer", tariff: "studio" } },
+      { text: "Качество и экспертиза", result: { role: "outsourcer", tariff: "agency" } },
+      { text: "Уникальное позиционирование", result: { role: "outsourcer", tariff: "enterprise" } }
+    ]
+  },
+
+  outsourcer_agency_services: {
+    id: "outsourcer_agency_services",
+    stage: "Шаг 6 из 7+",
+    question: "Какие услуги предоставляете?",
+    answers: [
+      { text: "Performance маркетинг", next: "outsourcer_agency_pricing" },
+      { text: "Брендинг + креатив", next: "outsourcer_agency_revenue" },
+      { text: "Комплексный digital", next: "outsourcer_agency_revenue" }
+    ]
+  },
+
+  outsourcer_agency_clients_size: {
+    id: "outsourcer_agency_clients_size",
+    stage: "Шаг 6 из 7+",
+    question: "С кем работаете?",
+    answers: [
+      { text: "Стартапы и SMB", next: "outsourcer_agency_pricing" },
+      { text: "Mid-market компании", next: "outsourcer_agency_revenue" },
+      { text: "Enterprise клиенты", next: "outsourcer_enterprise_contracts" }
+    ]
+  },
+
+  outsourcer_enterprise_contracts: {
+    id: "outsourcer_enterprise_contracts",
+    stage: "Шаг 7 из 7",
+    question: "Какой средний размер контракта?",
+    answers: [
+      { text: "$50k-$200k", result: { role: "outsourcer", tariff: "agency" } },
+      { text: "$200k-$1M", result: { role: "outsourcer", tariff: "enterprise" } },
+      { text: "Более $1M", result: { role: "outsourcer", tariff: "enterprise" } }
+    ]
+  },
+
+  outsourcer_company_scale: {
+    id: "outsourcer_company_scale",
+    stage: "Шаг 5 из 7+",
+    question: "Какова структура компании?",
+    answers: [
+      { text: "Несколько департаментов", next: "outsourcer_company_services" },
+      { text: "Офисы в нескольких городах/странах", next: "outsourcer_company_geography" },
+      { text: "Вертикально интегрированная", next: "outsourcer_company_verticals" }
+    ]
+  },
+
+  outsourcer_company_services: {
+    id: "outsourcer_company_services",
+    stage: "Шаг 6 из 7+",
+    question: "Какие направления развиты?",
+    answers: [
+      { text: "Разработка + дизайн", next: "outsourcer_company_revenue" },
+      { text: "+ Маркетинг", next: "outsourcer_company_revenue" },
+      { text: "Full-service (все услуги)", next: "outsourcer_company_partnerships" }
+    ]
+  },
+
+  outsourcer_company_revenue: {
+    id: "outsourcer_company_revenue",
+    stage: "Шаг 7 из 7",
+    question: "Каков годовой оборот?",
+    answers: [
+      { text: "$2M-$5M", result: { role: "outsourcer", tariff: "enterprise" } },
+      { text: "$5M-$20M", result: { role: "outsourcer", tariff: "enterprise" } },
+      { text: "Более $20M", result: { role: "outsourcer", tariff: "enterprise" } }
+    ]
+  },
+
+  outsourcer_company_partnerships: {
+    id: "outsourcer_company_partnerships",
+    stage: "Шаг 7 из 7",
+    question: "Есть ли партнерства с глобальными брендами?",
+    answers: [
+      { text: "Да, золотой партнер (Google, Meta и т.д.)", result: { role: "outsourcer", tariff: "enterprise" } },
+      { text: "Нет, но планируем", result: { role: "outsourcer", tariff: "enterprise" } }
+    ]
+  },
+
+  outsourcer_company_geography: {
+    id: "outsourcer_company_geography",
+    stage: "Шаг 6 из 7+",
+    question: "Где расположены офисы?",
+    answers: [
+      { text: "В одной стране", next: "outsourcer_company_revenue" },
+      { text: "В нескольких странах", next: "outsourcer_company_global" },
+      { text: "На нескольких континентах", next: "outsourcer_company_global" }
+    ]
+  },
+
+  outsourcer_company_global: {
+    id: "outsourcer_company_global",
+    stage: "Шаг 7 из 7",
+    question: "Сколько сотрудников всего?",
+    answers: [
+      { text: "15-50 человек", result: { role: "outsourcer", tariff: "agency" } },
+      { text: "50-200 человек", result: { role: "outsourcer", tariff: "enterprise" } },
+      { text: "Более 200 человек", result: { role: "outsourcer", tariff: "enterprise" } }
+    ]
+  },
+
+  outsourcer_company_verticals: {
+    id: "outsourcer_company_verticals",
+    stage: "Шаг 6 из 7+",
+    question: "Есть ли собственные продукты?",
+    answers: [
+      { text: "Да, развиваем SaaS продукты", next: "outsourcer_company_product_revenue" },
+      { text: "Нет, только услуги", next: "outsourcer_company_revenue" }
+    ]
+  },
+
+  outsourcer_company_product_revenue: {
+    id: "outsourcer_company_product_revenue",
+    stage: "Шаг 7 из 7",
+    question: "Какая доля выручки от продуктов?",
+    answers: [
+      { text: "До 20%", result: { role: "outsourcer", tariff: "enterprise" } },
+      { text: "20-50%", result: { role: "outsourcer", tariff: "enterprise" } },
+      { text: "Более 50%", result: { role: "founder", tariff: "scale" } }
+    ]
+  },
+
+  // === CONTRACTOR BRANCH ===
+  contractor_specialization: {
+    id: "contractor_specialization",
+    stage: "Шаг 4 из 7+",
+    question: "Какая ваша специализация?",
+    answers: [
+      { text: "Технический подрядчик (dev, QA)", next: "contractor_tech_stack" },
+      { text: "Креативный подрядчик (дизайн, видео)", next: "contractor_creative_services" },
+      { text: "Бизнес-подрядчик (операции, финансы)", next: "contractor_business_area" }
+    ]
+  },
+
+  contractor_tech_stack: {
+    id: "contractor_tech_stack",
+    stage: "Шаг 5 из 7+",
+    question: "Какой технологический стек?",
+    answers: [
+      { text: "Frontend (React, Vue, Angular)", next: "contractor_tech_experience" },
+      { text: "Backend (Node, Python, Go)", next: "contractor_tech_experience" },
+      { text: "Mobile (iOS, Android, React Native)", next: "contractor_tech_experience" },
+      { text: "Full-stack + DevOps", next: "contractor_tech_seniority" }
+    ]
+  },
+
+  contractor_tech_experience: {
+    id: "contractor_tech_experience",
+    stage: "Шаг 6 из 7+",
+    question: "Сколько лет коммерческого опыта?",
+    answers: [
+      { text: "2-5 лет", next: "contractor_tech_rate" },
+      { text: "5-10 лет", next: "contractor_tech_projects" },
+      { text: "Более 10 лет", next: "contractor_tech_leadership" }
+    ]
+  },
+
+  contractor_tech_rate: {
+    id: "contractor_tech_rate",
+    stage: "Шаг 7 из 7",
+    question: "Какой ваш часовой тариф?",
+    answers: [
+      { text: "$40-60/час", result: { role: "contractor", tariff: "specialist" } },
+      { text: "$60-100/час", result: { role: "contractor", tariff: "senior" } },
+      { text: "Более $100/час", result: { role: "contractor", tariff: "expert" } }
+    ]
+  },
+
+  contractor_tech_projects: {
+    id: "contractor_tech_projects",
+    stage: "Шаг 7 из 7",
+    question: "Какие проекты предпочитаете?",
+    answers: [
+      { text: "Краткосрочные (1-3 месяца)", result: { role: "contractor", tariff: "senior" } },
+      { text: "Долгосрочные контракты (6+ месяцев)", result: { role: "contractor", tariff: "expert" } }
+    ]
+  },
+
+  contractor_tech_leadership: {
+    id: "contractor_tech_leadership",
+    stage: "Шаг 7 из 7",
+    question: "Есть ли опыт руководства?",
+    answers: [
+      { text: "Да, Tech Lead/Architect", result: { role: "contractor", tariff: "expert" } },
+      { text: "Нет, только senior execution", result: { role: "contractor", tariff: "senior" } }
+    ]
+  },
+
+  contractor_tech_seniority: {
+    id: "contractor_tech_seniority",
+    stage: "Шаг 6 из 7+",
+    question: "Какой уровень сложности проектов?",
+    answers: [
+      { text: "Стандартные CRUD приложения", next: "contractor_tech_rate" },
+      { text: "High-load системы", next: "contractor_tech_projects" },
+      { text: "Enterprise архитектура", next: "contractor_tech_leadership" }
+    ]
+  },
+
+  contractor_creative_services: {
+    id: "contractor_creative_services",
+    stage: "Шаг 5 из 7+",
+    question: "Какие услуги предоставляете?",
+    answers: [
+      { text: "UI/UX дизайн", next: "contractor_creative_tools" },
+      { text: "Графический дизайн и брендинг", next: "contractor_creative_portfolio" },
+      { text: "Видеопродакшн и анимация", next: "contractor_creative_projects" },
+      { text: "Контент-продакшн", next: "contractor_creative_volume" }
+    ]
+  },
+
+  contractor_creative_tools: {
+    id: "contractor_creative_tools",
+    stage: "Шаг 6 из 7+",
+    question: "Какие инструменты используете?",
+    answers: [
+      { text: "Figma, Sketch, Adobe XD", next: "contractor_creative_portfolio" },
+      { text: "+ Prototyping (Framer, Principle)", next: "contractor_creative_projects" },
+      { text: "+ Front-end (HTML/CSS/JS)", next: "contractor_creative_rate_premium" }
+    ]
+  },
+
+  contractor_creative_portfolio: {
+    id: "contractor_creative_portfolio",
+    stage: "Шаг 7 из 7",
+    question: "Сколько проектов в портфолио?",
+    answers: [
+      { text: "5-15 проектов", result: { role: "contractor", tariff: "specialist" } },
+      { text: "15-50 проектов", result: { role: "contractor", tariff: "senior" } },
+      { text: "Более 50 проектов", result: { role: "contractor", tariff: "expert" } }
+    ]
+  },
+
+  contractor_creative_projects: {
+    id: "contractor_creative_projects",
+    stage: "Шаг 7 из 7",
+    question: "С кем предпочитаете работать?",
+    answers: [
+      { text: "Стартапы (быстрый темп)", result: { role: "contractor", tariff: "senior" } },
+      { text: "Агентства (разнообразие)", result: { role: "contractor", tariff: "senior" } },
+      { text: "Прямые корп. клиенты", result: { role: "contractor", tariff: "expert" } }
+    ]
+  },
+
+  contractor_creative_rate_premium: {
+    id: "contractor_creative_rate_premium",
+    stage: "Шаг 7 из 7",
+    question: "Какой ваш дневной тариф?",
+    answers: [
+      { text: "$400-$800/день", result: { role: "contractor", tariff: "senior" } },
+      { text: "$800-$1500/день", result: { role: "contractor", tariff: "expert" } }
+    ]
+  },
+
+  contractor_creative_volume: {
+    id: "contractor_creative_volume",
+    stage: "Шаг 6 из 7+",
+    question: "Какой объем контента производите?",
+    answers: [
+      { text: "По запросу (проектная работа)", next: "contractor_creative_portfolio" },
+      { text: "Регулярный поток (retainer)", next: "contractor_creative_rate_premium" }
+    ]
+  },
+
+  contractor_business_area: {
+    id: "contractor_business_area",
+    stage: "Шаг 5 из 7+",
+    question: "В какой области специализируетесь?",
+    answers: [
+      { text: "Операционный менеджмент", next: "contractor_business_experience" },
+      { text: "Финансы и аналитика", next: "contractor_business_certifications" },
+      { text: "HR и рекрутинг", next: "contractor_business_volume" },
+      { text: "Юридические услуги", next: "contractor_business_legal" }
+    ]
+  },
+
+  contractor_business_experience: {
+    id: "contractor_business_experience",
+    stage: "Шаг 6 из 7+",
+    question: "Каков ваш опыт?",
+    answers: [
+      { text: "3-7 лет", next: "contractor_business_rate" },
+      { text: "7-15 лет", next: "contractor_business_scale" },
+      { text: "Более 15 лет", next: "contractor_business_advisory" }
+    ]
+  },
+
+  contractor_business_rate: {
+    id: "contractor_business_rate",
+    stage: "Шаг 7 из 7",
+    question: "Какая модель оплаты?",
+    answers: [
+      { text: "Почасовая $50-100/час", result: { role: "contractor", tariff: "specialist" } },
+      { text: "Дневная $500-$1000/день", result: { role: "contractor", tariff: "senior" } },
+      { text: "Проектная (fixed price)", result: { role: "contractor", tariff: "senior" } }
+    ]
+  },
+
+  contractor_business_scale: {
+    id: "contractor_business_scale",
+    stage: "Шаг 7 из 7",
+    question: "Какого размера проекты ведете?",
+    answers: [
+      { text: "Small business / стартапы", result: { role: "contractor", tariff: "senior" } },
+      { text: "Mid-market компании", result: { role: "contractor", tariff: "expert" } },
+      { text: "Enterprise", result: { role: "contractor", tariff: "expert" } }
+    ]
+  },
+
+  contractor_business_advisory: {
+    id: "contractor_business_advisory",
+    stage: "Шаг 7 из 7",
+    question: "Работаете как исполнитель или советник?",
+    answers: [
+      { text: "Исполнитель (hands-on)", result: { role: "contractor", tariff: "expert" } },
+      { text: "Советник (advisory)", result: { role: "consultant", tariff: "clevel" } }
+    ]
+  },
+
+  contractor_business_certifications: {
+    id: "contractor_business_certifications",
+    stage: "Шаг 6 из 7+",
+    question: "Есть ли профессиональные сертификаты?",
+    answers: [
+      { text: "Да (CPA, CFA, ACCA и т.д.)", next: "contractor_business_scale" },
+      { text: "Нет, но есть опыт", next: "contractor_business_rate" }
+    ]
+  },
+
+  contractor_business_volume: {
+    id: "contractor_business_volume",
+    stage: "Шаг 6 из 7+",
+    question: "Сколько найма делаете в год?",
+    answers: [
+      { text: "До 20 позиций", next: "contractor_business_rate" },
+      { text: "20-50 позиций", next: "contractor_business_scale" },
+      { text: "Более 50 позиций", next: "contractor_business_advisory" }
+    ]
+  },
+
+  contractor_business_legal: {
+    id: "contractor_business_legal",
+    stage: "Шаг 6 из 7+",
+    question: "Какая юридическая специализация?",
+    answers: [
+      { text: "Корпоративное право", next: "contractor_business_scale" },
+      { text: "Интеллектуальная собственность", next: "contractor_business_scale" },
+      { text: "M&A и сделки", next: "contractor_business_advisory" }
+    ]
+  },
+
+  // === PROJECT ADMIN BRANCH ===
+  projectadmin_entry: {
+    id: "projectadmin_entry",
+    stage: "Шаг 3 из 7+",
+    question: "Какой у вас опыт в управлении проектами?",
+    answers: [
+      { text: "Нет опыта, хочу начать", next: "projectadmin_motivation" },
+      { text: "1-3 года опыта", next: "projectadmin_projects_count" },
+      { text: "Более 3 лет, профессиональный PM", next: "projectadmin_methodology" }
+    ]
+  },
+
+  projectadmin_motivation: {
+    id: "projectadmin_motivation",
+    stage: "Шаг 4 из 7+",
+    question: "Почему хотите стать PM?",
+    answers: [
+      { text: "Нравится координировать команды", next: "projectadmin_learning" },
+      { text: "Хочу карьерного роста", next: "projectadmin_learning" },
+      { text: "Есть техническое/бизнес образование", next: "projectadmin_background" }
+    ]
+  },
+
+  projectadmin_learning: {
+    id: "projectadmin_learning",
+    stage: "Шаг 5 из 7+",
+    question: "Проходили ли обучение PM?",
+    answers: [
+      { text: "Да, есть сертификаты (PMP, PRINCE2)", next: "projectadmin_first_role" },
+      { text: "Нет, самоучка", next: "projectadmin_tools_basic" }
+    ]
+  },
+
+  projectadmin_tools_basic: {
+    id: "projectadmin_tools_basic",
+    stage: "Шаг 6 из 7+",
+    question: "Какими инструментами владеете?",
+    answers: [
+      { text: "Trello, Asana (базовые)", next: "projectadmin_availability" },
+      { text: "Jira, MS Project (продвинутые)", next: "projectadmin_first_role" }
+    ]
+  },
+
+  projectadmin_availability: {
+    id: "projectadmin_availability",
+    stage: "Шаг 7 из 7",
+    question: "Готовы ли работать full-time?",
+    answers: [
+      { text: "Да, full-time", result: { role: "projectadmin", tariff: "junior" } },
+      { text: "Нет, ищу part-time", result: { role: "employee", tariff: "parttime" } }
+    ]
+  },
+
+  projectadmin_first_role: {
+    id: "projectadmin_first_role",
+    stage: "Шаг 7 из 7",
+    question: "Какую роль ищете?",
+    answers: [
+      { text: "Junior PM / PM Assistant", result: { role: "projectadmin", tariff: "junior" } },
+      { text: "Project Coordinator", result: { role: "projectadmin", tariff: "coordinator" } }
+    ]
+  },
+
+  projectadmin_background: {
+    id: "projectadmin_background",
+    stage: "Шаг 5 из 7+",
+    question: "Какое у вас образование?",
+    answers: [
+      { text: "Техническое (IT, инженерия)", next: "projectadmin_first_role" },
+      { text: "Бизнес (менеджмент, экономика)", next: "projectadmin_tools_basic" },
+      { text: "Другое", next: "projectadmin_learning" }
+    ]
+  },
+
+  projectadmin_projects_count: {
+    id: "projectadmin_projects_count",
+    stage: "Шаг 4 из 7+",
+    question: "Сколько проектов вели?",
+    answers: [
+      { text: "1-5 проектов", next: "projectadmin_team_size" },
+      { text: "5-15 проектов", next: "projectadmin_complexity" },
+      { text: "Более 15 проектов", next: "projectadmin_methodology" }
+    ]
+  },
+
+  projectadmin_team_size: {
+    id: "projectadmin_team_size",
+    stage: "Шаг 5 из 7+",
+    question: "Какого размера команды управляли?",
+    answers: [
+      { text: "До 5 человек", next: "projectadmin_tools_intermediate" },
+      { text: "5-15 человек", next: "projectadmin_budget" },
+      { text: "Более 15 человек", next: "projectadmin_methodology" }
+    ]
+  },
+
+  projectadmin_tools_intermediate: {
+    id: "projectadmin_tools_intermediate",
+    stage: "Шаг 6 из 7+",
+    question: "Какие методологии применяли?",
+    answers: [
+      { text: "Waterfall", next: "projectadmin_salary_mid" },
+      { text: "Agile/Scrum", next: "projectadmin_certifications" },
+      { text: "Hybrid", next: "projectadmin_certifications" }
+    ]
+  },
+
+  projectadmin_salary_mid: {
+    id: "projectadmin_salary_mid",
+    stage: "Шаг 7 из 7",
+    question: "Какая зарплата ожидается?",
+    answers: [
+      { text: "$2k-$4k/месяц", result: { role: "projectadmin", tariff: "coordinator" } },
+      { text: "$4k-$7k/месяц", result: { role: "projectadmin", tariff: "manager" } }
+    ]
+  },
+
+  projectadmin_certifications: {
+    id: "projectadmin_certifications",
+    stage: "Шаг 7 из 7",
+    question: "Есть ли сертификаты PM?",
+    answers: [
+      { text: "Да (PMP, PRINCE2, Scrum Master)", result: { role: "projectadmin", tariff: "manager" } },
+      { text: "Нет", result: { role: "projectadmin", tariff: "coordinator" } }
+    ]
+  },
+
+  projectadmin_budget: {
+    id: "projectadmin_budget",
+    stage: "Шаг 6 из 7+",
+    question: "Управляли ли бюджетом проекта?",
+    answers: [
+      { text: "Да, до $100k", next: "projectadmin_certifications" },
+      { text: "Да, $100k-$500k", next: "projectadmin_senior_scope" },
+      { text: "Более $500k", next: "projectadmin_methodology" }
+    ]
+  },
+
+  projectadmin_senior_scope: {
+    id: "projectadmin_senior_scope",
+    stage: "Шаг 7 из 7",
+    question: "Какого масштаба проекты вели?",
+    answers: [
+      { text: "Один проект за раз", result: { role: "projectadmin", tariff: "manager" } },
+      { text: "Несколько параллельно", result: { role: "projectadmin", tariff: "senior" } }
+    ]
+  },
+
+  projectadmin_complexity: {
+    id: "projectadmin_complexity",
+    stage: "Шаг 5 из 7+",
+    question: "Какой сложности проекты?",
+    answers: [
+      { text: "Стандартные (известная технология)", next: "projectadmin_budget" },
+      { text: "Сложные (innovation, R&D)", next: "projectadmin_stakeholders" },
+      { text: "Кризисные (turnaround)", next: "projectadmin_methodology" }
+    ]
+  },
+
+  projectadmin_stakeholders: {
+    id: "projectadmin_stakeholders",
+    stage: "Шаг 6 из 7+",
+    question: "Сколько стейкхолдеров обычно?",
+    answers: [
+      { text: "До 5 человек", next: "projectadmin_senior_scope" },
+      { text: "5-15 человек", next: "projectadmin_leadership" },
+      { text: "Более 15 (множественные департаменты)", next: "projectadmin_program" }
+    ]
+  },
+
+  projectadmin_leadership: {
+    id: "projectadmin_leadership",
+    stage: "Шаг 7 из 7",
+    question: "Есть ли опыт руководства PM'ами?",
+    answers: [
+      { text: "Да, управлял командой PM", result: { role: "projectadmin", tariff: "director" } },
+      { text: "Нет, только индивидуальные проекты", result: { role: "projectadmin", tariff: "senior" } }
+    ]
+  },
+
+  projectadmin_program: {
+    id: "projectadmin_program",
+    stage: "Шаг 7 из 7",
+    question: "Управляли ли программами (несколько связанных проектов)?",
+    answers: [
+      { text: "Да, Program Manager", result: { role: "projectadmin", tariff: "director" } },
+      { text: "Нет, только отдельные проекты", result: { role: "projectadmin", tariff: "senior" } }
+    ]
+  },
+
+  projectadmin_methodology: {
+    id: "projectadmin_methodology",
+    stage: "Шаг 4 из 7+",
+    question: "Какие методологии освоили?",
+    answers: [
+      { text: "Agile/Scrum/Kanban", next: "projectadmin_domain" },
+      { text: "Waterfall/PRINCE2", next: "projectadmin_transformation" },
+      { text: "Lean/Six Sigma", next: "projectadmin_industry" },
+      { text: "Все вышеперечисленные", next: "projectadmin_portfolio" }
+    ]
+  },
+
+  projectadmin_domain: {
+    id: "projectadmin_domain",
+    stage: "Шаг 5 из 7+",
+    question: "В какой сфере больше опыта?",
+    answers: [
+      { text: "IT/Software", next: "projectadmin_agile_scale" },
+      { text: "Product Development", next: "projectadmin_product_launches" },
+      { text: "Consulting/Professional Services", next: "projectadmin_client_facing" }
+    ]
+  },
+
+  projectadmin_agile_scale: {
+    id: "projectadmin_agile_scale",
+    stage: "Шаг 6 из 7+",
+    question: "Внедряли ли Agile на уровне компании?",
+    answers: [
+      { text: "Да, SAFe/LeSS implementation", next: "projectadmin_coaching" },
+      { text: "Нет, только команды", next: "projectadmin_leadership" }
+    ]
+  },
+
+  projectadmin_coaching: {
+    id: "projectadmin_coaching",
+    stage: "Шаг 7 из 7",
+    question: "Коучите ли вы команды?",
+    answers: [
+      { text: "Да, Agile Coach", result: { role: "projectadmin", tariff: "director" } },
+      { text: "Нет, только управление", result: { role: "projectadmin", tariff: "senior" } }
+    ]
+  },
+
+  projectadmin_product_launches: {
+    id: "projectadmin_product_launches",
+    stage: "Шаг 6 из 7+",
+    question: "Сколько продуктов запустили?",
+    answers: [
+      { text: "1-3 запуска", next: "projectadmin_leadership" },
+      { text: "4-10 запусков", next: "projectadmin_product_success" },
+      { text: "Более 10", next: "projectadmin_product_success" }
+    ]
+  },
+
+  projectadmin_product_success: {
+    id: "projectadmin_product_success",
+    stage: "Шаг 7 из 7",
+    question: "Каков success rate?",
+    answers: [
+      { text: "Более 70% успешных", result: { role: "projectadmin", tariff: "director" } },
+      { text: "50-70%", result: { role: "projectadmin", tariff: "senior" } }
+    ]
+  },
+
+  projectadmin_client_facing: {
+    id: "projectadmin_client_facing",
+    stage: "Шаг 6 из 7+",
+    question: "Работаете ли напрямую с клиентами?",
+    answers: [
+      { text: "Да, управляю отношениями", next: "projectadmin_account" },
+      { text: "Нет, внутренние проекты", next: "projectadmin_leadership" }
+    ]
+  },
+
+  projectadmin_account: {
+    id: "projectadmin_account",
+    stage: "Шаг 7 из 7",
+    question: "Какова роль?",
+    answers: [
+      { text: "Delivery Manager", result: { role: "projectadmin", tariff: "senior" } },
+      { text: "Account Manager / Client Partner", result: { role: "projectadmin", tariff: "director" } }
+    ]
+  },
+
+  projectadmin_transformation: {
+    id: "projectadmin_transformation",
+    stage: "Шаг 5 из 7+",
+    question: "Вели ли трансформационные проекты?",
+    answers: [
+      { text: "Да, организационная трансформация", next: "projectadmin_change" },
+      { text: "Нет, стандартные проекты", next: "projectadmin_leadership" }
+    ]
+  },
+
+  projectadmin_change: {
+    id: "projectadmin_change",
+    stage: "Шаг 6 из 7+",
+    question: "Есть ли опыт change management?",
+    answers: [
+      { text: "Да, сертифицированный change manager", next: "projectadmin_executive" },
+      { text: "Нет", next: "projectadmin_leadership" }
+    ]
+  },
+
+  projectadmin_executive: {
+    id: "projectadmin_executive",
+    stage: "Шаг 7 из 7",
+    question: "Работали ли на executive уровне?",
+    answers: [
+      { text: "Да, PMO Director / VP", result: { role: "projectadmin", tariff: "director" } },
+      { text: "Нет", result: { role: "projectadmin", tariff: "senior" } }
+    ]
+  },
+
+  projectadmin_industry: {
+    id: "projectadmin_industry",
+    stage: "Шаг 5 из 7+",
+    question: "В каких индустриях работали?",
+    answers: [
+      { text: "Одна индустрия (специализация)", next: "projectadmin_domain" },
+      { text: "Несколько индустрий", next: "projectadmin_adaptability" }
+    ]
+  },
+
+  projectadmin_adaptability: {
+    id: "projectadmin_adaptability",
+    stage: "Шаг 6 из 7+",
+    question: "Как быстро адаптируетесь?",
+    answers: [
+      { text: "Легко перехожу между индустриями", next: "projectadmin_portfolio" },
+      { text: "Нужно время на изучение", next: "projectadmin_leadership" }
+    ]
+  },
+
+  projectadmin_portfolio: {
+    id: "projectadmin_portfolio",
+    stage: "Шаг 5 из 7+",
+    question: "Управляли ли портфелем проектов?",
+    answers: [
+      { text: "Да, Portfolio Manager", next: "projectadmin_pmo" },
+      { text: "Нет, только отдельные проекты", next: "projectadmin_leadership" }
+    ]
+  },
+
+  projectadmin_pmo: {
+    id: "projectadmin_pmo",
+    stage: "Шаг 6 из 7+",
+    question: "Создавали ли PMO с нуля?",
+    answers: [
+      { text: "Да, построил PMO", next: "projectadmin_governance" },
+      { text: "Нет, работал в существующей PMO", next: "projectadmin_executive" }
+    ]
+  },
+
+  projectadmin_governance: {
+    id: "projectadmin_governance",
+    stage: "Шаг 7 из 7",
+    question: "Внедряли ли процессы governance?",
+    answers: [
+      { text: "Да, установил стандарты и процессы", result: { role: "projectadmin", tariff: "director" } },
+      { text: "Частично", result: { role: "projectadmin", tariff: "director" } }
+    ]
+  },
+
+  // === EMPLOYEE BRANCH ===
+  employee_entry: {
+    id: "employee_entry",
+    stage: "Шаг 3 из 7+",
+    question: "Какую роль в проекте ищете?",
+    answers: [
+      { text: "Техническая роль (dev, QA, devops)", next: "employee_tech_level" },
+      { text: "Продуктовая роль (PM, designer)", next: "employee_product_role" },
+      { text: "Бизнес-роль (маркетинг, продажи, операции)", next: "employee_business_function" }
+    ]
+  },
+
+  employee_tech_level: {
+    id: "employee_tech_level",
+    stage: "Шаг 4 из 7+",
+    question: "Какой ваш уровень?",
+    answers: [
+      { text: "Junior (до 2 лет опыта)", next: "employee_tech_learning" },
+      { text: "Middle (2-5 лет)", next: "employee_tech_stack" },
+      { text: "Senior (5+ лет)", next: "employee_tech_leadership_interest" }
+    ]
+  },
+
+  employee_tech_learning: {
+    id: "employee_tech_learning",
+    stage: "Шаг 5 из 7+",
+    question: "Какой стек изучаете?",
+    answers: [
+      { text: "Frontend", next: "employee_tech_mentorship" },
+      { text: "Backend", next: "employee_tech_mentorship" },
+      { text: "Mobile", next: "employee_tech_mentorship" },
+      { text: "QA/Testing", next: "employee_tech_mentorship" }
+    ]
+  },
+
+  employee_tech_mentorship: {
+    id: "employee_tech_mentorship",
+    stage: "Шаг 6 из 7+",
+    question: "Важно ли менторство?",
+    answers: [
+      { text: "Да, критически важно", next: "employee_work_mode" },
+      { text: "Желательно, но не обязательно", next: "employee_work_mode" }
+    ]
+  },
+
+  employee_work_mode: {
+    id: "employee_work_mode",
+    stage: "Шаг 7 из 7",
+    question: "Какой формат работы предпочитаете?",
+    answers: [
+      { text: "Full-time в офисе", result: { role: "employee", tariff: "fulltime" } },
+      { text: "Full-time удаленно", result: { role: "employee", tariff: "remote" } },
+      { text: "Part-time", result: { role: "employee", tariff: "parttime" } }
+    ]
+  },
+
+  employee_tech_stack: {
+    id: "employee_tech_stack",
+    stage: "Шаг 5 из 7+",
+    question: "Какая ваша специализация?",
+    answers: [
+      { text: "Frontend разработка", next: "employee_project_stage" },
+      { text: "Backend разработка", next: "employee_project_stage" },
+      { text: "Full-stack", next: "employee_project_stage" },
+      { text: "DevOps/Infrastructure", next: "employee_project_stage" }
+    ]
+  },
+
+  employee_project_stage: {
+    id: "employee_project_stage",
+    stage: "Шаг 6 из 7+",
+    question: "На какой стадии проект интересует?",
+    answers: [
+      { text: "Early stage (стартап)", next: "employee_equity" },
+      { text: "Growth stage", next: "employee_compensation" },
+      { text: "Не важно", next: "employee_work_mode" }
+    ]
+  },
+
+  employee_equity: {
+    id: "employee_equity",
+    stage: "Шаг 7 из 7",
+    question: "Интересует ли equity?",
+    answers: [
+      { text: "Да, готов на меньшую зарплату + опционы", result: { role: "employee", tariff: "equity" } },
+      { text: "Нет, только фикс", result: { role: "employee", tariff: "fulltime" } }
+    ]
+  },
+
+  employee_compensation: {
+    id: "employee_compensation",
+    stage: "Шаг 7 из 7",
+    question: "Что важнее?",
+    answers: [
+      { text: "Высокая зарплата", result: { role: "employee", tariff: "fulltime" } },
+      { text: "Equity + конкурентная зарплата", result: { role: "employee", tariff: "equity" } }
+    ]
+  },
+
+  employee_tech_leadership_interest: {
+    id: "employee_tech_leadership_interest",
+    stage: "Шаг 5 из 7+",
+    question: "Интересует ли руководство?",
+    answers: [
+      { text: "Да, хочу стать Tech Lead", next: "employee_leadership_experience" },
+      { text: "Нет, предпочитаю индивидуальный путь", next: "employee_project_stage" }
+    ]
+  },
+
+  employee_leadership_experience: {
+    id: "employee_leadership_experience",
+    stage: "Шаг 6 из 7+",
+    question: "Есть ли опыт руководства?",
+    answers: [
+      { text: "Да, управлял командой", next: "employee_leadership_size" },
+      { text: "Нет, но готов учиться", next: "employee_compensation" }
+    ]
+  },
+
+  employee_leadership_size: {
+    id: "employee_leadership_size",
+    stage: "Шаг 7 из 7",
+    question: "Какого размера команда?",
+    answers: [
+      { text: "2-5 человек", result: { role: "employee", tariff: "lead" } },
+      { text: "5-15 человек", result: { role: "employee", tariff: "lead" } },
+      { text: "Более 15 (Engineering Manager)", result: { role: "employee", tariff: "lead" } }
+    ]
+  },
+
+  employee_product_role: {
+    id: "employee_product_role",
+    stage: "Шаг 4 из 7+",
+    question: "Какая роль интересует?",
+    answers: [
+      { text: "Product Manager", next: "employee_pm_experience" },
+      { text: "Product Designer / UX", next: "employee_design_level" },
+      { text: "Product Analyst", next: "employee_analyst_tools" }
+    ]
+  },
+
+  employee_pm_experience: {
+    id: "employee_pm_experience",
+    stage: "Шаг 5 из 7+",
+    question: "Каков ваш опыт в PM?",
+    answers: [
+      { text: "Нет опыта, хочу начать", next: "employee_pm_learning" },
+      { text: "1-3 года", next: "employee_pm_products" },
+      { text: "Более 3 лет", next: "employee_pm_strategy" }
+    ]
+  },
+
+  employee_pm_learning: {
+    id: "employee_pm_learning",
+    stage: "Шаг 6 из 7+",
+    question: "Есть ли техническое/бизнес образование?",
+    answers: [
+      { text: "Да, технический бэкграунд", next: "employee_work_mode" },
+      { text: "Да, бизнес бэкграунд", next: "employee_work_mode" },
+      { text: "Нет, но хочу учиться", next: "employee_work_mode" }
+    ]
+  },
+
+  employee_pm_products: {
+    id: "employee_pm_products",
+    stage: "Шаг 6 из 7+",
+    question: "Какие продукты вели?",
+    answers: [
+      { text: "B2C продукты", next: "employee_project_stage" },
+      { text: "B2B/SaaS", next: "employee_project_stage" },
+      { text: "Marketplace", next: "employee_project_stage" }
+    ]
+  },
+
+  employee_pm_strategy: {
+    id: "employee_pm_strategy",
+    stage: "Шаг 6 из 7+",
+    question: "Участвовали ли в стратегии продукта?",
+    answers: [
+      { text: "Да, формировал product vision", next: "employee_pm_seniority" },
+      { text: "Нет, только execution", next: "employee_project_stage" }
+    ]
+  },
+
+  employee_pm_seniority: {
+    id: "employee_pm_seniory",
+    stage: "Шаг 7 из 7",
+    question: "Какую роль ищете?",
+    answers: [
+      { text: "Senior PM", result: { role: "employee", tariff: "lead" } },
+      { text: "Head of Product / CPO", result: { role: "cofounder", tariff: "partner" } }
+    ]
+  },
+
+  employee_design_level: {
+    id: "employee_design_level",
+    stage: "Шаг 5 из 7+",
+    question: "Какой ваш уровень?",
+    answers: [
+      { text: "Junior/Middle", next: "employee_design_focus" },
+      { text: "Senior", next: "employee_design_specialization" },
+      { text: "Lead Designer", next: "employee_design_team" }
+    ]
+  },
+
+  employee_design_focus: {
+    id: "employee_design_focus",
+    stage: "Шаг 6 из 7+",
+    question: "На чем фокусируетесь?",
+    answers: [
+      { text: "UI дизайн", next: "employee_work_mode" },
+      { text: "UX research", next: "employee_work_mode" },
+      { text: "Product design (UI+UX)", next: "employee_project_stage" }
+    ]
+  },
+
+  employee_design_specialization: {
+    id: "employee_design_specialization",
+    stage: "Шаг 6 из 7+",
+    question: "Есть ли узкая специализация?",
+    answers: [
+      { text: "Mobile design", next: "employee_project_stage" },
+      { text: "Web design", next: "employee_project_stage" },
+      { text: "Design systems", next: "employee_compensation" }
+    ]
+  },
+
+  employee_design_team: {
+    id: "employee_design_team",
+    stage: "Шаг 6 из 7+",
+    question: "Управляли ли командой дизайнеров?",
+    answers: [
+      { text: "Да, 2-5 человек", next: "employee_design_head" },
+      { text: "Нет, индивидуальный contributor", next: "employee_compensation" }
+    ]
+  },
+
+  employee_design_head: {
+    id: "employee_design_head",
+    stage: "Шаг 7 из 7",
+    question: "Интересует ли роль Head of Design?",
+    answers: [
+      { text: "Да", result: { role: "employee", tariff: "lead" } },
+      { text: "Нет, Lead Designer", result: { role: "employee", tariff: "lead" } }
+    ]
+  },
+
+  employee_analyst_tools: {
+    id: "employee_analyst_tools",
+    stage: "Шаг 5 из 7+",
+    question: "Какими инструментами владеете?",
+    answers: [
+      { text: "SQL, Excel", next: "employee_analyst_product" },
+      { text: "+ Python/R", next: "employee_analyst_experience" },
+      { text: "+ BI tools (Tableau, Looker)", next: "employee_analyst_experience" }
+    ]
+  },
+
+  employee_analyst_product: {
+    id: "employee_analyst_product",
+    stage: "Шаг 6 из 7+",
+    question: "Работали ли с продуктовыми метриками?",
+    answers: [
+      { text: "Да, знаю AARRR, cohorts и т.д.", next: "employee_work_mode" },
+      { text: "Нет, хочу научиться", next: "employee_work_mode" }
+    ]
+  },
+
+  employee_analyst_experience: {
+    id: "employee_analyst_experience",
+    stage: "Шаг 6 из 7+",
+    question: "Сколько лет опыта в аналитике?",
+    answers: [
+      { text: "До 2 лет", next: "employee_work_mode" },
+      { text: "2-5 лет", next: "employee_project_stage" },
+      { text: "Более 5 лет", next: "employee_compensation" }
+    ]
+  },
+
+  employee_business_function: {
+    id: "employee_business_function",
+    stage: "Шаг 4 из 7+",
+    question: "Какая функция интересует?",
+    answers: [
+      { text: "Маркетинг / Growth", next: "employee_marketing_type" },
+      { text: "Продажи / Business Development", next: "employee_sales_experience" },
+      { text: "Операции / Customer Success", next: "employee_ops_role" }
+    ]
+  },
+
+  employee_marketing_type: {
+    id: "employee_marketing_type",
+    stage: "Шаг 5 из 7+",
+    question: "Какое направление маркетинга?",
+    answers: [
+      { text: "Performance / Digital", next: "employee_marketing_channels" },
+      { text: "Content / Brand", next: "employee_marketing_content" },
+      { text: "Growth hacking", next: "employee_growth_metrics" }
+    ]
+  },
+
+  employee_marketing_channels: {
+    id: "employee_marketing_channels",
+    stage: "Шаг 6 из 7+",
+    question: "Какие каналы освоили?",
+    answers: [
+      { text: "Google Ads, Facebook Ads", next: "employee_marketing_budget" },
+      { text: "+ SEO, Email", next: "employee_marketing_experience" },
+      { text: "Все digital каналы", next: "employee_marketing_experience" }
+    ]
+  },
+
+  employee_marketing_budget: {
+    id: "employee_marketing_budget",
+    stage: "Шаг 7 из 7",
+    question: "Управляли ли рекламным бюджетом?",
+    answers: [
+      { text: "Да, до $50k/месяц", result: { role: "employee", tariff: "fulltime" } },
+      { text: "Да, более $50k/месяц", result: { role: "employee", tariff: "lead" } },
+      { text: "Нет", result: { role: "employee", tariff: "fulltime" } }
+    ]
+  },
+
+  employee_marketing_experience: {
+    id: "employee_marketing_experience",
+    stage: "Шаг 7 из 7",
+    question: "Сколько лет опыта в маркетинге?",
+    answers: [
+      { text: "До 3 лет", result: { role: "employee", tariff: "fulltime" } },
+      { text: "3-7 лет", result: { role: "employee", tariff: "fulltime" } },
+      { text: "Более 7 лет", result: { role: "employee", tariff: "lead" } }
+    ]
+  },
+
+  employee_marketing_content: {
+    id: "employee_marketing_content",
+    stage: "Шаг 6 из 7+",
+    question: "Какой контент создаете?",
+    answers: [
+      { text: "Статьи, блоги", next: "employee_marketing_portfolio" },
+      { text: "Видео, подкасты", next: "employee_marketing_portfolio" },
+      { text: "Комплексный контент", next: "employee_marketing_experience" }
+    ]
+  },
+
+  employee_marketing_portfolio: {
+    id: "employee_marketing_portfolio",
+    stage: "Шаг 7 из 7",
+    question: "Есть ли портфолио?",
+    answers: [
+      { text: "Да, могу показать примеры", result: { role: "employee", tariff: "fulltime" } },
+      { text: "Нет", result: { role: "employee", tariff: "fulltime" } }
+    ]
+  },
+
+  employee_growth_metrics: {
+    id: "employee_growth_metrics",
+    stage: "Шаг 6 из 7+",
+    question: "Работали ли с growth метриками?",
+    answers: [
+      { text: "Да, оптимизировал воронки", next: "employee_growth_results" },
+      { text: "Нет, хочу учиться", next: "employee_work_mode" }
+    ]
+  },
+
+  employee_growth_results: {
+    id: "employee_growth_results",
+    stage: "Шаг 7 из 7",
+    question: "Какие результаты?",
+    answers: [
+      { text: "Вырастил ключевые метрики на X%", result: { role: "employee", tariff: "lead" } },
+      { text: "Еще учусь", result: { role: "employee", tariff: "fulltime" } }
+    ]
+  },
+
+  employee_sales_experience: {
+    id: "employee_sales_experience",
+    stage: "Шаг 5 из 7+",
+    question: "Какой у вас опыт в продажах?",
+    answers: [
+      { text: "Нет опыта, хочу начать", next: "employee_sales_type" },
+      { text: "1-3 года", next: "employee_sales_b2b" },
+      { text: "Более 3 лет", next: "employee_sales_closing" }
+    ]
+  },
+
+  employee_sales_type: {
+    id: "employee_sales_type",
+    stage: "Шаг 6 из 7+",
+    question: "Какой тип продаж интересует?",
+    answers: [
+      { text: "B2B продажи", next: "employee_work_mode" },
+      { text: "B2C продажи", next: "employee_work_mode" },
+      { text: "Partnership / BD", next: "employee_work_mode" }
+    ]
+  },
+
+  employee_sales_b2b: {
+    id: "employee_sales_b2b",
+    stage: "Шаг 6 из 7+",
+    question: "Какой цикл сделки?",
+    answers: [
+      { text: "Короткий (SMB)", next: "employee_sales_quota" },
+      { text: "Длинный (Enterprise)", next: "employee_sales_deal_size" }
+    ]
+  },
+
+  employee_sales_quota: {
+    id: "employee_sales_quota",
+    stage: "Шаг 7 из 7",
+    question: "Выполняли ли квоту?",
+    answers: [
+      { text: "Да, регулярно 100%+", result: { role: "employee", tariff: "fulltime" } },
+      { text: "Иногда", result: { role: "employee", tariff: "fulltime" } }
+    ]
+  },
+
+  employee_sales_deal_size: {
+    id: "employee_sales_deal_size",
+    stage: "Шаг 7 из 7",
+    question: "Какой средний размер сделки?",
+    answers: [
+      { text: "До $50k", result: { role: "employee", tariff: "fulltime" } },
+      { text: "$50k-$500k", result: { role: "employee", tariff: "lead" } },
+      { text: "Более $500k", result: { role: "employee", tariff: "lead" } }
+    ]
+  },
+
+  employee_sales_closing: {
+    id: "employee_sales_closing",
+    stage: "Шаг 6 из 7+",
+    question: "Закрывали ли крупные сделки?",
+    answers: [
+      { text: "Да, $100k+ deals", next: "employee_sales_team" },
+      { text: "Нет, в основном SMB", next: "employee_sales_quota" }
+    ]
+  },
+
+  employee_sales_team: {
+    id: "employee_sales_team",
+    stage: "Шаг 7 из 7",
+    question: "Управляли ли командой продаж?",
+    answers: [
+      { text: "Да, Sales Manager/Director", result: { role: "employee", tariff: "lead" } },
+      { text: "Нет, индивидуальный contributor", result: { role: "employee", tariff: "fulltime" } }
+    ]
+  },
+
+  employee_ops_role: {
+    id: "employee_ops_role",
+    stage: "Шаг 5 из 7+",
+    question: "Какая роль интересует?",
+    answers: [
+      { text: "Operations Manager", next: "employee_ops_experience" },
+      { text: "Customer Success", next: "employee_cs_clients" },
+      { text: "Account Manager", next: "employee_am_portfolio" }
+    ]
+  },
+
+  employee_ops_experience: {
+    id: "employee_ops_experience",
+    stage: "Шаг 6 из 7+",
+    question: "Какой опыт в операциях?",
+    answers: [
+      { text: "До 2 лет", next: "employee_work_mode" },
+      { text: "2-5 лет", next: "employee_project_stage" },
+      { text: "Более 5 лет", next: "employee_ops_scale" }
+    ]
+  },
+
+  employee_ops_scale: {
+    id: "employee_ops_scale",
+    stage: "Шаг 7 из 7",
+    question: "Какого размера операции управляли?",
+    answers: [
+      { text: "Небольшая команда (до 10 чел)", result: { role: "employee", tariff: "fulltime" } },
+      { text: "Средняя команда (10-50 чел)", result: { role: "employee", tariff: "lead" } },
+      { text: "Крупная (50+ чел)", result: { role: "employee", tariff: "lead" } }
+    ]
+  },
+
+  employee_cs_clients: {
+    id: "employee_cs_clients",
+    stage: "Шаг 6 из 7+",
+    question: "Сколько клиентов вели?",
+    answers: [
+      { text: "До 20 клиентов", next: "employee_cs_retention" },
+      { text: "20-50 клиентов", next: "employee_cs_retention" },
+      { text: "Более 50 клиентов", next: "employee_cs_automation" }
+    ]
+  },
+
+  employee_cs_retention: {
+    id: "employee_cs_retention",
+    stage: "Шаг 7 из 7",
+    question: "Какой retention rate?",
+    answers: [
+      { text: "Более 90%", result: { role: "employee", tariff: "fulltime" } },
+      { text: "80-90%", result: { role: "employee", tariff: "fulltime" } }
+    ]
+  },
+
+  employee_cs_automation: {
+    id: "employee_cs_automation",
+    stage: "Шаг 7 из 7",
+    question: "Внедряли ли автоматизацию CS?",
+    answers: [
+      { text: "Да, настроил процессы", result: { role: "employee", tariff: "lead" } },
+      { text: "Нет", result: { role: "employee", tariff: "fulltime" } }
+    ]
+  },
+
+  employee_am_portfolio: {
+    id: "employee_am_portfolio",
+    stage: "Шаг 6 из 7+",
+    question: "Какой размер портфолио клиентов?",
+    answers: [
+      { text: "До $500k ARR", next: "employee_am_upsell" },
+      { text: "$500k-$2M ARR", next: "employee_am_upsell" },
+      { text: "Более $2M ARR", next: "employee_am_strategic" }
+    ]
+  },
+
+  employee_am_upsell: {
+    id: "employee_am_upsell",
+    stage: "Шаг 7 из 7",
+    question: "Занимались ли upsell?",
+    answers: [
+      { text: "Да, регулярно росла выручка", result: { role: "employee", tariff: "fulltime" } },
+      { text: "Нет, только retention", result: { role: "employee", tariff: "fulltime" } }
+    ]
+  },
+
+  employee_am_strategic: {
+    id: "employee_am_strategic",
+    stage: "Шаг 7 из 7",
+    question: "Работали ли со strategic accounts?",
+    answers: [
+      { text: "Да, enterprise клиенты", result: { role: "employee", tariff: "lead" } },
+      { text: "Нет", result: { role: "employee", tariff: "fulltime" } }
+    ]
+  },
+
   ecosystem_ambassador: {
     id: "ecosystem_ambassador",
     stage: "Шаг 3 из 7+",
