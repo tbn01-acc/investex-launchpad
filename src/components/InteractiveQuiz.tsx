@@ -2154,25 +2154,1335 @@ const quizTree: Record<string, Question> = {
     ]
   },
 
+  // ============ ВЕТКА КОНСУЛЬТАНТОВ (расширенная до 7+) ============
   ecosystem_consultant_type: {
     id: "ecosystem_consultant_type",
     stage: "Шаг 3 из 7+",
     question: "Какой тип консультанта вы?",
     answers: [
-      { text: "Бизнес-аналитик", result: { role: "consultant", tariff: "analyst" } },
-      { text: "Стратег", result: { role: "consultant", tariff: "strategist" } },
-      { text: "C-level", result: { role: "consultant", tariff: "clevel" } }
+      { text: "Бизнес-аналитик", next: "consultant_analyst_experience" },
+      { text: "Стратег", next: "consultant_strategist_background" },
+      { text: "C-level executive", next: "consultant_clevel_history" }
     ]
   },
 
+  consultant_analyst_experience: {
+    id: "consultant_analyst_experience",
+    stage: "Шаг 4 из 7+",
+    question: "Сколько лет опыта в анализе?",
+    answers: [
+      { text: "1-3 года", next: "consultant_analyst_tools" },
+      { text: "3-7 лет", next: "consultant_analyst_industries" },
+      { text: "Более 7 лет", next: "consultant_analyst_specialization" }
+    ]
+  },
+
+  consultant_analyst_tools: {
+    id: "consultant_analyst_tools",
+    stage: "Шаг 5 из 7+",
+    question: "Какими инструментами владеете?",
+    answers: [
+      { text: "Excel, Google Sheets", next: "consultant_analyst_project_type" },
+      { text: "+ SQL, Python/R", next: "consultant_analyst_data_scale" },
+      { text: "+ BI tools (Tableau, Power BI)", next: "consultant_analyst_clients" }
+    ]
+  },
+
+  consultant_analyst_project_type: {
+    id: "consultant_analyst_project_type",
+    stage: "Шаг 6 из 7+",
+    question: "Какие проекты предпочитаете?",
+    answers: [
+      { text: "Финансовое моделирование", next: "consultant_analyst_rate" },
+      { text: "Маркетинговая аналитика", next: "consultant_analyst_rate" },
+      { text: "Операционная аналитика", next: "consultant_analyst_rate" }
+    ]
+  },
+
+  consultant_analyst_rate: {
+    id: "consultant_analyst_rate",
+    stage: "Шаг 7 из 7",
+    question: "Какой ваш часовой тариф?",
+    answers: [
+      { text: "$50-80/час", result: { role: "consultant", tariff: "analyst" } },
+      { text: "$80-120/час", result: { role: "consultant", tariff: "strategist" } }
+    ]
+  },
+
+  consultant_analyst_data_scale: {
+    id: "consultant_analyst_data_scale",
+    stage: "Шаг 6 из 7+",
+    question: "С какими объемами данных работали?",
+    answers: [
+      { text: "До 100K записей", next: "consultant_analyst_rate" },
+      { text: "100K-1M записей", next: "consultant_analyst_advanced_rate" },
+      { text: "Более 1M записей (Big Data)", next: "consultant_analyst_advanced_rate" }
+    ]
+  },
+
+  consultant_analyst_advanced_rate: {
+    id: "consultant_analyst_advanced_rate",
+    stage: "Шаг 7 из 7",
+    question: "Есть ли опыт машинного обучения?",
+    answers: [
+      { text: "Да, применяю ML", result: { role: "consultant", tariff: "strategist" } },
+      { text: "Нет, только традиционная аналитика", result: { role: "consultant", tariff: "analyst" } }
+    ]
+  },
+
+  consultant_analyst_clients: {
+    id: "consultant_analyst_clients",
+    stage: "Шаг 6 из 7+",
+    question: "Сколько у вас было клиентов?",
+    answers: [
+      { text: "До 10", next: "consultant_analyst_rate" },
+      { text: "10-30", next: "consultant_analyst_testimonials" },
+      { text: "Более 30", next: "consultant_analyst_testimonials" }
+    ]
+  },
+
+  consultant_analyst_testimonials: {
+    id: "consultant_analyst_testimonials",
+    stage: "Шаг 7 из 7",
+    question: "Есть ли рекомендации?",
+    answers: [
+      { text: "Да, от нескольких клиентов", result: { role: "consultant", tariff: "strategist" } },
+      { text: "Нет еще", result: { role: "consultant", tariff: "analyst" } }
+    ]
+  },
+
+  consultant_analyst_industries: {
+    id: "consultant_analyst_industries",
+    stage: "Шаг 5 из 7+",
+    question: "В каких индустриях работали?",
+    answers: [
+      { text: "1 индустрия (узкая специализация)", next: "consultant_analyst_clients" },
+      { text: "2-3 индустрии", next: "consultant_analyst_methodologies" },
+      { text: "Более 3 индустрий", next: "consultant_analyst_methodologies" }
+    ]
+  },
+
+  consultant_analyst_methodologies: {
+    id: "consultant_analyst_methodologies",
+    stage: "Шаг 6 из 7+",
+    question: "Какие методологии применяете?",
+    answers: [
+      { text: "Базовые (SWOT, Porter's 5 Forces)", next: "consultant_analyst_testimonials" },
+      { text: "Продвинутые (BCG Matrix, Lean Analytics)", next: "consultant_strategist_deliverables" },
+      { text: "Кастомизированные фреймворки", next: "consultant_strategist_deliverables" }
+    ]
+  },
+
+  consultant_analyst_specialization: {
+    id: "consultant_analyst_specialization",
+    stage: "Шаг 5 из 7+",
+    question: "Есть ли узкая специализация?",
+    answers: [
+      { text: "Да, эксперт в нише", next: "consultant_analyst_thought_leadership" },
+      { text: "Нет, работаю широко", next: "consultant_analyst_industries" }
+    ]
+  },
+
+  consultant_analyst_thought_leadership: {
+    id: "consultant_analyst_thought_leadership",
+    stage: "Шаг 6 из 7+",
+    question: "Пишете ли статьи/исследования?",
+    answers: [
+      { text: "Да, регулярно публикуюсь", next: "consultant_strategist_rate_premium" },
+      { text: "Нет", next: "consultant_analyst_methodologies" }
+    ]
+  },
+
+  consultant_strategist_background: {
+    id: "consultant_strategist_background",
+    stage: "Шаг 4 из 7+",
+    question: "Какой у вас бэкграунд?",
+    answers: [
+      { text: "Консалтинговая фирма (MBB, Big 4)", next: "consultant_strategist_years" },
+      { text: "Корпоративная стратегия", next: "consultant_strategist_company_size" },
+      { text: "Стартапы и быстрорастущие компании", next: "consultant_strategist_startup_stage" }
+    ]
+  },
+
+  consultant_strategist_years: {
+    id: "consultant_strategist_years",
+    stage: "Шаг 5 из 7+",
+    question: "Сколько лет в консалтинге?",
+    answers: [
+      { text: "3-5 лет", next: "consultant_strategist_level" },
+      { text: "5-10 лет", next: "consultant_strategist_senior_projects" },
+      { text: "Более 10 лет", next: "consultant_strategist_partner_track" }
+    ]
+  },
+
+  consultant_strategist_level: {
+    id: "consultant_strategist_level",
+    stage: "Шаг 6 из 7+",
+    question: "Какой уровень в фирме?",
+    answers: [
+      { text: "Consultant/Senior Consultant", next: "consultant_strategist_deliverables" },
+      { text: "Manager/Senior Manager", next: "consultant_strategist_rate_mid" },
+      { text: "Principal/Partner", next: "consultant_clevel_portfolio" }
+    ]
+  },
+
+  consultant_strategist_deliverables: {
+    id: "consultant_strategist_deliverables",
+    stage: "Шаг 7 из 7",
+    question: "Что вы поставляете клиентам?",
+    answers: [
+      { text: "Аналитические отчеты", result: { role: "consultant", tariff: "analyst" } },
+      { text: "Стратегические рекомендации + план", result: { role: "consultant", tariff: "strategist" } },
+      { text: "Полное сопровождение внедрения", result: { role: "consultant", tariff: "strategist" } }
+    ]
+  },
+
+  consultant_strategist_rate_mid: {
+    id: "consultant_strategist_rate_mid",
+    stage: "Шаг 7 из 7",
+    question: "Какой ваш дневной тариф?",
+    answers: [
+      { text: "$1000-$2000/день", result: { role: "consultant", tariff: "strategist" } },
+      { text: "$2000-$4000/день", result: { role: "consultant", tariff: "clevel" } }
+    ]
+  },
+
+  consultant_strategist_senior_projects: {
+    id: "consultant_strategist_senior_projects",
+    stage: "Шаг 6 из 7+",
+    question: "Сколько проектов возглавляли?",
+    answers: [
+      { text: "5-15 проектов", next: "consultant_strategist_rate_mid" },
+      { text: "15-30 проектов", next: "consultant_strategist_rate_premium" },
+      { text: "Более 30 проектов", next: "consultant_clevel_transformation" }
+    ]
+  },
+
+  consultant_strategist_rate_premium: {
+    id: "consultant_strategist_rate_premium",
+    stage: "Шаг 7 из 7",
+    question: "Какой ваш дневной тариф?",
+    answers: [
+      { text: "$2000-$4000/день", result: { role: "consultant", tariff: "clevel" } },
+      { text: "$4000-$8000/день", result: { role: "consultant", tariff: "clevel" } }
+    ]
+  },
+
+  consultant_strategist_partner_track: {
+    id: "consultant_strategist_partner_track",
+    stage: "Шаг 6 из 7+",
+    question: "Были ли партнером в фирме?",
+    answers: [
+      { text: "Да, был/являюсь партнером", next: "consultant_clevel_own_practice" },
+      { text: "Нет, был Principal/Director", next: "consultant_strategist_rate_premium" }
+    ]
+  },
+
+  consultant_clevel_own_practice: {
+    id: "consultant_clevel_own_practice",
+    stage: "Шаг 7 из 7",
+    question: "Запустили ли собственную практику?",
+    answers: [
+      { text: "Да, работаю независимо", result: { role: "consultant", tariff: "clevel" } },
+      { text: "Нет, все еще в фирме", result: { role: "consultant", tariff: "clevel" } }
+    ]
+  },
+
+  consultant_strategist_company_size: {
+    id: "consultant_strategist_company_size",
+    stage: "Шаг 5 из 7+",
+    question: "В каких компаниях работали?",
+    answers: [
+      { text: "Средний бизнес (50-500 сотр.)", next: "consultant_strategist_strategy_focus" },
+      { text: "Крупные корпорации (500+)", next: "consultant_strategist_corporate_level" },
+      { text: "Fortune 500", next: "consultant_clevel_history" }
+    ]
+  },
+
+  consultant_strategist_strategy_focus: {
+    id: "consultant_strategist_strategy_focus",
+    stage: "Шаг 6 из 7+",
+    question: "На чем фокусировались?",
+    answers: [
+      { text: "Рост и экспансия", next: "consultant_strategist_outcomes" },
+      { text: "Оптимизация и эффективность", next: "consultant_strategist_outcomes" },
+      { text: "Трансформация бизнес-модели", next: "consultant_strategist_transformation" }
+    ]
+  },
+
+  consultant_strategist_outcomes: {
+    id: "consultant_strategist_outcomes",
+    stage: "Шаг 7 из 7",
+    question: "Каковы измеримые результаты?",
+    answers: [
+      { text: "Рост выручки на X%", result: { role: "consultant", tariff: "strategist" } },
+      { text: "Сокращение издержек на X%", result: { role: "consultant", tariff: "strategist" } },
+      { text: "Успешный exit/IPO", result: { role: "consultant", tariff: "clevel" } }
+    ]
+  },
+
+  consultant_strategist_transformation: {
+    id: "consultant_strategist_transformation",
+    stage: "Шаг 7 из 7",
+    question: "Какого размера была трансформация?",
+    answers: [
+      { text: "Отдел/департамент", result: { role: "consultant", tariff: "strategist" } },
+      { text: "Вся компания", result: { role: "consultant", tariff: "clevel" } }
+    ]
+  },
+
+  consultant_strategist_corporate_level: {
+    id: "consultant_strategist_corporate_level",
+    stage: "Шаг 6 из 7+",
+    question: "Какой был уровень?",
+    answers: [
+      { text: "Manager/Director", next: "consultant_strategist_rate_mid" },
+      { text: "VP/SVP", next: "consultant_clevel_experience" },
+      { text: "C-level", next: "consultant_clevel_history" }
+    ]
+  },
+
+  consultant_strategist_startup_stage: {
+    id: "consultant_strategist_startup_stage",
+    stage: "Шаг 5 из 7+",
+    question: "На каких стадиях работали?",
+    answers: [
+      { text: "Pre-seed/Seed", next: "consultant_strategist_startup_count" },
+      { text: "Series A-B", next: "consultant_strategist_startup_growth" },
+      { text: "Series C+ (scale-ups)", next: "consultant_strategist_scaleup" }
+    ]
+  },
+
+  consultant_strategist_startup_count: {
+    id: "consultant_strategist_startup_count",
+    stage: "Шаг 6 из 7+",
+    question: "Сколько стартапов консультировали?",
+    answers: [
+      { text: "1-5 стартапов", next: "consultant_strategist_equity_deals" },
+      { text: "5-15 стартапов", next: "consultant_strategist_portfolio_outcomes" },
+      { text: "Более 15", next: "consultant_strategist_portfolio_outcomes" }
+    ]
+  },
+
+  consultant_strategist_equity_deals: {
+    id: "consultant_strategist_equity_deals",
+    stage: "Шаг 7 из 7",
+    question: "Брали ли equity вместо cash?",
+    answers: [
+      { text: "Да, в нескольких проектах", result: { role: "consultant", tariff: "strategist" } },
+      { text: "Нет, только cash", result: { role: "consultant", tariff: "strategist" } }
+    ]
+  },
+
+  consultant_strategist_portfolio_outcomes: {
+    id: "consultant_strategist_portfolio_outcomes",
+    stage: "Шаг 7 из 7",
+    question: "Были ли успешные exits в портфолио?",
+    answers: [
+      { text: "Да, несколько exits", result: { role: "consultant", tariff: "clevel" } },
+      { text: "Нет", result: { role: "consultant", tariff: "strategist" } }
+    ]
+  },
+
+  consultant_strategist_startup_growth: {
+    id: "consultant_strategist_startup_growth",
+    stage: "Шаг 6 из 7+",
+    question: "Помогали ли в привлечении инвестиций?",
+    answers: [
+      { text: "Да, несколько раундов", next: "consultant_strategist_fundraising_size" },
+      { text: "Нет, фокус на операциях", next: "consultant_strategist_startup_count" }
+    ]
+  },
+
+  consultant_strategist_fundraising_size: {
+    id: "consultant_strategist_fundraising_size",
+    stage: "Шаг 7 из 7",
+    question: "Какого размера раунды привлекали?",
+    answers: [
+      { text: "До $5M", result: { role: "consultant", tariff: "strategist" } },
+      { text: "$5M-$20M", result: { role: "consultant", tariff: "clevel" } },
+      { text: "Более $20M", result: { role: "consultant", tariff: "clevel" } }
+    ]
+  },
+
+  consultant_strategist_scaleup: {
+    id: "consultant_strategist_scaleup",
+    stage: "Шаг 6 из 7+",
+    question: "В чем помогали scale-ups?",
+    answers: [
+      { text: "Международная экспансия", next: "consultant_strategist_markets" },
+      { text: "Организационная структура", next: "consultant_clevel_transformation" },
+      { text: "IPO подготовка", next: "consultant_clevel_ipo" }
+    ]
+  },
+
+  consultant_strategist_markets: {
+    id: "consultant_strategist_markets",
+    stage: "Шаг 7 из 7",
+    question: "Сколько рынков открывали?",
+    answers: [
+      { text: "1-2 рынка", result: { role: "consultant", tariff: "strategist" } },
+      { text: "3-5 рынков", result: { role: "consultant", tariff: "clevel" } },
+      { text: "Более 5 рынков", result: { role: "consultant", tariff: "clevel" } }
+    ]
+  },
+
+  consultant_clevel_history: {
+    id: "consultant_clevel_history",
+    stage: "Шаг 4 из 7+",
+    question: "Какую C-level позицию занимали?",
+    answers: [
+      { text: "CFO", next: "consultant_clevel_company_type" },
+      { text: "COO", next: "consultant_clevel_company_type" },
+      { text: "CMO/CPO/CTO", next: "consultant_clevel_company_type" },
+      { text: "CEO", next: "consultant_clevel_ceo_experience" }
+    ]
+  },
+
+  consultant_clevel_company_type: {
+    id: "consultant_clevel_company_type",
+    stage: "Шаг 5 из 7+",
+    question: "В каких компаниях?",
+    answers: [
+      { text: "Стартапы", next: "consultant_clevel_startup_outcomes" },
+      { text: "Средний бизнес", next: "consultant_clevel_growth" },
+      { text: "Корпорации", next: "consultant_clevel_corporate_scope" }
+    ]
+  },
+
+  consultant_clevel_startup_outcomes: {
+    id: "consultant_clevel_startup_outcomes",
+    stage: "Шаг 6 из 7+",
+    question: "Какие были outcomes?",
+    answers: [
+      { text: "Вырастил до series A/B", next: "consultant_clevel_fundraising" },
+      { text: "Exit/acquisition", next: "consultant_clevel_exit_size" },
+      { text: "IPO", next: "consultant_clevel_ipo" }
+    ]
+  },
+
+  consultant_clevel_fundraising: {
+    id: "consultant_clevel_fundraising",
+    stage: "Шаг 7 из 7",
+    question: "Сколько капитала привлекли?",
+    answers: [
+      { text: "До $10M", result: { role: "consultant", tariff: "clevel" } },
+      { text: "$10M-$50M", result: { role: "consultant", tariff: "clevel" } },
+      { text: "Более $50M", result: { role: "consultant", tariff: "clevel" } }
+    ]
+  },
+
+  consultant_clevel_exit_size: {
+    id: "consultant_clevel_exit_size",
+    stage: "Шаг 7 из 7",
+    question: "Какого размера была сделка?",
+    answers: [
+      { text: "$10M-$50M", result: { role: "consultant", tariff: "clevel" } },
+      { text: "$50M-$200M", result: { role: "consultant", tariff: "clevel" } },
+      { text: "Более $200M", result: { role: "consultant", tariff: "clevel" } }
+    ]
+  },
+
+  consultant_clevel_ipo: {
+    id: "consultant_clevel_ipo",
+    stage: "Шаг 7 из 7",
+    question: "Участвовали ли в IPO?",
+    answers: [
+      { text: "Да, вывел компанию на биржу", result: { role: "consultant", tariff: "clevel" } },
+      { text: "Да, был в команде IPO", result: { role: "consultant", tariff: "clevel" } }
+    ]
+  },
+
+  consultant_clevel_growth: {
+    id: "consultant_clevel_growth",
+    stage: "Шаг 6 из 7+",
+    question: "На сколько вырос бизнес?",
+    answers: [
+      { text: "2x за 3 года", next: "consultant_clevel_team_built" },
+      { text: "5x за 3 года", next: "consultant_clevel_transformation" },
+      { text: "10x+ за 3 года", next: "consultant_clevel_transformation" }
+    ]
+  },
+
+  consultant_clevel_team_built: {
+    id: "consultant_clevel_team_built",
+    stage: "Шаг 7 из 7",
+    question: "Какую команду построили?",
+    answers: [
+      { text: "10-50 человек", result: { role: "consultant", tariff: "clevel" } },
+      { text: "50-200 человек", result: { role: "consultant", tariff: "clevel" } },
+      { text: "Более 200 человек", result: { role: "consultant", tariff: "clevel" } }
+    ]
+  },
+
+  consultant_clevel_transformation: {
+    id: "consultant_clevel_transformation",
+    stage: "Шаг 7 из 7",
+    question: "Проводили ли трансформацию?",
+    answers: [
+      { text: "Да, digital transformation", result: { role: "consultant", tariff: "clevel" } },
+      { text: "Да, культурная трансформация", result: { role: "consultant", tariff: "clevel" } },
+      { text: "Да, полная реорганизация", result: { role: "consultant", tariff: "clevel" } }
+    ]
+  },
+
+  consultant_clevel_corporate_scope: {
+    id: "consultant_clevel_corporate_scope",
+    stage: "Шаг 6 из 7+",
+    question: "Какой был scope ответственности?",
+    answers: [
+      { text: "Департамент/бизнес-юнит", next: "consultant_clevel_team_built" },
+      { text: "Регион (несколько стран)", next: "consultant_clevel_multi_market" },
+      { text: "Global (вся компания)", next: "consultant_clevel_portfolio" }
+    ]
+  },
+
+  consultant_clevel_multi_market: {
+    id: "consultant_clevel_multi_market",
+    stage: "Шаг 7 из 7",
+    question: "Сколькими рынками управляли?",
+    answers: [
+      { text: "2-5 рынков", result: { role: "consultant", tariff: "clevel" } },
+      { text: "5-10 рынков", result: { role: "consultant", tariff: "clevel" } },
+      { text: "Более 10 рынков", result: { role: "consultant", tariff: "clevel" } }
+    ]
+  },
+
+  consultant_clevel_portfolio: {
+    id: "consultant_clevel_portfolio",
+    stage: "Шаг 7 из 7",
+    question: "Консультируете ли несколько компаний?",
+    answers: [
+      { text: "Да, портфолио из 3-5 компаний", result: { role: "consultant", tariff: "clevel" } },
+      { text: "Да, более 5 компаний", result: { role: "consultant", tariff: "clevel" } },
+      { text: "Нет, фокус на одной", result: { role: "consultant", tariff: "clevel" } }
+    ]
+  },
+
+  consultant_clevel_experience: {
+    id: "consultant_clevel_experience",
+    stage: "Шаг 7 из 7",
+    question: "Сколько лет в C-level?",
+    answers: [
+      { text: "3-7 лет", result: { role: "consultant", tariff: "clevel" } },
+      { text: "7-15 лет", result: { role: "consultant", tariff: "clevel" } },
+      { text: "Более 15 лет", result: { role: "consultant", tariff: "clevel" } }
+    ]
+  },
+
+  consultant_clevel_ceo_experience: {
+    id: "consultant_clevel_ceo_experience",
+    stage: "Шаг 5 из 7+",
+    question: "Сколько раз были CEO?",
+    answers: [
+      { text: "Один раз", next: "consultant_clevel_company_type" },
+      { text: "2-3 раза", next: "consultant_clevel_serial_outcomes" },
+      { text: "Более 3 раз (serial CEO)", next: "consultant_clevel_serial_success" }
+    ]
+  },
+
+  consultant_clevel_serial_outcomes: {
+    id: "consultant_clevel_serial_outcomes",
+    stage: "Шаг 6 из 7+",
+    question: "Были ли успешные exits?",
+    answers: [
+      { text: "Да, 1 exit", next: "consultant_clevel_exit_size" },
+      { text: "Да, несколько exits", next: "consultant_clevel_serial_size" },
+      { text: "Нет exits", next: "consultant_clevel_growth" }
+    ]
+  },
+
+  consultant_clevel_serial_size: {
+    id: "consultant_clevel_serial_size",
+    stage: "Шаг 7 из 7",
+    question: "Общий размер exits?",
+    answers: [
+      { text: "До $100M", result: { role: "consultant", tariff: "clevel" } },
+      { text: "$100M-$500M", result: { role: "consultant", tariff: "clevel" } },
+      { text: "Более $500M", result: { role: "consultant", tariff: "clevel" } }
+    ]
+  },
+
+  consultant_clevel_serial_success: {
+    id: "consultant_clevel_serial_success",
+    stage: "Шаг 6 из 7+",
+    question: "Каков track record?",
+    answers: [
+      { text: "Все компании выросли", next: "consultant_clevel_board_multiple" },
+      { text: "Были и успехи и неудачи", next: "consultant_clevel_learnings" }
+    ]
+  },
+
+  consultant_clevel_board_multiple: {
+    id: "consultant_clevel_board_multiple",
+    stage: "Шаг 7 из 7",
+    question: "В скольких board сейчас?",
+    answers: [
+      { text: "1-3 board seats", result: { role: "consultant", tariff: "clevel" } },
+      { text: "4-7 board seats", result: { role: "consultant", tariff: "clevel" } },
+      { text: "Более 7 board seats", result: { role: "consultant", tariff: "clevel" } }
+    ]
+  },
+
+  consultant_clevel_learnings: {
+    id: "consultant_clevel_learnings",
+    stage: "Шаг 7 из 7",
+    question: "Применяете ли опыт провалов?",
+    answers: [
+      { text: "Да, это ключевая ценность", result: { role: "consultant", tariff: "clevel" } },
+      { text: "Да, но фокус на успехах", result: { role: "consultant", tariff: "clevel" } }
+    ]
+  },
+
+  // ============ ВЕТКА ЭКСПЕРТОВ (расширенная до 7+) ============
+  expert_entry: {
+    id: "expert_entry",
+    stage: "Шаг 3 из 7+",
+    question: "Какой у вас уровень экспертизы?",
+    answers: [
+      { text: "Специалист (5-10 лет опыта)", next: "expert_specialist_domain" },
+      { text: "Старший эксперт (10-15 лет)", next: "expert_senior_focus" },
+      { text: "Гуру (15+ лет, признание в индустрии)", next: "expert_guru_value" }
+    ]
+  },
+
+  expert_specialist_domain: {
+    id: "expert_specialist_domain",
+    stage: "Шаг 4 из 7+",
+    question: "В какой области ваша экспертиза?",
+    answers: [
+      { text: "Технологии (CTO, архитектор)", next: "expert_specialist_certifications" },
+      { text: "Продукт (CPO, product management)", next: "expert_specialist_certifications" },
+      { text: "Маркетинг (CMO, growth)", next: "expert_specialist_certifications" },
+      { text: "Финансы (CFO, контроллинг)", next: "expert_specialist_certifications" }
+    ]
+  },
+
+  expert_specialist_certifications: {
+    id: "expert_specialist_certifications",
+    stage: "Шаг 5 из 7+",
+    question: "Есть ли у вас профессиональные сертификаты?",
+    answers: [
+      { text: "Да, международные сертификации", next: "expert_specialist_availability" },
+      { text: "Нет, но есть опыт в крупных компаниях", next: "expert_specialist_availability" }
+    ]
+  },
+
+  expert_specialist_availability: {
+    id: "expert_specialist_availability",
+    stage: "Шаг 6 из 7+",
+    question: "Сколько времени готовы уделять?",
+    answers: [
+      { text: "Part-time (10-20 часов/неделю)", next: "expert_specialist_rate" },
+      { text: "Полная занятость", next: "expert_specialist_commitment" }
+    ]
+  },
+
+  expert_specialist_rate: {
+    id: "expert_specialist_rate",
+    stage: "Шаг 7 из 7",
+    question: "Какой ваш часовой тариф?",
+    answers: [
+      { text: "$100-200/час", result: { role: "expert", tariff: "specialist" } },
+      { text: "$200-400/час", result: { role: "expert", tariff: "senior" } }
+    ]
+  },
+
+  expert_specialist_commitment: {
+    id: "expert_specialist_commitment",
+    stage: "Шаг 7 из 7",
+    question: "Готовы ли к долгосрочному контракту?",
+    answers: [
+      { text: "Да, 6-12 месяцев", result: { role: "expert", tariff: "senior" } },
+      { text: "Нет, предпочитаю проектную работу", result: { role: "expert", tariff: "specialist" } }
+    ]
+  },
+
+  expert_senior_focus: {
+    id: "expert_senior_focus",
+    stage: "Шаг 4 из 7+",
+    question: "На чем вы фокусируетесь?",
+    answers: [
+      { text: "Стратегические консультации", next: "expert_senior_industries" },
+      { text: "Операционное внедрение", next: "expert_senior_team_size" },
+      { text: "Менторинг и обучение", next: "expert_senior_mentees" }
+    ]
+  },
+
+  expert_senior_industries: {
+    id: "expert_senior_industries",
+    stage: "Шаг 5 из 7+",
+    question: "В скольких индустриях работали?",
+    answers: [
+      { text: "1-2 индустрии (узкая специализация)", next: "expert_senior_clients" },
+      { text: "3-5 индустрий", next: "expert_senior_track_record" },
+      { text: "Более 5 (широкий опыт)", next: "expert_senior_track_record" }
+    ]
+  },
+
+  expert_senior_clients: {
+    id: "expert_senior_clients",
+    stage: "Шаг 6 из 7+",
+    question: "С кем предпочитаете работать?",
+    answers: [
+      { text: "Стартапы (seed-series A)", next: "expert_senior_equity" },
+      { text: "Scale-ups (series B+)", next: "expert_senior_pricing" },
+      { text: "Enterprise", next: "expert_senior_pricing" }
+    ]
+  },
+
+  expert_senior_equity: {
+    id: "expert_senior_equity",
+    stage: "Шаг 7 из 7",
+    question: "Рассматриваете ли equity compensation?",
+    answers: [
+      { text: "Да, если проект интересный", result: { role: "expert", tariff: "senior" } },
+      { text: "Только частично (cash + equity)", result: { role: "expert", tariff: "senior" } },
+      { text: "Нет, только cash", result: { role: "expert", tariff: "senior" } }
+    ]
+  },
+
+  expert_senior_pricing: {
+    id: "expert_senior_pricing",
+    stage: "Шаг 7 из 7",
+    question: "Какая модель оплаты?",
+    answers: [
+      { text: "Retainer (месячный)", result: { role: "expert", tariff: "senior" } },
+      { text: "Проектная ставка", result: { role: "expert", tariff: "senior" } },
+      { text: "Success fee", result: { role: "expert", tariff: "guru" } }
+    ]
+  },
+
+  expert_senior_track_record: {
+    id: "expert_senior_track_record",
+    stage: "Шаг 6 из 7+",
+    question: "Есть ли успешные exits в портфолио?",
+    answers: [
+      { text: "Да, был частью команды exit", next: "expert_senior_reference" },
+      { text: "Нет, но помогал масштабировать", next: "expert_senior_pricing" }
+    ]
+  },
+
+  expert_senior_reference: {
+    id: "expert_senior_reference",
+    stage: "Шаг 7 из 7",
+    question: "Можете ли предоставить рекомендации?",
+    answers: [
+      { text: "Да, от CEO/основателей", result: { role: "expert", tariff: "guru" } },
+      { text: "Да, от менеджеров", result: { role: "expert", tariff: "senior" } }
+    ]
+  },
+
+  expert_senior_team_size: {
+    id: "expert_senior_team_size",
+    stage: "Шаг 5 из 7+",
+    question: "Какого размера команды управляли?",
+    answers: [
+      { text: "До 10 человек", next: "expert_senior_clients" },
+      { text: "10-50 человек", next: "expert_senior_track_record" },
+      { text: "Более 50 человек", next: "expert_senior_c_level" }
+    ]
+  },
+
+  expert_senior_c_level: {
+    id: "expert_senior_c_level",
+    stage: "Шаг 6 из 7+",
+    question: "Были ли в C-level позиции?",
+    answers: [
+      { text: "Да, был CXO", next: "expert_senior_interim" },
+      { text: "Нет, VP/Director level", next: "expert_senior_pricing" }
+    ]
+  },
+
+  expert_senior_interim: {
+    id: "expert_senior_interim",
+    stage: "Шаг 7 из 7",
+    question: "Рассматриваете ли interim CXO роль?",
+    answers: [
+      { text: "Да, это приоритет", result: { role: "expert", tariff: "guru" } },
+      { text: "Нет, только консалтинг", result: { role: "expert", tariff: "senior" } }
+    ]
+  },
+
+  expert_senior_mentees: {
+    id: "expert_senior_mentees",
+    stage: "Шаг 5 из 7+",
+    question: "Сколько у вас было менти?",
+    answers: [
+      { text: "До 10 человек", next: "expert_senior_programs" },
+      { text: "10-50 человек", next: "expert_senior_teaching" },
+      { text: "Более 50 (корпоративное обучение)", next: "expert_senior_thought_leader" }
+    ]
+  },
+
+  expert_senior_programs: {
+    id: "expert_senior_programs",
+    stage: "Шаг 6 из 7+",
+    question: "Есть ли структурированная программа?",
+    answers: [
+      { text: "Да, разработал программу", next: "expert_senior_pricing_mentor" },
+      { text: "Нет, индивидуальный подход", next: "expert_senior_pricing_mentor" }
+    ]
+  },
+
+  expert_senior_pricing_mentor: {
+    id: "expert_senior_pricing_mentor",
+    stage: "Шаг 7 из 7",
+    question: "Какая модель работы с менти?",
+    answers: [
+      { text: "Почасовая оплата", result: { role: "expert", tariff: "senior" } },
+      { text: "Месячный retainer", result: { role: "expert", tariff: "senior" } },
+      { text: "Equity в стартапе", result: { role: "expert", tariff: "guru" } }
+    ]
+  },
+
+  expert_senior_teaching: {
+    id: "expert_senior_teaching",
+    stage: "Шаг 6 из 7+",
+    question: "Преподаете ли в университетах?",
+    answers: [
+      { text: "Да, регулярно", next: "expert_senior_publications" },
+      { text: "Нет, только корпоративное обучение", next: "expert_senior_pricing_mentor" }
+    ]
+  },
+
+  expert_senior_publications: {
+    id: "expert_senior_publications",
+    stage: "Шаг 7 из 7",
+    question: "Есть ли публикации или книги?",
+    answers: [
+      { text: "Да, написал книгу(и)", result: { role: "expert", tariff: "guru" } },
+      { text: "Да, регулярно пишу статьи", result: { role: "expert", tariff: "guru" } },
+      { text: "Нет", result: { role: "expert", tariff: "senior" } }
+    ]
+  },
+
+  expert_senior_thought_leader: {
+    id: "expert_senior_thought_leader",
+    stage: "Шаг 6 из 7+",
+    question: "Вы thought leader в индустрии?",
+    answers: [
+      { text: "Да, меня приглашают на конференции", next: "expert_guru_speaking" },
+      { text: "Нет, но есть экспертиза", next: "expert_senior_pricing_mentor" }
+    ]
+  },
+
+  expert_guru_speaking: {
+    id: "expert_guru_speaking",
+    stage: "Шаг 7 из 7",
+    question: "Выступаете ли на международных конференциях?",
+    answers: [
+      { text: "Да, регулярно", result: { role: "expert", tariff: "guru" } },
+      { text: "Иногда", result: { role: "expert", tariff: "guru" } }
+    ]
+  },
+
+  expert_guru_value: {
+    id: "expert_guru_value",
+    stage: "Шаг 4 из 7+",
+    question: "В чем ваша уникальная ценность?",
+    answers: [
+      { text: "Построил и продал стартапы", next: "expert_guru_exits" },
+      { text: "Работал в FAANG/топ компаниях", next: "expert_guru_network" },
+      { text: "Признанный эксперт в узкой нише", next: "expert_guru_niche" }
+    ]
+  },
+
+  expert_guru_exits: {
+    id: "expert_guru_exits",
+    stage: "Шаг 5 из 7+",
+    question: "Сколько было exits?",
+    answers: [
+      { text: "1 exit", next: "expert_guru_deal_size" },
+      { text: "2-3 exits", next: "expert_guru_advisory_board" },
+      { text: "Более 3 exits", next: "expert_guru_portfolio" }
+    ]
+  },
+
+  expert_guru_deal_size: {
+    id: "expert_guru_deal_size",
+    stage: "Шаг 6 из 7+",
+    question: "Какого размера была сделка?",
+    answers: [
+      { text: "$1M - $10M", next: "expert_guru_role_type" },
+      { text: "$10M - $100M", next: "expert_guru_board_seats" },
+      { text: "Более $100M", next: "expert_guru_exclusive" }
+    ]
+  },
+
+  expert_guru_role_type: {
+    id: "expert_guru_role_type",
+    stage: "Шаг 7 из 7",
+    question: "Какую роль предпочитаете?",
+    answers: [
+      { text: "Advisory board member", result: { role: "expert", tariff: "guru" } },
+      { text: "Interim executive", result: { role: "expert", tariff: "guru" } },
+      { text: "Strategic consultant", result: { role: "expert", tariff: "guru" } }
+    ]
+  },
+
+  expert_guru_board_seats: {
+    id: "expert_guru_board_seats",
+    stage: "Шаг 7 из 7",
+    question: "Сколько board seats у вас сейчас?",
+    answers: [
+      { text: "1-2", result: { role: "expert", tariff: "guru" } },
+      { text: "3-5", result: { role: "expert", tariff: "guru" } },
+      { text: "Более 5", result: { role: "expert", tariff: "guru" } }
+    ]
+  },
+
+  expert_guru_exclusive: {
+    id: "expert_guru_exclusive",
+    stage: "Шаг 7 из 7",
+    question: "Работаете ли только с эксклюзивными проектами?",
+    answers: [
+      { text: "Да, очень селективный", result: { role: "expert", tariff: "guru" } },
+      { text: "Нет, открыт к разным проектам", result: { role: "expert", tariff: "guru" } }
+    ]
+  },
+
+  expert_guru_advisory_board: {
+    id: "expert_guru_advisory_board",
+    stage: "Шаг 6 из 7+",
+    question: "В скольких advisory boards состоите?",
+    answers: [
+      { text: "1-3", next: "expert_guru_compensation" },
+      { text: "4-10", next: "expert_guru_portfolio" },
+      { text: "Более 10", next: "expert_guru_venture" }
+    ]
+  },
+
+  expert_guru_compensation: {
+    id: "expert_guru_compensation",
+    stage: "Шаг 7 из 7",
+    question: "Какая компенсация?",
+    answers: [
+      { text: "Equity only", result: { role: "expert", tariff: "guru" } },
+      { text: "Cash + equity", result: { role: "expert", tariff: "guru" } },
+      { text: "Cash only (высокая ставка)", result: { role: "expert", tariff: "guru" } }
+    ]
+  },
+
+  expert_guru_portfolio: {
+    id: "expert_guru_portfolio",
+    stage: "Шаг 7 из 7",
+    question: "Инвестируете ли в портфолио?",
+    answers: [
+      { text: "Да, активный angel investor", result: { role: "expert", tariff: "guru" } },
+      { text: "Да, иногда", result: { role: "expert", tariff: "guru" } },
+      { text: "Нет, только экспертиза", result: { role: "expert", tariff: "guru" } }
+    ]
+  },
+
+  expert_guru_venture: {
+    id: "expert_guru_venture",
+    stage: "Шаг 7 из 7",
+    question: "Ассоциированы ли с VC фондом?",
+    answers: [
+      { text: "Да, партнер/советник VC", result: { role: "expert", tariff: "guru" } },
+      { text: "Нет", result: { role: "expert", tariff: "guru" } }
+    ]
+  },
+
+  expert_guru_network: {
+    id: "expert_guru_network",
+    stage: "Шаг 5 из 7+",
+    question: "В каких компаниях работали?",
+    answers: [
+      { text: "Google, Facebook, Amazon и т.д.", next: "expert_guru_level_faang" },
+      { text: "Лидирующие стартапы (unicorns)", next: "expert_guru_startup_role" },
+      { text: "Fortune 500", next: "expert_guru_corporate_role" }
+    ]
+  },
+
+  expert_guru_level_faang: {
+    id: "expert_guru_level_faang",
+    stage: "Шаг 6 из 7+",
+    question: "Какой был уровень?",
+    answers: [
+      { text: "Senior engineer/manager", next: "expert_guru_role_type" },
+      { text: "Director/VP", next: "expert_guru_board_seats" },
+      { text: "C-level", next: "expert_guru_exclusive" }
+    ]
+  },
+
+  expert_guru_startup_role: {
+    id: "expert_guru_startup_role",
+    stage: "Шаг 6 из 7+",
+    question: "Какую роль играли?",
+    answers: [
+      { text: "Early employee (1-50)", next: "expert_guru_equity_outcome" },
+      { text: "Founding team", next: "expert_guru_deal_size" },
+      { text: "Executive hire", next: "expert_guru_board_seats" }
+    ]
+  },
+
+  expert_guru_equity_outcome: {
+    id: "expert_guru_equity_outcome",
+    stage: "Шаг 7 из 7",
+    question: "Какой был outcome?",
+    answers: [
+      { text: "IPO", result: { role: "expert", tariff: "guru" } },
+      { text: "Acquisition", result: { role: "expert", tariff: "guru" } },
+      { text: "Все еще там/не было exit", result: { role: "expert", tariff: "guru" } }
+    ]
+  },
+
+  expert_guru_corporate_role: {
+    id: "expert_guru_corporate_role",
+    stage: "Шаг 6 из 7+",
+    question: "Какая была позиция?",
+    answers: [
+      { text: "VP/SVP", next: "expert_guru_board_seats" },
+      { text: "C-level", next: "expert_guru_exclusive" }
+    ]
+  },
+
+  expert_guru_niche: {
+    id: "expert_guru_niche",
+    stage: "Шаг 5 из 7+",
+    question: "Что это за ниша?",
+    answers: [
+      { text: "Blockchain/Web3", next: "expert_guru_recognition" },
+      { text: "AI/ML", next: "expert_guru_recognition" },
+      { text: "Quantum computing", next: "expert_guru_recognition" },
+      { text: "Biotech/Healthcare", next: "expert_guru_recognition" },
+      { text: "Другая emerging tech", next: "expert_guru_recognition" }
+    ]
+  },
+
+  expert_guru_recognition: {
+    id: "expert_guru_recognition",
+    stage: "Шаг 6 из 7+",
+    question: "Какое признание в индустрии?",
+    answers: [
+      { text: "Публикации в top journals", next: "expert_guru_patents" },
+      { text: "Keynote speaker на конференциях", next: "expert_senior_publications" },
+      { text: "Награды и премии", next: "expert_guru_portfolio" }
+    ]
+  },
+
+  expert_guru_patents: {
+    id: "expert_guru_patents",
+    stage: "Шаг 7 из 7",
+    question: "Есть ли патенты?",
+    answers: [
+      { text: "Да, несколько патентов", result: { role: "expert", tariff: "guru" } },
+      { text: "Нет", result: { role: "expert", tariff: "guru" } }
+    ]
+  },
+
+  // ============ ВЕТКА ФРИЛАНСЕРОВ (расширенная до 7+) ============
   ecosystem_freelancer_level: {
     id: "ecosystem_freelancer_level",
     stage: "Шаг 3 из 7+",
     question: "Какой у вас уровень?",
     answers: [
-      { text: "Новичок", result: { role: "freelancer", tariff: "novice" } },
-      { text: "Профессионал", result: { role: "freelancer", tariff: "professional" } },
-      { text: "Эксперт", result: { role: "freelancer", tariff: "expert" } }
+      { text: "Новичок (менее 1 года)", next: "freelancer_novice_skills" },
+      { text: "Профессионал (1-3 года)", next: "freelancer_pro_specialization" },
+      { text: "Эксперт (3+ лет)", next: "freelancer_expert_niche" }
+    ]
+  },
+
+  freelancer_novice_skills: {
+    id: "freelancer_novice_skills",
+    stage: "Шаг 4 из 7+",
+    question: "Какие навыки вы предлагаете?",
+    answers: [
+      { text: "Дизайн (UI/UX, графика)", next: "freelancer_novice_portfolio" },
+      { text: "Разработка (frontend, backend)", next: "freelancer_novice_portfolio" },
+      { text: "Контент (копирайтинг, SMM)", next: "freelancer_novice_portfolio" },
+      { text: "Другое", next: "freelancer_novice_portfolio" }
+    ]
+  },
+
+  freelancer_novice_portfolio: {
+    id: "freelancer_novice_portfolio",
+    stage: "Шаг 5 из 7+",
+    question: "Есть ли у вас портфолио?",
+    answers: [
+      { text: "Да, есть 5+ работ", next: "freelancer_novice_rate" },
+      { text: "Да, но только 1-3 работы", next: "freelancer_novice_learning" },
+      { text: "Нет, я только начинаю", next: "freelancer_novice_first_project" }
+    ]
+  },
+
+  freelancer_novice_rate: {
+    id: "freelancer_novice_rate",
+    stage: "Шаг 6 из 7+",
+    question: "Какой ваш часовой тариф?",
+    answers: [
+      { text: "До $20/час", next: "freelancer_novice_goal" },
+      { text: "$20-40/час", next: "freelancer_novice_commitment" }
+    ]
+  },
+
+  freelancer_novice_goal: {
+    id: "freelancer_novice_goal",
+    stage: "Шаг 7 из 7",
+    question: "Какая ваша главная цель?",
+    answers: [
+      { text: "Набраться опыта", result: { role: "freelancer", tariff: "novice" } },
+      { text: "Зарабатывать деньги", result: { role: "freelancer", tariff: "novice" } }
+    ]
+  },
+
+  freelancer_novice_commitment: {
+    id: "freelancer_novice_commitment",
+    stage: "Шаг 7 из 7",
+    question: "Сколько времени готовы уделять?",
+    answers: [
+      { text: "Part-time (до 20 часов/неделю)", result: { role: "freelancer", tariff: "novice" } },
+      { text: "Full-time (40+ часов/неделю)", result: { role: "freelancer", tariff: "professional" } }
+    ]
+  },
+
+  freelancer_novice_learning: {
+    id: "freelancer_novice_learning",
+    stage: "Шаг 6 из 7+",
+    question: "Хотите ли развивать навыки?",
+    answers: [
+      { text: "Да, нужен менторинг", next: "freelancer_novice_mentor_support" },
+      { text: "Нет, буду учиться сам", next: "freelancer_novice_goal" }
+    ]
+  },
+
+  freelancer_novice_mentor_support: {
+    id: "freelancer_novice_mentor_support",
+    stage: "Шаг 7 из 7",
+    question: "Нужна ли помощь в поиске клиентов?",
+    answers: [
+      { text: "Да, это критично", result: { role: "freelancer", tariff: "novice" } },
+      { text: "Нет, найду сам", result: { role: "freelancer", tariff: "novice" } }
+    ]
+  },
+
+  freelancer_novice_first_project: {
+    id: "freelancer_novice_first_project",
+    stage: "Шаг 6 из 7+",
+    question: "Готовы ли работать за символическую плату?",
+    answers: [
+      { text: "Да, для первого опыта", next: "freelancer_novice_timeline" },
+      { text: "Нет, хочу нормальную ставку", next: "freelancer_novice_goal" }
+    ]
+  },
+
+  freelancer_novice_timeline: {
+    id: "freelancer_novice_timeline",
+    stage: "Шаг 7 из 7",
+    question: "Когда хотите начать?",
+    answers: [
+      { text: "Прямо сейчас", result: { role: "freelancer", tariff: "novice" } },
+      { text: "Через 1-2 месяца", result: { role: "freelancer", tariff: "novice" } }
+    ]
+  },
+
+  freelancer_pro_specialization: {
+    id: "freelancer_pro_specialization",
+    stage: "Шаг 4 из 7+",
+    question: "Какая ваша специализация?",
+    answers: [
+      { text: "Веб-разработка (React, Vue, Node)", next: "freelancer_pro_clients" },
+      { text: "Мобильная разработка (iOS, Android)", next: "freelancer_pro_clients" },
+      { text: "UI/UX дизайн", next: "freelancer_pro_clients" },
+      { text: "Digital маркетинг", next: "freelancer_pro_clients" },
+      { text: "Другое", next: "freelancer_pro_clients" }
+    ]
+  },
+
+  freelancer_pro_clients: {
+    id: "freelancer_pro_clients",
+    stage: "Шаг 5 из 7+",
+    question: "Сколько клиентов у вас было?",
+    answers: [
+      { text: "До 10 клиентов", next: "freelancer_pro_rate" },
+      { text: "10-30 клиентов", next: "freelancer_pro_recurring" },
+      { text: "Более 30 клиентов", next: "freelancer_pro_team" }
+    ]
+  },
+
+  freelancer_pro_rate: {
+    id: "freelancer_pro_rate",
+    stage: "Шаг 6 из 7+",
+    question: "Какой ваш текущий тариф?",
+    answers: [
+      { text: "$30-50/час", next: "freelancer_pro_project_type" },
+      { text: "$50-100/час", next: "freelancer_pro_availability" }
+    ]
+  },
+
+  freelancer_pro_project_type: {
+    id: "freelancer_pro_project_type",
+    stage: "Шаг 7 из 7",
+    question: "Какие проекты предпочитаете?",
+    answers: [
+      { text: "Краткосрочные (до 1 месяца)", result: { role: "freelancer", tariff: "professional" } },
+      { text: "Долгосрочные контракты", result: { role: "freelancer", tariff: "professional" } }
+    ]
+  },
+
+  freelancer_pro_availability: {
+    id: "freelancer_pro_availability",
+    stage: "Шаг 7 из 7",
+    question: "Какая ваша доступность?",
+    answers: [
+      { text: "Part-time (20 часов)", result: { role: "freelancer", tariff: "professional" } },
+      { text: "Full-time (40+ часов)", result: { role: "freelancer", tariff: "expert" } }
+    ]
+  },
+
+  freelancer_pro_recurring: {
+    id: "freelancer_pro_recurring",
+    stage: "Шаг 6 из 7+",
+    question: "Есть ли у вас постоянные клиенты?",
+    answers: [
+      { text: "Да, 3+ ретейнеров", next: "freelancer_pro_revenue" },
+      { text: "Нет, ищу каждый раз", next: "freelancer_pro_project_type" }
+    ]
+  },
+
+  freelancer_pro_revenue: {
+    id: "freelancer_pro_revenue",
+    stage: "Шаг 7 из 7",
+    question: "Какой месячный доход?",
+    answers: [
+      { text: "$3k-$5k/месяц", result: { role: "freelancer", tariff: "professional" } },
+      { text: "$5k-$10k/месяц", result: { role: "freelancer", tariff: "expert" } },
+      { text: "Более $10k/месяц", result: { role: "freelancer", tariff: "expert" } }
+    ]
+  },
+
+  freelancer_pro_team: {
+    id: "freelancer_pro_team",
+    stage: "Шаг 6 из 7+",
+    question: "Работаете ли в команде?",
+    answers: [
+      { text: "Да, у меня есть команда", next: "freelancer_to_agency" },
+      { text: "Нет, работаю один", next: "freelancer_pro_project_type" }
+    ]
+  },
+
+  freelancer_to_agency: {
+    id: "freelancer_to_agency",
+    stage: "Шаг 7 из 7",
+    question: "Планируете ли развивать агентство?",
+    answers: [
+      { text: "Да, это моя цель", result: { role: "outsourcer", tariff: "studio" } },
+      { text: "Нет, останусь фрилансером", result: { role: "freelancer", tariff: "expert" } }
+    ]
+  },
+
+  freelancer_expert_niche: {
+    id: "freelancer_expert_niche",
+    stage: "Шаг 4 из 7+",
+    question: "Есть ли у вас узкая ниша?",
+    answers: [
+      { text: "Да, специализируюсь на определенной индустрии", next: "freelancer_expert_rate" },
+      { text: "Нет, беру любые проекты", next: "freelancer_expert_branding" }
+    ]
+  },
+
+  freelancer_expert_rate: {
+    id: "freelancer_expert_rate",
+    stage: "Шаг 5 из 7+",
+    question: "Какой ваш тариф?",
+    answers: [
+      { text: "$80-150/час", next: "freelancer_expert_projects" },
+      { text: "$150-300/час", next: "freelancer_expert_vip_clients" },
+      { text: "Более $300/час", next: "freelancer_expert_consulting" }
+    ]
+  },
+
+  freelancer_expert_projects: {
+    id: "freelancer_expert_projects",
+    stage: "Шаг 6 из 7+",
+    question: "Какие проекты вам интересны?",
+    answers: [
+      { text: "Стартапы с потенциалом", next: "freelancer_expert_equity" },
+      { text: "Enterprise клиенты", next: "freelancer_expert_retainer" }
+    ]
+  },
+
+  freelancer_expert_equity: {
+    id: "freelancer_expert_equity",
+    stage: "Шаг 7 из 7",
+    question: "Рассматриваете ли equity вместо оплаты?",
+    answers: [
+      { text: "Да, если проект перспективный", result: { role: "expert", tariff: "senior" } },
+      { text: "Нет, только деньги", result: { role: "freelancer", tariff: "expert" } }
+    ]
+  },
+
+  freelancer_expert_retainer: {
+    id: "freelancer_expert_retainer",
+    stage: "Шаг 7 из 7",
+    question: "Предпочитаете retainer или проектную работу?",
+    answers: [
+      { text: "Retainer с фиксированной ставкой", result: { role: "freelancer", tariff: "expert" } },
+      { text: "Проектная с премией за результат", result: { role: "expert", tariff: "specialist" } }
+    ]
+  },
+
+  freelancer_expert_vip_clients: {
+    id: "freelancer_expert_vip_clients",
+    stage: "Шаг 6 из 7+",
+    question: "С кем предпочитаете работать?",
+    answers: [
+      { text: "Только C-level и основатели", next: "freelancer_expert_advisory" },
+      { text: "С менеджерами проектов", next: "freelancer_expert_retainer" }
+    ]
+  },
+
+  freelancer_expert_advisory: {
+    id: "freelancer_expert_advisory",
+    stage: "Шаг 7 из 7",
+    question: "Готовы ли выполнять роль advisory?",
+    answers: [
+      { text: "Да, это моя основная роль", result: { role: "expert", tariff: "guru" } },
+      { text: "Нет, предпочитаю execution", result: { role: "freelancer", tariff: "expert" } }
+    ]
+  },
+
+  freelancer_expert_consulting: {
+    id: "freelancer_expert_consulting",
+    stage: "Шаг 5 из 7+",
+    question: "Вы консультант или исполнитель?",
+    answers: [
+      { text: "Консультант (стратегия, аудит)", next: "freelancer_expert_industry" },
+      { text: "Исполнитель (hands-on работа)", next: "freelancer_expert_retainer" }
+    ]
+  },
+
+  freelancer_expert_industry: {
+    id: "freelancer_expert_industry",
+    stage: "Шаг 6 из 7+",
+    question: "В какой индустрии ваша экспертиза?",
+    answers: [
+      { text: "FinTech / Crypto", next: "freelancer_expert_track_record" },
+      { text: "HealthTech / BioTech", next: "freelancer_expert_track_record" },
+      { text: "AI / ML / Big Data", next: "freelancer_expert_track_record" },
+      { text: "E-commerce / Retail", next: "freelancer_expert_track_record" }
+    ]
+  },
+
+  freelancer_expert_track_record: {
+    id: "freelancer_expert_track_record",
+    stage: "Шаг 7 из 7",
+    question: "Есть ли у вас успешные кейсы?",
+    answers: [
+      { text: "Да, помог вырасти нескольким стартапам", result: { role: "expert", tariff: "guru" } },
+      { text: "Да, есть портфолио проектов", result: { role: "expert", tariff: "senior" } }
+    ]
+  },
+
+  freelancer_expert_branding: {
+    id: "freelancer_expert_branding",
+    stage: "Шаг 5 из 7+",
+    question: "Есть ли у вас личный бренд?",
+    answers: [
+      { text: "Да, меня знают в индустрии", next: "freelancer_expert_rate" },
+      { text: "Нет, работаю без PR", next: "freelancer_expert_projects" }
     ]
   },
 
