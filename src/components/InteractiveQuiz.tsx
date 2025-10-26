@@ -3486,18 +3486,6 @@ const quizTree: Record<string, Question> = {
     ]
   },
 
-  // ============ ВЕТКА ФРИЛАНСЕРА (из ecosystem) ============
-  ecosystem_freelancer_level: {
-    id: "ecosystem_freelancer_level",
-    stage: "Шаг 3 из 7+",
-    question: "Вы работаете в одиночку или с командой?",
-    answers: [
-      { text: "Работаю один как фрилансер", next: "freelancer_experience" },
-      { text: "Руковожу командой/агентством", next: "outsourcer_team_size" },
-      { text: "Ищу проекты как подрядчик", next: "contractor_specialization" }
-    ]
-  },
-
   // === OUTSOURCER BRANCH ===
   outsourcer_team_size: {
     id: "outsourcer_team_size",
@@ -4854,13 +4842,1022 @@ const quizTree: Record<string, Question> = {
     ]
   },
 
+  // ============ ВЕТКА ЭКОСИСТЕМЫ: ПАРТНЕРЫ И КОММЬЮНИТИ ============
   ecosystem_ambassador: {
     id: "ecosystem_ambassador",
     stage: "Шаг 3 из 7+",
-    question: "Вы амбассадор или блогер?",
+    question: "Какая роль вас интересует?",
     answers: [
-      { text: "Амбассадор", result: { role: "ambassador", tariff: "ambassador" } },
-      { text: "Блогер", result: { role: "blogger", tariff: "blogger" } }
+      { text: "Партнер (привлечение клиентов)", next: "partner_experience" },
+      { text: "Амбассадор проектов", next: "ambassador_audience" },
+      { text: "Блогер/Инфлюенсер", next: "blogger_platform" },
+      { text: "Ищу работу (Job Seeker)", next: "jobseeker_status" }
+    ]
+  },
+
+  // ============ ВЕТКА ПАРТНЕРА (расширенная до 7+) ============
+  partner_experience: {
+    id: "partner_experience",
+    stage: "Шаг 4 из 7+",
+    question: "Есть ли у вас опыт партнерского маркетинга?",
+    answers: [
+      { text: "Да, работал(а) с партнерками", next: "partner_network" },
+      { text: "Нет, хочу начать", next: "partner_motivation" }
+    ]
+  },
+
+  partner_network: {
+    id: "partner_network",
+    stage: "Шаг 5 из 7+",
+    question: "Какая у вас сеть контактов?",
+    answers: [
+      { text: "Небольшая (до 100 потенциальных клиентов)", next: "partner_niche" },
+      { text: "Средняя (100-500 контактов)", next: "partner_conversion" },
+      { text: "Большая (500+ контактов)", next: "partner_revenue" }
+    ]
+  },
+
+  partner_niche: {
+    id: "partner_niche",
+    stage: "Шаг 6 из 7+",
+    question: "Есть ли у вас специализация по нише?",
+    answers: [
+      { text: "Да, работаю в определенной индустрии", next: "partner_time" },
+      { text: "Нет, работаю с разными сегментами", next: "partner_time" }
+    ]
+  },
+
+  partner_time: {
+    id: "partner_time",
+    stage: "Шаг 7 из 7",
+    question: "Сколько времени готовы уделять?",
+    answers: [
+      { text: "Несколько часов в неделю", result: { role: "partner", tariff: "starter" } },
+      { text: "Несколько часов в день", result: { role: "partner", tariff: "starter" } }
+    ]
+  },
+
+  partner_conversion: {
+    id: "partner_conversion",
+    stage: "Шаг 6 из 7+",
+    question: "Какой процент конверсии в сделки?",
+    answers: [
+      { text: "До 5%", next: "partner_tools" },
+      { text: "5-10%", next: "partner_scaling" },
+      { text: "Более 10%", next: "partner_revenue" }
+    ]
+  },
+
+  partner_tools: {
+    id: "partner_tools",
+    stage: "Шаг 7 из 7",
+    question: "Используете ли CRM и аналитику?",
+    answers: [
+      { text: "Да, отслеживаю метрики", result: { role: "partner", tariff: "pro" } },
+      { text: "Нет, работаю вручную", result: { role: "partner", tariff: "starter" } }
+    ]
+  },
+
+  partner_scaling: {
+    id: "partner_scaling",
+    stage: "Шаг 7 из 7",
+    question: "Планируете ли масштабировать партнерский бизнес?",
+    answers: [
+      { text: "Да, хочу построить агентство", result: { role: "partner", tariff: "elite" } },
+      { text: "Нет, комфортен текущий масштаб", result: { role: "partner", tariff: "pro" } }
+    ]
+  },
+
+  partner_revenue: {
+    id: "partner_revenue",
+    stage: "Шаг 6 из 7+",
+    question: "Какой месячный доход от партнерки?",
+    answers: [
+      { text: "До $2,000", next: "partner_growth_goal" },
+      { text: "$2,000-$10,000", next: "partner_team" },
+      { text: "Более $10,000", next: "partner_automation" }
+    ]
+  },
+
+  partner_growth_goal: {
+    id: "partner_growth_goal",
+    stage: "Шаг 7 из 7",
+    question: "Хотите ли увеличить доход?",
+    answers: [
+      { text: "Да, хочу расти до $10k+", result: { role: "partner", tariff: "pro" } },
+      { text: "Нет, это дополнительный доход", result: { role: "partner", tariff: "starter" } }
+    ]
+  },
+
+  partner_team: {
+    id: "partner_team",
+    stage: "Шаг 7 из 7",
+    question: "Работаете ли с командой?",
+    answers: [
+      { text: "Да, у меня есть помощники", result: { role: "partner", tariff: "elite" } },
+      { text: "Нет, работаю один", result: { role: "partner", tariff: "pro" } }
+    ]
+  },
+
+  partner_automation: {
+    id: "partner_automation",
+    stage: "Шаг 7 из 7",
+    question: "Используете ли автоматизацию процессов?",
+    answers: [
+      { text: "Да, автоматизировал воронки", result: { role: "partner", tariff: "elite" } },
+      { text: "Частично", result: { role: "partner", tariff: "elite" } }
+    ]
+  },
+
+  partner_motivation: {
+    id: "partner_motivation",
+    stage: "Шаг 5 из 7+",
+    question: "Что вас привлекает в партнерстве?",
+    answers: [
+      { text: "Пассивный доход", next: "partner_audience" },
+      { text: "Развитие бизнес-навыков", next: "partner_learning" },
+      { text: "Расширение сети контактов", next: "partner_network_building" }
+    ]
+  },
+
+  partner_audience: {
+    id: "partner_audience",
+    stage: "Шаг 6 из 7+",
+    question: "Есть ли у вас аудитория?",
+    answers: [
+      { text: "Да, есть свой блог/канал", next: "partner_content" },
+      { text: "Нет, буду строить с нуля", next: "partner_commitment" }
+    ]
+  },
+
+  partner_content: {
+    id: "partner_content",
+    stage: "Шаг 7 из 7",
+    question: "Готовы ли создавать контент?",
+    answers: [
+      { text: "Да, регулярно пишу/снимаю", result: { role: "partner", tariff: "pro" } },
+      { text: "Буду пробовать", result: { role: "partner", tariff: "starter" } }
+    ]
+  },
+
+  partner_commitment: {
+    id: "partner_commitment",
+    stage: "Шаг 7 из 7",
+    question: "Готовы ли учиться партнерскому маркетингу?",
+    answers: [
+      { text: "Да, готов(а) инвестировать время", result: { role: "partner", tariff: "starter" } },
+      { text: "Хочу попробовать", result: { role: "partner", tariff: "starter" } }
+    ]
+  },
+
+  partner_learning: {
+    id: "partner_learning",
+    stage: "Шаг 6 из 7+",
+    question: "Готовы ли изучать продажи и маркетинг?",
+    answers: [
+      { text: "Да, хочу глубоко разобраться", next: "partner_budget" },
+      { text: "Базово, для старта", next: "partner_commitment" }
+    ]
+  },
+
+  partner_budget: {
+    id: "partner_budget",
+    stage: "Шаг 7 из 7",
+    question: "Есть ли бюджет на рекламу?",
+    answers: [
+      { text: "Да, $500-$2000", result: { role: "partner", tariff: "pro" } },
+      { text: "Нет, только органика", result: { role: "partner", tariff: "starter" } }
+    ]
+  },
+
+  partner_network_building: {
+    id: "partner_network_building",
+    stage: "Шаг 6 из 7+",
+    question: "Как планируете строить сеть?",
+    answers: [
+      { text: "Через LinkedIn и нетворкинг", next: "partner_outreach" },
+      { text: "Через события и конференции", next: "partner_events" }
+    ]
+  },
+
+  partner_outreach: {
+    id: "partner_outreach",
+    stage: "Шаг 7 из 7",
+    question: "Готовы ли делать холодный outreach?",
+    answers: [
+      { text: "Да, умею писать сообщения", result: { role: "partner", tariff: "pro" } },
+      { text: "Нет, предпочитаю теплые контакты", result: { role: "partner", tariff: "starter" } }
+    ]
+  },
+
+  partner_events: {
+    id: "partner_events",
+    stage: "Шаг 7 из 7",
+    question: "Как часто посещаете мероприятия?",
+    answers: [
+      { text: "Регулярно (1-2 раза в месяц)", result: { role: "partner", tariff: "pro" } },
+      { text: "Иногда", result: { role: "partner", tariff: "starter" } }
+    ]
+  },
+
+  // ============ ВЕТКА АМБАССАДОРА (расширенная до 7+) ============
+  ambassador_audience: {
+    id: "ambassador_audience",
+    stage: "Шаг 4 из 7+",
+    question: "Какая у вас аудитория?",
+    answers: [
+      { text: "До 1,000 подписчиков", next: "ambassador_motivation" },
+      { text: "1,000-10,000 подписчиков", next: "ambassador_engagement" },
+      { text: "Более 10,000 подписчиков", next: "ambassador_blogger_crossover" }
+    ]
+  },
+
+  ambassador_motivation: {
+    id: "ambassador_motivation",
+    stage: "Шаг 5 из 7+",
+    question: "Что вас мотивирует?",
+    answers: [
+      { text: "Поддержка стартапов", next: "ambassador_niche" },
+      { text: "Расширение личного бренда", next: "ambassador_content_type" },
+      { text: "Дополнительный доход", next: "ambassador_time" }
+    ]
+  },
+
+  ambassador_niche: {
+    id: "ambassador_niche",
+    stage: "Шаг 6 из 7+",
+    question: "Есть ли у вас специализация?",
+    answers: [
+      { text: "Да, tech/SaaS стартапы", next: "ambassador_expertise" },
+      { text: "Да, другая индустрия", next: "ambassador_expertise" },
+      { text: "Нет, готов(а) работать с разными проектами", next: "ambassador_commitment" }
+    ]
+  },
+
+  ambassador_expertise: {
+    id: "ambassador_expertise",
+    stage: "Шаг 7 из 7",
+    question: "Есть ли экспертиза в вашей нише?",
+    answers: [
+      { text: "Да, работал(а) в индустрии", result: { role: "ambassador", tariff: "ambassador" } },
+      { text: "Нет, но активно изучаю", result: { role: "ambassador", tariff: "ambassador" } }
+    ]
+  },
+
+  ambassador_content_type: {
+    id: "ambassador_content_type",
+    stage: "Шаг 6 из 7+",
+    question: "Какой контент создаете?",
+    answers: [
+      { text: "Посты в соцсетях", next: "ambassador_frequency" },
+      { text: "Статьи/лонгриды", next: "ambassador_frequency" },
+      { text: "Видео/подкасты", next: "ambassador_production" }
+    ]
+  },
+
+  ambassador_frequency: {
+    id: "ambassador_frequency",
+    stage: "Шаг 7 из 7",
+    question: "Как часто публикуете контент?",
+    answers: [
+      { text: "Несколько раз в неделю", result: { role: "ambassador", tariff: "ambassador" } },
+      { text: "Раз в неделю", result: { role: "ambassador", tariff: "ambassador" } },
+      { text: "Реже", result: { role: "ambassador", tariff: "ambassador" } }
+    ]
+  },
+
+  ambassador_production: {
+    id: "ambassador_production",
+    stage: "Шаг 7 из 7",
+    question: "Какое качество продакшена?",
+    answers: [
+      { text: "Профессиональное (студия/оборудование)", result: { role: "ambassador", tariff: "ambassador" } },
+      { text: "Среднее (смартфон + монтаж)", result: { role: "ambassador", tariff: "ambassador" } }
+    ]
+  },
+
+  ambassador_time: {
+    id: "ambassador_time",
+    stage: "Шаг 6 из 7+",
+    question: "Сколько времени готовы уделять?",
+    answers: [
+      { text: "5-10 часов в неделю", next: "ambassador_projects" },
+      { text: "Более 10 часов в неделю", next: "ambassador_full_time" }
+    ]
+  },
+
+  ambassador_projects: {
+    id: "ambassador_projects",
+    stage: "Шаг 7 из 7",
+    question: "Сколько проектов готовы продвигать?",
+    answers: [
+      { text: "1-2 проекта одновременно", result: { role: "ambassador", tariff: "ambassador" } },
+      { text: "3-5 проектов", result: { role: "ambassador", tariff: "ambassador" } }
+    ]
+  },
+
+  ambassador_full_time: {
+    id: "ambassador_full_time",
+    stage: "Шаг 7 из 7",
+    question: "Рассматриваете ли это как основную деятельность?",
+    answers: [
+      { text: "Да, хочу делать это full-time", result: { role: "ambassador", tariff: "ambassador" } },
+      { text: "Нет, это подработка", result: { role: "ambassador", tariff: "ambassador" } }
+    ]
+  },
+
+  ambassador_commitment: {
+    id: "ambassador_commitment",
+    stage: "Шаг 7 из 7",
+    question: "Готовы ли активно строить аудиторию?",
+    answers: [
+      { text: "Да, буду регулярно создавать контент", result: { role: "ambassador", tariff: "ambassador" } },
+      { text: "Буду пробовать", result: { role: "ambassador", tariff: "ambassador" } }
+    ]
+  },
+
+  ambassador_engagement: {
+    id: "ambassador_engagement",
+    stage: "Шаг 5 из 7+",
+    question: "Какой уровень вовлеченности аудитории?",
+    answers: [
+      { text: "Высокий (5%+ engagement)", next: "ambassador_monetization" },
+      { text: "Средний (2-5%)", next: "ambassador_growth" },
+      { text: "Низкий (менее 2%)", next: "ambassador_content_strategy" }
+    ]
+  },
+
+  ambassador_monetization: {
+    id: "ambassador_monetization",
+    stage: "Шаг 6 из 7+",
+    question: "Монетизируете ли сейчас аудиторию?",
+    answers: [
+      { text: "Да, есть доход от рекламы/партнерок", next: "ambassador_income" },
+      { text: "Нет, но хочу начать", next: "ambassador_projects" }
+    ]
+  },
+
+  ambassador_income: {
+    id: "ambassador_income",
+    stage: "Шаг 7 из 7",
+    question: "Какой месячный доход?",
+    answers: [
+      { text: "До $500", result: { role: "ambassador", tariff: "ambassador" } },
+      { text: "$500-$2000", result: { role: "ambassador", tariff: "ambassador" } },
+      { text: "Более $2000", result: { role: "blogger", tariff: "influencer" } }
+    ]
+  },
+
+  ambassador_growth: {
+    id: "ambassador_growth",
+    stage: "Шаг 6 из 7+",
+    question: "Как быстро растет аудитория?",
+    answers: [
+      { text: "Быстро (10%+ в месяц)", next: "ambassador_monetization" },
+      { text: "Медленно", next: "ambassador_content_strategy" }
+    ]
+  },
+
+  ambassador_content_strategy: {
+    id: "ambassador_content_strategy",
+    stage: "Шаг 7 из 7",
+    question: "Есть ли контент-стратегия?",
+    answers: [
+      { text: "Да, планирую контент заранее", result: { role: "ambassador", tariff: "ambassador" } },
+      { text: "Нет, публикую спонтанно", result: { role: "ambassador", tariff: "ambassador" } }
+    ]
+  },
+
+  ambassador_blogger_crossover: {
+    id: "ambassador_blogger_crossover",
+    stage: "Шаг 5 из 7+",
+    question: "Как вы позиционируетесь?",
+    answers: [
+      { text: "Амбассадор стартапов/брендов", next: "ambassador_partnerships" },
+      { text: "Инфлюенсер/Блогер", next: "blogger_monetization_level" }
+    ]
+  },
+
+  ambassador_partnerships: {
+    id: "ambassador_partnerships",
+    stage: "Шаг 6 из 7+",
+    question: "Сколько брендов/проектов продвигаете?",
+    answers: [
+      { text: "1-2 одновременно", next: "ambassador_partnership_type" },
+      { text: "3-5 одновременно", next: "ambassador_partnership_depth" },
+      { text: "Более 5", next: "blogger_collaborations" }
+    ]
+  },
+
+  ambassador_partnership_type: {
+    id: "ambassador_partnership_type",
+    stage: "Шаг 7 из 7",
+    question: "Какой тип партнерства предпочитаете?",
+    answers: [
+      { text: "Долгосрочные (3+ месяца)", result: { role: "ambassador", tariff: "ambassador" } },
+      { text: "Разовые кампании", result: { role: "ambassador", tariff: "ambassador" } }
+    ]
+  },
+
+  ambassador_partnership_depth: {
+    id: "ambassador_partnership_depth",
+    stage: "Шаг 7 из 7",
+    question: "Насколько глубоко вовлечены в проекты?",
+    answers: [
+      { text: "Консультирую и помогаю развитию", result: { role: "ambassador", tariff: "ambassador" } },
+      { text: "Только продвижение", result: { role: "ambassador", tariff: "ambassador" } }
+    ]
+  },
+
+  // ============ ВЕТКА БЛОГЕРА (расширенная до 7+) ============
+  blogger_platform: {
+    id: "blogger_platform",
+    stage: "Шаг 4 из 7+",
+    question: "На какой платформе ваша основная аудитория?",
+    answers: [
+      { text: "Instagram/TikTok", next: "blogger_audience_size" },
+      { text: "YouTube", next: "blogger_youtube_subscribers" },
+      { text: "Twitter/LinkedIn", next: "blogger_professional" },
+      { text: "Telegram/VK", next: "blogger_audience_size" }
+    ]
+  },
+
+  blogger_audience_size: {
+    id: "blogger_audience_size",
+    stage: "Шаг 5 из 7+",
+    question: "Какой размер аудитории?",
+    answers: [
+      { text: "До 10,000", next: "blogger_growth_strategy" },
+      { text: "10,000-100,000", next: "blogger_engagement_rate" },
+      { text: "Более 100,000", next: "blogger_monetization_level" }
+    ]
+  },
+
+  blogger_growth_strategy: {
+    id: "blogger_growth_strategy",
+    stage: "Шаг 6 из 7+",
+    question: "Как планируете расти?",
+    answers: [
+      { text: "Органически (контент)", next: "blogger_content_frequency" },
+      { text: "Платная реклама", next: "blogger_ad_budget" },
+      { text: "Коллаборации", next: "blogger_niche" }
+    ]
+  },
+
+  blogger_content_frequency: {
+    id: "blogger_content_frequency",
+    stage: "Шаг 7 из 7",
+    question: "Как часто публикуете контент?",
+    answers: [
+      { text: "Ежедневно", result: { role: "blogger", tariff: "blogger" } },
+      { text: "Несколько раз в неделю", result: { role: "blogger", tariff: "blogger" } },
+      { text: "Раз в неделю или реже", result: { role: "blogger", tariff: "blogger" } }
+    ]
+  },
+
+  blogger_ad_budget: {
+    id: "blogger_ad_budget",
+    stage: "Шаг 7 из 7",
+    question: "Какой бюджет на рекламу?",
+    answers: [
+      { text: "$500-$2000/месяц", result: { role: "blogger", tariff: "blogger" } },
+      { text: "Более $2000/месяц", result: { role: "blogger", tariff: "influencer" } },
+      { text: "Пока нет бюджета", result: { role: "blogger", tariff: "blogger" } }
+    ]
+  },
+
+  blogger_niche: {
+    id: "blogger_niche",
+    stage: "Шаг 7 из 7",
+    question: "Есть ли у вас четкая ниша?",
+    answers: [
+      { text: "Да, узкая специализация", result: { role: "blogger", tariff: "blogger" } },
+      { text: "Нет, general content", result: { role: "blogger", tariff: "blogger" } }
+    ]
+  },
+
+  blogger_engagement_rate: {
+    id: "blogger_engagement_rate",
+    stage: "Шаг 6 из 7+",
+    question: "Какой engagement rate?",
+    answers: [
+      { text: "Более 5%", next: "blogger_monetization_current" },
+      { text: "2-5%", next: "blogger_content_quality" },
+      { text: "Менее 2%", next: "blogger_audience_quality" }
+    ]
+  },
+
+  blogger_monetization_current: {
+    id: "blogger_monetization_current",
+    stage: "Шаг 7 из 7",
+    question: "Какой текущий доход от блога?",
+    answers: [
+      { text: "До $1000/месяц", result: { role: "blogger", tariff: "blogger" } },
+      { text: "$1000-$5000/месяц", result: { role: "blogger", tariff: "influencer" } },
+      { text: "Более $5000/месяц", result: { role: "blogger", tariff: "influencer" } }
+    ]
+  },
+
+  blogger_content_quality: {
+    id: "blogger_content_quality",
+    stage: "Шаг 7 из 7",
+    question: "Какое качество контента?",
+    answers: [
+      { text: "Профессиональное (съемка, монтаж)", result: { role: "blogger", tariff: "influencer" } },
+      { text: "Среднее (смартфон)", result: { role: "blogger", tariff: "blogger" } }
+    ]
+  },
+
+  blogger_audience_quality: {
+    id: "blogger_audience_quality",
+    stage: "Шаг 7 из 7",
+    question: "Анализируете ли аудиторию?",
+    answers: [
+      { text: "Да, использую аналитику", result: { role: "blogger", tariff: "blogger" } },
+      { text: "Нет", result: { role: "blogger", tariff: "blogger" } }
+    ]
+  },
+
+  blogger_monetization_level: {
+    id: "blogger_monetization_level",
+    stage: "Шаг 6 из 7+",
+    question: "Какой уровень монетизации?",
+    answers: [
+      { text: "$5k-$20k/месяц", next: "blogger_business_model" },
+      { text: "Более $20k/месяц", next: "blogger_team" },
+      { text: "Пока не монетизирую", next: "blogger_monetization_plan" }
+    ]
+  },
+
+  blogger_business_model: {
+    id: "blogger_business_model",
+    stage: "Шаг 7 из 7",
+    question: "Какая основная модель дохода?",
+    answers: [
+      { text: "Реклама брендов", result: { role: "blogger", tariff: "influencer" } },
+      { text: "Партнерские программы", result: { role: "blogger", tariff: "influencer" } },
+      { text: "Свои продукты/курсы", result: { role: "blogger", tariff: "influencer" } }
+    ]
+  },
+
+  blogger_team: {
+    id: "blogger_team",
+    stage: "Шаг 7 из 7",
+    question: "Работаете ли с командой?",
+    answers: [
+      { text: "Да, есть менеджер/редактор", result: { role: "blogger", tariff: "influencer" } },
+      { text: "Нет, делаю всё сам", result: { role: "blogger", tariff: "influencer" } }
+    ]
+  },
+
+  blogger_monetization_plan: {
+    id: "blogger_monetization_plan",
+    stage: "Шаг 7 из 7",
+    question: "Планируете ли монетизировать?",
+    answers: [
+      { text: "Да, активно ищу способы", result: { role: "blogger", tariff: "influencer" } },
+      { text: "Пока просто создаю контент", result: { role: "blogger", tariff: "blogger" } }
+    ]
+  },
+
+  blogger_youtube_subscribers: {
+    id: "blogger_youtube_subscribers",
+    stage: "Шаг 5 из 7+",
+    question: "Сколько подписчиков на YouTube?",
+    answers: [
+      { text: "До 10,000", next: "blogger_youtube_content" },
+      { text: "10,000-100,000", next: "blogger_youtube_views" },
+      { text: "Более 100,000", next: "blogger_youtube_monetization" }
+    ]
+  },
+
+  blogger_youtube_content: {
+    id: "blogger_youtube_content",
+    stage: "Шаг 6 из 7+",
+    question: "Какой тип контента?",
+    answers: [
+      { text: "Короткие видео (Shorts)", next: "blogger_youtube_frequency" },
+      { text: "Длинные видео (10+ минут)", next: "blogger_youtube_quality" },
+      { text: "Оба формата", next: "blogger_youtube_quality" }
+    ]
+  },
+
+  blogger_youtube_frequency: {
+    id: "blogger_youtube_frequency",
+    stage: "Шаг 7 из 7",
+    question: "Как часто загружаете видео?",
+    answers: [
+      { text: "Ежедневно", result: { role: "blogger", tariff: "blogger" } },
+      { text: "Несколько раз в неделю", result: { role: "blogger", tariff: "blogger" } },
+      { text: "Раз в неделю", result: { role: "blogger", tariff: "blogger" } }
+    ]
+  },
+
+  blogger_youtube_quality: {
+    id: "blogger_youtube_quality",
+    stage: "Шаг 7 из 7",
+    question: "Какое качество продакшена?",
+    answers: [
+      { text: "Профессиональное (камера, свет, монтаж)", result: { role: "blogger", tariff: "influencer" } },
+      { text: "Среднее", result: { role: "blogger", tariff: "blogger" } }
+    ]
+  },
+
+  blogger_youtube_views: {
+    id: "blogger_youtube_views",
+    stage: "Шаг 6 из 7+",
+    question: "Средний просмотр на видео?",
+    answers: [
+      { text: "До 5,000", next: "blogger_youtube_growth" },
+      { text: "5,000-50,000", next: "blogger_youtube_monetization_status" },
+      { text: "Более 50,000", next: "blogger_youtube_monetization" }
+    ]
+  },
+
+  blogger_youtube_growth: {
+    id: "blogger_youtube_growth",
+    stage: "Шаг 7 из 7",
+    question: "Растет ли канал?",
+    answers: [
+      { text: "Да, стабильный рост", result: { role: "blogger", tariff: "blogger" } },
+      { text: "Медленно", result: { role: "blogger", tariff: "blogger" } }
+    ]
+  },
+
+  blogger_youtube_monetization_status: {
+    id: "blogger_youtube_monetization_status",
+    stage: "Шаг 7 из 7",
+    question: "Подключена ли монетизация YouTube?",
+    answers: [
+      { text: "Да, зарабатываю на просмотрах", result: { role: "blogger", tariff: "influencer" } },
+      { text: "Нет, не хватает часов просмотра", result: { role: "blogger", tariff: "blogger" } }
+    ]
+  },
+
+  blogger_youtube_monetization: {
+    id: "blogger_youtube_monetization",
+    stage: "Шаг 7 из 7",
+    question: "Какой доход от YouTube?",
+    answers: [
+      { text: "До $2000/месяц", result: { role: "blogger", tariff: "influencer" } },
+      { text: "$2000-$10k/месяц", result: { role: "blogger", tariff: "influencer" } },
+      { text: "Более $10k/месяц", result: { role: "blogger", tariff: "influencer" } }
+    ]
+  },
+
+  blogger_professional: {
+    id: "blogger_professional",
+    stage: "Шаг 5 из 7+",
+    question: "Какой тип контента?",
+    answers: [
+      { text: "B2B / профессиональные темы", next: "blogger_professional_niche" },
+      { text: "Personal brand / лайфстайл", next: "blogger_audience_size" }
+    ]
+  },
+
+  blogger_professional_niche: {
+    id: "blogger_professional_niche",
+    stage: "Шаг 6 из 7+",
+    question: "Есть ли экспертиза в нише?",
+    answers: [
+      { text: "Да, работаю в индустрии", next: "blogger_professional_network" },
+      { text: "Нет, но активно изучаю", next: "blogger_audience_size" }
+    ]
+  },
+
+  blogger_professional_network: {
+    id: "blogger_professional_network",
+    stage: "Шаг 7 из 7",
+    question: "Есть ли сильная профессиональная сеть?",
+    answers: [
+      { text: "Да, хорошие связи в индустрии", result: { role: "blogger", tariff: "influencer" } },
+      { text: "Нет, только начинаю", result: { role: "blogger", tariff: "blogger" } }
+    ]
+  },
+
+  blogger_collaborations: {
+    id: "blogger_collaborations",
+    stage: "Шаг 6 из 7+",
+    question: "Как часто делаете коллаборации?",
+    answers: [
+      { text: "Регулярно (1-2 в месяц)", next: "blogger_collab_results" },
+      { text: "Иногда", next: "blogger_content_frequency" }
+    ]
+  },
+
+  blogger_collab_results: {
+    id: "blogger_collab_results",
+    stage: "Шаг 7 из 7",
+    question: "Растет ли аудитория от коллабораций?",
+    answers: [
+      { text: "Да, заметный прирост", result: { role: "blogger", tariff: "influencer" } },
+      { text: "Немного", result: { role: "blogger", tariff: "blogger" } }
+    ]
+  },
+
+  // ============ ВЕТКА JOB SEEKER (расширенная до 7+) ============
+  jobseeker_status: {
+    id: "jobseeker_status",
+    stage: "Шаг 4 из 7+",
+    question: "Ваш текущий статус?",
+    answers: [
+      { text: "Активно ищу работу", next: "jobseeker_experience" },
+      { text: "Рассматриваю предложения", next: "jobseeker_current_job" },
+      { text: "Хочу сменить карьеру", next: "jobseeker_career_change" }
+    ]
+  },
+
+  jobseeker_experience: {
+    id: "jobseeker_experience",
+    stage: "Шаг 5 из 7+",
+    question: "Какой у вас опыт работы?",
+    answers: [
+      { text: "Без опыта / Junior", next: "jobseeker_education" },
+      { text: "1-3 года (Middle)", next: "jobseeker_field" },
+      { text: "Более 3 лет (Senior+)", next: "jobseeker_leadership" }
+    ]
+  },
+
+  jobseeker_education: {
+    id: "jobseeker_education",
+    stage: "Шаг 6 из 7+",
+    question: "Есть ли образование/сертификаты?",
+    answers: [
+      { text: "Да, профильное образование", next: "jobseeker_learning" },
+      { text: "Есть онлайн-курсы", next: "jobseeker_portfolio" },
+      { text: "Нет, самоучка", next: "jobseeker_portfolio" }
+    ]
+  },
+
+  jobseeker_learning: {
+    id: "jobseeker_learning",
+    stage: "Шаг 7 из 7",
+    question: "Готовы ли продолжать обучение?",
+    answers: [
+      { text: "Да, активно учусь", result: { role: "jobseeker", tariff: "active" } },
+      { text: "По необходимости", result: { role: "jobseeker", tariff: "seeker" } }
+    ]
+  },
+
+  jobseeker_portfolio: {
+    id: "jobseeker_portfolio",
+    stage: "Шаг 7 из 7",
+    question: "Есть ли портфолио или пет-проекты?",
+    answers: [
+      { text: "Да, есть несколько проектов", result: { role: "jobseeker", tariff: "active" } },
+      { text: "Работаю над первым проектом", result: { role: "jobseeker", tariff: "seeker" } },
+      { text: "Нет", result: { role: "jobseeker", tariff: "seeker" } }
+    ]
+  },
+
+  jobseeker_field: {
+    id: "jobseeker_field",
+    stage: "Шаг 6 из 7+",
+    question: "В какой сфере работаете?",
+    answers: [
+      { text: "Tech (разработка, дизайн, продукт)", next: "jobseeker_tech_role" },
+      { text: "Бизнес (маркетинг, продажи, operations)", next: "jobseeker_business_area" },
+      { text: "Другое", next: "jobseeker_search_intensity" }
+    ]
+  },
+
+  jobseeker_tech_role: {
+    id: "jobseeker_tech_role",
+    stage: "Шаг 7 из 7",
+    question: "Какая роль интересует?",
+    answers: [
+      { text: "Developer", result: { role: "jobseeker", tariff: "active" } },
+      { text: "Designer", result: { role: "jobseeker", tariff: "active" } },
+      { text: "Product Manager", result: { role: "jobseeker", tariff: "premium" } },
+      { text: "Аналитик", result: { role: "jobseeker", tariff: "active" } }
+    ]
+  },
+
+  jobseeker_business_area: {
+    id: "jobseeker_business_area",
+    stage: "Шаг 7 из 7",
+    question: "Какое направление?",
+    answers: [
+      { text: "Маркетинг / Growth", result: { role: "jobseeker", tariff: "active" } },
+      { text: "Продажи / BD", result: { role: "jobseeker", tariff: "active" } },
+      { text: "Operations / CS", result: { role: "jobseeker", tariff: "active" } }
+    ]
+  },
+
+  jobseeker_search_intensity: {
+    id: "jobseeker_search_intensity",
+    stage: "Шаг 7 из 7",
+    question: "Как активно ищете?",
+    answers: [
+      { text: "Очень активно (откликаюсь ежедневно)", result: { role: "jobseeker", tariff: "active" } },
+      { text: "Умеренно", result: { role: "jobseeker", tariff: "seeker" } }
+    ]
+  },
+
+  jobseeker_leadership: {
+    id: "jobseeker_leadership",
+    stage: "Шаг 6 из 7+",
+    question: "Есть ли опыт управления?",
+    answers: [
+      { text: "Да, руководил командой", next: "jobseeker_team_size" },
+      { text: "Нет, индивидуальный contributor", next: "jobseeker_seniority" }
+    ]
+  },
+
+  jobseeker_team_size: {
+    id: "jobseeker_team_size",
+    stage: "Шаг 7 из 7",
+    question: "Какого размера командой управляли?",
+    answers: [
+      { text: "2-5 человек (Team Lead)", result: { role: "jobseeker", tariff: "premium" } },
+      { text: "6-15 человек (Manager)", result: { role: "jobseeker", tariff: "premium" } },
+      { text: "Более 15 (Director/Head)", result: { role: "jobseeker", tariff: "premium" } }
+    ]
+  },
+
+  jobseeker_seniority: {
+    id: "jobseeker_seniority",
+    stage: "Шаг 7 из 7",
+    question: "Какую роль ищете?",
+    answers: [
+      { text: "Senior специалист", result: { role: "jobseeker", tariff: "premium" } },
+      { text: "Lead / Principal", result: { role: "jobseeker", tariff: "premium" } }
+    ]
+  },
+
+  jobseeker_current_job: {
+    id: "jobseeker_current_job",
+    stage: "Шаг 5 из 7+",
+    question: "Почему рассматриваете смену?",
+    answers: [
+      { text: "Хочу больше зарплату", next: "jobseeker_salary_expectations" },
+      { text: "Ищу новые вызовы", next: "jobseeker_motivation" },
+      { text: "Хочу в стартап/крупную компанию", next: "jobseeker_company_type" }
+    ]
+  },
+
+  jobseeker_salary_expectations: {
+    id: "jobseeker_salary_expectations",
+    stage: "Шаг 6 из 7+",
+    question: "На сколько хотите увеличить зарплату?",
+    answers: [
+      { text: "На 20-30%", next: "jobseeker_negotiation" },
+      { text: "На 50%+", next: "jobseeker_value_prop" }
+    ]
+  },
+
+  jobseeker_negotiation: {
+    id: "jobseeker_negotiation",
+    stage: "Шаг 7 из 7",
+    question: "Готовы ли к долгим переговорам?",
+    answers: [
+      { text: "Да, буду искать идеальный оффер", result: { role: "jobseeker", tariff: "premium" } },
+      { text: "Хочу быстро найти", result: { role: "jobseeker", tariff: "active" } }
+    ]
+  },
+
+  jobseeker_value_prop: {
+    id: "jobseeker_value_prop",
+    stage: "Шаг 7 из 7",
+    question: "Можете ли обосновать такой рост?",
+    answers: [
+      { text: "Да, есть достижения и метрики", result: { role: "jobseeker", tariff: "premium" } },
+      { text: "Частично", result: { role: "jobseeker", tariff: "active" } }
+    ]
+  },
+
+  jobseeker_motivation: {
+    id: "jobseeker_motivation",
+    stage: "Шаг 6 из 7+",
+    question: "Какие вызовы интересуют?",
+    answers: [
+      { text: "Новые технологии/инструменты", next: "jobseeker_learning_attitude" },
+      { text: "Управление и лидерство", next: "jobseeker_leadership_ambition" },
+      { text: "Более сложные проекты", next: "jobseeker_project_complexity" }
+    ]
+  },
+
+  jobseeker_learning_attitude: {
+    id: "jobseeker_learning_attitude",
+    stage: "Шаг 7 из 7",
+    question: "Как быстро осваиваете новое?",
+    answers: [
+      { text: "Очень быстро, люблю учиться", result: { role: "jobseeker", tariff: "premium" } },
+      { text: "Нормально", result: { role: "jobseeker", tariff: "active" } }
+    ]
+  },
+
+  jobseeker_leadership_ambition: {
+    id: "jobseeker_leadership_ambition",
+    stage: "Шаг 7 из 7",
+    question: "Есть ли опыт менторства?",
+    answers: [
+      { text: "Да, менторил джунов", result: { role: "jobseeker", tariff: "premium" } },
+      { text: "Нет, но хочу попробовать", result: { role: "jobseeker", tariff: "active" } }
+    ]
+  },
+
+  jobseeker_project_complexity: {
+    id: "jobseeker_project_complexity",
+    stage: "Шаг 7 из 7",
+    question: "Какие проекты интересуют?",
+    answers: [
+      { text: "Highload / сложные системы", result: { role: "jobseeker", tariff: "premium" } },
+      { text: "Инновационные продукты", result: { role: "jobseeker", tariff: "premium" } },
+      { text: "Просто более масштабные", result: { role: "jobseeker", tariff: "active" } }
+    ]
+  },
+
+  jobseeker_company_type: {
+    id: "jobseeker_company_type",
+    stage: "Шаг 6 из 7+",
+    question: "Какой тип компании интересует?",
+    answers: [
+      { text: "Стартап (быстрый рост, риск)", next: "jobseeker_startup_stage" },
+      { text: "Крупная компания (стабильность)", next: "jobseeker_corporate" }
+    ]
+  },
+
+  jobseeker_startup_stage: {
+    id: "jobseeker_startup_stage",
+    stage: "Шаг 7 из 7",
+    question: "Какая стадия стартапа?",
+    answers: [
+      { text: "Pre-seed / Seed (0-10 человек)", result: { role: "jobseeker", tariff: "premium" } },
+      { text: "Series A-B (10-100 человек)", result: { role: "jobseeker", tariff: "active" } },
+      { text: "Series C+ (100+ человек)", result: { role: "jobseeker", tariff: "active" } }
+    ]
+  },
+
+  jobseeker_corporate: {
+    id: "jobseeker_corporate",
+    stage: "Шаг 7 из 7",
+    question: "Что важнее?",
+    answers: [
+      { text: "Бренд компании", result: { role: "jobseeker", tariff: "premium" } },
+      { text: "Зарплата и бенефиты", result: { role: "jobseeker", tariff: "active" } },
+      { text: "Work-life balance", result: { role: "jobseeker", tariff: "active" } }
+    ]
+  },
+
+  jobseeker_career_change: {
+    id: "jobseeker_career_change",
+    stage: "Шаг 5 из 7+",
+    question: "Откуда хотите перейти?",
+    answers: [
+      { text: "Из другой индустрии в tech", next: "jobseeker_tech_skills" },
+      { text: "Из одной tech-роли в другую", next: "jobseeker_transition_reason" }
+    ]
+  },
+
+  jobseeker_tech_skills: {
+    id: "jobseeker_tech_skills",
+    stage: "Шаг 6 из 7+",
+    question: "Есть ли tech-навыки?",
+    answers: [
+      { text: "Да, прошел курсы/буткемп", next: "jobseeker_transition_support" },
+      { text: "Нет, но готов учиться", next: "jobseeker_retraining" }
+    ]
+  },
+
+  jobseeker_transition_support: {
+    id: "jobseeker_transition_support",
+    stage: "Шаг 7 из 7",
+    question: "Нужна ли помощь с переходом?",
+    answers: [
+      { text: "Да, нужен менторинг", result: { role: "jobseeker", tariff: "premium" } },
+      { text: "Нет, справлюсь сам", result: { role: "jobseeker", tariff: "active" } }
+    ]
+  },
+
+  jobseeker_retraining: {
+    id: "jobseeker_retraining",
+    stage: "Шаг 7 из 7",
+    question: "Готовы ли инвестировать время?",
+    answers: [
+      { text: "Да, 6-12 месяцев на обучение", result: { role: "jobseeker", tariff: "active" } },
+      { text: "Хочу быстрее", result: { role: "jobseeker", tariff: "seeker" } }
+    ]
+  },
+
+  jobseeker_transition_reason: {
+    id: "jobseeker_transition_reason",
+    stage: "Шаг 6 из 7+",
+    question: "Почему хотите сменить роль?",
+    answers: [
+      { text: "Текущая не подходит", next: "jobseeker_new_direction" },
+      { text: "Хочу больше зарабатывать", next: "jobseeker_salary_expectations" }
+    ]
+  },
+
+  jobseeker_new_direction: {
+    id: "jobseeker_new_direction",
+    stage: "Шаг 7 из 7",
+    question: "Какое направление интересует?",
+    answers: [
+      { text: "Продуктовое (PM)", result: { role: "jobseeker", tariff: "premium" } },
+      { text: "Аналитическое (Data)", result: { role: "jobseeker", tariff: "active" } },
+      { text: "Техническое (Engineering)", result: { role: "jobseeker", tariff: "active" } }
     ]
   }
 };
