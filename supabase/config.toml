@@ -30,8 +30,14 @@ file_size_limit = "50MiB"
 
 [auth]
 enabled = true
-site_url = "http://127.0.0.1:3000"
-additional_redirect_urls = ["https://127.0.0.1:3000"]
+site_url = "https://invest-ex.ru"
+additional_redirect_urls = [
+  "https://127.0.0.1:3000",
+  "http://127.0.0.1:3000",
+  "https://invest-ex.ru",
+  "https://www.invest-ex.ru",
+  "https://b11a36e1-c258-4cea-a90f-6f733088704e.lovableproject.com"
+]
 jwt_expiry = 3600
 enable_signup = true
 
