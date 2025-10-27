@@ -10,6 +10,11 @@ export const roleSuccessStories = {
     { title: "Клуб Ольги С.", subtitle: "12 соинвесторов", metric: "6 раундов", label: "Закрыто за год" },
     { title: "Группа Александра П.", subtitle: "Diversified portfolio", metric: "×3.8", label: "Средний ROI" }
   ],
+  franchisee: [
+    { title: "Бизнес Михаила П.", subtitle: "Кофейня в центре", metric: "14 месяцев", label: "Срок окупаемости" },
+    { title: "Инвестиция Анны Б.", subtitle: "Фитнес-франшиза", metric: "₽ 8 млн", label: "Годовой доход" },
+    { title: "Проект Юрия К.", subtitle: "Образовательный центр", metric: "3 локации", label: "Открыто за год" }
+  ],
   founder: [
     { title: "Стартап Елены Ф.", subtitle: "EdTech платформа", metric: "₽ 15 млн", label: "Pre-seed раунд" },
     { title: "Проект Антона Р.", subtitle: "FinTech решение", metric: "₽ 80 млн", label: "Series A привлечено" },

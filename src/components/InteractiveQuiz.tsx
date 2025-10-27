@@ -2071,9 +2071,9 @@ const quizTree: Record<string, Question> = {
     stage: "Шаг 7 из 7",
     question: "Когда планируете запуск?",
     answers: [
-      { text: "В течение 3 месяцев", result: { role: "franchiser", tariff: "franchisor" } },
-      { text: "3-6 месяцев", result: { role: "franchiser", tariff: "franchisor" } },
-      { text: "Более 6 месяцев", result: { role: "franchiser", tariff: "franchisor" } }
+      { text: "В течение 3 месяцев", result: { role: "franchisee", tariff: "investor" } },
+      { text: "3-6 месяцев", result: { role: "franchisee", tariff: "investor" } },
+      { text: "Более 6 месяцев", result: { role: "franchisee", tariff: "investor" } }
     ]
   },
 
@@ -2102,9 +2102,9 @@ const quizTree: Record<string, Question> = {
     stage: "Шаг 7 из 7",
     question: "Сколько точек планируете?",
     answers: [
-      { text: "2-5 точек", result: { role: "franchiser", tariff: "franchisor" } },
-      { text: "5-10 точек", result: { role: "franchiser", tariff: "franchisor" } },
-      { text: "Более 10", result: { role: "franchiser", tariff: "franchisor" } }
+      { text: "2-5 точек", result: { role: "franchisee", tariff: "investor" } },
+      { text: "5-10 точек", result: { role: "franchisee", tariff: "investor" } },
+      { text: "Более 10", result: { role: "franchisee", tariff: "investor" } }
     ]
   },
 
