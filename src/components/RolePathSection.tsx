@@ -364,13 +364,13 @@ interface RolePathSectionProps {
 const RolePathSection = ({ initialRole }: RolePathSectionProps) => {
   // Преобразуем initialRole из ключа в отображаемое название
   const initialRoleName = initialRole ? roleKeyToName[initialRole] || null : null;
-  const initialGroupName = initialRoleName ? roleToGroup[initialRoleName] || "Участники" : "Участники";
+  const initialGroupName = initialRoleName ? roleToGroup[initialRoleName] || "Инвесторы" : "Инвесторы";
   
   // Находим данные начальной роли
   const getInitialRoleData = () => {
-    if (!initialRoleName || !initialGroupName) return segments["Участники"].roles[0];
+    if (!initialRoleName || !initialGroupName) return segments["Инвесторы"].roles[0];
     const group = segments[initialGroupName as keyof typeof segments];
-    return group.roles.find(role => role.name === initialRoleName) || segments["Участники"].roles[0];
+    return group?.roles?.find(role => role.name === initialRoleName) || segments["Инвесторы"].roles[0];
   };
   
   const [activeGroup, setActiveGroup] = useState<string | null>(initialGroupName);
@@ -381,11 +381,11 @@ const RolePathSection = ({ initialRole }: RolePathSectionProps) => {
   useEffect(() => {
     if (initialRole) {
       const roleName = roleKeyToName[initialRole] || null;
-      const groupName = roleName ? roleToGroup[roleName] || "Участники" : "Участники";
+      const groupName = roleName ? roleToGroup[roleName] || "Инвесторы" : "Инвесторы";
       
       if (roleName && groupName) {
         const group = segments[groupName as keyof typeof segments];
-        const roleData = group.roles.find(role => role.name === roleName);
+        const roleData = group?.roles?.find(role => role.name === roleName);
         
         if (roleData) {
           setActiveGroup(groupName);
@@ -403,9 +403,12 @@ const RolePathSection = ({ initialRole }: RolePathSectionProps) => {
       setSelectedRoleData(null);
     } else {
       setActiveGroup(groupName);
-      const firstRole = segments[groupName as keyof typeof segments].roles[0];
-      setActiveRole(firstRole.name);
-      setSelectedRoleData(firstRole);
+      const group = segments[groupName as keyof typeof segments];
+      const firstRole = group?.roles?.[0];
+      if (firstRole) {
+        setActiveRole(firstRole.name);
+        setSelectedRoleData(firstRole);
+      }
     }
   };
 
