@@ -11,6 +11,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
+import { DeviceManagement } from '@/components/DeviceManagement';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const ROLE_CATEGORIES = {
   "Участники": [
@@ -159,13 +161,20 @@ export default function Profile() {
     <div className="min-h-screen">
       <Navigation />
       <main className="pt-24 pb-16">
-        <div className="container mx-auto px-4 space-y-8">
-          <header>
-            <h1 className="text-3xl font-bold">Настройки профиля</h1>
-            <p className="text-muted-foreground">Обновите свои данные и роли аккаунта</p>
-          </header>
+        <div className="container mx-auto px-4 max-w-4xl">
+          <Tabs defaultValue="profile" className="w-full">
+            <TabsList className="grid w-full grid-cols-2 mb-8">
+              <TabsTrigger value="profile">Профиль</TabsTrigger>
+              <TabsTrigger value="devices">Устройства и сессии</TabsTrigger>
+            </TabsList>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <TabsContent value="profile" className="space-y-6">
+              <header>
+                <h1 className="text-3xl font-bold">Настройки профиля</h1>
+                <p className="text-muted-foreground">Обновите свои данные и роли аккаунта</p>
+              </header>
+
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <Card className="lg:col-span-2">
               <CardHeader>
                 <CardTitle>Личные данные</CardTitle>
@@ -269,7 +278,13 @@ export default function Profile() {
                 <p className="text-xs text-muted-foreground">Удаление ролей будет доступно позже.</p>
               </CardContent>
             </Card>
-          </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="devices">
+              <DeviceManagement />
+            </TabsContent>
+          </Tabs>
         </div>
       </main>
       <Footer />

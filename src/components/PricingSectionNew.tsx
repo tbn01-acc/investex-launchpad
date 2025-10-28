@@ -42,7 +42,7 @@ const PricingSectionNew = () => {
   const rolesByCategory = {
     'Участники': ['Инвестор', 'Соинвестор', 'Фаундер', 'Ко-фаундер', 'Соучредитель', 'Франчайзер'],
     'Исполнители': ['Фрилансер', 'Эксперт', 'Консультант', 'Аутсорсер', 'Подрядчик'],
-    'Сотрудники': ['Администратор проекта', 'Сотрудник проекта', 'Соискатель'],
+    'Сотрудники': ['Администратор стартапа', 'Сотрудник стартапа', 'Соискатель'],
     'Партнеры': ['Партнёр (Affiliate)', 'Амбассадор проекта', 'Лидер мнений/Блогер']
   };
 
@@ -64,9 +64,9 @@ const PricingSectionNew = () => {
   const tariffs = {
     'Инвестор': {
       plans: [
-        { name: 'Начинающий', price: 0, trial: false },
-        { name: 'Профессионал', price: 99, trial: true },
-        { name: 'Элитный', price: 499, trial: false }
+        { name: 'Старт', price: 0, trial: false },
+        { name: 'Профи', price: 99, trial: true },
+        { name: 'Премиум', price: 499, trial: false }
       ],
       features: [
         ['Просмотр проектов', 'до 20/мес', 'неограниченно', 'неограниченно'],
@@ -81,9 +81,9 @@ const PricingSectionNew = () => {
     },
     'Соинвестор': {
       plans: [
-        { name: 'Участник', price: 0, trial: false },
-        { name: 'Клуб', price: 49, trial: true },
-        { name: 'Синдикат', price: 249, trial: false }
+        { name: 'Старт', price: 0, trial: false },
+        { name: 'Профи', price: 49, trial: true },
+        { name: 'Премиум', price: 249, trial: false }
       ],
       features: [
         ['Синдикаты/мес', '1', 'неограниченно', 'неограниченно + создание'],
@@ -97,9 +97,9 @@ const PricingSectionNew = () => {
     },
     'Фаундер': {
       plans: [
-        { name: 'Стартап', price: 0, trial: false },
-        { name: 'Рост', price: 99, trial: true },
-        { name: 'Масштаб', price: 499, trial: false }
+        { name: 'Старт', price: 0, trial: false },
+        { name: 'Профи', price: 99, trial: true },
+        { name: 'Премиум', price: 499, trial: false }
       ],
       features: [
         ['Активные проекты', 'до 2', 'до 10', 'неограниченно'],
@@ -114,9 +114,9 @@ const PricingSectionNew = () => {
     },
     'Ко-фаундер': {
       plans: [
-        { name: 'Искатель', price: 0, trial: false },
-        { name: 'Поиск', price: 49, trial: true },
-        { name: 'Партнер', price: 249, trial: false }
+        { name: 'Старт', price: 0, trial: false },
+        { name: 'Профи', price: 49, trial: true },
+        { name: 'Премиум', price: 249, trial: false }
       ],
       features: [
         ['Отклики на проекты/мес', '3', 'неограниченно', 'неограниченно'],
@@ -130,9 +130,9 @@ const PricingSectionNew = () => {
     },
     'Соучредитель': {
       plans: [
-        { name: 'Наблюдатель', price: 0, trial: false },
-        { name: 'Продвинутый', price: 79, trial: true },
-        { name: 'Стратегический', price: 349, trial: false }
+        { name: 'Старт', price: 0, trial: false },
+        { name: 'Профи', price: 79, trial: true },
+        { name: 'Премиум', price: 349, trial: false }
       ],
       features: [
         ['Запросов на анализ/мес', '2', '10', 'неограниченно'],
@@ -146,9 +146,9 @@ const PricingSectionNew = () => {
     },
     'Франчайзер': {
       plans: [
-        { name: 'Базовый', price: 0, trial: false },
-        { name: 'Рост', price: 99, trial: true },
-        { name: 'Масштаб', price: 299, trial: false }
+        { name: 'Старт', price: 0, trial: false },
+        { name: 'Профи', price: 99, trial: true },
+        { name: 'Премиум', price: 299, trial: false }
       ],
       features: [
         ['Франчайзинговые программы', '1', 'до 3', 'неограниченно'],
@@ -163,9 +163,9 @@ const PricingSectionNew = () => {
     },
     'Фрилансер': {
       plans: [
-        { name: 'Новичок', price: 0, trial: false },
-        { name: 'Профессионал', price: 9, trial: true },
-        { name: 'Эксперт', price: 29, trial: false }
+        { name: 'Старт', price: 0, trial: false },
+        { name: 'Профи', price: 9, trial: true },
+        { name: 'Премиум', price: 29, trial: false }
       ],
       features: [
         ['Отклики/мес', '5', 'неограниченно', 'неограниченно'],
@@ -180,9 +180,9 @@ const PricingSectionNew = () => {
     },
     'Эксперт': {
       plans: [
-        { name: 'Консультант-стажер', price: 0, trial: false },
-        { name: 'Консультант', price: 49, trial: true },
-        { name: 'Сениор', price: 99, trial: false }
+        { name: 'Старт', price: 0, trial: false },
+        { name: 'Профи', price: 49, trial: true },
+        { name: 'Премиум', price: 99, trial: false }
       ],
       features: [
         ['Консультации/мес', '2', 'неограниченно', 'неограниченно'],
@@ -196,9 +196,9 @@ const PricingSectionNew = () => {
     },
     'Консультант': {
       plans: [
-        { name: 'Бизнес-аналитик', price: 0, trial: false },
-        { name: 'Бизнес-консультант', price: 79, trial: true },
-        { name: 'Стратегический', price: 149, trial: false }
+        { name: 'Старт', price: 0, trial: false },
+        { name: 'Профи', price: 79, trial: true },
+        { name: 'Премиум', price: 149, trial: false }
       ],
       features: [
         ['Сессии/мес', '2', 'неограниченно', 'неограниченно'],
@@ -212,9 +212,9 @@ const PricingSectionNew = () => {
     },
     'Аутсорсер': {
       plans: [
-        { name: 'Команда', price: 0, trial: false },
-        { name: 'Агентство', price: 99, trial: true },
-        { name: 'Предприятие', price: 249, trial: false }
+        { name: 'Старт', price: 0, trial: false },
+        { name: 'Профи', price: 99, trial: true },
+        { name: 'Премиум', price: 249, trial: false }
       ],
       features: [
         ['Команда', 'до 5 чел', 'до 20 чел', 'неограниченно'],
@@ -229,8 +229,8 @@ const PricingSectionNew = () => {
     },
     'Подрядчик': {
       plans: [
-        { name: 'Подрядчик', price: 0, trial: false },
-        { name: 'Сертифицированный', price: 99, trial: true },
+        { name: 'Старт', price: 0, trial: false },
+        { name: 'Профи', price: 99, trial: true },
         { name: 'Премиум', price: 299, trial: false }
       ],
       features: [
@@ -244,7 +244,7 @@ const PricingSectionNew = () => {
         ['Индивидуальное страхование', false, false, true]
       ]
     },
-    'Администратор проекта': {
+    'Администратор стартапа': {
       plans: [
         { name: 'Администратор', price: 0, trial: false }
       ],
@@ -260,7 +260,7 @@ const PricingSectionNew = () => {
         ['Токенизированные опционы', true]
       ]
     },
-    'Сотрудник проекта': {
+    'Сотрудник стартапа': {
       plans: [
         { name: 'Сотрудник', price: 0, trial: false }
       ],
@@ -278,9 +278,9 @@ const PricingSectionNew = () => {
     },
     'Соискатель': {
       plans: [
-        { name: 'Базовый', price: 0, trial: false },
-        { name: 'Премиум', price: 9, trial: true },
-        { name: 'Профи', price: 29, trial: false }
+        { name: 'Старт', price: 0, trial: false },
+        { name: 'Профи', price: 9, trial: true },
+        { name: 'Премиум', price: 29, trial: false }
       ],
       features: [
         ['Отклики/мес', '10', 'неограниченно', 'неограниченно'],

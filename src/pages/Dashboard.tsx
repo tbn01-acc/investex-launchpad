@@ -143,7 +143,7 @@ const Dashboard = () => {
       contractor: 'Подрядчик',
       // Сотрудники
       administrator: 'Администратор',
-      project_admin: 'Администратор проекта',
+      project_admin: 'Администратор стартапа',
       employee: 'Сотрудник',
       job_seeker: 'Соискатель',
       // Партнеры

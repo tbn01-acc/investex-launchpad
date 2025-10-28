@@ -12,7 +12,7 @@ import {
 const Employees = () => {
   const employeeRoles = [
     {
-      title: 'Администратор проекта',
+      title: 'Администратор стартапа',
       description: 'Управляйте проектами и координируйте работу команды',
       icon: Settings,
       color: 'bg-blue-500',
@@ -22,7 +22,7 @@ const Employees = () => {
       href: '/dashboard?role=project-admin'
     },
     {
-      title: 'Сотрудник проекта',
+      title: 'Сотрудник стартапа',
       description: 'Участвуйте в реализации проектов в качестве штатного сотрудника',
       icon: Users,
       color: 'bg-green-500',

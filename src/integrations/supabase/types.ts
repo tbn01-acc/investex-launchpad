@@ -382,6 +382,45 @@ export type Database = {
         }
         Relationships: []
       }
+      device_fingerprints: {
+        Row: {
+          authorized_at: string | null
+          browser_info: string | null
+          created_at: string
+          device_info: Json | null
+          fingerprint_hash: string
+          id: string
+          ip_address: string | null
+          is_authorized: boolean
+          last_seen_at: string
+          user_id: string
+        }
+        Insert: {
+          authorized_at?: string | null
+          browser_info?: string | null
+          created_at?: string
+          device_info?: Json | null
+          fingerprint_hash: string
+          id?: string
+          ip_address?: string | null
+          is_authorized?: boolean
+          last_seen_at?: string
+          user_id: string
+        }
+        Update: {
+          authorized_at?: string | null
+          browser_info?: string | null
+          created_at?: string
+          device_info?: Json | null
+          fingerprint_hash?: string
+          id?: string
+          ip_address?: string | null
+          is_authorized?: boolean
+          last_seen_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       due_diligence_items: {
         Row: {
           category: string
@@ -2437,6 +2476,47 @@ export type Database = {
           },
         ]
       }
+      user_sessions: {
+        Row: {
+          expires_at: string
+          fingerprint_id: string
+          id: string
+          is_active: boolean
+          last_activity_at: string
+          session_token: string
+          started_at: string
+          user_id: string
+        }
+        Insert: {
+          expires_at?: string
+          fingerprint_id: string
+          id?: string
+          is_active?: boolean
+          last_activity_at?: string
+          session_token: string
+          started_at?: string
+          user_id: string
+        }
+        Update: {
+          expires_at?: string
+          fingerprint_id?: string
+          id?: string
+          is_active?: boolean
+          last_activity_at?: string
+          session_token?: string
+          started_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_sessions_fingerprint_id_fkey"
+            columns: ["fingerprint_id"]
+            isOneToOne: false
+            referencedRelation: "device_fingerprints"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       public_profiles: {
@@ -2501,14 +2581,28 @@ export type Database = {
           username: string
         }[]
       }
+      authorize_device: { Args: { p_fingerprint_id: string }; Returns: Json }
       calculate_investment_match_score: {
         Args: { p_investor_id: string; p_project_id: string }
         Returns: number
+      }
+      check_and_register_device: {
+        Args: {
+          p_browser_info: string
+          p_device_info: Json
+          p_fingerprint_hash: string
+          p_ip_address: string
+        }
+        Returns: Json
       }
       clean_expired_password_reset_tokens: { Args: never; Returns: undefined }
       get_current_user_role: {
         Args: never
         Returns: Database["public"]["Enums"]["new_user_role"]
+      }
+      get_max_devices_for_tariff: {
+        Args: { p_user_id: string }
+        Returns: number
       }
       get_platform_stats: { Args: never; Returns: Json }
       get_platform_stats_secured: {
@@ -2538,10 +2632,15 @@ export type Database = {
         }
         Returns: boolean
       }
+      revoke_device_authorization: {
+        Args: { p_fingerprint_id: string }
+        Returns: Json
+      }
       switch_user_role: {
         Args: { p_role: Database["public"]["Enums"]["new_user_role"] }
         Returns: undefined
       }
+      terminate_session: { Args: { p_session_id: string }; Returns: Json }
     }
     Enums: {
       funding_stage:

@@ -24,7 +24,7 @@ const ROLE_LABELS: Record<string, string> = {
   contractor: 'Подрядчик',
   // Сотрудники и администрирование
   administrator: 'Администратор',
-  project_admin: 'Администратор проекта',
+  project_admin: 'Администратор стартапа',
   employee: 'Сотрудник',
   job_seeker: 'Соискатель',
   // Партнеры и медиа
