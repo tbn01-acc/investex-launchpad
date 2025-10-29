@@ -16,6 +16,8 @@ import CoFounderDashboard from '@/pages/dashboards/CoFounderDashboard';
 import CoPartnerDashboard from '@/pages/dashboards/CoPartnerDashboard';
 import BloggerDashboard from '@/pages/dashboards/BloggerDashboard';
 import ConsultantDashboard from '@/pages/dashboards/ConsultantDashboard';
+import FranchiserDashboard from '@/pages/dashboards/FranchiserDashboard';
+import FranchiseeDashboard from '@/pages/dashboards/FranchiseeDashboard';
 import JobSeekerDashboard from '@/pages/dashboards/JobSeekerDashboard';
 import AmbassadorDashboard from '@/pages/dashboards/AmbassadorDashboard';
 import ProjectAdminDashboard from '@/pages/dashboards/ProjectAdminDashboard';
@@ -49,13 +51,13 @@ const Dashboard = () => {
   const [activeTab, setActiveTab] = useState('overview');
   const [selectedRole, setSelectedRole] = useState<string>('');
   const [stats, setStats] = useState({
-    totalUsers: 15847,
-    totalProjects: 3421,
-    totalInvestments: 892,
-    totalFunding: 12500000,
-    activeFreelancers: 15847,
-    activeInvestors: 1204,
-    successfulProjects: 2847
+    totalUsers: 0,
+    totalProjects: 0,
+    totalInvestments: 0,
+    totalFunding: 0,
+    activeFreelancers: 0,
+    activeInvestors: 0,
+    successfulProjects: 0
   });
   
 
@@ -151,6 +153,7 @@ const Dashboard = () => {
       partner: 'Партнер',
       blogger: 'Блогер',
       franchiser: 'Франчайзер',
+      franchisee: 'Франчайзи',
       superadmin: 'Суперадмин'
     };
     return roleMap[role] || 'Пользователь';
@@ -228,6 +231,10 @@ const Dashboard = () => {
         return <PartnerAnalytics />;
       case 'blogger':
         return <BloggerAnalytics />;
+      case 'franchisee':
+        return <PartnerAnalytics />;
+      case 'franchiser':
+        return <PartnerAnalytics />;
       case 'superadmin':
         return (
           <div className="grid gap-6">
@@ -313,6 +320,10 @@ const Dashboard = () => {
         return <PartnerDashboard />;
       case 'blogger':
         return <BloggerDashboard />;
+      case 'franchiser':
+        return <FranchiserDashboard />;
+      case 'franchisee':
+        return <FranchiseeDashboard />;
       default:
         return null;
     }
@@ -347,6 +358,7 @@ const Dashboard = () => {
                       <div className="px-2 py-1.5 text-sm font-semibold text-muted-foreground">Участники</div>
                       <SelectItem value="investor">Инвестор</SelectItem>
                       <SelectItem value="co_investor">Соинвестор</SelectItem>
+                      <SelectItem value="franchisee">Франчайзи</SelectItem>
                       <SelectItem value="founder">Фаундер</SelectItem>
                       <SelectItem value="co_founder">Ко-фаундер</SelectItem>
                       <SelectItem value="co_owner">Соучредитель</SelectItem>
@@ -367,6 +379,7 @@ const Dashboard = () => {
                       <SelectItem value="ambassador">Амбассадор</SelectItem>
                       <SelectItem value="partner">Партнер</SelectItem>
                       <SelectItem value="blogger">Блогер</SelectItem>
+                      <SelectItem value="franchiser">Франчайзер</SelectItem>
                       
                       {profile?.role === 'superadmin' && (
                         <>

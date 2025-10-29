@@ -58,7 +58,26 @@ export default function SuperadminDashboard() {
       
       // RPC returns array, get first item
       if (data && data.length > 0) {
-        setStats(data[0]);
+        setStats({
+          total_users: data[0].total_users || 0,
+          total_projects: data[0].total_projects || 0,
+          total_investments: data[0].total_investments || 0,
+          total_funding_raised: data[0].total_funding_raised || 0,
+          active_freelancers: data[0].active_freelancers || 0,
+          active_investors: data[0].active_investors || 0,
+          successful_projects: data[0].successful_projects || 0,
+        });
+      } else {
+        // Set default values if no data
+        setStats({
+          total_users: 0,
+          total_projects: 0,
+          total_investments: 0,
+          total_funding_raised: 0,
+          active_freelancers: 0,
+          active_investors: 0,
+          successful_projects: 0,
+        });
       }
     } catch (error: any) {
       toast({

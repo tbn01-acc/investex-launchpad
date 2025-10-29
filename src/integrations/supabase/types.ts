@@ -2641,6 +2641,7 @@ export type Database = {
         Returns: undefined
       }
       terminate_session: { Args: { p_session_id: string }; Returns: Json }
+      update_platform_statistics: { Args: never; Returns: undefined }
     }
     Enums: {
       funding_stage:
