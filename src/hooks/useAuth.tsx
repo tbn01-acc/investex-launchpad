@@ -3,6 +3,79 @@ import { Session, User } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 
+// Функция для создания отпечатка устройства
+const generateFingerprint = (): string => {
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  
+  let canvasData = '';
+  if (ctx) {
+    ctx.textBaseline = 'top';
+    ctx.font = '14px Arial';
+    ctx.fillText('Invest-Ex Device', 2, 2);
+    canvasData = canvas.toDataURL();
+  }
+  
+  const fingerprint = {
+    userAgent: navigator.userAgent,
+    language: navigator.language,
+    colorDepth: screen.colorDepth,
+    deviceMemory: (navigator as any).deviceMemory || 'unknown',
+    hardwareConcurrency: navigator.hardwareConcurrency,
+    screenResolution: `${screen.width}x${screen.height}`,
+    availableScreenResolution: `${screen.availWidth}x${screen.availHeight}`,
+    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    platform: navigator.platform,
+    canvas: canvasData.slice(0, 100),
+    plugins: Array.from(navigator.plugins || []).map(p => p.name).join(','),
+  };
+  
+  const fingerprintString = JSON.stringify(fingerprint);
+  return btoa(fingerprintString).slice(0, 64);
+};
+
+const getDeviceType = (): string => {
+  const ua = navigator.userAgent;
+  if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
+    return 'tablet';
+  }
+  if (/Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(ua)) {
+    return 'mobile';
+  }
+  return 'desktop';
+};
+
+const getBrowserInfo = (): string => {
+  const ua = navigator.userAgent;
+  let browser = 'Unknown';
+  
+  if (ua.indexOf('Firefox') > -1) {
+    browser = 'Firefox';
+  } else if (ua.indexOf('Opera') > -1 || ua.indexOf('OPR') > -1) {
+    browser = 'Opera';
+  } else if (ua.indexOf('Trident') > -1) {
+    browser = 'Internet Explorer';
+  } else if (ua.indexOf('Edge') > -1 || ua.indexOf('Edg') > -1) {
+    browser = 'Microsoft Edge';
+  } else if (ua.indexOf('Chrome') > -1) {
+    browser = 'Chrome';
+  } else if (ua.indexOf('Safari') > -1) {
+    browser = 'Safari';
+  }
+  
+  return `${browser} (${getDeviceType()})`;
+};
+
+const getIPAddress = async (): Promise<string> => {
+  try {
+    const response = await fetch('https://api.ipify.org?format=json');
+    const data = await response.json();
+    return data.ip;
+  } catch (error) {
+    return 'unknown';
+  }
+};
+
 interface AuthContextType {
   session: Session | null;
   user: User | null;
@@ -35,6 +108,45 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [profile, setProfile] = useState<any>(null);
   const { toast } = useToast();
 
+  const checkDeviceFingerprint = async (userId: string) => {
+    try {
+      const fingerprint = generateFingerprint();
+      const ipAddress = await getIPAddress();
+      const deviceInfo = {
+        type: getDeviceType(),
+        platform: navigator.platform,
+        screenResolution: `${screen.width}x${screen.height}`
+      };
+      const browserInfo = getBrowserInfo();
+      
+      const { data, error } = await supabase.rpc('check_and_register_device', {
+        p_fingerprint_hash: fingerprint,
+        p_device_info: deviceInfo,
+        p_browser_info: browserInfo,
+        p_ip_address: ipAddress
+      });
+      
+      if (error) throw error;
+      
+      const result = data as any;
+      if (result?.requires_authorization) {
+        toast({
+          title: "Требуется авторизация устройства",
+          description: result.error === 'Device limit reached' 
+            ? `Достигнут лимит устройств (${result.max_devices}). Авторизуйте устройство в настройках профиля.`
+            : 'Авторизуйте это устройство в настройках профиля для продолжения работы.',
+          variant: "destructive",
+          duration: 10000,
+        });
+        return false;
+      }
+      return true;
+    } catch (error: any) {
+      console.error('Error checking device:', error);
+      return true; // Не блокируем в случае ошибки
+    }
+  };
+
   const refreshProfile = async () => {
     if (!user) return;
     
@@ -55,15 +167,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     // Set up auth state listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
+      async (event, session) => {
         setSession(session);
         setUser(session?.user ?? null);
         setLoading(false);
         
-        // Defer profile fetch with setTimeout to prevent deadlock
+        // Defer profile and device check with setTimeout to prevent deadlock
         if (session?.user) {
-          setTimeout(() => {
-            refreshProfile();
+          setTimeout(async () => {
+            await refreshProfile();
+            if (event === 'SIGNED_IN') {
+              await checkDeviceFingerprint(session.user.id);
+            }
           }, 0);
         } else {
           setProfile(null);
@@ -77,8 +192,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setUser(session?.user ?? null);
       setLoading(false);
       if (session?.user) {
-        setTimeout(() => {
-          refreshProfile();
+        setTimeout(async () => {
+          await refreshProfile();
+          await checkDeviceFingerprint(session.user.id);
         }, 0);
       }
     });
