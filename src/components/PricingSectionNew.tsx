@@ -8,7 +8,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const PricingSectionNew = () => {
   const [searchParams] = useSearchParams();
-  const [selectedCategory, setSelectedCategory] = useState('Участники');
+  const [selectedCategory, setSelectedCategory] = useState('Инвесторы');
   const [selectedRole, setSelectedRole] = useState('Инвестор');
   const [selectedPeriod, setSelectedPeriod] = useState(1);
   const navigate = useNavigate();
@@ -37,10 +37,11 @@ const PricingSectionNew = () => {
     }
   }, [searchParams]);
 
-  const categories = ['Участники', 'Исполнители', 'Сотрудники', 'Партнеры'];
+  const categories = ['Инвесторы', 'Стартап/Франшиза', 'Исполнители', 'Сотрудники', 'Партнеры'];
   
   const rolesByCategory = {
-    'Участники': ['Инвестор', 'Соинвестор', 'Фаундер', 'Ко-фаундер', 'Соучредитель', 'Франчайзер'],
+    'Инвесторы': ['Инвестор', 'Соинвестор', 'Франчайзи'],
+    'Стартап/Франшиза': ['Фаундер', 'Ко-фаундер', 'Соучредитель', 'Франчайзер'],
     'Исполнители': ['Фрилансер', 'Эксперт', 'Консультант', 'Аутсорсер', 'Подрядчик'],
     'Сотрудники': ['Администратор стартапа', 'Сотрудник стартапа', 'Соискатель'],
     'Партнеры': ['Партнёр (Affiliate)', 'Амбассадор проекта', 'Лидер мнений/Блогер']
@@ -159,6 +160,23 @@ const PricingSectionNew = () => {
         ['Персональный менеджер', false, false, true],
         ['Юр. сопровождение', false, false, true],
         ['Приоритетное размещение', false, false, true]
+      ]
+    },
+    'Франчайзи': {
+      plans: [
+        { name: 'Старт', price: 0, trial: false },
+        { name: 'Профи', price: 49, trial: true },
+        { name: 'Премиум', price: 149, trial: false }
+      ],
+      features: [
+        ['Просмотр франшиз/мес', 'до 10', 'неограниченно', 'неограниченно'],
+        ['Аналитика окупаемости', 'базовая', 'AI-аналитика', 'AI + персональный советник'],
+        ['Запросы франчайзерам/мес', '3', '10', 'неограниченно'],
+        ['Финансовая оценка', false, true, true],
+        ['Локации под франшизу', false, true, true],
+        ['Due Diligence франшиз', false, false, true],
+        ['Юр. сопровождение сделки', false, false, true],
+        ['Персональный менеджер', false, false, true]
       ]
     },
     'Фрилансер': {

@@ -16,6 +16,7 @@ const ROLE_LABELS: Record<string, string> = {
   partner: 'Партнер',
   co_partner: 'Со-партнер',
   franchiser: 'Франчайзер',
+  franchisee: 'Франчайзи',
   // Исполнители
   freelancer: 'Фрилансер',
   expert: 'Эксперт',

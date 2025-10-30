@@ -15,9 +15,12 @@ import { DeviceManagement } from '@/components/DeviceManagement';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const ROLE_CATEGORIES = {
-  "Участники": [
+  "Инвесторы": [
     { value: 'investor', label: 'Инвестор' },
     { value: 'co_investor', label: 'Соинвестор' },
+    { value: 'franchisee', label: 'Франчайзи' },
+  ],
+  "Стартап/Франшиза": [
     { value: 'founder', label: 'Фаундер' },
     { value: 'co_founder', label: 'Ко-фаундер' },
     { value: 'co_partner', label: 'Соучредитель' },

@@ -66,18 +66,28 @@ const Community = () => {
     {
       name: "Александр Новиков",
       role: "Инвестор",
+      category: "Инвесторы",
       avatar: "/src/assets/projects/blockchain-logistics.jpg",
       contributions: 156,
     },
     {
+      name: "Ольга Морозова",
+      role: "Франчайзи",
+      category: "Инвесторы",
+      avatar: "/src/assets/projects/foodtech-automation.jpg",
+      contributions: 134,
+    },
+    {
       name: "Мария Светлова",
       role: "Эксперт",
+      category: "Профессионалы",
       avatar: "/src/assets/projects/ai-marketing-ecommerce.jpg",
       contributions: 142,
     },
     {
       name: "Сергей Белов",
       role: "Фаундер",
+      category: "Стартап/Франшиза",
       avatar: "/src/assets/projects/greentech-energy.jpg",
       contributions: 128,
     },

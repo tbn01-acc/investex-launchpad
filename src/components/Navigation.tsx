@@ -148,10 +148,16 @@ const Navigation = () => {
       title: "Сообщество",
       categories: [
         {
-          title: "Участники",
+          title: "Инвесторы",
           items: [
             { title: "Инвесторы", href: "/participants", description: "Инвестиции в проекты" },
             { title: "Соинвесторы", href: "/participants", description: "Групповые инвестиции" },
+            { title: "Франчайзи", href: "/participants", description: "Покупка франшизы" },
+          ]
+        },
+        {
+          title: "Стартап/Франшиза",
+          items: [
             { title: "Фаундеры", href: "/participants", description: "Создание стартапов" },
             { title: "Ко-фаундеры", href: "/participants", description: "Партнерство в проектах" },
             { title: "Соучредители", href: "/participants", description: "Совместное учредительство" },
