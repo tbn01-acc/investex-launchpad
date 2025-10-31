@@ -12,6 +12,7 @@ type RoleCategory = "investors" | "creators" | "executors" | "partners";
 const roles = [
   { name: "Инвестор", description: "Ищу лучшие стартапы, отрасли, управляю портфелем и рисками.", category: "investors" as RoleCategory },
   { name: "Соинвестор", description: "Доступ к сделкам совместных инвестиций, приватным раундам, аналитике и аукционам.", category: "investors" as RoleCategory },
+  { name: "Франчайзи", description: "Инвестирую в готовый бизнес с проверенной моделью и поддержкой франчайзера.", category: "investors" as RoleCategory },
   { name: "Фаундер", description: "Запускаю стартап, управляю командой, презентуюсь инвесторам.", category: "creators" as RoleCategory },
   { name: "Ко-фаундер", description: "Вхожу в перспективные проекты, улучшаю профиль команды, развиваю идеи.", category: "creators" as RoleCategory },
   { name: "Соучредитель", description: "Вхожу в проекты, получая долю, работаю с лидерами, строю бизнес.", category: "creators" as RoleCategory },

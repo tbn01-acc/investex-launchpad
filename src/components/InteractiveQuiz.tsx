@@ -5912,6 +5912,7 @@ const InteractiveQuiz = ({ onComplete }: InteractiveQuizProps) => {
   const ROLE_NAMES: Record<string, string> = {
     investor: "Инвестор",
     coinvestor: "Соинвестор",
+    franchisee: "Франчайзи",
     founder: "Фаундер",
     cofounder: "Ко-фаундер",
     copartner: "Соучредитель",
@@ -6012,8 +6013,8 @@ const InteractiveQuiz = ({ onComplete }: InteractiveQuizProps) => {
             <Progress value={progress} className="h-2" />
           </div>
 
-          <Card className="p-8 shadow-lg">
-            <h3 className="text-2xl font-semibold text-foreground mb-6">
+          <Card className="p-4 sm:p-8 shadow-lg">
+            <h3 className="text-lg sm:text-xl md:text-2xl font-semibold text-foreground mb-4 sm:mb-6 leading-snug">
               {currentQuestion.question}
             </h3>
             
