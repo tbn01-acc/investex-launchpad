@@ -108,6 +108,23 @@ const LEAD_MAGNETS: Record<string, Record<string, { title: string; file: string;
       tariff: "Стратег"
     }
   },
+  franchisee: {
+    start: {
+      title: "Гайд: Как выбрать прибыльную франшизу",
+      file: "franchise_selection_guide.pdf",
+      tariff: "Старт"
+    },
+    professional: {
+      title: "Калькулятор: ROI франшизы и окупаемость",
+      file: "franchise_roi_calculator.xlsx",
+      tariff: "Профи"
+    },
+    premium: {
+      title: "Стратегия: Масштабирование франчайзинговой сети",
+      file: "multi_location_strategy.pdf",
+      tariff: "Премиум"
+    }
+  },
   franchiser: {
     basic: {
       title: "Пакет документов: Запуск франшизы",
@@ -287,7 +304,8 @@ const quizTree: Record<string, Question> = {
       { text: "До $10,000", next: "invest_small_experience" },
       { text: "$10,000 - $50,000", next: "invest_medium_goals" },
       { text: "$50,000 - $100,000", next: "invest_large_strategy" },
-      { text: "Более $100,000", next: "invest_huge_approach" }
+      { text: "Более $100,000", next: "invest_huge_approach" },
+      { text: "🏪 Интересует готовый бизнес (франшиза)", next: "franchisee_capital" }
     ]
   },
 
@@ -2033,16 +2051,6 @@ const quizTree: Record<string, Question> = {
     ]
   },
 
-  franchisee_budget: {
-    id: "franchisee_budget",
-    stage: "Шаг 4 из 7+",
-    question: "Какой бюджет для покупки франшизы?",
-    answers: [
-      { text: "До $50,000", next: "franchisee_industry" },
-      { text: "$50,000 - $200,000", next: "franchisee_industry" },
-      { text: "Более $200,000", next: "franchisee_experience" }
-    ]
-  },
 
   franchisee_industry: {
     id: "franchisee_industry",
@@ -2071,9 +2079,9 @@ const quizTree: Record<string, Question> = {
     stage: "Шаг 7 из 7",
     question: "Когда планируете запуск?",
     answers: [
-      { text: "В течение 3 месяцев", result: { role: "franchisee", tariff: "investor" } },
-      { text: "3-6 месяцев", result: { role: "franchisee", tariff: "investor" } },
-      { text: "Более 6 месяцев", result: { role: "franchisee", tariff: "investor" } }
+      { text: "В течение 3 месяцев", result: { role: "franchisee", tariff: "start" } },
+      { text: "3-6 месяцев", result: { role: "franchisee", tariff: "start" } },
+      { text: "Более 6 месяцев", result: { role: "franchisee", tariff: "start" } }
     ]
   },
 
@@ -2102,9 +2110,9 @@ const quizTree: Record<string, Question> = {
     stage: "Шаг 7 из 7",
     question: "Сколько точек планируете?",
     answers: [
-      { text: "2-5 точек", result: { role: "franchisee", tariff: "investor" } },
-      { text: "5-10 точек", result: { role: "franchisee", tariff: "investor" } },
-      { text: "Более 10", result: { role: "franchisee", tariff: "investor" } }
+      { text: "2-5 точек", result: { role: "franchisee", tariff: "professional" } },
+      { text: "5-10 точек", result: { role: "franchisee", tariff: "premium" } },
+      { text: "Более 10", result: { role: "franchisee", tariff: "premium" } }
     ]
   },
 

@@ -359,9 +359,10 @@ const roleToGroup: Record<string, string> = {
 
 interface RolePathSectionProps {
   initialRole?: string | null;
+  onRoleChange?: (role: string) => void;
 }
 
-const RolePathSection = ({ initialRole }: RolePathSectionProps) => {
+const RolePathSection = ({ initialRole, onRoleChange }: RolePathSectionProps) => {
   // Преобразуем initialRole из ключа в отображаемое название
   const initialRoleName = initialRole ? roleKeyToName[initialRole] || null : null;
   const initialGroupName = initialRoleName ? roleToGroup[initialRoleName] || "Инвесторы" : "Инвесторы";
@@ -415,6 +416,11 @@ const RolePathSection = ({ initialRole }: RolePathSectionProps) => {
   const handleRoleClick = (roleName: string, roleData: any) => {
     setActiveRole(roleName);
     setSelectedRoleData(roleData);
+    // Находим ключ роли для передачи в родительский компонент
+    const roleKey = Object.keys(roleKeyToName).find(key => roleKeyToName[key] === roleName);
+    if (roleKey && onRoleChange) {
+      onRoleChange(roleKey);
+    }
   };
 
   // Function to get reordered roles with selected role at the top

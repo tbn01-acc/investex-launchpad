@@ -17,10 +17,12 @@ import Footer from "@/components/Footer";
 
 const Index = () => {
   const [quizRole, setQuizRole] = useState<string | null>(null);
+  const [selectedRole, setSelectedRole] = useState<string | null>(null);
   const rolePathRef = useRef<HTMLDivElement>(null);
 
   const handleQuizComplete = (role: string) => {
     setQuizRole(role);
+    setSelectedRole(role);
     // Прокручиваем к секции выбора роли после завершения квиза
     setTimeout(() => {
       rolePathRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -38,11 +40,11 @@ const Index = () => {
       <PowerfulFeaturesSection />
       <InteractiveQuiz onComplete={handleQuizComplete} />
       <div ref={rolePathRef}>
-        <RolePathSection initialRole={quizRole} />
+        <RolePathSection initialRole={quizRole} onRoleChange={setSelectedRole} />
       </div>
       <ProjectShowcase />
-      <SuccessStoriesSection filterByRole={quizRole || undefined} />
-      <TestimonialsSection filterByRole={quizRole || undefined} />
+      <SuccessStoriesSection filterByRole={selectedRole || undefined} />
+      <TestimonialsSection filterByRole={selectedRole || undefined} />
       <StatsSection />
       <CTASection />
       <Footer />
