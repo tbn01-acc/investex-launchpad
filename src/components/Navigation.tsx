@@ -318,6 +318,8 @@ const Navigation = () => {
               </NavigationMenuList>
             </NavigationMenu>
 
+            <LanguageCurrencySelector />
+
             <div className="flex items-center space-x-3">
               {user && (
                 <>

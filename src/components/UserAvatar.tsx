@@ -15,7 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { User, LayoutDashboard, LogOut, Settings } from 'lucide-react';
+import { User, LayoutDashboard, LogOut, Settings, Heart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { ApiConfigDialog } from '@/components/ApiConfigDialog';
@@ -192,6 +192,13 @@ const UserAvatar = () => {
           <Link to="/profile" className="cursor-pointer">
             <User className="mr-2 h-4 w-4" />
             Профиль
+          </Link>
+        </DropdownMenuItem>
+        
+        <DropdownMenuItem asChild>
+          <Link to="/favorites" className="cursor-pointer">
+            <Heart className="mr-2 h-4 w-4" />
+            Избранное
           </Link>
         </DropdownMenuItem>
         

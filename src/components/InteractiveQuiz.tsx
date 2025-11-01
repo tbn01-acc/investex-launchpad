@@ -6014,7 +6014,7 @@ const InteractiveQuiz = ({ onComplete }: InteractiveQuizProps) => {
           </div>
 
           <Card className="p-4 sm:p-8 shadow-lg">
-            <h3 className="text-lg sm:text-xl md:text-2xl font-semibold text-foreground mb-4 sm:mb-6 leading-snug">
+            <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl font-semibold text-foreground mb-4 sm:mb-6 leading-snug line-clamp-3 sm:line-clamp-none">
               {currentQuestion.question}
             </h3>
             
