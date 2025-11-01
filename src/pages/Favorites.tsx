@@ -8,10 +8,13 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { Badge } from '@/components/ui/badge';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
-import { Heart, Trash2, ExternalLink, Plus, Edit } from 'lucide-react';
+import { Heart, Trash2, ExternalLink, Plus, Edit, Eye } from 'lucide-react';
+import { allProjects } from '@/data/projectsData';
+import { cn } from '@/lib/utils';
 
 interface Favorite {
   id: string;
@@ -282,28 +285,59 @@ const Favorites = () => {
                     </CardContent>
                   </Card>
                 ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {filterFavorites('project').map(fav => (
-                      <Card key={fav.id} className="hover:shadow-lg transition-shadow">
-                        <CardHeader className="pb-3">
-                          <CardTitle className="text-base">Проект #{fav.item_id}</CardTitle>
-                          <CardDescription className="text-xs">
-                            {new Date(fav.created_at).toLocaleDateString('ru-RU')}
-                          </CardDescription>
-                        </CardHeader>
-                        <CardContent className="pt-0">
-                          <div className="flex gap-2 justify-end">
-                            <Button variant="outline" size="sm" onClick={() => window.location.href = `/projects/${fav.item_id}`}>
-                              <ExternalLink className="w-3 h-3 mr-1" />
-                              Открыть
-                            </Button>
-                            <Button variant="ghost" size="sm" onClick={() => removeFavorite(fav.id)}>
-                              <Trash2 className="w-3 h-3 text-destructive" />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                    {filterFavorites('project').map(fav => {
+                      const project = allProjects.find(p => String(p.id) === fav.item_id);
+                      if (!project) return null;
+                      
+                      return (
+                        <div 
+                          key={fav.id} 
+                          className="bg-card rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow border border-border cursor-pointer group"
+                          onClick={() => window.location.href = `/projects/${fav.item_id}`}
+                        >
+                          <div className="relative">
+                            <img 
+                              src={project.image || "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=400&fit=crop"} 
+                              alt={project.title}
+                              className="w-full h-48 object-cover"
+                              onError={(e) => {
+                                (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=400&fit=crop";
+                              }}
+                            />
+                            <Badge className="absolute top-4 left-4 bg-primary text-primary-foreground">
+                              {project.category}
+                            </Badge>
+                            <Button
+                              size="icon"
+                              variant="secondary"
+                              className="absolute top-4 right-4 rounded-full shadow-lg bg-primary text-primary-foreground hover:bg-primary/90"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                removeFavorite(fav.id);
+                              }}
+                            >
+                              <Heart className="w-5 h-5 fill-current" />
                             </Button>
                           </div>
-                        </CardContent>
-                      </Card>
-                    ))}
+                          <div className="p-6 flex flex-col h-56">
+                            <h3 className="text-xl font-semibold mb-3 text-foreground line-clamp-2 h-14">{project.title}</h3>
+                            <p className="text-muted-foreground mb-4 line-clamp-3 flex-1">{project.description}</p>
+                            <Button 
+                              size="sm" 
+                              className="w-full mt-auto"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                window.location.href = `/projects/${fav.item_id}`;
+                              }}
+                            >
+                              <Eye className="w-4 h-4 mr-2" />
+                              Подробнее
+                            </Button>
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                 )}
               </TabsContent>
