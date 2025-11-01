@@ -322,22 +322,6 @@ const Navigation = () => {
 
             <div className="flex items-center space-x-3">
               {user && (
-                <>
-                  <Link
-                    to="/favorites"
-                    className="text-sm font-medium transition-colors hover:text-primary hidden lg:inline-flex"
-                  >
-                    Избранное
-                  </Link>
-                  <Link
-                    to="/dashboard"
-                    className="text-sm font-medium transition-colors hover:text-primary hidden lg:inline-flex"
-                  >
-                    Личный кабинет
-                  </Link>
-                </>
-              )}
-              {user && (
                 <Button
                   variant="ghost"
                   size="icon"

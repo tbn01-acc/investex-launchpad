@@ -282,28 +282,29 @@ const Favorites = () => {
                     </CardContent>
                   </Card>
                 ) : (
-                  filterFavorites('project').map(fav => (
-                    <Card key={fav.id}>
-                      <CardHeader>
-                        <div className="flex items-start justify-between">
-                          <div className="flex-1">
-                            <CardTitle>Проект #{fav.item_id}</CardTitle>
-                            <CardDescription>
-                              Добавлено {new Date(fav.created_at).toLocaleDateString('ru-RU')}
-                            </CardDescription>
-                          </div>
-                          <div className="flex gap-2">
-                            <Button variant="ghost" size="icon" onClick={() => window.location.href = `/projects/${fav.item_id}`}>
-                              <ExternalLink className="w-4 h-4" />
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {filterFavorites('project').map(fav => (
+                      <Card key={fav.id} className="hover:shadow-lg transition-shadow">
+                        <CardHeader className="pb-3">
+                          <CardTitle className="text-base">Проект #{fav.item_id}</CardTitle>
+                          <CardDescription className="text-xs">
+                            {new Date(fav.created_at).toLocaleDateString('ru-RU')}
+                          </CardDescription>
+                        </CardHeader>
+                        <CardContent className="pt-0">
+                          <div className="flex gap-2 justify-end">
+                            <Button variant="outline" size="sm" onClick={() => window.location.href = `/projects/${fav.item_id}`}>
+                              <ExternalLink className="w-3 h-3 mr-1" />
+                              Открыть
                             </Button>
-                            <Button variant="ghost" size="icon" onClick={() => removeFavorite(fav.id)}>
-                              <Trash2 className="w-4 h-4 text-destructive" />
+                            <Button variant="ghost" size="sm" onClick={() => removeFavorite(fav.id)}>
+                              <Trash2 className="w-3 h-3 text-destructive" />
                             </Button>
                           </div>
-                        </div>
-                      </CardHeader>
-                    </Card>
-                  ))
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
                 )}
               </TabsContent>
 
