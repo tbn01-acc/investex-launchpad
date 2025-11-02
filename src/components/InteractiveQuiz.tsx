@@ -304,8 +304,7 @@ const quizTree: Record<string, Question> = {
       { text: "До $10,000", next: "invest_small_experience" },
       { text: "$10,000 - $50,000", next: "invest_medium_goals" },
       { text: "$50,000 - $100,000", next: "invest_large_strategy" },
-      { text: "Более $100,000", next: "invest_huge_approach" },
-      { text: "🏪 Интересует готовый бизнес (франшиза)", next: "franchisee_capital" }
+      { text: "Более $100,000", next: "invest_huge_approach" }
     ]
   },
 
@@ -1212,7 +1211,8 @@ const quizTree: Record<string, Question> = {
       { text: "Идея или концепция (я основатель)", next: "founder_idea_experience" },
       { text: "Хочу присоединиться к проекту как партнер", next: "cofounder_motivation" },
       { text: "Хочу создать франшизу или купить готовый бизнес", next: "franchiser_type" },
-      { text: "Хочу войти в готовый бизнес как соучредитель", next: "copartner_experience" }
+      { text: "Хочу войти в готовый бизнес как соучредитель", next: "copartner_experience" },
+      { text: "🏪 Интересует покупка франшизы", next: "franchisee_capital" }
     ]
   },
 
@@ -2051,7 +2051,266 @@ const quizTree: Record<string, Question> = {
     ]
   },
 
+  // ============ ПОЛНАЯ ВЕТКА ФРАНЧАЙЗИ ============
+  franchisee_capital: {
+    id: "franchisee_capital",
+    stage: "Шаг 3 из 7+",
+    question: "Каким капиталом вы располагаете для франшизы?",
+    answers: [
+      { text: "До $50,000", next: "franchisee_low_motivation" },
+      { text: "$50,000 - $150,000", next: "franchisee_mid_experience" },
+      { text: "Более $150,000", next: "franchisee_high_goals" }
+    ]
+  },
 
+  // Ветка для низкого бюджета
+  franchisee_low_motivation: {
+    id: "franchisee_low_motivation",
+    stage: "Шаг 4 из 7+",
+    question: "Что для вас важнее?",
+    answers: [
+      { text: "Быстрый запуск с минимальными рисками", next: "franchisee_low_industry" },
+      { text: "Обучение и поддержка", next: "franchisee_low_support" }
+    ]
+  },
+
+  franchisee_low_support: {
+    id: "franchisee_low_support",
+    stage: "Шаг 5 из 7+",
+    question: "Есть ли у вас опыт в бизнесе?",
+    answers: [
+      { text: "Нет, это первый бизнес", next: "franchisee_low_learning" },
+      { text: "Да, есть опыт", next: "franchisee_low_industry" }
+    ]
+  },
+
+  franchisee_low_learning: {
+    id: "franchisee_low_learning",
+    stage: "Шаг 6 из 7+",
+    question: "Готовы ли инвестировать время в обучение?",
+    answers: [
+      { text: "Да, хочу полное обучение", next: "franchisee_low_timeline" },
+      { text: "Хочу максимально простую модель", next: "franchisee_low_timeline" }
+    ]
+  },
+
+  franchisee_low_timeline: {
+    id: "franchisee_low_timeline",
+    stage: "Шаг 7 из 7",
+    question: "Когда планируете запуск?",
+    answers: [
+      { text: "В течение 3 месяцев", result: { role: "franchisee", tariff: "start" } },
+      { text: "3-6 месяцев", result: { role: "franchisee", tariff: "start" } },
+      { text: "Более 6 месяцев", result: { role: "franchisee", tariff: "start" } }
+    ]
+  },
+
+  franchisee_low_industry: {
+    id: "franchisee_low_industry",
+    stage: "Шаг 5 из 7+",
+    question: "Какая индустрия интересна?",
+    answers: [
+      { text: "Еда и напитки", next: "franchisee_low_location" },
+      { text: "Услуги (клининг, ремонт)", next: "franchisee_low_location" },
+      { text: "Ретейл (киоски, магазины)", next: "franchisee_low_location" },
+      { text: "Образование и детские услуги", next: "franchisee_low_location" }
+    ]
+  },
+
+  franchisee_low_location: {
+    id: "franchisee_low_location",
+    stage: "Шаг 6 из 7+",
+    question: "Есть ли подходящая локация?",
+    answers: [
+      { text: "Да, локация готова", next: "franchisee_low_timeline" },
+      { text: "Нет, буду искать с помощью франчайзера", next: "franchisee_low_timeline" }
+    ]
+  },
+
+  // Ветка для среднего бюджета
+  franchisee_mid_experience: {
+    id: "franchisee_mid_experience",
+    stage: "Шаг 4 из 7+",
+    question: "Есть ли у вас опыт управления бизнесом?",
+    answers: [
+      { text: "Да, управлял своим бизнесом", next: "franchisee_mid_scale_interest" },
+      { text: "Да, работал на руководящей позиции", next: "franchisee_mid_industry" },
+      { text: "Нет, это первый опыт", next: "franchisee_mid_industry" }
+    ]
+  },
+
+  franchisee_mid_scale_interest: {
+    id: "franchisee_mid_scale_interest",
+    stage: "Шаг 5 из 7+",
+    question: "Планируете ли развитие сети?",
+    answers: [
+      { text: "Да, планирую 2-3 точки", next: "franchisee_mid_timeline_multi" },
+      { text: "Пока только одну", next: "franchisee_mid_industry" }
+    ]
+  },
+
+  franchisee_mid_timeline_multi: {
+    id: "franchisee_mid_timeline_multi",
+    stage: "Шаг 6 из 7+",
+    question: "В какие сроки планируете открыть вторую точку?",
+    answers: [
+      { text: "Через 6-12 месяцев после первой", next: "franchisee_mid_roi" },
+      { text: "Через 1-2 года", next: "franchisee_mid_roi" }
+    ]
+  },
+
+  franchisee_mid_roi: {
+    id: "franchisee_mid_roi",
+    stage: "Шаг 7 из 7",
+    question: "Какая окупаемость вас интересует?",
+    answers: [
+      { text: "До 12 месяцев", result: { role: "franchisee", tariff: "professional" } },
+      { text: "12-24 месяца", result: { role: "franchisee", tariff: "professional" } },
+      { text: "Более 24 месяцев", result: { role: "franchisee", tariff: "professional" } }
+    ]
+  },
+
+  franchisee_mid_industry: {
+    id: "franchisee_mid_industry",
+    stage: "Шаг 5 из 7+",
+    question: "В какой сфере ищете франшизу?",
+    answers: [
+      { text: "HoReCa (кафе, рестораны)", next: "franchisee_mid_format" },
+      { text: "Фитнес и wellness", next: "franchisee_mid_format" },
+      { text: "B2B услуги", next: "franchisee_mid_format" },
+      { text: "Ретейл и e-commerce", next: "franchisee_mid_format" }
+    ]
+  },
+
+  franchisee_mid_format: {
+    id: "franchisee_mid_format",
+    stage: "Шаг 6 из 7+",
+    question: "Какой формат предпочитаете?",
+    answers: [
+      { text: "Стандартная точка с персоналом", next: "franchisee_mid_team" },
+      { text: "Полуавтоматизированный (киоск, автомат)", next: "franchisee_mid_roi" }
+    ]
+  },
+
+  franchisee_mid_team: {
+    id: "franchisee_mid_team",
+    stage: "Шаг 7 из 7",
+    question: "Планируете ли управлять лично?",
+    answers: [
+      { text: "Да, буду работать в бизнесе", result: { role: "franchisee", tariff: "start" } },
+      { text: "Нет, наймy управляющего", result: { role: "franchisee", tariff: "professional" } }
+    ]
+  },
+
+  // Ветка для высокого бюджета
+  franchisee_high_goals: {
+    id: "franchisee_high_goals",
+    stage: "Шаг 4 из 7+",
+    question: "Какая ваша главная цель?",
+    answers: [
+      { text: "Построить сеть из нескольких точек", next: "franchisee_high_scale" },
+      { text: "Открыть одну премиум точку", next: "franchisee_high_premium" }
+    ]
+  },
+
+  franchisee_high_scale: {
+    id: "franchisee_high_scale",
+    stage: "Шаг 5 из 7+",
+    question: "Сколько точек планируете открыть?",
+    answers: [
+      { text: "2-5 точек", next: "franchisee_high_geography" },
+      { text: "5-10 точек", next: "franchisee_high_master" },
+      { text: "Более 10 точек", next: "franchisee_high_master" }
+    ]
+  },
+
+  franchisee_high_geography: {
+    id: "franchisee_high_geography",
+    stage: "Шаг 6 из 7+",
+    question: "География развития?",
+    answers: [
+      { text: "Один город", next: "franchisee_high_management" },
+      { text: "Несколько городов", next: "franchisee_high_management" },
+      { text: "Вся страна/регион", next: "franchisee_high_master" }
+    ]
+  },
+
+  franchisee_high_management: {
+    id: "franchisee_high_management",
+    stage: "Шаг 7 из 7",
+    question: "Как планируете управлять?",
+    answers: [
+      { text: "Лично управляю всеми точками", result: { role: "franchisee", tariff: "professional" } },
+      { text: "Команда управляющих", result: { role: "franchisee", tariff: "premium" } }
+    ]
+  },
+
+  franchisee_high_master: {
+    id: "franchisee_high_master",
+    stage: "Шаг 6 из 7+",
+    question: "Рассматриваете ли мастер-франшизу?",
+    answers: [
+      { text: "Да, интересует региональное развитие", next: "franchisee_high_team_size" },
+      { text: "Нет, только собственные точки", next: "franchisee_high_team_size" }
+    ]
+  },
+
+  franchisee_high_team_size: {
+    id: "franchisee_high_team_size",
+    stage: "Шаг 7 из 7",
+    question: "Какая команда будет управлять?",
+    answers: [
+      { text: "Я + 1-2 управляющих", result: { role: "franchisee", tariff: "professional" } },
+      { text: "Полноценная управленческая команда", result: { role: "franchisee", tariff: "premium" } },
+      { text: "Планирую нанять CEO", result: { role: "franchisee", tariff: "premium" } }
+    ]
+  },
+
+  franchisee_high_premium: {
+    id: "franchisee_high_premium",
+    stage: "Шаг 5 из 7+",
+    question: "Что для вас важно в премиум франшизе?",
+    answers: [
+      { text: "Престиж бренда", next: "franchisee_high_involvement" },
+      { text: "Высокая маржинальность", next: "franchisee_high_involvement" },
+      { text: "Эксклюзивность территории", next: "franchisee_high_involvement" }
+    ]
+  },
+
+  franchisee_high_involvement: {
+    id: "franchisee_high_involvement",
+    stage: "Шаг 6 из 7+",
+    question: "Насколько активно будете участвовать?",
+    answers: [
+      { text: "Полностью вовлечен в операции", next: "franchisee_high_experience" },
+      { text: "Стратегическое управление", next: "franchisee_high_experience" },
+      { text: "Пассивное инвестирование", next: "franchisee_high_returns" }
+    ]
+  },
+
+  franchisee_high_experience: {
+    id: "franchisee_high_experience",
+    stage: "Шаг 7 из 7",
+    question: "Есть ли опыт в этой индустрии?",
+    answers: [
+      { text: "Да, большой опыт", result: { role: "franchisee", tariff: "premium" } },
+      { text: "Минимальный опыт", result: { role: "franchisee", tariff: "professional" } },
+      { text: "Нет опыта", result: { role: "franchisee", tariff: "professional" } }
+    ]
+  },
+
+  franchisee_high_returns: {
+    id: "franchisee_high_returns",
+    stage: "Шаг 7 из 7",
+    question: "Какую доходность ожидаете?",
+    answers: [
+      { text: "20-30% годовых", result: { role: "franchisee", tariff: "premium" } },
+      { text: "30-50% годовых", result: { role: "franchisee", tariff: "premium" } },
+      { text: "Более 50% годовых", result: { role: "franchisee", tariff: "premium" } }
+    ]
+  },
+
+  // Старые franchisee узлы (для обратной совместимости)
   franchisee_industry: {
     id: "franchisee_industry",
     stage: "Шаг 5 из 7+",

@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
 import InvestCTABanner from "@/components/InvestCTABanner";
+import KeySearchSection from "@/components/KeySearchSection";
 import AboutUsSection from "@/components/AboutUsSection";
 import VerificationSection from "@/components/VerificationSection";
 import RoleAnimator from "@/components/RoleAnimator";
@@ -34,6 +35,7 @@ const Index = () => {
       <Navigation />
       <HeroSection />
       <InvestCTABanner />
+      <KeySearchSection />
       <AboutUsSection />
       <VerificationSection />
       <RoleAnimator />
