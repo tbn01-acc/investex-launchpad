@@ -249,28 +249,52 @@ const Favorites = () => {
                     </CardContent>
                   </Card>
                 ) : (
-                  filterFavorites('idea').map(fav => (
-                    <Card key={fav.id}>
-                      <CardHeader>
-                        <div className="flex items-start justify-between">
-                          <div className="flex-1">
-                            <CardTitle>Идея #{fav.item_id}</CardTitle>
-                            <CardDescription>
-                              Добавлено {new Date(fav.created_at).toLocaleDateString('ru-RU')}
-                            </CardDescription>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                    {filterFavorites('idea').map(fav => (
+                      <div 
+                        key={fav.id} 
+                        className="bg-card rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow border border-border cursor-pointer group"
+                        onClick={() => window.location.href = `/investments/ideas?id=${fav.item_id}`}
+                      >
+                        <div className="relative">
+                          <div className="w-full h-48 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
+                            <Heart className="w-16 h-16 text-primary/40" />
                           </div>
-                          <div className="flex gap-2">
-                            <Button variant="ghost" size="icon" onClick={() => window.location.href = `/investments/ideas?id=${fav.item_id}`}>
-                              <ExternalLink className="w-4 h-4" />
-                            </Button>
-                            <Button variant="ghost" size="icon" onClick={() => removeFavorite(fav.id)}>
-                              <Trash2 className="w-4 h-4 text-destructive" />
-                            </Button>
-                          </div>
+                          <Badge className="absolute top-4 left-4 bg-primary text-primary-foreground">
+                            Идея
+                          </Badge>
+                          <Button
+                            size="icon"
+                            variant="secondary"
+                            className="absolute top-4 right-4 rounded-full shadow-lg bg-primary text-primary-foreground hover:bg-primary/90"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              removeFavorite(fav.id);
+                            }}
+                          >
+                            <Heart className="w-5 h-5 fill-current" />
+                          </Button>
                         </div>
-                      </CardHeader>
-                    </Card>
-                  ))
+                        <div className="p-6 flex flex-col h-56">
+                          <h3 className="text-xl font-semibold mb-3 text-foreground line-clamp-2 h-14">Идея #{fav.item_id}</h3>
+                          <p className="text-muted-foreground mb-4 line-clamp-3 flex-1">
+                            Добавлено {new Date(fav.created_at).toLocaleDateString('ru-RU')}
+                          </p>
+                          <Button 
+                            size="sm" 
+                            className="w-full mt-auto"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              window.location.href = `/investments/ideas?id=${fav.item_id}`;
+                            }}
+                          >
+                            <Eye className="w-4 h-4 mr-2" />
+                            Подробнее
+                          </Button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 )}
               </TabsContent>
 
@@ -353,25 +377,47 @@ const Favorites = () => {
                     </CardContent>
                   </Card>
                 ) : (
-                  filterFavorites('contact').map(fav => (
-                    <Card key={fav.id}>
-                      <CardHeader>
-                        <div className="flex items-start justify-between">
-                          <div className="flex-1">
-                            <CardTitle>Контакт #{fav.item_id}</CardTitle>
-                            <CardDescription>
-                              Добавлено {new Date(fav.created_at).toLocaleDateString('ru-RU')}
-                            </CardDescription>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                    {filterFavorites('contact').map(fav => (
+                      <div 
+                        key={fav.id} 
+                        className="bg-card rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow border border-border cursor-pointer group"
+                      >
+                        <div className="relative">
+                          <div className="w-full h-48 bg-gradient-to-br from-secondary/20 to-accent/20 flex items-center justify-center">
+                            <Heart className="w-16 h-16 text-secondary/40" />
                           </div>
-                          <div className="flex gap-2">
-                            <Button variant="ghost" size="icon" onClick={() => removeFavorite(fav.id)}>
-                              <Trash2 className="w-4 h-4 text-destructive" />
-                            </Button>
-                          </div>
+                          <Badge className="absolute top-4 left-4 bg-secondary text-secondary-foreground">
+                            Контакт
+                          </Badge>
+                          <Button
+                            size="icon"
+                            variant="secondary"
+                            className="absolute top-4 right-4 rounded-full shadow-lg bg-primary text-primary-foreground hover:bg-primary/90"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              removeFavorite(fav.id);
+                            }}
+                          >
+                            <Heart className="w-5 h-5 fill-current" />
+                          </Button>
                         </div>
-                      </CardHeader>
-                    </Card>
-                  ))
+                        <div className="p-6 flex flex-col h-56">
+                          <h3 className="text-xl font-semibold mb-3 text-foreground line-clamp-2 h-14">Контакт #{fav.item_id}</h3>
+                          <p className="text-muted-foreground mb-4 line-clamp-3 flex-1">
+                            Добавлено {new Date(fav.created_at).toLocaleDateString('ru-RU')}
+                          </p>
+                          <Button 
+                            size="sm" 
+                            className="w-full mt-auto"
+                          >
+                            <Eye className="w-4 h-4 mr-2" />
+                            Подробнее
+                          </Button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 )}
               </TabsContent>
 
