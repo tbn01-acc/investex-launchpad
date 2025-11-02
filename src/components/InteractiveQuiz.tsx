@@ -5882,6 +5882,13 @@ const InteractiveQuiz = ({ onComplete }: InteractiveQuizProps) => {
   const currentQuestion = quizTree[currentQuestionId];
   const progress = Math.min(100, (history.length / 7) * 100);
 
+  // Safety check: if currentQuestion is undefined, reset to start
+  if (!currentQuestion) {
+    setCurrentQuestionId("start");
+    setHistory(["start"]);
+    return null;
+  }
+
   const handleAnswer = (answer: Answer) => {
     if (answer.result) {
       setQuizResult(answer.result);
