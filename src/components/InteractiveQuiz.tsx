@@ -6024,10 +6024,10 @@ const InteractiveQuiz = ({ onComplete }: InteractiveQuizProps) => {
                   key={index}
                   onClick={() => handleAnswer(answer)}
                   variant="outline"
-                  className="w-full justify-start text-left h-auto py-4 px-6 hover:bg-primary/5 hover:border-primary transition-all"
+                  className="w-full justify-start text-left h-auto py-3 sm:py-4 px-4 sm:px-6 hover:bg-primary/5 hover:border-primary transition-all"
                 >
-                  <span className="text-base">{answer.text}</span>
-                  <ArrowRight className="ml-auto w-5 h-5 text-muted-foreground" />
+                  <span className="text-sm sm:text-base break-words leading-tight whitespace-normal flex-1 pr-2">{answer.text}</span>
+                  <ArrowRight className="ml-auto w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground flex-shrink-0" />
                 </Button>
               ))}
             </div>
