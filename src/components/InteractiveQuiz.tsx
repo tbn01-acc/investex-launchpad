@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ArrowRight, Download, ArrowLeft } from "lucide-react";
+import { ArrowRight, Download, ArrowLeft, DollarSign, Rocket, Briefcase, Handshake } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 
 // Типы для структуры квиза
@@ -12,6 +12,7 @@ type Answer = {
     role: string;
     tariff: string;
   };
+  icon?: string;
 };
 
 type Question = {
@@ -288,10 +289,10 @@ const quizTree: Record<string, Question> = {
     stage: "Шаг 1 из 7+",
     question: "Что лучше всего описывает вашу текущую ситуацию?",
     answers: [
-      { text: "💰\u00A0\u00A0У меня есть капитал для инвестиций", next: "invest_amount" },
-      { text: "🚀\u00A0\u00A0У меня есть идея/проект или я хочу создать бизнес", next: "business_stage" },
-      { text: "💼\u00A0\u00A0У меня есть навыки, которые я хочу применить", next: "skills_type" },
-      { text: "🤝\u00A0\u00A0Я хочу быть частью экосистемы", next: "ecosystem_role" }
+      { text: "У меня есть капитал для инвестиций", next: "invest_amount", icon: "DollarSign" },
+      { text: "У меня есть идея/проект или я хочу создать бизнес", next: "business_stage", icon: "Rocket" },
+      { text: "У меня есть навыки, которые я хочу применить", next: "skills_type", icon: "Briefcase" },
+      { text: "Я хочу быть частью экосистемы", next: "ecosystem_role", icon: "Handshake" }
     ]
   },
 
@@ -6285,17 +6286,30 @@ const InteractiveQuiz = ({ onComplete }: InteractiveQuizProps) => {
             </h3>
             
             <div className="space-y-3">
-              {currentQuestion.answers.map((answer, index) => (
-                <Button
-                  key={index}
-                  onClick={() => handleAnswer(answer)}
-                  variant="outline"
-                  className="w-full justify-start text-left h-auto py-3 sm:py-4 px-4 sm:px-6 hover:bg-accent hover:border-accent hover:text-accent-foreground active:bg-accent active:border-accent transition-all"
-                >
-                  <span className="text-sm sm:text-base break-words leading-tight whitespace-normal flex-1 pr-2">{answer.text}</span>
-                  <ArrowRight className="ml-auto w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground flex-shrink-0" />
-                </Button>
-              ))}
+              {currentQuestion.answers.map((answer, index) => {
+                const isFirstQuestion = currentQuestion.id === "start";
+                const IconComponent = answer.icon === "DollarSign" ? DollarSign :
+                                    answer.icon === "Rocket" ? Rocket :
+                                    answer.icon === "Briefcase" ? Briefcase :
+                                    answer.icon === "Handshake" ? Handshake : null;
+                
+                return (
+                  <Button
+                    key={index}
+                    onClick={() => handleAnswer(answer)}
+                    variant="outline"
+                    className="w-full justify-start text-left h-auto py-3 sm:py-4 px-4 sm:px-6 hover:bg-accent hover:border-accent hover:text-accent-foreground active:bg-accent active:border-accent transition-all"
+                  >
+                    {isFirstQuestion && IconComponent && (
+                      <div className="w-10 h-10 rounded-lg bg-primary/20 backdrop-blur-sm flex items-center justify-center mr-4 flex-shrink-0">
+                        <IconComponent className="w-5 h-5 text-primary" strokeWidth={2.5} />
+                      </div>
+                    )}
+                    <span className="text-sm sm:text-base break-words leading-tight whitespace-normal flex-1 pr-2">{answer.text}</span>
+                    <ArrowRight className="ml-auto w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground flex-shrink-0" />
+                  </Button>
+                );
+              })}
             </div>
 
             {history.length > 1 && (

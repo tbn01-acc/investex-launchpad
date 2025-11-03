@@ -81,12 +81,12 @@ const KeySearchSection = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
           {keySearches.map((item, index) => {
             const Icon = item.icon;
             return (
               <Link key={index} to={item.link} className="block group">
-                <div className={`relative h-32 rounded-xl bg-gradient-to-br ${item.color} p-6 transition-all duration-300 hover:shadow-xl hover:scale-105 overflow-hidden`}>
+                <div className={`relative h-64 rounded-xl bg-gradient-to-br ${item.color} p-6 transition-all duration-300 hover:shadow-xl hover:scale-105 overflow-hidden`}>
                   {/* Background overlay for depth */}
                   <div className="absolute inset-0 bg-gradient-to-br from-black/20 to-transparent" />
                   
