@@ -17,6 +17,10 @@ import ForOutsourcers from "./pages/ForOutsourcers";
 import ForFounders from "./pages/ForFounders";
 import ForInvestors from "./pages/ForInvestors";
 import Participants from "./pages/Participants";
+import Investors from "./pages/Investors";
+import Startup from "./pages/Startup";
+import Franchises from "./pages/Franchises";
+import Franchisers from "./pages/Franchisers";
 import Executors from "./pages/Executors";
 import Employees from "./pages/Employees";
 import Partners from "./pages/Partners";
@@ -100,9 +104,12 @@ const App = () => (
                 <Route path="/for-outsourcers" element={<ForOutsourcers />} />
                 <Route path="/founders" element={<ForFounders />} />
                 <Route path="/for-founders" element={<ForFounders />} />
-                <Route path="/investors" element={<ForInvestors />} />
                 <Route path="/for-investors" element={<ForInvestors />} />
                 <Route path="/participants" element={<Participants />} />
+                <Route path="/investors" element={<Investors />} />
+                <Route path="/startup" element={<Startup />} />
+                <Route path="/franchises" element={<Franchises />} />
+                <Route path="/franchisers" element={<Franchisers />} />
                 <Route path="/executors" element={<Executors />} />
                 <Route path="/employees" element={<Employees />} />
                 <Route path="/partners" element={<Partners />} />
@@ -115,7 +122,8 @@ const App = () => (
                 <Route path="/investments/startups" element={<InvestmentStartups />} />
                 <Route path="/investments/ideas" element={<IdeaExchange />} />
                 <Route path="/investments/secondary" element={<SecondaryMarket />} />
-                <Route path="/investments/franchises" element={<ManagementFranchises />} />
+                <Route path="/investments/franchises" element={<Franchises />} />
+                <Route path="/management-franchises" element={<ManagementFranchises />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/dashboards/franchiser" element={<FranchiserDashboard />} />
                 <Route path="/profile" element={<Profile />} />

@@ -150,18 +150,18 @@ const Navigation = () => {
         {
           title: "Инвесторы",
           items: [
-            { title: "Инвесторы", href: "/participants", description: "Инвестиции в проекты" },
-            { title: "Соинвесторы", href: "/participants", description: "Групповые инвестиции" },
-            { title: "Франчайзи", href: "/participants", description: "Покупка франшизы" },
+            { title: "Инвесторы", href: "/investors", description: "Инвестиции в проекты" },
+            { title: "Соинвесторы", href: "/investors", description: "Групповые инвестиции" },
+            { title: "Франчайзи", href: "/investors", description: "Покупка франшизы" },
           ]
         },
         {
           title: "Стартап/Франшиза",
           items: [
-            { title: "Фаундеры", href: "/participants", description: "Создание стартапов" },
-            { title: "Ко-фаундеры", href: "/participants", description: "Партнерство в проектах" },
-            { title: "Соучредители", href: "/participants", description: "Совместное учредительство" },
-            { title: "Франчайзеры", href: "/participants", description: "Франчайзинговый бизнес" },
+            { title: "Фаундеры", href: "/startup", description: "Создание стартапов" },
+            { title: "Ко-фаундеры", href: "/startup", description: "Партнерство в проектах" },
+            { title: "Соучредители", href: "/startup", description: "Совместное учредительство" },
+            { title: "Франчайзеры", href: "/franchisers", description: "Франчайзинговый бизнес" },
           ]
         },
         {
@@ -200,7 +200,7 @@ const Navigation = () => {
         { title: "Стартапы", href: "/investments/startups", description: "Песочница и золотой фонд проектов" },
         { title: "Биржа идей", href: "/investments/ideas", description: "Для аккредитованных инвесторов" },
         { title: "Вторичный рынок", href: "/investments/secondary", description: "Для профессиональных инвесторов" },
-        { title: "Франшизы", href: "/investments/franchises", description: "Пассивный доход от бизнеса" },
+        { title: "Франшизы", href: "/franchises", description: "Пассивный доход от бизнеса" },
       ]
     },
     { title: "Тарифы", href: "/pricing" },
