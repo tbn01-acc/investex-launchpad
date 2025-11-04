@@ -9,11 +9,6 @@ const HeroSection = () => {
   return (
     <section className="relative min-h-[70vh] flex items-center justify-center bg-gradient-to-br from-blue-600 via-green-500 to-yellow-400 pt-[5px] pb-12">
       {/* Logo in top left corner - hidden on mobile */}
-      <div className="absolute top-[15px] left-0 right-0 z-20 hidden md:block">
-        <div className="container mx-auto px-4">
-          <img src={logoSilver} alt="Invest-Ex Logo" className="w-48 h-auto" />
-        </div>
-      </div>
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid lg:grid-cols-2 gap-8 items-center">
