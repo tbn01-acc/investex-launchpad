@@ -399,13 +399,13 @@ const Navigation = () => {
             {/* Панель меню */}
             <div
               className={cn(
-                "absolute top-0 left-0 h-full w-11/12 max-w-sm bg-background border-r border-border shadow-xl",
+                "absolute top-0 left-0 h-full w-11/12 max-w-sm bg-background border-r border-border shadow-xl flex flex-col",
                 "transform transition-transform duration-300",
                 isOpen ? "translate-x-0" : "-translate-x-full"
               )}
             >
               {/* Хедер панели */}
-              <div className="flex items-center justify-between p-4 border-b border-border">
+              <div className="flex items-center justify-between p-4 border-b border-border flex-shrink-0">
                 <Link to="/" onClick={() => setIsOpen(false)} className="flex items-center space-x-2">
                   <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center p-1">
                     <img src={logoIcon} alt="Invest-Ex" className="w-full h-full object-contain" />
@@ -454,7 +454,7 @@ const Navigation = () => {
               </div>
 
               {/* Футер меню */}
-              <div className="border-t border-border p-4 space-y-3">
+              <div className="border-t border-border p-4 space-y-3 flex-shrink-0">
                 <LanguageCurrencySelector />
                 {user ? (
                   <div className="py-2">

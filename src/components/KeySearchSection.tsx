@@ -81,24 +81,61 @@ const KeySearchSection = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+        {/* Desktop version - unified gradient background */}
+        <div className="hidden lg:grid lg:grid-cols-3 gap-1 relative">
+          {/* Unified gradient background for desktop */}
+          <div className="absolute inset-0 bg-gradient-to-br from-purple-600 via-blue-500 via-pink-500 to-orange-500 rounded-xl" 
+               style={{ 
+                 background: 'linear-gradient(135deg, #7c3aed 0%, #2563eb 25%, #db2777 50%, #ea580c 75%, #f97316 100%)'
+               }} 
+          />
+          
           {keySearches.map((item, index) => {
             const Icon = item.icon;
             return (
-              <Link key={index} to={item.link} className="block group">
-                <div className={`relative h-64 rounded-xl bg-gradient-to-br ${item.color} p-6 transition-all duration-300 hover:shadow-xl hover:scale-105 overflow-hidden`}>
-                  {/* Background overlay for depth */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-black/20 to-transparent" />
+              <Link key={index} to={item.link} className="block group relative">
+                <div className="relative h-64 overflow-hidden transition-all duration-300 hover:scale-105 hover:z-10">
+                  {/* Semi-transparent overlay */}
+                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-all backdrop-blur-[2px]" />
                   
-                  {/* Icon with inverted style */}
-                  <div className="relative z-10 w-12 h-12 rounded-lg bg-white/20 backdrop-blur-sm flex items-center justify-center mb-3 group-hover:bg-white/30 transition-all">
-                    <Icon className="w-6 h-6 text-white" strokeWidth={2.5} />
-                  </div>
-                  
-                  {/* Text content */}
-                  <h3 className="relative z-10 text-base font-bold text-white leading-tight group-hover:translate-x-1 transition-transform">
+                  {/* Text content - top left */}
+                  <h3 className="absolute top-[1.125rem] left-[1.125rem] text-lg text-white leading-tight max-w-[70%] z-10 group-hover:translate-x-1 transition-transform">
                     {item.query}
                   </h3>
+                  
+                  {/* Icon - bottom right */}
+                  <div className="absolute bottom-[1.125rem] right-[1.125rem] w-12 h-12 rounded-lg bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/30 transition-all z-10">
+                    <Icon className="w-6 h-6 text-white" strokeWidth={2.5} />
+                  </div>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+
+        {/* Mobile version - individual gradients */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:hidden gap-1">
+          {keySearches.map((item, index) => {
+            const Icon = item.icon;
+            // Extract base color from item.color (e.g., "from-blue-500" -> "blue")
+            const colorMatch = item.color.match(/from-(\w+)-/);
+            const baseColor = colorMatch ? colorMatch[1] : 'blue';
+            
+            return (
+              <Link key={index} to={item.link} className="block group">
+                <div className={`relative h-64 rounded-xl bg-gradient-to-br from-${baseColor}-800 via-${baseColor}-200 to-${baseColor}-500 overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-105`}>
+                  {/* Overlay for better text contrast */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-black/30 to-transparent" />
+                  
+                  {/* Text content - top left */}
+                  <h3 className="absolute top-[1.125rem] left-[1.125rem] text-lg text-white leading-tight max-w-[70%] z-10 group-hover:translate-x-1 transition-transform">
+                    {item.query}
+                  </h3>
+                  
+                  {/* Icon - bottom right */}
+                  <div className="absolute bottom-[1.125rem] right-[1.125rem] w-12 h-12 rounded-lg bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/30 transition-all z-10">
+                    <Icon className="w-6 h-6 text-white" strokeWidth={2.5} />
+                  </div>
                 </div>
               </Link>
             );

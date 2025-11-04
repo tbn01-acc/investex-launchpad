@@ -36,6 +36,8 @@ additional_redirect_urls = [
   "http://127.0.0.1:3000",
   "https://invest-ex.ru",
   "https://www.invest-ex.ru",
+  "https://invest-ex.online",
+  "https://www.invest-ex.online",
   "https://b11a36e1-c258-4cea-a90f-6f733088704e.lovableproject.com"
 ]
 jwt_expiry = 3600
