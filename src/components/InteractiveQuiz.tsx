@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ArrowRight, Download, ArrowLeft, DollarSign, Rocket, Briefcase, Handshake } from "lucide-react";
+import { ArrowRight, Download, ArrowLeft, DollarSign, Rocket, Briefcase, Handshake, Store } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 
 // Типы для структуры квиза
@@ -292,7 +292,530 @@ const quizTree: Record<string, Question> = {
       { text: "У меня есть капитал для инвестиций", next: "invest_amount", icon: "DollarSign" },
       { text: "У меня есть идея/проект или я хочу создать бизнес", next: "business_stage", icon: "Rocket" },
       { text: "У меня есть навыки, которые я хочу применить", next: "skills_type", icon: "Briefcase" },
+      { text: "Я хочу купить готовый бизнес-формат", next: "franchise_capital", icon: "Store" },
       { text: "Я хочу быть частью экосистемы", next: "ecosystem_role", icon: "Handshake" }
+    ]
+  },
+
+  // ============ ВЕТКА ФРАНЧАЙЗИ ============
+  franchise_capital: {
+    id: "franchise_capital",
+    stage: "Шаг 2 из 7+",
+    question: "Каким капиталом вы располагаете для покупки франшизы?",
+    answers: [
+      { text: "До $25,000", next: "franchise_experience" },
+      { text: "$25,000 - $100,000", next: "franchise_sector" },
+      { text: "$100,000 - $500,000", next: "franchise_goals" },
+      { text: "Более $500,000", next: "franchise_multi" }
+    ]
+  },
+
+  franchise_experience: {
+    id: "franchise_experience",
+    stage: "Шаг 3 из 7+",
+    question: "Есть ли у вас опыт ведения бизнеса?",
+    answers: [
+      { text: "Нет, начинаю с нуля", next: "franchise_support" },
+      { text: "Да, небольшой опыт", next: "franchise_industry" }
+    ]
+  },
+
+  franchise_support: {
+    id: "franchise_support",
+    stage: "Шаг 4 из 7+",
+    question: "Насколько важна для вас поддержка франчайзера?",
+    answers: [
+      { text: "Критична, нужно полное сопровождение", next: "franchise_location" },
+      { text: "Умеренная поддержка на старте", next: "franchise_location" }
+    ]
+  },
+
+  franchise_location: {
+    id: "franchise_location",
+    stage: "Шаг 5 из 7+",
+    question: "Где планируете открыть франшизу?",
+    answers: [
+      { text: "В моем городе", next: "franchise_timeline" },
+      { text: "В регионе/области", next: "franchise_timeline" },
+      { text: "Рассматриваю несколько локаций", next: "franchise_timeline" }
+    ]
+  },
+
+  franchise_timeline: {
+    id: "franchise_timeline",
+    stage: "Шаг 6 из 7+",
+    question: "В какие сроки планируете запуститься?",
+    answers: [
+      { text: "В течение 3 месяцев", next: "franchise_analytics" },
+      { text: "В течение 6-12 месяцев", next: "franchise_analytics" },
+      { text: "Пока изучаю рынок", next: "franchise_analytics" }
+    ]
+  },
+
+  franchise_analytics: {
+    id: "franchise_analytics",
+    stage: "Шаг 7 из 7",
+    question: "Нужны ли вам аналитические инструменты для выбора?",
+    answers: [
+      { text: "Да, хочу детальный анализ", result: { role: "franchisee", tariff: "start" } },
+      { text: "Базовой информации достаточно", result: { role: "franchisee", tariff: "start" } }
+    ]
+  },
+
+  franchise_industry: {
+    id: "franchise_industry",
+    stage: "Шаг 4 из 7+",
+    question: "В какой индустрии вы работали?",
+    answers: [
+      { text: "Ритейл/Торговля", next: "franchise_scale" },
+      { text: "Услуги/HoReCa", next: "franchise_scale" },
+      { text: "Другая сфера", next: "franchise_scale" }
+    ]
+  },
+
+  franchise_scale: {
+    id: "franchise_scale",
+    stage: "Шаг 5 из 7+",
+    question: "Планируете ли масштабировать бизнес?",
+    answers: [
+      { text: "Да, хочу несколько точек", next: "franchise_tools" },
+      { text: "Пока сфокусируюсь на одной", result: { role: "franchisee", tariff: "professional" } }
+    ]
+  },
+
+  franchise_tools: {
+    id: "franchise_tools",
+    stage: "Шаг 6 из 7+",
+    question: "Нужны ли инструменты управления сетью?",
+    answers: [
+      { text: "Да, планирую рост", next: "franchise_financing" },
+      { text: "Пока не актуально", result: { role: "franchisee", tariff: "professional" } }
+    ]
+  },
+
+  franchise_financing: {
+    id: "franchise_financing",
+    stage: "Шаг 7 из 7",
+    question: "Интересует ли вас помощь с финансированием?",
+    answers: [
+      { text: "Да, рассматриваю кредитование", result: { role: "franchisee", tariff: "premium" } },
+      { text: "Нет, использую собственный капитал", result: { role: "franchisee", tariff: "premium" } }
+    ]
+  },
+
+  franchise_sector: {
+    id: "franchise_sector",
+    stage: "Шаг 3 из 7+",
+    question: "Какой сектор вас интересует?",
+    answers: [
+      { text: "Продукты питания/HoReCa", next: "franchise_roi" },
+      { text: "Услуги/Сервис", next: "franchise_roi" },
+      { text: "Ритейл/Торговля", next: "franchise_roi" },
+      { text: "Образование/Детские услуги", next: "franchise_roi" }
+    ]
+  },
+
+  franchise_roi: {
+    id: "franchise_roi",
+    stage: "Шаг 4 из 7+",
+    question: "Какой срок окупаемости для вас приемлем?",
+    answers: [
+      { text: "12-18 месяцев", next: "franchise_involvement" },
+      { text: "18-24 месяца", next: "franchise_involvement" },
+      { text: "24-36 месяцев", next: "franchise_involvement" }
+    ]
+  },
+
+  franchise_involvement: {
+    id: "franchise_involvement",
+    stage: "Шаг 5 из 7+",
+    question: "Планируете ли участвовать в операционке?",
+    answers: [
+      { text: "Да, буду управлять сам", next: "franchise_expansion" },
+      { text: "Нет, наймю менеджера", next: "franchise_portfolio" }
+    ]
+  },
+
+  franchise_expansion: {
+    id: "franchise_expansion",
+    stage: "Шаг 6 из 7+",
+    question: "Планируете ли расширение в будущем?",
+    answers: [
+      { text: "Да, хочу построить сеть", next: "franchise_premium_tools" },
+      { text: "Сфокусируюсь на текущей точке", result: { role: "franchisee", tariff: "professional" } }
+    ]
+  },
+
+  franchise_premium_tools: {
+    id: "franchise_premium_tools",
+    stage: "Шаг 7 из 7",
+    question: "Нужны ли премиум инструменты аналитики?",
+    answers: [
+      { text: "Да, важна детальная аналитика", result: { role: "franchisee", tariff: "premium" } },
+      { text: "Базовых инструментов достаточно", result: { role: "franchisee", tariff: "professional" } }
+    ]
+  },
+
+  franchise_portfolio: {
+    id: "franchise_portfolio",
+    stage: "Шаг 6 из 7+",
+    question: "Рассматриваете ли портфель франшиз?",
+    answers: [
+      { text: "Да, хочу диверсифицировать", next: "franchise_management" },
+      { text: "Нет, одна франшиза", result: { role: "franchisee", tariff: "professional" } }
+    ]
+  },
+
+  franchise_management: {
+    id: "franchise_management",
+    stage: "Шаг 7 из 7",
+    question: "Нужна ли централизованная система управления?",
+    answers: [
+      { text: "Да, для всех объектов", result: { role: "franchisee", tariff: "premium" } },
+      { text: "Буду управлять раздельно", result: { role: "franchisee", tariff: "premium" } }
+    ]
+  },
+
+  franchise_goals: {
+    id: "franchise_goals",
+    stage: "Шаг 3 из 7+",
+    question: "Какая ваша главная цель?",
+    answers: [
+      { text: "Диверсификация активов", next: "franchise_passive" },
+      { text: "Построение бизнес-империи", next: "franchise_network" }
+    ]
+  },
+
+  franchise_passive: {
+    id: "franchise_passive",
+    stage: "Шаг 4 из 7+",
+    question: "Интересует ли пассивный доход?",
+    answers: [
+      { text: "Да, хочу минимального участия", next: "franchise_professional_management" },
+      { text: "Буду активно участвовать", next: "franchise_regions" }
+    ]
+  },
+
+  franchise_professional_management: {
+    id: "franchise_professional_management",
+    stage: "Шаг 5 из 7+",
+    question: "Готовы ли инвестировать в профессиональное управление?",
+    answers: [
+      { text: "Да, это часть стратегии", next: "franchise_monitoring" },
+      { text: "Предпочту личный контроль", result: { role: "franchisee", tariff: "professional" } }
+    ]
+  },
+
+  franchise_monitoring: {
+    id: "franchise_monitoring",
+    stage: "Шаг 6 из 7+",
+    question: "Важна ли система мониторинга в реальном времени?",
+    answers: [
+      { text: "Критично важна", next: "franchise_multi_brand" },
+      { text: "Периодическая отчётность достаточна", result: { role: "franchisee", tariff: "premium" } }
+    ]
+  },
+
+  franchise_multi_brand: {
+    id: "franchise_multi_brand",
+    stage: "Шаг 7 из 7",
+    question: "Рассматриваете ли франшизы разных брендов?",
+    answers: [
+      { text: "Да, хочу портфель из разных брендов", result: { role: "franchisee", tariff: "premium" } },
+      { text: "Фокусируюсь на одном бренде", result: { role: "franchisee", tariff: "premium" } }
+    ]
+  },
+
+  franchise_regions: {
+    id: "franchise_regions",
+    stage: "Шаг 5 из 7+",
+    question: "Планируете ли региональную экспансию?",
+    answers: [
+      { text: "Да, несколько регионов", next: "franchise_team" },
+      { text: "В рамках одного региона", result: { role: "franchisee", tariff: "professional" } }
+    ]
+  },
+
+  franchise_team: {
+    id: "franchise_team",
+    stage: "Шаг 6 из 7+",
+    question: "Планируете ли формировать команду управления?",
+    answers: [
+      { text: "Да, буду строить структуру", next: "franchise_advanced_analytics" },
+      { text: "Буду управлять сам", result: { role: "franchisee", tariff: "professional" } }
+    ]
+  },
+
+  franchise_advanced_analytics: {
+    id: "franchise_advanced_analytics",
+    stage: "Шаг 7 из 7",
+    question: "Нужна ли продвинутая бизнес-аналитика?",
+    answers: [
+      { text: "Да, для принятия решений", result: { role: "franchisee", tariff: "premium" } },
+      { text: "Стандартной достаточно", result: { role: "franchisee", tariff: "premium" } }
+    ]
+  },
+
+  franchise_network: {
+    id: "franchise_network",
+    stage: "Шаг 4 из 7+",
+    question: "Сколько точек планируете открыть?",
+    answers: [
+      { text: "3-5 точек", next: "franchise_timeframe" },
+      { text: "5-10 точек", next: "franchise_master" },
+      { text: "Более 10 точек", next: "franchise_master" }
+    ]
+  },
+
+  franchise_timeframe: {
+    id: "franchise_timeframe",
+    stage: "Шаг 5 из 7+",
+    question: "В какие сроки планируете развернуть сеть?",
+    answers: [
+      { text: "1-2 года", next: "franchise_operations" },
+      { text: "2-3 года", next: "franchise_operations" },
+      { text: "3-5 лет", next: "franchise_operations" }
+    ]
+  },
+
+  franchise_operations: {
+    id: "franchise_operations",
+    stage: "Шаг 6 из 7+",
+    question: "Нужна ли операционная поддержка?",
+    answers: [
+      { text: "Да, на всех этапах", next: "franchise_crm" },
+      { text: "Только на старте", result: { role: "franchisee", tariff: "premium" } }
+    ]
+  },
+
+  franchise_crm: {
+    id: "franchise_crm",
+    stage: "Шаг 7 из 7",
+    question: "Важна ли интеграция с CRM и BI системами?",
+    answers: [
+      { text: "Критично важна", result: { role: "franchisee", tariff: "premium" } },
+      { text: "Буду использовать базовые инструменты", result: { role: "franchisee", tariff: "premium" } }
+    ]
+  },
+
+  franchise_master: {
+    id: "franchise_master",
+    stage: "Шаг 5 из 7+",
+    question: "Интересует ли мастер-франшиза для региона?",
+    answers: [
+      { text: "Да, хочу права на регион", next: "franchise_subfranch" },
+      { text: "Нет, буду развивать собственную сеть", next: "franchise_infrastructure" }
+    ]
+  },
+
+  franchise_subfranch: {
+    id: "franchise_subfranch",
+    stage: "Шаг 6 из 7+",
+    question: "Планируете ли продавать субфраншизы?",
+    answers: [
+      { text: "Да, хочу развивать партнёрскую сеть", next: "franchise_ecosystem" },
+      { text: "Нет, все точки будут собственные", result: { role: "franchisee", tariff: "premium" } }
+    ]
+  },
+
+  franchise_ecosystem: {
+    id: "franchise_ecosystem",
+    stage: "Шаг 7 из 7",
+    question: "Нужна ли экосистема для управления субфранчайзи?",
+    answers: [
+      { text: "Да, с полным функционалом", result: { role: "franchisee", tariff: "premium" } },
+      { text: "Базовые инструменты достаточны", result: { role: "franchisee", tariff: "premium" } }
+    ]
+  },
+
+  franchise_infrastructure: {
+    id: "franchise_infrastructure",
+    stage: "Шаг 6 из 7+",
+    question: "Планируете ли строить собственную инфраструктуру?",
+    answers: [
+      { text: "Да, хочу полный контроль", next: "franchise_supply" },
+      { text: "Буду использовать инфраструктуру франчайзера", result: { role: "franchisee", tariff: "premium" } }
+    ]
+  },
+
+  franchise_supply: {
+    id: "franchise_supply",
+    stage: "Шаг 7 из 7",
+    question: "Нужна ли система управления поставками?",
+    answers: [
+      { text: "Да, с централизованными закупками", result: { role: "franchisee", tariff: "premium" } },
+      { text: "Каждая точка работает автономно", result: { role: "franchisee", tariff: "premium" } }
+    ]
+  },
+
+  franchise_multi: {
+    id: "franchise_multi",
+    stage: "Шаг 3 из 7+",
+    question: "Рассматриваете ли эксклюзивные права?",
+    answers: [
+      { text: "Да, хочу эксклюзив на регион", next: "franchise_multibrand" },
+      { text: "Нет, стандартное сотрудничество", next: "franchise_investment_goals" }
+    ]
+  },
+
+  franchise_multibrand: {
+    id: "franchise_multibrand",
+    stage: "Шаг 4 из 7+",
+    question: "Планируете ли работать с несколькими брендами?",
+    answers: [
+      { text: "Да, хочу портфель франшиз", next: "franchise_holding" },
+      { text: "Сфокусируюсь на одном бренде", next: "franchise_exclusive_expansion" }
+    ]
+  },
+
+  franchise_holding: {
+    id: "franchise_holding",
+    stage: "Шаг 5 из 7+",
+    question: "Планируете ли создать холдинговую структуру?",
+    answers: [
+      { text: "Да, для управления всеми активами", next: "franchise_automation" },
+      { text: "Буду управлять напрямую", result: { role: "franchisee", tariff: "premium" } }
+    ]
+  },
+
+  franchise_automation: {
+    id: "franchise_automation",
+    stage: "Шаг 6 из 7+",
+    question: "Важна ли автоматизация всех процессов?",
+    answers: [
+      { text: "Критически важна", next: "franchise_ai" },
+      { text: "Частичная автоматизация", result: { role: "franchisee", tariff: "premium" } }
+    ]
+  },
+
+  franchise_ai: {
+    id: "franchise_ai",
+    stage: "Шаг 7 из 7",
+    question: "Интересуют ли AI-инструменты управления?",
+    answers: [
+      { text: "Да, хочу использовать AI", result: { role: "franchisee", tariff: "premium" } },
+      { text: "Традиционные инструменты достаточны", result: { role: "franchisee", tariff: "premium" } }
+    ]
+  },
+
+  franchise_exclusive_expansion: {
+    id: "franchise_exclusive_expansion",
+    stage: "Шаг 5 из 7+",
+    question: "Планируете ли агрессивную экспансию?",
+    answers: [
+      { text: "Да, максимально быстрый рост", next: "franchise_financing_strategy" },
+      { text: "Поступательное развитие", result: { role: "franchisee", tariff: "premium" } }
+    ]
+  },
+
+  franchise_financing_strategy: {
+    id: "franchise_financing_strategy",
+    stage: "Шаг 6 из 7+",
+    question: "Рассматриваете ли внешнее финансирование?",
+    answers: [
+      { text: "Да, привлечение инвестиций", next: "franchise_ipo" },
+      { text: "Только собственный капитал", result: { role: "franchisee", tariff: "premium" } }
+    ]
+  },
+
+  franchise_ipo: {
+    id: "franchise_ipo",
+    stage: "Шаг 7 из 7",
+    question: "Рассматриваете ли выход на биржу в будущем?",
+    answers: [
+      { text: "Да, это часть стратегии", result: { role: "franchisee", tariff: "premium" } },
+      { text: "Нет, планирую частный бизнес", result: { role: "franchisee", tariff: "premium" } }
+    ]
+  },
+
+  franchise_investment_goals: {
+    id: "franchise_investment_goals",
+    stage: "Шаг 4 из 7+",
+    question: "Какая ваша главная инвестиционная цель?",
+    answers: [
+      { text: "Максимизация прибыли", next: "franchise_risk_appetite" },
+      { text: "Построение долгосрочного актива", next: "franchise_legacy" }
+    ]
+  },
+
+  franchise_risk_appetite: {
+    id: "franchise_risk_appetite",
+    stage: "Шаг 5 из 7+",
+    question: "Какой уровень риска приемлем?",
+    answers: [
+      { text: "Готов к высоким рискам ради роста", next: "franchise_innovation" },
+      { text: "Предпочитаю стабильность", result: { role: "franchisee", tariff: "premium" } }
+    ]
+  },
+
+  franchise_innovation: {
+    id: "franchise_innovation",
+    stage: "Шаг 6 из 7+",
+    question: "Готовы ли внедрять инновации?",
+    answers: [
+      { text: "Да, хочу быть пионером", next: "franchise_competitive" },
+      { text: "Следую проверенным практикам", result: { role: "franchisee", tariff: "premium" } }
+    ]
+  },
+
+  franchise_competitive: {
+    id: "franchise_competitive",
+    stage: "Шаг 7 из 7",
+    question: "Важно ли конкурентное преимущество?",
+    answers: [
+      { text: "Критически важно", result: { role: "franchisee", tariff: "premium" } },
+      { text: "Достаточно быть в рынке", result: { role: "franchisee", tariff: "premium" } }
+    ]
+  },
+
+  franchise_legacy: {
+    id: "franchise_legacy",
+    stage: "Шаг 5 из 7+",
+    question: "Планируете ли передачу бизнеса наследникам?",
+    answers: [
+      { text: "Да, строю семейный бизнес", next: "franchise_sustainability" },
+      { text: "Рассматриваю продажу в будущем", next: "franchise_exit" }
+    ]
+  },
+
+  franchise_sustainability: {
+    id: "franchise_sustainability",
+    stage: "Шаг 6 из 7+",
+    question: "Важна ли устойчивость бизнес-модели?",
+    answers: [
+      { text: "Критически важна", next: "franchise_values" },
+      { text: "Главное - прибыльность", result: { role: "franchisee", tariff: "premium" } }
+    ]
+  },
+
+  franchise_values: {
+    id: "franchise_values",
+    stage: "Шаг 7 из 7",
+    question: "Важны ли ценности и миссия бренда?",
+    answers: [
+      { text: "Очень важны", result: { role: "franchisee", tariff: "premium" } },
+      { text: "Второстепенны", result: { role: "franchisee", tariff: "premium" } }
+    ]
+  },
+
+  franchise_exit: {
+    id: "franchise_exit",
+    stage: "Шаг 6 из 7+",
+    question: "В какие сроки планируете выход?",
+    answers: [
+      { text: "5-7 лет", next: "franchise_valuation" },
+      { text: "7-10 лет", next: "franchise_valuation" },
+      { text: "Более 10 лет", next: "franchise_valuation" }
+    ]
+  },
+
+  franchise_valuation: {
+    id: "franchise_valuation",
+    stage: "Шаг 7 из 7",
+    question: "Важна ли максимизация оценки при выходе?",
+    answers: [
+      { text: "Да, это ключевая цель", result: { role: "franchisee", tariff: "premium" } },
+      { text: "Важнее стабильный доход до продажи", result: { role: "franchisee", tariff: "premium" } }
     ]
   },
 
@@ -6291,6 +6814,7 @@ const InteractiveQuiz = ({ onComplete }: InteractiveQuizProps) => {
                 const IconComponent = answer.icon === "DollarSign" ? DollarSign :
                                     answer.icon === "Rocket" ? Rocket :
                                     answer.icon === "Briefcase" ? Briefcase :
+                                    answer.icon === "Store" ? Store :
                                     answer.icon === "Handshake" ? Handshake : null;
                 
                 return (
@@ -6298,11 +6822,11 @@ const InteractiveQuiz = ({ onComplete }: InteractiveQuizProps) => {
                     key={index}
                     onClick={() => handleAnswer(answer)}
                     variant="outline"
-                    className="w-full justify-start text-left h-auto py-3 sm:py-4 px-4 sm:px-6 hover:bg-accent hover:border-accent hover:text-accent-foreground active:bg-accent active:border-accent transition-all"
+                    className="w-full justify-start text-left h-auto py-3 sm:py-4 px-4 sm:px-6 hover:bg-accent hover:border-accent hover:text-accent-foreground active:bg-accent active:border-accent transition-all group"
                   >
                     {isFirstQuestion && IconComponent && (
-                      <div className="w-10 h-10 rounded-lg bg-primary/20 backdrop-blur-sm flex items-center justify-center mr-4 flex-shrink-0">
-                        <IconComponent className="w-5 h-5 text-primary" strokeWidth={2.5} />
+                      <div className="w-10 h-10 rounded-lg bg-primary/20 backdrop-blur-sm flex items-center justify-center mr-4 flex-shrink-0 group-hover:bg-primary transition-colors">
+                        <IconComponent className="w-5 h-5 text-primary group-hover:text-primary-foreground transition-colors" strokeWidth={2.5} />
                       </div>
                     )}
                     <span className="text-sm sm:text-base break-words leading-tight whitespace-normal flex-1 pr-2">{answer.text}</span>

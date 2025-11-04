@@ -82,11 +82,12 @@ const KeySearchSection = () => {
         </div>
         
         {/* Desktop version - unified gradient background */}
-        <div className="hidden lg:grid lg:grid-cols-3 gap-1 relative">
-          {/* Unified gradient background for desktop */}
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-600 via-blue-500 via-pink-500 to-orange-500 rounded-xl" 
+        <div className="hidden lg:grid lg:grid-cols-3 gap-1 relative p-1">
+          {/* Unified galactic gradient background for desktop with subtle glow */}
+          <div className="absolute inset-0 rounded-xl overflow-hidden" 
                style={{ 
-                 background: 'linear-gradient(135deg, #7c3aed 0%, #2563eb 25%, #db2777 50%, #ea580c 75%, #f97316 100%)'
+                 background: 'linear-gradient(135deg, #3d1f5c 0%, #6b3fa0 15%, #4169e1 30%, #9333ea 45%, #db2777 60%, #f97316 75%, #ea580c 85%, #3d1f5c 100%)',
+                 boxShadow: '0 0 60px rgba(147, 51, 234, 0.15), 0 0 120px rgba(219, 39, 119, 0.1), inset 0 0 80px rgba(147, 51, 234, 0.05)'
                }} 
           />
           
@@ -94,7 +95,7 @@ const KeySearchSection = () => {
             const Icon = item.icon;
             return (
               <Link key={index} to={item.link} className="block group relative">
-                <div className="relative h-64 overflow-hidden transition-all duration-300 hover:scale-105 hover:z-10">
+                <div className="relative h-64 overflow-hidden rounded-lg transition-all duration-300 hover:scale-105 hover:z-10">
                   {/* Semi-transparent overlay */}
                   <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-all backdrop-blur-[2px]" />
                   
