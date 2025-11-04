@@ -75,6 +75,8 @@ import IVIIndex from './pages/IVIIndex';
 import SupervisoryBoard from './pages/SupervisoryBoard';
 import MediationCenter from './pages/MediationCenter';
 import Favorites from './pages/Favorites';
+import DevelopmentWarning from './components/DevelopmentWarning';
+import DevelopmentBanner from './components/DevelopmentBanner';
 
 const queryClient = new QueryClient();
 
@@ -185,4 +187,20 @@ const App = () => (
   </QueryClientProvider>
 );
 
+function App() {
+  return (
+    <>
+      {/* Модальное окно (только при первом посещении) */}
+      <DevelopmentWarning />
+      
+      {/* Основной контент вашего сайта */}
+      <div className="pb-24"> {/* pb-24 создает отступ внизу для полосы */}
+        {/* Здесь ваш контент */}
+      </div>
+
+      {/* Полоса внизу (всегда видна после согласия) */}
+      <DevelopmentBanner />
+    </>
+  );
+}
 export default App;
