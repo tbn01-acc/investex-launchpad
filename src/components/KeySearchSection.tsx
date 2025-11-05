@@ -81,32 +81,34 @@ const KeySearchSection = () => {
           </p>
         </div>
         
-        {/* Desktop version - unified gradient background */}
+        {/* Desktop version - unified gradient across all cards */}
         <div className="hidden lg:grid lg:grid-cols-3 gap-1 relative">
-          {/* Subtle galactic glow effect in background */}
-          <div className="absolute inset-0 pointer-events-none" 
-               style={{ 
-                 background: 'radial-gradient(circle at 20% 30%, rgba(147, 51, 234, 0.03) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(219, 39, 119, 0.02) 0%, transparent 50%), radial-gradient(circle at 50% 50%, rgba(65, 105, 225, 0.02) 0%, transparent 50%)',
-                 filter: 'blur(40px)'
-               }} 
-          />
-          
           {keySearches.map((item, index) => {
             const Icon = item.icon;
-            // Extract base color from item.color
-            const colorMatch = item.color.match(/from-(\w+)-/);
-            const baseColor = colorMatch ? colorMatch[1] : 'blue';
+            const row = Math.floor(index / 3);
+            const col = index % 3;
+            const xPos = col * 50;
+            const yPos = row * 50;
             
             return (
               <Link key={index} to={item.link} className="block group relative">
                 <div 
                   className="relative h-64 overflow-hidden rounded-lg transition-all duration-300 hover:scale-105 hover:z-10"
                   style={{
-                    background: `linear-gradient(135deg, hsl(var(--${baseColor}-800)) 0%, hsl(var(--${baseColor}-200)) 50%, hsl(var(--${baseColor}-500)) 100%)`
+                    background: 'linear-gradient(135deg, #1a0f2e 0%, #6b3fa0 12%, #4169e1 25%, #8b5cf6 35%, #db2777 50%, #f97316 65%, #fb923c 75%, #6b3fa0 88%, #1a0f2e 100%)',
+                    backgroundSize: '300% 300%',
+                    backgroundPosition: `${xPos}% ${yPos}%`,
+                    boxShadow: `
+                      0 0 40px rgba(147, 51, 234, 0.08),
+                      0 0 80px rgba(219, 39, 119, 0.05),
+                      inset 0 0 60px rgba(255, 255, 255, 0.03),
+                      inset ${20 - col * 20}px ${20 - row * 20}px 40px rgba(139, 92, 246, 0.04),
+                      inset ${-20 + col * 20}px ${-20 + row * 20}px 40px rgba(219, 39, 119, 0.04)
+                    `
                   }}
                 >
-                  {/* Semi-transparent overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-black/30 to-transparent" />
+                  {/* Semi-transparent overlay for better text contrast */}
+                  <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-all" />
                   
                   {/* Text content - top left */}
                   <h3 className="absolute top-[1.125rem] left-[1.125rem] text-lg text-white leading-tight max-w-[70%] z-10 group-hover:translate-x-1 transition-transform">
