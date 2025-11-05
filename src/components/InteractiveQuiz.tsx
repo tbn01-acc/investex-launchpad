@@ -28,256 +28,256 @@ const LEAD_MAGNETS: Record<string, Record<string, { title: string; file: string;
     beginner: {
       title: "Гайд: Первые шаги в венчурных инвестициях",
       file: "venture_investing_guide.pdf",
-      tariff: "Новичок"
+      tariff: "Начинающий ($29/мес)"
     },
     professional: {
       title: "Чек-лист: AI Due Diligence для инвесторов",
       file: "ai_due_diligence_checklist.pdf",
-      tariff: "Профессионал"
+      tariff: "Профессионал ($79/мес)"
     },
     elite: {
       title: "Эксклюзивный отчёт: Pre-seed Deal Flow 2025",
       file: "preseed_dealflow_2025.pdf",
-      tariff: "Элит"
+      tariff: "Элит ($199/мес)"
     }
   },
   coinvestor: {
     participant: {
       title: "Руководство: Синдицированные инвестиции",
       file: "syndicate_guide.pdf",
-      tariff: "Участник"
+      tariff: "Участник ($19/мес)"
     },
     club: {
       title: "Методика: Коллективный Due Diligence",
       file: "collective_dd_methodology.pdf",
-      tariff: "Клуб"
+      tariff: "Клуб ($49/мес)"
     },
     syndicate: {
       title: "Шаблон: Создание инвестиционного синдиката",
       file: "syndicate_template.pdf",
-      tariff: "Лид-инвестор"
+      tariff: "Лид-инвестор ($149/мес)"
     }
   },
   founder: {
     startup: {
       title: "Шаблон: Профессиональный Pitch Deck",
       file: "pitch_deck_template.pdf",
-      tariff: "Стартап"
+      tariff: "Стартап ($49/мес)"
     },
     growth: {
       title: "Финансовая модель: 5-летний прогноз",
       file: "financial_model_5y.xlsx",
-      tariff: "Рост"
+      tariff: "Рост ($149/мес)"
     },
     scale: {
       title: "Стратегия: Масштабирование стартапа",
       file: "scaling_strategy.pdf",
-      tariff: "Масштабирование"
+      tariff: "Масштабирование ($349/мес)"
     }
   },
   cofounder: {
     seeker: {
       title: "Гайд: Как стать со-основателем",
       file: "cofounder_guide.pdf",
-      tariff: "Поиск"
+      tariff: "Поиск ($29/мес)"
     },
     search: {
       title: "Чек-лист: Оценка потенциала стартапа",
       file: "startup_evaluation_checklist.pdf",
-      tariff: "Активный поиск"
+      tariff: "Активный поиск ($79/мес)"
     },
     partner: {
       title: "Юридический пакет: Документы для со-основателей",
       file: "cofounder_legal_pack.pdf",
-      tariff: "Партнёр"
+      tariff: "Партнёр ($149/мес)"
     }
   },
   copartner: {
     observer: {
       title: "Отчёт: M&A сделки на венчурном рынке",
       file: "ma_market_report.pdf",
-      tariff: "Наблюдатель"
+      tariff: "Наблюдатель ($39/мес)"
     },
     advanced: {
       title: "Профессиональный Due Diligence чек-лист",
       file: "professional_dd_checklist.pdf",
-      tariff: "Продвинутый"
+      tariff: "Продвинутый ($99/мес)"
     },
     strategic: {
       title: "Стратегия: Слияния и поглощения",
       file: "ma_strategy.pdf",
-      tariff: "Стратег"
+      tariff: "Стратег ($249/мес)"
     }
   },
   franchisee: {
     start: {
       title: "Гайд: Как выбрать прибыльную франшизу",
       file: "franchise_selection_guide.pdf",
-      tariff: "Старт"
+      tariff: "Старт ($39/мес)"
     },
     professional: {
       title: "Калькулятор: ROI франшизы и окупаемость",
       file: "franchise_roi_calculator.xlsx",
-      tariff: "Профи"
+      tariff: "Профи ($99/мес)"
     },
     premium: {
       title: "Стратегия: Масштабирование франчайзинговой сети",
       file: "multi_location_strategy.pdf",
-      tariff: "Премиум"
+      tariff: "Премиум ($249/мес)"
     }
   },
   franchiser: {
     basic: {
       title: "Пакет документов: Запуск франшизы",
       file: "franchise_starter_pack.pdf",
-      tariff: "Базовый"
+      tariff: "Базовый ($99/мес)"
     },
     growth: {
       title: "Методика: AI-подбор франчайзи",
       file: "franchisee_selection_ai.pdf",
-      tariff: "Рост сети"
+      tariff: "Рост сети ($299/мес)"
     },
     scale: {
       title: "Стратегия: Масштабирование франшизы",
       file: "franchise_scaling.pdf",
-      tariff: "Масштабирование"
+      tariff: "Масштабирование ($599/мес)"
     }
   },
   freelancer: {
     novice: {
       title: "Руководство: Старт карьеры фрилансера",
       file: "freelancer_startup_guide.pdf",
-      tariff: "Новичок"
+      tariff: "Новичок ($19/мес)"
     },
     professional: {
       title: "Инструменты: Time-tracking и отчётность",
       file: "timetracking_tools.pdf",
-      tariff: "Профессионал"
+      tariff: "Профессионал ($49/мес)"
     },
     expert: {
       title: "Стратегия: Equity-компенсация для фрилансеров",
       file: "equity_compensation_guide.pdf",
-      tariff: "Эксперт"
+      tariff: "Эксперт ($129/мес)"
     }
   },
   expert: {
     intern: {
       title: "Программа: Сертификация эксперта",
       file: "expert_certification.pdf",
-      tariff: "Стажёр"
+      tariff: "Стажёр ($39/мес)"
     },
     consultant: {
       title: "Инструменты: Профессиональная отчётность",
       file: "consultant_reporting_tools.pdf",
-      tariff: "Консультант"
+      tariff: "Консультант ($99/мес)"
     },
     senior: {
       title: "Методика: Участие в инвестиционных комитетах",
       file: "investment_committee_guide.pdf",
-      tariff: "Сениор"
+      tariff: "Сениор ($249/мес)"
     }
   },
   consultant: {
     analyst: {
       title: "Библиотека: Шаблоны бизнес-аналитики",
       file: "business_analytics_templates.pdf",
-      tariff: "Аналитик"
+      tariff: "Аналитик ($59/мес)"
     },
     strategist: {
       title: "Инструменты: Бизнес-моделирование",
       file: "business_modeling_tools.pdf",
-      tariff: "Стратег"
+      tariff: "Стратег ($149/мес)"
     },
     clevel: {
       title: "Методика: Корпоративная трансформация",
       file: "corporate_transformation.pdf",
-      tariff: "C-level"
+      tariff: "C-level ($349/мес)"
     }
   },
   outsourcer: {
     team: {
       title: "CRM: Управление командой аутсорсеров",
       file: "outsource_team_crm.pdf",
-      tariff: "Команда"
+      tariff: "Команда ($79/мес)"
     },
     agency: {
       title: "White Label: Возможности и стратегии",
       file: "whitelabel_strategies.pdf",
-      tariff: "Агентство"
+      tariff: "Агентство ($199/мес)"
     },
     enterprise: {
       title: "Enterprise контракты: Руководство",
       file: "enterprise_contracts_guide.pdf",
-      tariff: "Предприятие"
+      tariff: "Предприятие ($499/мес)"
     }
   },
   contractor: {
     basic: {
       title: "Сертификация: Подрядчик на платформе",
       file: "contractor_certification.pdf",
-      tariff: "Базовый"
+      tariff: "Базовый ($29/мес)"
     },
     certified: {
       title: "Контроль качества: Инструменты подрядчика",
       file: "quality_control_tools.pdf",
-      tariff: "Сертифицированный"
+      tariff: "Сертифицированный ($79/мес)"
     },
     premium: {
       title: "Крупные контракты: Стратегия и управление",
       file: "large_contracts_strategy.pdf",
-      tariff: "Премиум"
+      tariff: "Премиум ($199/мес)"
     }
   },
   projectadmin: {
     admin: {
       title: "AI-советник: Руководство по управлению проектами",
       file: "ai_project_management.pdf",
-      tariff: "Администратор"
+      tariff: "Администратор ($99/мес)"
     }
   },
   employee: {
     employee: {
       title: "Карьерный трек: Развитие в стартапе",
       file: "startup_career_track.pdf",
-      tariff: "Сотрудник"
+      tariff: "Сотрудник ($9/мес)"
     }
   },
   jobseeker: {
     basic: {
       title: "AI-оптимизация резюме: Практическое руководство",
       file: "resume_optimization.pdf",
-      tariff: "Базовый"
+      tariff: "Базовый ($19/мес)"
     },
     premium: {
       title: "Карьерный roadmap: Построение карьеры в стартапах",
       file: "career_roadmap.pdf",
-      tariff: "Премиум"
+      tariff: "Премиум ($49/мес)"
     },
     pro: {
       title: "Networking: Стратегии для профессионалов",
       file: "networking_strategies.pdf",
-      tariff: "Про"
+      tariff: "Про ($99/мес)"
     }
   },
   partner: {
     affiliate: {
       title: "Партнёрская программа: Максимизация дохода",
       file: "affiliate_income_maximization.pdf",
-      tariff: "Партнёр"
+      tariff: "Партнёр ($0/мес)"
     }
   },
   ambassador: {
     ambassador: {
       title: "Амбассадор: Стратегия влияния и развития",
       file: "ambassador_strategy.pdf",
-      tariff: "Амбассадор"
+      tariff: "Амбассадор ($0/мес)"
     }
   },
   blogger: {
     blogger: {
       title: "Монетизация контента: Руководство для блогеров",
       file: "content_monetization.pdf",
-      tariff: "Блогер"
+      tariff: "Блогер ($0/мес)"
     }
   }
 };
@@ -878,8 +878,8 @@ const quizTree: Record<string, Question> = {
     stage: "Шаг 7 из 7",
     question: "Как часто вы планируете делать инвестиции?",
     answers: [
-      { text: "Несколько раз в год", result: { role: "investor", tariff: "beginner" } },
-      { text: "Ежемесячно", result: { role: "investor", tariff: "beginner" } },
+      { text: "Несколько раз в год", result: { role: "investor", tariff: "professional" } },
+      { text: "Ежемесячно", result: { role: "investor", tariff: "professional" } },
       { text: "Пока не определился", result: { role: "investor", tariff: "beginner" } }
     ]
   },
@@ -900,7 +900,7 @@ const quizTree: Record<string, Question> = {
     question: "Хотите ли вы диверсифицировать портфель?",
     answers: [
       { text: "Да, хочу добавить 2-3 проекта", next: "invest_small_sectors" },
-      { text: "Нет, пока наблюдаю за текущими", result: { role: "investor", tariff: "beginner" } }
+      { text: "Нет, пока наблюдаю за текущими", result: { role: "investor", tariff: "professional" } }
     ]
   },
 
@@ -922,7 +922,7 @@ const quizTree: Record<string, Question> = {
     question: "Нужна ли вам расширенная AI-аналитика?",
     answers: [
       { text: "Да, это важно для решений", result: { role: "investor", tariff: "professional" } },
-      { text: "Базовой аналитики достаточно", result: { role: "investor", tariff: "beginner" } }
+      { text: "Базовой аналитики достаточно", result: { role: "investor", tariff: "professional" } }
     ]
   },
 
@@ -932,7 +932,7 @@ const quizTree: Record<string, Question> = {
     question: "Используете ли вы продвинутые инструменты?",
     answers: [
       { text: "Да, использую аналитику и due diligence", next: "invest_small_secondary" },
-      { text: "Нет, инвестирую интуитивно", result: { role: "investor", tariff: "beginner" } }
+      { text: "Нет, инвестирую интуитивно", result: { role: "investor", tariff: "professional" } }
     ]
   },
 
@@ -993,7 +993,7 @@ const quizTree: Record<string, Question> = {
     question: "Интересует ли вас сообщество инвесторов?",
     answers: [
       { text: "Да, хочу общаться и учиться", next: "invest_medium_events" },
-      { text: "Нет, предпочитаю работать самостоятельно", result: { role: "investor", tariff: "beginner" } }
+      { text: "Нет, предпочитаю работать самостоятельно", result: { role: "investor", tariff: "professional" } }
     ]
   },
 
@@ -1003,7 +1003,7 @@ const quizTree: Record<string, Question> = {
     question: "Будете ли посещать мероприятия?",
     answers: [
       { text: "Да, это важно для нетворкинга", result: { role: "investor", tariff: "professional" } },
-      { text: "Нет, предпочитаю онлайн", result: { role: "investor", tariff: "beginner" } }
+      { text: "Нет, предпочитаю онлайн", result: { role: "investor", tariff: "professional" } }
     ]
   },
 
@@ -1022,7 +1022,7 @@ const quizTree: Record<string, Question> = {
     stage: "Шаг 7 из 7",
     question: "Как часто планируете инвестировать?",
     answers: [
-      { text: "Несколько раз в год", result: { role: "investor", tariff: "beginner" } },
+      { text: "Несколько раз в год", result: { role: "investor", tariff: "professional" } },
       { text: "Регулярно, ежемесячно", result: { role: "investor", tariff: "professional" } }
     ]
   },
@@ -1043,7 +1043,7 @@ const quizTree: Record<string, Question> = {
     question: "Хотите ли перейти на профессиональные инструменты?",
     answers: [
       { text: "Да, готов развиваться", next: "invest_medium_ai" },
-      { text: "Нет, мне достаточно текущих", result: { role: "investor", tariff: "beginner" } }
+      { text: "Нет, мне достаточно текущих", result: { role: "investor", tariff: "professional" } }
     ]
   },
 
@@ -1053,7 +1053,7 @@ const quizTree: Record<string, Question> = {
     question: "Интересует ли вас AI для принятия решений?",
     answers: [
       { text: "Да, хочу использовать AI", result: { role: "investor", tariff: "professional" } },
-      { text: "Нет, доверяю своей интуиции", result: { role: "investor", tariff: "beginner" } }
+      { text: "Нет, доверяю своей интуиции", result: { role: "investor", tariff: "professional" } }
     ]
   },
 
@@ -1104,7 +1104,7 @@ const quizTree: Record<string, Question> = {
     question: "Хотите улучшить результаты с AI?",
     answers: [
       { text: "Да, нужна помощь в отборе", result: { role: "investor", tariff: "professional" } },
-      { text: "Нет, продолжу как есть", result: { role: "investor", tariff: "beginner" } }
+      { text: "Нет, продолжу как есть", result: { role: "investor", tariff: "professional" } }
     ]
   },
 
@@ -1176,7 +1176,7 @@ const quizTree: Record<string, Question> = {
     question: "Как быстро принимаете решения?",
     answers: [
       { text: "Быстро (1-2 недели)", result: { role: "investor", tariff: "professional" } },
-      { text: "Долго анализирую (месяц+)", result: { role: "investor", tariff: "beginner" } }
+      { text: "Долго анализирую (месяц+)", result: { role: "investor", tariff: "professional" } }
     ]
   },
 

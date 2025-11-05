@@ -19,7 +19,7 @@ const keySearches = [
     color: "from-blue-500 to-blue-600"
   },
   {
-    query: "Войти в инвестиционный синдикат",
+    query: "Войти в коллективные инвестиции",
     icon: Users,
     link: "/investments",
     color: "from-purple-500 to-purple-600"
@@ -37,7 +37,7 @@ const keySearches = [
     color: "from-orange-500 to-orange-600"
   },
   {
-    query: "Найти команду для стартапа",
+    query: "Собрать команду для стартапа",
     icon: UserPlus,
     link: "/for-founders",
     color: "from-pink-500 to-pink-600"
@@ -49,7 +49,7 @@ const keySearches = [
     color: "from-teal-500 to-teal-600"
   },
   {
-    query: "Найти проекты для фриланса",
+    query: "Найти проекты для сотрудничества",
     icon: Briefcase,
     link: "/for-freelancers",
     color: "from-indigo-500 to-indigo-600"
@@ -82,22 +82,31 @@ const KeySearchSection = () => {
         </div>
         
         {/* Desktop version - unified gradient background */}
-        <div className="hidden lg:grid lg:grid-cols-3 gap-1 relative p-1">
-          {/* Unified galactic gradient background for desktop with subtle glow */}
-          <div className="absolute inset-0 rounded-xl overflow-hidden" 
+        <div className="hidden lg:grid lg:grid-cols-3 gap-1 relative">
+          {/* Subtle galactic glow effect in background */}
+          <div className="absolute inset-0 pointer-events-none" 
                style={{ 
-                 background: 'linear-gradient(135deg, #3d1f5c 0%, #6b3fa0 15%, #4169e1 30%, #9333ea 45%, #db2777 60%, #f97316 75%, #ea580c 85%, #3d1f5c 100%)',
-                 boxShadow: '0 0 60px rgba(147, 51, 234, 0.15), 0 0 120px rgba(219, 39, 119, 0.1), inset 0 0 80px rgba(147, 51, 234, 0.05)'
+                 background: 'radial-gradient(circle at 20% 30%, rgba(147, 51, 234, 0.03) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(219, 39, 119, 0.02) 0%, transparent 50%), radial-gradient(circle at 50% 50%, rgba(65, 105, 225, 0.02) 0%, transparent 50%)',
+                 filter: 'blur(40px)'
                }} 
           />
           
           {keySearches.map((item, index) => {
             const Icon = item.icon;
+            // Extract base color from item.color
+            const colorMatch = item.color.match(/from-(\w+)-/);
+            const baseColor = colorMatch ? colorMatch[1] : 'blue';
+            
             return (
               <Link key={index} to={item.link} className="block group relative">
-                <div className="relative h-64 overflow-hidden rounded-lg transition-all duration-300 hover:scale-105 hover:z-10">
+                <div 
+                  className="relative h-64 overflow-hidden rounded-lg transition-all duration-300 hover:scale-105 hover:z-10"
+                  style={{
+                    background: `linear-gradient(135deg, hsl(var(--${baseColor}-800)) 0%, hsl(var(--${baseColor}-200)) 50%, hsl(var(--${baseColor}-500)) 100%)`
+                  }}
+                >
                   {/* Semi-transparent overlay */}
-                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-all backdrop-blur-[2px]" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-black/30 to-transparent" />
                   
                   {/* Text content - top left */}
                   <h3 className="absolute top-[1.125rem] left-[1.125rem] text-lg text-white leading-tight max-w-[70%] z-10 group-hover:translate-x-1 transition-transform">
@@ -118,13 +127,18 @@ const KeySearchSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:hidden gap-1">
           {keySearches.map((item, index) => {
             const Icon = item.icon;
-            // Extract base color from item.color (e.g., "from-blue-500" -> "blue")
+            // Extract base color from item.color
             const colorMatch = item.color.match(/from-(\w+)-/);
             const baseColor = colorMatch ? colorMatch[1] : 'blue';
             
             return (
               <Link key={index} to={item.link} className="block group">
-                <div className={`relative h-64 rounded-xl bg-gradient-to-br from-${baseColor}-800 via-${baseColor}-200 to-${baseColor}-500 overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-105`}>
+                <div 
+                  className="relative h-64 rounded-xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-105"
+                  style={{
+                    background: `linear-gradient(135deg, hsl(var(--${baseColor}-800)) 0%, hsl(var(--${baseColor}-200)) 50%, hsl(var(--${baseColor}-500)) 100%)`
+                  }}
+                >
                   {/* Overlay for better text contrast */}
                   <div className="absolute inset-0 bg-gradient-to-br from-black/30 to-transparent" />
                   
