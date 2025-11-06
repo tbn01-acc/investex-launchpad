@@ -8,7 +8,9 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Search, Eye } from 'lucide-react';
+import { Search, Eye, Heart } from 'lucide-react';
+import { useFavorites } from '@/hooks/useFavorites';
+import { cn } from '@/lib/utils';
 import ProjectModal from '@/components/ProjectModal';
 import { allProjects } from '@/data/projectsData';
 import { supabase } from '@/integrations/supabase/client';
@@ -23,6 +25,7 @@ const Projects = () => {
   const [selectedProject, setSelectedProject] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const { toggleFavorite, isFavorite } = useFavorites('project');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [projectCategory, setProjectCategory] = useState('active');
   const [dbProjects, setDbProjects] = useState<any[]>([]);
@@ -154,6 +157,11 @@ const Projects = () => {
     setIsModalOpen(true);
   };
 
+  const handleFavoriteClick = (e: React.MouseEvent, projectId: string) => {
+    e.stopPropagation();
+    toggleFavorite(projectId);
+  };
+
   const ProjectList = () => (
     <>
       <div className="mb-4 flex justify-between items-center">
@@ -190,6 +198,24 @@ const Projects = () => {
               <Badge className="absolute top-4 left-4 bg-primary text-primary-foreground">
                 {project.category}
               </Badge>
+              <Button
+                size="icon"
+                variant="secondary"
+                className={cn(
+                  "absolute top-4 right-4 rounded-full shadow-lg transition-all",
+                  isFavorite(String(project.id)) 
+                    ? "bg-primary text-primary-foreground hover:bg-primary/90" 
+                    : "bg-background/80 hover:bg-background"
+                )}
+                onClick={(e) => handleFavoriteClick(e, String(project.id))}
+              >
+                <Heart 
+                  className={cn(
+                    "w-5 h-5 transition-all",
+                    isFavorite(String(project.id)) && "fill-current"
+                  )} 
+                />
+              </Button>
             </div>
 
             <div className="p-6 flex flex-col flex-1">

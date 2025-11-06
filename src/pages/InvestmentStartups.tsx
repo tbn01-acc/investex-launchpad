@@ -5,7 +5,9 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { Lock, Trophy, Clock, Users, DollarSign, Target, Shield } from 'lucide-react';
+import { Lock, Trophy, Clock, Users, DollarSign, Target, Shield, Heart } from 'lucide-react';
+import { useFavorites } from '@/hooks/useFavorites';
+import { cn } from '@/lib/utils';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import aiCode from '@/assets/projects/ai-code-assistant.jpg';
 import biotech from '@/assets/projects/biotech-lab-platform.jpg';
@@ -27,6 +29,7 @@ const InvestmentStartups = () => {
   const [sandboxDisplayedItems, setSandboxDisplayedItems] = useState(15);
   const [goldItemsPerPage, setGoldItemsPerPage] = useState(15);
   const [goldDisplayedItems, setGoldDisplayedItems] = useState(15);
+  const { toggleFavorite, isFavorite } = useFavorites('project');
 
   const localImages = [aiCode, biotech, fintech, iot, greentech, healthtech];
 
@@ -167,6 +170,11 @@ const InvestmentStartups = () => {
                        profile?.verification_level === 'professional' || 
                        profile?.verification_level === 'qualified';
 
+  const handleFavoriteClick = (e: React.MouseEvent, projectId: string) => {
+    e.stopPropagation();
+    toggleFavorite(projectId);
+  };
+
   return (
     <div className="min-h-screen">
       <Navigation />
@@ -231,6 +239,24 @@ const InvestmentStartups = () => {
                       <Lock className="w-3 h-3 mr-1" />
                       Ограниченный доступ
                     </Badge>
+                    <Button
+                      size="icon"
+                      variant="secondary"
+                      className={cn(
+                        "absolute top-4 right-4 rounded-full shadow-lg transition-all",
+                        isFavorite(String(project.id)) 
+                          ? "bg-primary text-primary-foreground hover:bg-primary/90" 
+                          : "bg-background/80 hover:bg-background"
+                      )}
+                      onClick={(e) => handleFavoriteClick(e, String(project.id))}
+                    >
+                      <Heart 
+                        className={cn(
+                          "w-5 h-5 transition-all",
+                          isFavorite(String(project.id)) && "fill-current"
+                        )} 
+                      />
+                    </Button>
                   </div>
                   
                   <div className="p-6 flex flex-col flex-1">
@@ -344,6 +370,24 @@ const InvestmentStartups = () => {
                       <Trophy className="w-3 h-3 mr-1" />
                       Золотой фонд
                     </Badge>
+                    <Button
+                      size="icon"
+                      variant="secondary"
+                      className={cn(
+                        "absolute top-4 right-4 rounded-full shadow-lg transition-all",
+                        isFavorite(String(project.id)) 
+                          ? "bg-primary text-primary-foreground hover:bg-primary/90" 
+                          : "bg-background/80 hover:bg-background"
+                      )}
+                      onClick={(e) => handleFavoriteClick(e, String(project.id))}
+                    >
+                      <Heart 
+                        className={cn(
+                          "w-5 h-5 transition-all",
+                          isFavorite(String(project.id)) && "fill-current"
+                        )} 
+                      />
+                    </Button>
                   </div>
                   
                   <div className="p-6 flex flex-col flex-1">

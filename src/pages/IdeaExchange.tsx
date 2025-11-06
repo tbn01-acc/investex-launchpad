@@ -4,7 +4,9 @@ import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Lightbulb, Lock, Users, ThumbsUp, MessageSquare, TrendingUp, Shield } from 'lucide-react';
+import { Lightbulb, Lock, Users, ThumbsUp, MessageSquare, TrendingUp, Shield, Heart } from 'lucide-react';
+import { useFavorites } from '@/hooks/useFavorites';
+import { cn } from '@/lib/utils';
 import { useAuth } from '@/hooks/useAuth';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import edtech from '@/assets/projects/edtech-platform.jpg';
@@ -17,6 +19,7 @@ const IdeaExchange = () => {
   const { profile } = useAuth();
   const [itemsPerPage, setItemsPerPage] = useState(15);
   const [displayedItems, setDisplayedItems] = useState(15);
+  const { toggleFavorite, isFavorite } = useFavorites('idea');
 
   const localImages = [edtech, agritech, marketplace, healthtech, vr];
 
@@ -104,6 +107,11 @@ const IdeaExchange = () => {
     return amount.toLocaleString() + '₽';
   };
 
+  const handleFavoriteClick = (e: React.MouseEvent, ideaId: string) => {
+    e.stopPropagation();
+    toggleFavorite(ideaId);
+  };
+
   return (
     <div className="min-h-screen">
       <Navigation />
@@ -173,6 +181,24 @@ const IdeaExchange = () => {
                   <Badge variant="outline" className="absolute top-4 left-4 bg-background/80">
                     {idea.category}
                   </Badge>
+                  <Button
+                    size="icon"
+                    variant="secondary"
+                    className={cn(
+                      "absolute top-4 right-4 rounded-full shadow-lg transition-all",
+                      isFavorite(String(idea.id)) 
+                        ? "bg-primary text-primary-foreground hover:bg-primary/90" 
+                        : "bg-background/80 hover:bg-background"
+                    )}
+                    onClick={(e) => handleFavoriteClick(e, String(idea.id))}
+                  >
+                    <Heart 
+                      className={cn(
+                        "w-5 h-5 transition-all",
+                        isFavorite(String(idea.id)) && "fill-current"
+                      )} 
+                    />
+                  </Button>
                 </div>
                 
                 <div className="p-6 flex flex-col flex-1">

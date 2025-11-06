@@ -7,10 +7,19 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { 
   Store, DollarSign, TrendingUp, Users, 
-  Clock, Award, MapPin, BarChart
+  Clock, Award, MapPin, BarChart, Heart
 } from 'lucide-react';
+import { useFavorites } from '@/hooks/useFavorites';
+import { cn } from '@/lib/utils';
 
 const Franchises = () => {
+  const { toggleFavorite, isFavorite } = useFavorites('project');
+
+  const handleFavoriteClick = (e: React.MouseEvent, franchiseId: string) => {
+    e.stopPropagation();
+    toggleFavorite(franchiseId);
+  };
+
   const franchiseCategories = [
     {
       title: 'Еда и напитки',
@@ -40,6 +49,7 @@ const Franchises = () => {
 
   const featuredFranchises = [
     {
+      id: 'franchise-1',
       name: 'FastFood Express',
       category: 'Еда и напитки',
       investment: '50,000 - 100,000',
@@ -49,6 +59,7 @@ const Franchises = () => {
       rating: 4.8
     },
     {
+      id: 'franchise-2',
       name: 'FitLife Gym',
       category: 'Фитнес и здоровье',
       investment: '80,000 - 150,000',
@@ -58,6 +69,7 @@ const Franchises = () => {
       rating: 4.6
     },
     {
+      id: 'franchise-3',
       name: 'SmartKids Education',
       category: 'Образование',
       investment: '30,000 - 60,000',
@@ -143,7 +155,25 @@ const Franchises = () => {
             <h2 className="text-2xl font-bold mb-8 text-center">Популярные франшизы</h2>
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
               {featuredFranchises.map((franchise, index) => (
-                <Card key={index} className="hover:shadow-lg transition-shadow">
+                <Card key={index} className="hover:shadow-lg transition-shadow relative">
+                  <Button
+                    size="icon"
+                    variant="secondary"
+                    className={cn(
+                      "absolute top-4 right-4 rounded-full shadow-lg transition-all z-10",
+                      isFavorite(franchise.id) 
+                        ? "bg-primary text-primary-foreground hover:bg-primary/90" 
+                        : "bg-background/80 hover:bg-background"
+                    )}
+                    onClick={(e) => handleFavoriteClick(e, franchise.id)}
+                  >
+                    <Heart 
+                      className={cn(
+                        "w-5 h-5 transition-all",
+                        isFavorite(franchise.id) && "fill-current"
+                      )} 
+                    />
+                  </Button>
                   <CardHeader>
                     <div className="flex items-start justify-between">
                       <div>

@@ -7,7 +7,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowLeft, Plus, Search, Mail, Phone, Building } from "lucide-react";
+import { ArrowLeft, Plus, Search, Mail, Phone, Building, Heart } from "lucide-react";
+import { useFavorites } from "@/hooks/useFavorites";
+import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
@@ -17,6 +19,12 @@ export default function ContactsPage() {
   const [contacts, setContacts] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filterType, setFilterType] = useState<string>("all");
+  const { toggleFavorite, isFavorite } = useFavorites('contact');
+
+  const handleFavoriteClick = (e: React.MouseEvent, contactId: string) => {
+    e.stopPropagation();
+    toggleFavorite(contactId);
+  };
 
   useEffect(() => {
     fetchContacts();
@@ -101,7 +109,25 @@ export default function ContactsPage() {
           <TabsContent value={filterType} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {filteredContacts.map((contact) => (
-                <Card key={contact.id} className="hover:shadow-lg transition-shadow">
+                <Card key={contact.id} className="hover:shadow-lg transition-shadow relative">
+                  <Button
+                    size="icon"
+                    variant="secondary"
+                    className={cn(
+                      "absolute top-4 right-4 rounded-full shadow-lg transition-all z-10",
+                      isFavorite(String(contact.id)) 
+                        ? "bg-primary text-primary-foreground hover:bg-primary/90" 
+                        : "bg-background/80 hover:bg-background"
+                    )}
+                    onClick={(e) => handleFavoriteClick(e, String(contact.id))}
+                  >
+                    <Heart 
+                      className={cn(
+                        "w-5 h-5 transition-all",
+                        isFavorite(String(contact.id)) && "fill-current"
+                      )} 
+                    />
+                  </Button>
                   <CardHeader>
                     <div className="flex items-start justify-between">
                       <div className="flex-1">

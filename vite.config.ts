@@ -19,4 +19,22 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'ui-vendor': ['@radix-ui/react-dialog', '@radix-ui/react-tabs', '@radix-ui/react-select'],
+        },
+      },
+    },
+    // Enable better caching with consistent chunk names
+    chunkSizeWarningLimit: 1000,
+  },
+  // Configure cache headers for better performance
+  preview: {
+    headers: {
+      'Cache-Control': 'public, max-age=31536000, immutable',
+    },
+  },
 }));
