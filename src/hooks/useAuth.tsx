@@ -110,6 +110,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const checkDeviceFingerprint = async (userId: string) => {
     try {
+      // Проверяем что пользователь авторизован
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        console.log('Device check skipped: user not authenticated');
+        return true;
+      }
+
       const fingerprint = generateFingerprint();
       const ipAddress = await getIPAddress();
       const deviceInfo = {
@@ -126,7 +133,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         p_ip_address: ipAddress
       });
       
-      if (error) throw error;
+      if (error) {
+        console.error('RPC error:', error);
+        throw error;
+      }
       
       const result = data as any;
       if (result?.requires_authorization) {
@@ -143,6 +153,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return true;
     } catch (error: any) {
       console.error('Error checking device:', error);
+      // Показываем только если это не проблема с авторизацией
+      if (error?.message && !error.message.includes('User not authenticated')) {
+        toast({
+          title: "Ошибка проверки устройства",
+          description: "Проверка устройства временно недоступна",
+          variant: "destructive",
+        });
+      }
       return true; // Не блокируем в случае ошибки
     }
   };
@@ -176,8 +194,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         if (session?.user) {
           setTimeout(async () => {
             await refreshProfile();
+            // Проверяем устройство только после успешного входа и с задержкой
             if (event === 'SIGNED_IN') {
-              await checkDeviceFingerprint(session.user.id);
+              setTimeout(() => {
+                checkDeviceFingerprint(session.user.id);
+              }, 1000);
             }
           }, 0);
         } else {
@@ -194,7 +215,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (session?.user) {
         setTimeout(async () => {
           await refreshProfile();
-          await checkDeviceFingerprint(session.user.id);
+          // Добавляем задержку для проверки устройства при начальной загрузке
+          setTimeout(() => {
+            checkDeviceFingerprint(session.user.id);
+          }, 1000);
         }, 0);
       }
     });
