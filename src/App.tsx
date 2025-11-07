@@ -75,6 +75,11 @@ import IVIIndex from './pages/IVIIndex';
 import SupervisoryBoard from './pages/SupervisoryBoard';
 import MediationCenter from './pages/MediationCenter';
 import Favorites from './pages/Favorites';
+import BlogIndex from './pages/blog/BlogIndex';
+import RoleBlog from './pages/blog/RoleBlog';
+import CategoryBlog from './pages/blog/CategoryBlog';
+import AuthorProfile from './pages/blog/AuthorProfile';
+import ArticleDetail from './pages/blog/ArticleDetail';
 
 const queryClient = new QueryClient();
 
@@ -98,6 +103,14 @@ const App = () => (
                 <Route path="/supervisory-board" element={<SupervisoryBoard />} />
                 <Route path="/mediation-center" element={<MediationCenter />} />
                 <Route path="/favorites" element={<Favorites />} />
+                
+                {/* Blog Routes */}
+                <Route path="/blog" element={<BlogIndex />} />
+                <Route path="/blog/:roleType" element={<RoleBlog />} />
+                <Route path="/blog/categories/:categoryId" element={<CategoryBlog />} />
+                <Route path="/blog/authors/:authorId" element={<AuthorProfile />} />
+                <Route path="/blog/article/:articleId" element={<ArticleDetail />} />
+                
                 <Route path="/freelancers" element={<ForFreelancers />} />
                 <Route path="/for-freelancers" element={<ForFreelancers />} />
                 <Route path="/outsourcers" element={<ForOutsourcers />} />

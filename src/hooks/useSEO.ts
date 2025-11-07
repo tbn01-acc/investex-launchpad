@@ -75,6 +75,102 @@ const SEO_CONFIGS: Record<string, Record<DomainConfig, SEOConfig>> = {
       canonical: 'https://invest-ex.online/for-founders',
       ogImage: 'https://invest-ex.online/og-image-founders.jpg'
     }
+  },
+  '/blog': {
+    'invest-ex.ru': {
+      title: 'Блог Invest-Ex — Статьи о стартапах и инвестициях',
+      description: 'Экспертные статьи, кейсы и аналитика от профессионалов венчурной индустрии. Советы для инвесторов, основателей и экспертов.',
+      keywords: ['блог о стартапах', 'венчурные инвестиции', 'советы инвесторам', 'развитие стартапов'],
+      canonical: 'https://invest-ex.ru/blog',
+      ogImage: 'https://invest-ex.ru/og-blog.png'
+    },
+    'invest-ex.online': {
+      title: 'Invest-Ex Blog — Startup & Investment Articles',
+      description: 'Expert articles, cases and analytics from venture industry professionals. Advice for investors, founders and experts.',
+      keywords: ['startup blog', 'venture investments', 'investor advice', 'startup growth'],
+      canonical: 'https://invest-ex.online/blog',
+      ogImage: 'https://invest-ex.online/og-blog.png'
+    }
+  },
+  '/blog/angel-investors': {
+    'invest-ex.ru': {
+      title: 'Блог бизнес-ангелов — Invest-Ex',
+      description: 'Экспертные статьи от практикующих бизнес-ангелов. Опыт инвестирования в стартапы, оценка проектов и управление портфелем.',
+      keywords: ['бизнес-ангелы', 'инвестиции в стартапы', 'портфель инвестиций'],
+      canonical: 'https://invest-ex.ru/blog/angel-investors',
+      ogImage: 'https://invest-ex.ru/og-blog.png'
+    },
+    'invest-ex.online': {
+      title: 'Angel Investors Blog — Invest-Ex',
+      description: 'Expert articles from practicing angel investors. Experience in startup investing, project evaluation and portfolio management.',
+      keywords: ['angel investors', 'startup investments', 'investment portfolio'],
+      canonical: 'https://invest-ex.online/blog/angel-investors',
+      ogImage: 'https://invest-ex.online/og-blog.png'
+    }
+  },
+  '/blog/founders': {
+    'invest-ex.ru': {
+      title: 'Блог основателей — Invest-Ex',
+      description: 'Опыт и советы от успешных фаундеров. Фандрайзинг, масштабирование, построение команды и развитие продукта.',
+      keywords: ['блог фаундеров', 'фандрайзинг', 'масштабирование стартапа'],
+      canonical: 'https://invest-ex.ru/blog/founders',
+      ogImage: 'https://invest-ex.ru/og-blog.png'
+    },
+    'invest-ex.online': {
+      title: 'Founders Blog — Invest-Ex',
+      description: 'Experience and advice from successful founders. Fundraising, scaling, team building and product development.',
+      keywords: ['founders blog', 'fundraising', 'startup scaling'],
+      canonical: 'https://invest-ex.online/blog/founders',
+      ogImage: 'https://invest-ex.online/og-blog.png'
+    }
+  },
+  '/blog/vc-funds': {
+    'invest-ex.ru': {
+      title: 'Блог VC фондов — Invest-Ex',
+      description: 'Инсайты от партнеров венчурных фондов. Тренды индустрии, процесс принятия решений и критерии оценки стартапов.',
+      keywords: ['венчурные фонды', 'VC инвестиции', 'оценка стартапов'],
+      canonical: 'https://invest-ex.ru/blog/vc-funds',
+      ogImage: 'https://invest-ex.ru/og-blog.png'
+    },
+    'invest-ex.online': {
+      title: 'VC Funds Blog — Invest-Ex',
+      description: 'Insights from venture fund partners. Industry trends, decision-making process and startup evaluation criteria.',
+      keywords: ['venture funds', 'VC investments', 'startup evaluation'],
+      canonical: 'https://invest-ex.online/blog/vc-funds',
+      ogImage: 'https://invest-ex.online/og-blog.png'
+    }
+  },
+  '/blog/consultants': {
+    'invest-ex.ru': {
+      title: 'Блог консультантов — Invest-Ex',
+      description: 'Стратегические советы от экспертов. Оптимизация бизнес-модели, GTM стратегия и развитие компании.',
+      keywords: ['бизнес консультанты', 'стратегия развития', 'оптимизация бизнеса'],
+      canonical: 'https://invest-ex.ru/blog/consultants',
+      ogImage: 'https://invest-ex.ru/og-blog.png'
+    },
+    'invest-ex.online': {
+      title: 'Consultants Blog — Invest-Ex',
+      description: 'Strategic advice from experts. Business model optimization, GTM strategy and company development.',
+      keywords: ['business consultants', 'growth strategy', 'business optimization'],
+      canonical: 'https://invest-ex.online/blog/consultants',
+      ogImage: 'https://invest-ex.online/og-blog.png'
+    }
+  },
+  '/blog/developers': {
+    'invest-ex.ru': {
+      title: 'Блог разработчиков — Invest-Ex',
+      description: 'Технические решения для стартапов. Архитектура MVP, масштабирование инфраструктуры и управление техническим долгом.',
+      keywords: ['разработка стартапов', 'MVP архитектура', 'техническое масштабирование'],
+      canonical: 'https://invest-ex.ru/blog/developers',
+      ogImage: 'https://invest-ex.ru/og-blog.png'
+    },
+    'invest-ex.online': {
+      title: 'Developers Blog — Invest-Ex',
+      description: 'Technical solutions for startups. MVP architecture, infrastructure scaling and technical debt management.',
+      keywords: ['startup development', 'MVP architecture', 'technical scaling'],
+      canonical: 'https://invest-ex.online/blog/developers',
+      ogImage: 'https://invest-ex.online/og-blog.png'
+    }
   }
 };
 

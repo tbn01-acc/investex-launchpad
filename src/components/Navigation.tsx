@@ -205,6 +205,17 @@ const Navigation = () => {
     },
     { title: "Тарифы", href: "/pricing" },
     { 
+      title: "Блоги",
+      href: "/blog",
+      items: [
+        { title: "Бизнес-ангелы", href: "/blog/angel-investors", description: "Экспертные статьи от практикующих бизнес-ангелов" },
+        { title: "Основатели", href: "/blog/founders", description: "Опыт и советы от успешных фаундеров" },
+        { title: "VC фонды", href: "/blog/vc-funds", description: "Инсайты от партнеров венчурных фондов" },
+        { title: "Консультанты", href: "/blog/consultants", description: "Стратегические советы от экспертов" },
+        { title: "Разработчики", href: "/blog/developers", description: "Технические решения для стартапов" },
+      ]
+    },
+    { 
       title: "О платформе",
       href: "/about",
       items: [
