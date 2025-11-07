@@ -1,6 +1,7 @@
 import React from 'react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
+import { useSEO } from '@/hooks/useSEO';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -8,6 +9,8 @@ import { Lightbulb, Rocket, Users, TrendingUp, DollarSign, Globe } from 'lucide-
 import { Link } from 'react-router-dom';
 
 const ForFounders = () => {
+  useSEO('/for-founders');
+  
   const features = [
     {
       icon: Lightbulb,

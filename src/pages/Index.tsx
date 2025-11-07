@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import Navigation from "@/components/Navigation";
+import { useSEO, useDevDomainSetter } from '@/hooks/useSEO';
 import HeroSection from "@/components/HeroSection";
 import InvestCTABanner from "@/components/InvestCTABanner";
 import KeySearchSection from "@/components/KeySearchSection";
@@ -17,6 +18,9 @@ import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
 
 const Index = () => {
+  useSEO('/');
+  useDevDomainSetter();
+  
   const [quizRole, setQuizRole] = useState<string | null>(null);
   const [selectedRole, setSelectedRole] = useState<string | null>(null);
   const rolePathRef = useRef<HTMLDivElement>(null);

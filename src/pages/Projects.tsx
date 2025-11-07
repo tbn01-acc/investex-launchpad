@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Navigation from '@/components/Navigation';
+import { useSEO } from '@/hooks/useSEO';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -20,6 +21,8 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { formatCurrency } from '@/lib/utils';
 
 const Projects = () => {
+  useSEO('/projects');
+  
   const { toast } = useToast();
   const { currency } = useLanguage();
   const [selectedProject, setSelectedProject] = useState<any>(null);
