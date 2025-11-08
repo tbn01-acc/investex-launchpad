@@ -1,3 +1,20 @@
+// Import blog images
+import angelInvestBasics from '@/assets/blog/angel-invest-basics.jpg';
+import dueDiligenceChecklist from '@/assets/blog/due-diligence-checklist.jpg';
+import portfolioDiversification from '@/assets/blog/portfolio-diversification.jpg';
+import fundraisingStrategy from '@/assets/blog/fundraising-strategy.jpg';
+import scalingTeam from '@/assets/blog/scaling-team.jpg';
+import productMarketFit from '@/assets/blog/product-market-fit.jpg';
+import seriesATrends from '@/assets/blog/series-a-trends.jpg';
+import vcDecisionProcess from '@/assets/blog/vc-decision-process.jpg';
+import unicornTraits from '@/assets/blog/unicorn-traits.jpg';
+import businessModelOptimization from '@/assets/blog/business-model-optimization.jpg';
+import goToMarketStrategy from '@/assets/blog/go-to-market-strategy.jpg';
+import turnaroundCase from '@/assets/blog/turnaround-case.jpg';
+import mvpArchitecture from '@/assets/blog/mvp-architecture.jpg';
+import techDebtManagement from '@/assets/blog/tech-debt-management.jpg';
+import scalingInfrastructure from '@/assets/blog/scaling-infrastructure.jpg';
+
 export interface BlogAuthor {
   id: string;
   name: string;
@@ -77,7 +94,7 @@ export const blogArticles: BlogArticle[] = [
     tags: ['инвестиции', 'стартапы', 'бизнес-ангелы'],
     publishedAt: '2024-01-15',
     readTime: 8,
-    image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800',
+    image: angelInvestBasics,
     roleType: 'angel-investors',
     contentType: 'guides'
   },
@@ -91,7 +108,7 @@ export const blogArticles: BlogArticle[] = [
     tags: ['due diligence', 'проверка', 'риски'],
     publishedAt: '2024-01-10',
     readTime: 10,
-    image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800',
+    image: dueDiligenceChecklist,
     roleType: 'angel-investors',
     contentType: 'guides'
   },
@@ -105,7 +122,7 @@ export const blogArticles: BlogArticle[] = [
     tags: ['портфель', 'диверсификация', 'кейс'],
     publishedAt: '2024-01-05',
     readTime: 12,
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800',
+    image: portfolioDiversification,
     roleType: 'angel-investors',
     contentType: 'cases'
   },
@@ -121,7 +138,7 @@ export const blogArticles: BlogArticle[] = [
     tags: ['фандрайзинг', 'инвестиции', 'питч'],
     publishedAt: '2024-01-18',
     readTime: 9,
-    image: 'https://images.unsplash.com/photo-1556761175-b413da4baf72?w=800',
+    image: fundraisingStrategy,
     roleType: 'founders',
     contentType: 'guides'
   },
@@ -135,7 +152,7 @@ export const blogArticles: BlogArticle[] = [
     tags: ['команда', 'масштабирование', 'HR'],
     publishedAt: '2024-01-12',
     readTime: 11,
-    image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800',
+    image: scalingTeam,
     roleType: 'founders',
     contentType: 'cases'
   },
@@ -149,7 +166,7 @@ export const blogArticles: BlogArticle[] = [
     tags: ['product-market fit', 'валидация', 'метрики'],
     publishedAt: '2024-01-08',
     readTime: 10,
-    image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800',
+    image: productMarketFit,
     roleType: 'founders',
     contentType: 'analytics'
   },
@@ -165,7 +182,7 @@ export const blogArticles: BlogArticle[] = [
     tags: ['Series A', 'тренды', 'венчур'],
     publishedAt: '2024-01-20',
     readTime: 7,
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800',
+    image: seriesATrends,
     roleType: 'vc-funds',
     contentType: 'trends'
   },
@@ -179,7 +196,7 @@ export const blogArticles: BlogArticle[] = [
     tags: ['VC', 'процесс', 'инвестиции'],
     publishedAt: '2024-01-14',
     readTime: 13,
-    image: 'https://images.unsplash.com/photo-1573164713988-8665fc963095?w=800',
+    image: vcDecisionProcess,
     roleType: 'vc-funds',
     contentType: 'guides'
   },
@@ -193,7 +210,7 @@ export const blogArticles: BlogArticle[] = [
     tags: ['единороги', 'успех', 'анализ'],
     publishedAt: '2024-01-09',
     readTime: 15,
-    image: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=800',
+    image: unicornTraits,
     roleType: 'vc-funds',
     contentType: 'analytics'
   },
@@ -209,7 +226,7 @@ export const blogArticles: BlogArticle[] = [
     tags: ['бизнес-модель', 'оптимизация', 'юнит-экономика'],
     publishedAt: '2024-01-17',
     readTime: 9,
-    image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800',
+    image: businessModelOptimization,
     roleType: 'consultants',
     contentType: 'guides'
   },
@@ -223,7 +240,7 @@ export const blogArticles: BlogArticle[] = [
     tags: ['GTM', 'B2B', 'стратегия'],
     publishedAt: '2024-01-11',
     readTime: 11,
-    image: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800',
+    image: goToMarketStrategy,
     roleType: 'consultants',
     contentType: 'guides'
   },
@@ -237,7 +254,7 @@ export const blogArticles: BlogArticle[] = [
     tags: ['кейс', 'антикризис', 'рост'],
     publishedAt: '2024-01-06',
     readTime: 14,
-    image: 'https://images.unsplash.com/photo-1553028826-f4804a6dba3b?w=800',
+    image: turnaroundCase,
     roleType: 'consultants',
     contentType: 'cases'
   },
@@ -253,7 +270,7 @@ export const blogArticles: BlogArticle[] = [
     tags: ['MVP', 'архитектура', 'разработка'],
     publishedAt: '2024-01-19',
     readTime: 10,
-    image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800',
+    image: mvpArchitecture,
     roleType: 'developers',
     contentType: 'guides'
   },
@@ -267,7 +284,7 @@ export const blogArticles: BlogArticle[] = [
     tags: ['технический долг', 'разработка', 'качество'],
     publishedAt: '2024-01-13',
     readTime: 8,
-    image: 'https://images.unsplash.com/photo-1484417894907-623942c8ee29?w=800',
+    image: techDebtManagement,
     roleType: 'developers',
     contentType: 'analytics'
   },
@@ -281,7 +298,7 @@ export const blogArticles: BlogArticle[] = [
     tags: ['инфраструктура', 'масштабирование', 'DevOps'],
     publishedAt: '2024-01-07',
     readTime: 12,
-    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800',
+    image: scalingInfrastructure,
     roleType: 'developers',
     contentType: 'cases'
   }
