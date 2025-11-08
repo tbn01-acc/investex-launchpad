@@ -1,0 +1,48 @@
+name: Automated Sitemap Generation
+
+on:
+  # Запуск каждую ночь в 2:00 UTC (5:00 MSK)
+  schedule:
+    - cron: '0 2 * * *'
+  
+  # Ручной запуск
+  workflow_dispatch:
+  
+  # Запуск при изменении контента
+  push:
+    paths:
+      - 'src/pages/**'
+      - 'src/data/**'
+
+jobs:
+  generate-sitemaps:
+    runs-on: ubuntu-latest
+    name: Generate Sitemaps for Both Domains
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Generate sitemap for invest-ex.ru
+        run: |
+          curl -X POST "${{ secrets.SUPABASE_URL }}/functions/v1/sitemap-generator" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d '{"domain": "invest-ex.ru", "locale": "ru"}' \
+            --fail-with-body
+      
+      - name: Generate sitemap for invest-ex.online
+        run: |
+          curl -X POST "${{ secrets.SUPABASE_URL }}/functions/v1/sitemap-generator" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d '{"domain": "invest-ex.online", "locale": "en"}' \
+            --fail-with-body
+      
+      - name: Notify Google about sitemap update
+        run: |
+          curl "https://www.google.com/ping?sitemap=https://invest-ex.ru/sitemap.xml"
+          curl "https://www.google.com/ping?sitemap=https://invest-ex.online/sitemap.xml"
+      
+      - name: Report success
+        run: echo "✅ Sitemaps generated and search engines notified successfully"
