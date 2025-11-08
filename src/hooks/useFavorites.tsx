@@ -3,7 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "./useAuth";
 import { useToast } from "./use-toast";
 
-export const useFavorites = (itemType: 'project' | 'idea' | 'contact') => {
+export const useFavorites = (itemType: 'project' | 'idea' | 'contact' | 'article') => {
   const { user } = useAuth();
   const { toast } = useToast();
   const [favorites, setFavorites] = useState<Set<string>>(new Set());

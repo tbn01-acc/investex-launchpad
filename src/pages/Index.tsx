@@ -13,7 +13,7 @@ import RolePathSection from "@/components/RolePathSection";
 import ProjectShowcase from "@/components/ProjectShowcase";
 import SuccessStoriesSection from "@/components/SuccessStoriesSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
-import StatsSection from "@/components/StatsSection";
+import BlogSection from "@/components/BlogSection";
 import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
 
@@ -51,7 +51,7 @@ const Index = () => {
       <ProjectShowcase />
       <SuccessStoriesSection filterByRole={selectedRole || undefined} />
       <TestimonialsSection filterByRole={selectedRole || undefined} />
-      <StatsSection />
+      <BlogSection />
       <CTASection />
       <Footer />
     </div>
