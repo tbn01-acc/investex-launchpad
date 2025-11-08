@@ -6,6 +6,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
 import { AuthProvider } from "@/hooks/useAuth";
 import { LanguageProvider } from "@/contexts/LanguageContext";
+import { DomainProvider } from "@/contexts/DomainContext";
+import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
 import ScrollToTop from "@/components/ScrollToTop";
 import GoToTop from "@/components/GoToTop";
 import Index from "./pages/Index";
@@ -90,11 +92,13 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <LanguageProvider>
-            <AuthProvider>
-              <ScrollToTop />
-              <GoToTop />
-              <Routes>
+          <DomainProvider>
+            <GoogleAnalytics />
+            <LanguageProvider>
+              <AuthProvider>
+                <ScrollToTop />
+                <GoToTop />
+                <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/community" element={<Community />} />
                 <Route path="/auth" element={<Auth />} />
@@ -192,6 +196,7 @@ const App = () => (
               </Routes>
             </AuthProvider>
           </LanguageProvider>
+          </DomainProvider>
         </BrowserRouter>
       </TooltipProvider>
     </ThemeProvider>
