@@ -7,17 +7,21 @@
       "maxDuration": 10
     }
   },
-  "rewrites": [
+  "redirects": [
     {
       "source": "/sitemap.xml",
-      "destination": "/api/sitemap"
+      "destination": "/api/sitemap",
+      "statusCode": 307
     },
     {
       "source": "/robots.txt",
-      "destination": "/api/robots"
-    },
+      "destination": "/api/robots",
+      "statusCode": 307
+    }
+  ],
+  "rewrites": [
     {
-      "source": "/:path((?!api).*)",
+      "source": "/(.*)",
       "destination": "/index.html"
     }
   ],
@@ -41,10 +45,6 @@
         {
           "key": "Content-Type",
           "value": "text/plain; charset=utf-8"
-        },
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=86400, s-maxage=86400"
         }
       ]
     }
