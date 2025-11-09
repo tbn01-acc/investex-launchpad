@@ -1,20 +1,20 @@
 {
   "functions": {
-    "api/sitemap.xml.js": {
+    "api/sitemap.js": {
       "maxDuration": 30
     },
-    "api/robots.txt.js": {
+    "api/robots.js": {
       "maxDuration": 10
     }
   },
   "rewrites": [
     {
       "source": "/sitemap.xml",
-      "destination": "/api/sitemap.xml"
+      "destination": "/api/sitemap"
     },
     {
       "source": "/robots.txt",
-      "destination": "/api/robots.txt"
+      "destination": "/api/robots"
     },
     {
       "source": "/(.*)",
@@ -23,7 +23,7 @@
   ],
   "headers": [
     {
-      "source": "/api/sitemap.xml",
+      "source": "/api/sitemap",
       "headers": [
         {
           "key": "Content-Type",
@@ -36,7 +36,7 @@
       ]
     },
     {
-      "source": "/api/robots.txt",
+      "source": "/api/robots",
       "headers": [
         {
           "key": "Content-Type",
