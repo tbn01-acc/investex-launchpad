@@ -28,7 +28,8 @@ export interface BlogArticle {
   id: string;
   title: string;
   excerpt: string;
-  content: string;
+  content: string; // Short preview (15-20% for free users)
+  fullContent?: string; // Full article (for premium users)
   author: BlogAuthor;
   category: string;
   tags: string[];
@@ -37,6 +38,7 @@ export interface BlogArticle {
   image: string;
   roleType: 'angel-investors' | 'founders' | 'vc-funds' | 'consultants' | 'developers';
   contentType: 'guides' | 'cases' | 'analytics' | 'trends';
+  isPremium: boolean; // Whether full content requires premium access
 }
 
 export const blogAuthors: BlogAuthor[] = [
@@ -96,7 +98,8 @@ export const blogArticles: BlogArticle[] = [
     readTime: 8,
     image: angelInvestBasics,
     roleType: 'angel-investors',
-    contentType: 'guides'
+    contentType: 'guides',
+    isPremium: false
   },
   {
     id: 'due-diligence-checklist',
@@ -110,7 +113,8 @@ export const blogArticles: BlogArticle[] = [
     readTime: 10,
     image: dueDiligenceChecklist,
     roleType: 'angel-investors',
-    contentType: 'guides'
+    contentType: 'guides',
+    isPremium: false
   },
   {
     id: 'portfolio-diversification',
@@ -124,7 +128,8 @@ export const blogArticles: BlogArticle[] = [
     readTime: 12,
     image: portfolioDiversification,
     roleType: 'angel-investors',
-    contentType: 'cases'
+    contentType: 'cases',
+    isPremium: false
   },
 
   // Founders Articles
@@ -140,7 +145,8 @@ export const blogArticles: BlogArticle[] = [
     readTime: 9,
     image: fundraisingStrategy,
     roleType: 'founders',
-    contentType: 'guides'
+    contentType: 'guides',
+    isPremium: false
   },
   {
     id: 'scaling-team',
@@ -154,7 +160,8 @@ export const blogArticles: BlogArticle[] = [
     readTime: 11,
     image: scalingTeam,
     roleType: 'founders',
-    contentType: 'cases'
+    contentType: 'cases',
+    isPremium: false
   },
   {
     id: 'product-market-fit',
@@ -168,7 +175,8 @@ export const blogArticles: BlogArticle[] = [
     readTime: 10,
     image: productMarketFit,
     roleType: 'founders',
-    contentType: 'analytics'
+    contentType: 'analytics',
+    isPremium: false
   },
 
   // VC Funds Articles
@@ -184,7 +192,8 @@ export const blogArticles: BlogArticle[] = [
     readTime: 7,
     image: seriesATrends,
     roleType: 'vc-funds',
-    contentType: 'trends'
+    contentType: 'trends',
+    isPremium: false
   },
   {
     id: 'vc-decision-process',
@@ -198,7 +207,8 @@ export const blogArticles: BlogArticle[] = [
     readTime: 13,
     image: vcDecisionProcess,
     roleType: 'vc-funds',
-    contentType: 'guides'
+    contentType: 'guides',
+    isPremium: false
   },
   {
     id: 'unicorn-traits',
@@ -212,7 +222,8 @@ export const blogArticles: BlogArticle[] = [
     readTime: 15,
     image: unicornTraits,
     roleType: 'vc-funds',
-    contentType: 'analytics'
+    contentType: 'analytics',
+    isPremium: false
   },
 
   // Consultants Articles
@@ -228,7 +239,8 @@ export const blogArticles: BlogArticle[] = [
     readTime: 9,
     image: businessModelOptimization,
     roleType: 'consultants',
-    contentType: 'guides'
+    contentType: 'guides',
+    isPremium: false
   },
   {
     id: 'go-to-market-strategy',
@@ -242,7 +254,8 @@ export const blogArticles: BlogArticle[] = [
     readTime: 11,
     image: goToMarketStrategy,
     roleType: 'consultants',
-    contentType: 'guides'
+    contentType: 'guides',
+    isPremium: false
   },
   {
     id: 'turnaround-case',
@@ -256,7 +269,8 @@ export const blogArticles: BlogArticle[] = [
     readTime: 14,
     image: turnaroundCase,
     roleType: 'consultants',
-    contentType: 'cases'
+    contentType: 'cases',
+    isPremium: false
   },
 
   // Developers Articles
@@ -272,7 +286,8 @@ export const blogArticles: BlogArticle[] = [
     readTime: 10,
     image: mvpArchitecture,
     roleType: 'developers',
-    contentType: 'guides'
+    contentType: 'guides',
+    isPremium: false
   },
   {
     id: 'tech-debt-management',
@@ -286,7 +301,8 @@ export const blogArticles: BlogArticle[] = [
     readTime: 8,
     image: techDebtManagement,
     roleType: 'developers',
-    contentType: 'analytics'
+    contentType: 'analytics',
+    isPremium: false
   },
   {
     id: 'scaling-infrastructure',
@@ -300,7 +316,8 @@ export const blogArticles: BlogArticle[] = [
     readTime: 12,
     image: scalingInfrastructure,
     roleType: 'developers',
-    contentType: 'cases'
+    contentType: 'cases',
+    isPremium: false
   }
 ];
 

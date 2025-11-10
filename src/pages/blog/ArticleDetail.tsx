@@ -1,17 +1,23 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { blogArticles } from "@/data/blogData";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Clock, ArrowLeft } from "lucide-react";
+import { Clock, ArrowLeft, Lock } from "lucide-react";
 import { useSEO } from "@/hooks/useSEO";
+import { useSubscription } from "@/hooks/useSubscription";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const ArticleDetail = () => {
   const { articleId } = useParams<{ articleId: string }>();
+  const navigate = useNavigate();
+  const { hasPremiumAccess, loading: subscriptionLoading } = useSubscription();
   
   const article = blogArticles.find(a => a.id === articleId);
+  
+  const canViewFullContent = !article?.isPremium || hasPremiumAccess;
 
   useSEO(`/blog/article/${articleId}`, article ? {
     title: `${article.title} | Invest-Ex`,
@@ -84,9 +90,44 @@ const ArticleDetail = () => {
             <p className="lead text-xl text-muted-foreground mb-8">
               {article.excerpt}
             </p>
+            
+            {/* Preview content (always visible) */}
             <div className="whitespace-pre-line">
               {article.content}
             </div>
+
+            {/* Premium content gate */}
+            {article.isPremium && !canViewFullContent && (
+              <div className="mt-8 relative">
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background pointer-events-none h-32 -mt-32" />
+                <Alert className="border-primary/50 bg-primary/5">
+                  <Lock className="h-5 w-5 text-primary" />
+                  <AlertDescription className="ml-2">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="font-semibold text-lg mb-1">Полная версия статьи доступна по подписке</p>
+                        <p className="text-muted-foreground">
+                          Получите доступ к {article.fullContent ? Math.round(article.fullContent.length / article.content.length) : '5'}x больше контента с экспертными инсайтами
+                        </p>
+                      </div>
+                      <Button 
+                        onClick={() => navigate('/pricing')} 
+                        className="ml-4"
+                      >
+                        Оформить подписку
+                      </Button>
+                    </div>
+                  </AlertDescription>
+                </Alert>
+              </div>
+            )}
+
+            {/* Full content (for premium users only) */}
+            {article.isPremium && canViewFullContent && article.fullContent && (
+              <div className="mt-8 pt-8 border-t whitespace-pre-line">
+                {article.fullContent}
+              </div>
+            )}
           </div>
 
           {/* Tags */}
