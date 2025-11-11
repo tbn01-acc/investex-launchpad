@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from './useAuth';
+import { supabase } from '@/integrations/supabase/client';
 
 export type SubscriptionTier = 'free' | 'basic' | 'professional' | 'enterprise';
 
@@ -11,34 +12,50 @@ interface SubscriptionData {
 
 export const useSubscription = () => {
   const { user } = useAuth();
-  const [subscription] = useState<SubscriptionData>({
+  const [subscription, setSubscription] = useState<SubscriptionData>({
     tier: 'free',
     isActive: false
   });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate loading subscription data
-    // TODO: Replace with actual Supabase query when subscriptions table is created
     const loadSubscription = async () => {
       if (!user) {
         setLoading(false);
         return;
       }
 
-      // For now, return free tier for all users
-      // This will be replaced with real subscription checks
-      setTimeout(() => {
+      try {
+        const { data, error } = await supabase
+          .from('subscriptions')
+          .select('*')
+          .eq('user_id', user.id)
+          .single();
+
+        if (error) {
+          console.error('Error loading subscription:', error);
+          setLoading(false);
+          return;
+        }
+
+        if (data) {
+          setSubscription({
+            tier: data.tier as SubscriptionTier,
+            isActive: data.is_active,
+            expiresAt: data.expires_at || undefined
+          });
+        }
+      } catch (error) {
+        console.error('Error loading subscription:', error);
+      } finally {
         setLoading(false);
-      }, 500);
+      }
     };
 
     loadSubscription();
   }, [user]);
 
   const hasPremiumAccess = () => {
-    // TODO: Implement actual subscription check
-    // For now, return false (all users are free tier)
     return subscription.isActive && subscription.tier !== 'free';
   };
 
