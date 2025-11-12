@@ -15,10 +15,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { User, LayoutDashboard, LogOut, Settings, Heart } from 'lucide-react';
+import { User, LayoutDashboard, LogOut, Settings, Heart, PenSquare } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { ApiConfigDialog } from '@/components/ApiConfigDialog';
+import { BlogArticleDialog } from '@/components/blog/BlogArticleDialog';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 
@@ -208,6 +209,13 @@ const UserAvatar = () => {
             Личный кабинет
           </Link>
         </DropdownMenuItem>
+
+        <BlogArticleDialog>
+          <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+            <PenSquare className="mr-2 h-4 w-4" />
+            Написать статью
+          </DropdownMenuItem>
+        </BlogArticleDialog>
 
         {profile?.role === 'superadmin' && (
           <DropdownMenuItem asChild>

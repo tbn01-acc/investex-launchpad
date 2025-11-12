@@ -6,7 +6,8 @@ import { useAuth } from '@/hooks/useAuth';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { MessagesTab } from '@/components/MessagesTab';
 import { RoleSelector } from '@/components/RoleSelector';
-import { Users, Settings, FileText, Activity, Shield, AlertCircle, MessageSquare } from 'lucide-react';
+import { Users, Settings, FileText, Activity, Shield, AlertCircle, MessageSquare, BookOpen } from 'lucide-react';
+import { BlogModerationPanel } from '@/components/blog/BlogModerationPanel';
 
 const AdministratorDashboard = () => {
   const { user } = useAuth();
@@ -136,6 +137,7 @@ const AdministratorDashboard = () => {
           <TabsTrigger value="pending">На модерации</TabsTrigger>
           <TabsTrigger value="users">Пользователи</TabsTrigger>
           <TabsTrigger value="projects">Проекты</TabsTrigger>
+          <TabsTrigger value="blog">Блог</TabsTrigger>
           <TabsTrigger value="settings">Настройки</TabsTrigger>
           <TabsTrigger value="logs">Логи</TabsTrigger>
           <TabsTrigger value="messages">
@@ -227,6 +229,20 @@ const AdministratorDashboard = () => {
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground">История действий и событий системы</p>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="blog" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <BookOpen className="h-5 w-5" />
+                Модерация блога
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <BlogModerationPanel />
             </CardContent>
           </Card>
         </TabsContent>

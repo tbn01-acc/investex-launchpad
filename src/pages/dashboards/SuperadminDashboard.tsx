@@ -12,9 +12,10 @@ import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { 
   Shield, Users, Settings, BarChart3, DollarSign, 
-  TrendingUp, Activity, Lock, RefreshCw, Save, Briefcase, FileText, MessageSquare, Key, Info
+  TrendingUp, Activity, Lock, RefreshCw, Save, Briefcase, FileText, MessageSquare, Key, Info, BookOpen
 } from 'lucide-react';
 import { MessagesTab } from '@/components/MessagesTab';
+import { BlogModerationPanel } from '@/components/blog/BlogModerationPanel';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 
 interface PlatformStats {
@@ -232,10 +233,11 @@ export default function SuperadminDashboard() {
 
         {/* Detailed Tabs */}
         <Tabs defaultValue="dashboard" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-6">
+          <TabsList className="grid w-full grid-cols-7">
             <TabsTrigger value="dashboard">{t('common.dashboard')}</TabsTrigger>
             <TabsTrigger value="projects">Проекты</TabsTrigger>
             <TabsTrigger value="staff">Персонал</TabsTrigger>
+            <TabsTrigger value="blog">Блог</TabsTrigger>
             <TabsTrigger value="analytics">Аналитика</TabsTrigger>
             <TabsTrigger value="settings">Настройки</TabsTrigger>
             <TabsTrigger value="messages">{t('common.messages')}</TabsTrigger>
@@ -438,6 +440,23 @@ export default function SuperadminDashboard() {
                 </CardContent>
               </Card>
             </div>
+          </TabsContent>
+
+          <TabsContent value="blog">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <BookOpen className="h-5 w-5" />
+                  Модерация блога
+                </CardTitle>
+                <CardDescription>
+                  Модерация статей, управление публикациями
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <BlogModerationPanel />
+              </CardContent>
+            </Card>
           </TabsContent>
 
           <TabsContent value="messages">

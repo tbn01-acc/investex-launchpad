@@ -155,6 +155,191 @@ export type Database = {
           },
         ]
       }
+      blog_article_ratings: {
+        Row: {
+          article_id: string
+          created_at: string
+          id: string
+          rating: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          article_id: string
+          created_at?: string
+          id?: string
+          rating: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          article_id?: string
+          created_at?: string
+          id?: string
+          rating?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blog_article_ratings_article_id_fkey"
+            columns: ["article_id"]
+            isOneToOne: false
+            referencedRelation: "blog_articles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      blog_articles: {
+        Row: {
+          author_id: string
+          category: string
+          content: string
+          content_type: string
+          created_at: string
+          dislikes_count: number
+          excerpt: string
+          full_content: string
+          id: string
+          image_url: string | null
+          is_premium: boolean
+          is_public: boolean
+          likes_count: number
+          moderated_at: string | null
+          moderated_by: string | null
+          moderation_comment: string | null
+          moderation_status: string
+          published_at: string | null
+          read_time: number
+          role_type: string
+          tags: string[] | null
+          title: string
+          updated_at: string
+          views_count: number
+        }
+        Insert: {
+          author_id: string
+          category: string
+          content: string
+          content_type: string
+          created_at?: string
+          dislikes_count?: number
+          excerpt: string
+          full_content: string
+          id?: string
+          image_url?: string | null
+          is_premium?: boolean
+          is_public?: boolean
+          likes_count?: number
+          moderated_at?: string | null
+          moderated_by?: string | null
+          moderation_comment?: string | null
+          moderation_status?: string
+          published_at?: string | null
+          read_time?: number
+          role_type: string
+          tags?: string[] | null
+          title: string
+          updated_at?: string
+          views_count?: number
+        }
+        Update: {
+          author_id?: string
+          category?: string
+          content?: string
+          content_type?: string
+          created_at?: string
+          dislikes_count?: number
+          excerpt?: string
+          full_content?: string
+          id?: string
+          image_url?: string | null
+          is_premium?: boolean
+          is_public?: boolean
+          likes_count?: number
+          moderated_at?: string | null
+          moderated_by?: string | null
+          moderation_comment?: string | null
+          moderation_status?: string
+          published_at?: string | null
+          read_time?: number
+          role_type?: string
+          tags?: string[] | null
+          title?: string
+          updated_at?: string
+          views_count?: number
+        }
+        Relationships: []
+      }
+      blog_author_subscriptions: {
+        Row: {
+          author_id: string
+          created_at: string
+          id: string
+          subscriber_id: string
+        }
+        Insert: {
+          author_id: string
+          created_at?: string
+          id?: string
+          subscriber_id: string
+        }
+        Update: {
+          author_id?: string
+          created_at?: string
+          id?: string
+          subscriber_id?: string
+        }
+        Relationships: []
+      }
+      blog_category_subscriptions: {
+        Row: {
+          category: string
+          created_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      content_changelog: {
+        Row: {
+          action: string
+          changed_at: string | null
+          entity_id: string
+          entity_type: string
+          id: string
+          trigger_sitemap_update: boolean | null
+        }
+        Insert: {
+          action: string
+          changed_at?: string | null
+          entity_id: string
+          entity_type: string
+          id?: string
+          trigger_sitemap_update?: boolean | null
+        }
+        Update: {
+          action?: string
+          changed_at?: string | null
+          entity_id?: string
+          entity_type?: string
+          id?: string
+          trigger_sitemap_update?: boolean | null
+        }
+        Relationships: []
+      }
       crm_contacts: {
         Row: {
           company: string | null
@@ -2112,6 +2297,93 @@ export type Database = {
         }
         Relationships: []
       }
+      seo_configurations: {
+        Row: {
+          canonical_url: string | null
+          change_frequency: string | null
+          created_at: string | null
+          description: string
+          domain: string
+          id: string
+          keywords: string[] | null
+          locale: string
+          og_image_url: string | null
+          page_key: string
+          priority: number | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          canonical_url?: string | null
+          change_frequency?: string | null
+          created_at?: string | null
+          description: string
+          domain: string
+          id?: string
+          keywords?: string[] | null
+          locale: string
+          og_image_url?: string | null
+          page_key: string
+          priority?: number | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          canonical_url?: string | null
+          change_frequency?: string | null
+          created_at?: string | null
+          description?: string
+          domain?: string
+          id?: string
+          keywords?: string[] | null
+          locale?: string
+          og_image_url?: string | null
+          page_key?: string
+          priority?: number | null
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      sitemap_updates: {
+        Row: {
+          created_at: string | null
+          domain: string
+          error_message: string | null
+          file_size_bytes: number | null
+          generation_time_ms: number | null
+          id: string
+          last_generated: string | null
+          locale: string
+          pages_count: number | null
+          status: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          domain: string
+          error_message?: string | null
+          file_size_bytes?: number | null
+          generation_time_ms?: number | null
+          id?: string
+          last_generated?: string | null
+          locale: string
+          pages_count?: number | null
+          status?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          domain?: string
+          error_message?: string | null
+          file_size_bytes?: number | null
+          generation_time_ms?: number | null
+          id?: string
+          last_generated?: string | null
+          locale?: string
+          pages_count?: number | null
+          status?: string | null
+        }
+        Relationships: []
+      }
       skill_categories: {
         Row: {
           created_at: string | null
@@ -2167,6 +2439,36 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      subscriptions: {
+        Row: {
+          created_at: string
+          expires_at: string | null
+          id: string
+          is_active: boolean
+          tier: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          is_active?: boolean
+          tier: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          is_active?: boolean
+          tier?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
       }
       superadmin_audit_log: {
         Row: {

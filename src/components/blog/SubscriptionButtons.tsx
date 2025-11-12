@@ -43,7 +43,7 @@ export const SubscriptionButtons = ({ category, authorId, className }: Subscript
         const { data } = await supabase
           .from('blog_author_subscriptions')
           .select('id')
-          .eq('user_id', user.id)
+          .eq('subscriber_id', user.id)
           .eq('author_id', authorId)
           .single();
         setSubscribedToAuthor(!!data);
@@ -115,7 +115,7 @@ export const SubscriptionButtons = ({ category, authorId, className }: Subscript
         const { error } = await supabase
           .from('blog_author_subscriptions')
           .delete()
-          .eq('user_id', user.id)
+          .eq('subscriber_id', user.id)
           .eq('author_id', authorId);
 
         if (error) throw error;
@@ -125,7 +125,7 @@ export const SubscriptionButtons = ({ category, authorId, className }: Subscript
         const { error } = await supabase
           .from('blog_author_subscriptions')
           .insert({
-            user_id: user.id,
+            subscriber_id: user.id,
             author_id: authorId!
           });
 
