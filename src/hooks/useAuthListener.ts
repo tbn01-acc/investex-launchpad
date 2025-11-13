@@ -1,6 +1,7 @@
+``````typescript
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { supabase } from '@/integrations/supabase/client'
+import { supabase } from '@/lib/supabaseClient' // ВАЖНО: замените на ваш реальный путь к supabase клиенту
 
 /**
  * Hook для обработки OAuth callback токенов и слушания событий авторизации

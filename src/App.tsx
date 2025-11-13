@@ -10,8 +10,6 @@ import { DomainProvider } from "@/contexts/DomainContext";
 import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
 import ScrollToTop from "@/components/ScrollToTop";
 import GoToTop from "@/components/GoToTop";
-import { useAuthListener } from "@/hooks/useAuthListener";
-
 import Index from "./pages/Index";
 import Community from "./pages/Community";
 import Auth from "./pages/Auth";
@@ -71,137 +69,157 @@ import WikiPage from "./pages/kb/WikiPage";
 import FilesPage from "./pages/kb/FilesPage";
 import ReportsPage from "./pages/bi/ReportsPage";
 import AnalyticsPage from "./pages/bi/AnalyticsPage";
-import TaskNew from "./pages/pm/TaskNew";
-import VacancyNew from "./pages/hr/VacancyNew";
-import ContactNew from "./pages/crm/ContactNew";
-import ArticleNew from "./pages/kb/ArticleNew";
-import IVIIndex from "./pages/IVIIndex";
-import SupervisoryBoard from "./pages/SupervisoryBoard";
-import MediationCenter from "./pages/MediationCenter";
-import Favorites from "./pages/Favorites";
-import BlogIndex from "./pages/blog/BlogIndex";
-import RoleBlog from "./pages/blog/RoleBlog";
-import CategoryBlog from "./pages/blog/CategoryBlog";
-import AuthorProfile from "./pages/blog/AuthorProfile";
-import ArticleDetail from "./pages/blog/ArticleDetail";
+import TaskNew from './pages/pm/TaskNew';
+import VacancyNew from './pages/hr/VacancyNew';
+import ContactNew from './pages/crm/ContactNew';
+import ArticleNew from './pages/kb/ArticleNew';
+import IVIIndex from './pages/IVIIndex';
+import SupervisoryBoard from './pages/SupervisoryBoard';
+import MediationCenter from './pages/MediationCenter';
+import Favorites from './pages/Favorites';
+import BlogIndex from './pages/blog/BlogIndex';
+import RoleBlog from './pages/blog/RoleBlog';
+import CategoryBlog from './pages/blog/CategoryBlog';
+import AuthorProfile from './pages/blog/AuthorProfile';
+import ArticleDetail from './pages/blog/ArticleDetail';
+import { useAuthListener } from '@/hooks/useAuthListener';
 
 const queryClient = new QueryClient();
 
 export default function App() {
-  useAuthListener();
+  // ВАЖНО: Вызовите hook на самом первом уровне
+  useAuthListener()
 
   return (
-    <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-      <QueryClientProvider client={queryClient}>
-        <AuthProvider>
-          <LanguageProvider>
-            <DomainProvider>
-              <GoogleAnalytics>
-                <TooltipProvider>
-                  <BrowserRouter>
-                    <ScrollToTop />
-                    <GoToTop />
-                    <Routes>
-                      <Route path="/" element={<Index />} />
-                      <Route path="/community" element={<Community />} />
-                      <Route path="/auth" element={<Auth />} />
-                      <Route path="/about" element={<About />} />
-                      <Route path="/for-freelancers" element={<ForFreelancers />} />
-                      <Route path="/for-outsourcers" element={<ForOutsourcers />} />
-                      <Route path="/for-founders" element={<ForFounders />} />
-                      <Route path="/for-investors" element={<ForInvestors />} />
-                      <Route path="/participants" element={<Participants />} />
-                      <Route path="/investors" element={<Investors />} />
-                      <Route path="/startup" element={<Startup />} />
-                      <Route path="/franchises" element={<Franchises />} />
-                      <Route path="/franchisers" element={<Franchisers />} />
-                      <Route path="/executors" element={<Executors />} />
-                      <Route path="/employees" element={<Employees />} />
-                      <Route path="/partners" element={<Partners />} />
-                      <Route path="/pricing" element={<Pricing />} />
-                      <Route path="/contact" element={<Contact />} />
-                      <Route path="/dashboard" element={<Dashboard />} />
-                      <Route path="/projects" element={<Projects />} />
-                      <Route path="/projects/:id" element={<ProjectDetail />} />
-                      <Route path="/investments" element={<Investments />} />
-                      <Route path="/investment-startups" element={<InvestmentStartups />} />
-                      <Route path="/investments-new" element={<InvestmentsNew />} />
-                      <Route path="/idea-exchange" element={<IdeaExchange />} />
-                      <Route path="/secondary-market" element={<SecondaryMarket />} />
-                      <Route path="/management-franchises" element={<ManagementFranchises />} />
-                      <Route path="/forgot-password" element={<ForgotPassword />} />
-                      <Route path="/reset-password" element={<ResetPassword />} />
-                      <Route path="/profile" element={<Profile />} />
-                      <Route path="/terms" element={<Terms />} />
-                      <Route path="/privacy" element={<Privacy />} />
-                      <Route path="/cookies" element={<Cookies />} />
-                      <Route path="/security" element={<Security />} />
-                      <Route path="/api-docs" element={<ApiDocs />} />
-                      <Route path="/knowledge-base" element={<KnowledgeBase />} />
-                      <Route path="/project-management" element={<ProjectManagement />} />
-                      <Route path="/payment" element={<Payment />} />
-                      <Route path="/project-management-hub" element={<ProjectManagementHub />} />
-                      <Route path="/ivi-index" element={<IVIIndex />} />
-                      <Route path="/supervisory-board" element={<SupervisoryBoard />} />
-                      <Route path="/mediation-center" element={<MediationCenter />} />
-                      <Route path="/favorites" element={<Favorites />} />
-
-                      {/* Blog Routes */}
-                      <Route path="/blog" element={<BlogIndex />} />
-                      <Route path="/blog/role/:role" element={<RoleBlog />} />
-                      <Route path="/blog/category/:category" element={<CategoryBlog />} />
-                      <Route path="/blog/author/:author" element={<AuthorProfile />} />
-                      <Route path="/blog/article/:id" element={<ArticleDetail />} />
-
-                      {/* PM Routes */}
-                      <Route path="/pm/tasks" element={<TasksPage />} />
-                      <Route path="/pm/projects" element={<ProjectsOverviewPage />} />
-                      <Route path="/pm/timeline" element={<TimelinePage />} />
-                      <Route path="/pm/task-new" element={<TaskNew />} />
-
-                      {/* HR Routes */}
-                      <Route path="/hr/recruitment" element={<RecruitmentPage />} />
-                      <Route path="/hr/team" element={<TeamPage />} />
-                      <Route path="/hr/onboarding" element={<OnboardingPage />} />
-                      <Route path="/hr/vacancy-new" element={<VacancyNew />} />
-
-                      {/* CRM Routes */}
-                      <Route path="/crm/contacts" element={<ContactsPage />} />
-                      <Route path="/crm/pipelines" element={<PipelinesPage />} />
-                      <Route path="/crm/deals" element={<DealsPage />} />
-                      <Route path="/crm/contact-new" element={<ContactNew />} />
-
-                      {/* KB Routes */}
-                      <Route path="/kb/documentation" element={<DocumentationPage />} />
-                      <Route path="/kb/wiki" element={<WikiPage />} />
-                      <Route path="/kb/files" element={<FilesPage />} />
-                      <Route path="/kb/article-new" element={<ArticleNew />} />
-
-                      {/* BI Routes */}
-                      <Route path="/bi/dashboard" element={<DashboardPage />} />
-                      <Route path="/bi/reports" element={<ReportsPage />} />
-                      <Route path="/bi/analytics" element={<AnalyticsPage />} />
-
-                      {/* Superadmin Routes */}
-                      <Route path="/superadmin/projects" element={<ProjectsSandbox />} />
-                      <Route path="/superadmin/staff" element={<StaffManagement />} />
-                      <Route path="/superadmin/analytics" element={<SuperadminAnalytics />} />
-
-                      {/* Franchiser Dashboard */}
-                      <Route path="/franchiser-dashboard" element={<FranchiserDashboard />} />
-
-                      {/* Catch-all */}
-                      <Route path="*" element={<NotFound />} />
-                    </Routes>
-                  </BrowserRouter>
-                  <Toaster />
-                  <Sonner />
-                </TooltipProvider>
-              </GoogleAnalytics>
-            </DomainProvider>
-          </LanguageProvider>
-        </AuthProvider>
-      </QueryClientProvider>
-    </ThemeProvider>
-  );
+    <QueryClientProvider client={queryClient}>
+      <Router>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/profile" element={<Profile />} />
+        </Routes>
+      </Router>
+      <Toaster />
+    </QueryClientProvider>
+  )
 }
+
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <DomainProvider>
+            <GoogleAnalytics />
+            <LanguageProvider>
+              <AuthProvider>
+                <ScrollToTop />
+                <GoToTop />
+                <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/community" element={<Community />} />
+                <Route path="/auth" element={<Auth />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/ivi-index" element={<IVIIndex />} />
+                <Route path="/supervisory-board" element={<SupervisoryBoard />} />
+                <Route path="/mediation-center" element={<MediationCenter />} />
+                <Route path="/favorites" element={<Favorites />} />
+                
+                {/* Blog Routes */}
+                <Route path="/blog" element={<BlogIndex />} />
+                <Route path="/blog/:roleType" element={<RoleBlog />} />
+                <Route path="/blog/categories/:categoryId" element={<CategoryBlog />} />
+                <Route path="/blog/authors/:authorId" element={<AuthorProfile />} />
+                <Route path="/blog/article/:articleId" element={<ArticleDetail />} />
+                
+                <Route path="/freelancers" element={<ForFreelancers />} />
+                <Route path="/for-freelancers" element={<ForFreelancers />} />
+                <Route path="/outsourcers" element={<ForOutsourcers />} />
+                <Route path="/for-outsourcers" element={<ForOutsourcers />} />
+                <Route path="/founders" element={<ForFounders />} />
+                <Route path="/for-founders" element={<ForFounders />} />
+                <Route path="/for-investors" element={<ForInvestors />} />
+                <Route path="/participants" element={<Participants />} />
+                <Route path="/investors" element={<Investors />} />
+                <Route path="/startup" element={<Startup />} />
+                <Route path="/franchises" element={<Franchises />} />
+                <Route path="/franchisers" element={<Franchisers />} />
+                <Route path="/executors" element={<Executors />} />
+                <Route path="/employees" element={<Employees />} />
+                <Route path="/partners" element={<Partners />} />
+                <Route path="/pricing" element={<Pricing />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/projects" element={<Projects />} />
+                <Route path="/project/:id" element={<ProjectDetail />} />
+                <Route path="/projects/:id" element={<ProjectDetail />} />
+                <Route path="/investments" element={<InvestmentsNew />} />
+                <Route path="/investments/startups" element={<InvestmentStartups />} />
+                <Route path="/investments/ideas" element={<IdeaExchange />} />
+                <Route path="/investments/secondary" element={<SecondaryMarket />} />
+                <Route path="/investments/franchises" element={<Franchises />} />
+                <Route path="/management-franchises" element={<ManagementFranchises />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/dashboards/franchiser" element={<FranchiserDashboard />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/reset-password/:token" element={<ResetPassword />} />
+                <Route path="/terms" element={<Terms />} />
+                <Route path="/privacy" element={<Privacy />} />
+                <Route path="/cookies" element={<Cookies />} />
+                <Route path="/security" element={<Security />} />
+                <Route path="/api-docs" element={<ApiDocs />} />
+                <Route path="/knowledge-base" element={<KnowledgeBase />} />
+                <Route path="/project-management" element={<ProjectManagement />} />
+                <Route path="/project-management-hub" element={<ProjectManagementHub />} />
+                <Route path="/project-management/pm/tasks" element={<TasksPage />} />
+                <Route path="/project-management/hr/recruitment" element={<RecruitmentPage />} />
+                <Route path="/project-management/crm/contacts" element={<ContactsPage />} />
+                <Route path="/project-management/kb/docs" element={<DocumentationPage />} />
+                <Route path="/project-management/bi/dashboard" element={<DashboardPage />} />
+                <Route path="/pm/tasks" element={<TasksPage />} />
+                <Route path="/hr/recruitment" element={<RecruitmentPage />} />
+                <Route path="/crm/contacts" element={<ContactsPage />} />
+                <Route path="/kb/documentation" element={<DocumentationPage />} />
+                <Route path="/bi/dashboard" element={<DashboardPage />} />
+                <Route path="/superadmin/projects-sandbox" element={<ProjectsSandbox />} />
+                <Route path="/superadmin/staff-management" element={<StaffManagement />} />
+                <Route path="/superadmin/analytics" element={<SuperadminAnalytics />} />
+                
+                {/* Project Management Module Routes */}
+                <Route path="/project-management/pm" element={<TasksPage />} />
+                <Route path="/project-management/pm/projects" element={<ProjectsOverviewPage />} />
+                <Route path="/project-management/pm/timeline" element={<TimelinePage />} />
+                <Route path="/project-management/hr" element={<RecruitmentPage />} />
+                <Route path="/project-management/hr/team" element={<TeamPage />} />
+                <Route path="/project-management/hr/onboarding" element={<OnboardingPage />} />
+                <Route path="/project-management/crm" element={<ContactsPage />} />
+                <Route path="/project-management/crm/pipelines" element={<PipelinesPage />} />
+                <Route path="/project-management/crm/deals" element={<DealsPage />} />
+                <Route path="/project-management/kb" element={<DocumentationPage />} />
+                <Route path="/project-management/kb/wiki" element={<WikiPage />} />
+                <Route path="/project-management/kb/files" element={<FilesPage />} />
+                <Route path="/project-management/bi" element={<DashboardPage />} />
+                <Route path="/project-management/bi/reports" element={<ReportsPage />} />
+                <Route path="/project-management/bi/analytics" element={<AnalyticsPage />} />
+                
+                {/* Project Management Modal Routes */}
+                <Route path="/project-management/pm/tasks/new" element={<TaskNew />} />
+                <Route path="/project-management/hr/vacancies/new" element={<VacancyNew />} />
+                <Route path="/project-management/crm/contacts/new" element={<ContactNew />} />
+                <Route path="/project-management/kb/articles/new" element={<ArticleNew />} />
+                
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </AuthProvider>
+          </LanguageProvider>
+          </DomainProvider>
+        </BrowserRouter>
+      </TooltipProvider>
+    </ThemeProvider>
+  </QueryClientProvider>
+);
+
+export default App;
