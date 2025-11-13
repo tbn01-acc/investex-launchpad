@@ -12,7 +12,6 @@ import ScrollToTop from "@/components/ScrollToTop";
 import GoToTop from "@/components/GoToTop";
 import { useAuthListener } from "@/hooks/useAuthListener";
 
-// Page imports
 import Index from "./pages/Index";
 import Community from "./pages/Community";
 import Auth from "./pages/Auth";
@@ -89,7 +88,6 @@ import ArticleDetail from "./pages/blog/ArticleDetail";
 const queryClient = new QueryClient();
 
 export default function App() {
-  // Р’РђР–РќРћ: Р’С‹Р·РѕРІРёС‚Рµ hook РЅР° СЃР°РјРѕРј РїРµСЂРІРѕРј СѓСЂРѕРІРЅРµ
   useAuthListener();
 
   return (
@@ -104,7 +102,6 @@ export default function App() {
                     <ScrollToTop />
                     <GoToTop />
                     <Routes>
-                      {/* Main routes */}
                       <Route path="/" element={<Index />} />
                       <Route path="/community" element={<Community />} />
                       <Route path="/auth" element={<Auth />} />
@@ -156,31 +153,31 @@ export default function App() {
                       <Route path="/blog/author/:author" element={<AuthorProfile />} />
                       <Route path="/blog/article/:id" element={<ArticleDetail />} />
 
-                      {/* Project Management Module Routes */}
+                      {/* PM Routes */}
                       <Route path="/pm/tasks" element={<TasksPage />} />
                       <Route path="/pm/projects" element={<ProjectsOverviewPage />} />
                       <Route path="/pm/timeline" element={<TimelinePage />} />
                       <Route path="/pm/task-new" element={<TaskNew />} />
 
-                      {/* HR Module Routes */}
+                      {/* HR Routes */}
                       <Route path="/hr/recruitment" element={<RecruitmentPage />} />
                       <Route path="/hr/team" element={<TeamPage />} />
                       <Route path="/hr/onboarding" element={<OnboardingPage />} />
                       <Route path="/hr/vacancy-new" element={<VacancyNew />} />
 
-                      {/* CRM Module Routes */}
+                      {/* CRM Routes */}
                       <Route path="/crm/contacts" element={<ContactsPage />} />
                       <Route path="/crm/pipelines" element={<PipelinesPage />} />
                       <Route path="/crm/deals" element={<DealsPage />} />
                       <Route path="/crm/contact-new" element={<ContactNew />} />
 
-                      {/* Knowledge Base Routes */}
+                      {/* KB Routes */}
                       <Route path="/kb/documentation" element={<DocumentationPage />} />
                       <Route path="/kb/wiki" element={<WikiPage />} />
                       <Route path="/kb/files" element={<FilesPage />} />
                       <Route path="/kb/article-new" element={<ArticleNew />} />
 
-                      {/* BI/Analytics Routes */}
+                      {/* BI Routes */}
                       <Route path="/bi/dashboard" element={<DashboardPage />} />
                       <Route path="/bi/reports" element={<ReportsPage />} />
                       <Route path="/bi/analytics" element={<AnalyticsPage />} />
@@ -193,7 +190,7 @@ export default function App() {
                       {/* Franchiser Dashboard */}
                       <Route path="/franchiser-dashboard" element={<FranchiserDashboard />} />
 
-                      {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                      {/* Catch-all */}
                       <Route path="*" element={<NotFound />} />
                     </Routes>
                   </BrowserRouter>
