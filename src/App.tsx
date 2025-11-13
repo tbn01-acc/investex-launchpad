@@ -82,8 +82,27 @@ import RoleBlog from './pages/blog/RoleBlog';
 import CategoryBlog from './pages/blog/CategoryBlog';
 import AuthorProfile from './pages/blog/AuthorProfile';
 import ArticleDetail from './pages/blog/ArticleDetail';
+import { useAuthListener } from '@/hooks/useAuthListener';
 
 const queryClient = new QueryClient();
+
+export default function App() {
+  // ВАЖНО: Вызовите hook на самом первом уровне
+  useAuthListener()
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Router>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/profile" element={<Profile />} />
+        </Routes>
+      </Router>
+      <Toaster />
+    </QueryClientProvider>
+  )
+}
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
