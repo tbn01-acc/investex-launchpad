@@ -89,7 +89,7 @@ import ArticleDetail from "./pages/blog/ArticleDetail";
 const queryClient = new QueryClient();
 
 export default function App() {
-  // ВАЖНО: Вызовите hook на самом первом уровне
+  // Р’РђР–РќРћ: Р’С‹Р·РѕРІРёС‚Рµ hook РЅР° СЃР°РјРѕРј РїРµСЂРІРѕРј СѓСЂРѕРІРЅРµ
   useAuthListener();
 
   return (
