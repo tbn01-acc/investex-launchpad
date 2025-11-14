@@ -9,84 +9,27 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
+import { useLanguage } from '@/contexts/LanguageContext';
 
-const titles: Record<string, string> = {
-  '': 'Главная',
-  projects: 'Проекты',
-  project: 'Проект',
-  investments: 'Инвестиции',
-  startups: 'Инвестиционные стартапы',
-  ideas: 'Биржа идей',
-  secondary: 'Вторичный рынок',
-  franchises: 'Управленческие франшизы',
-  'management-franchises': 'Управленческие франшизы',
-  pricing: 'Тарифы',
-  about: 'О платформе',
-  profile: 'Профиль',
-  dashboard: 'Личный кабинет',
-  dashboards: 'Личные кабинеты',
-  contacts: 'Контакты',
-  partners: 'Партнеры',
-  auth: 'Вход',
-  'forgot-password': 'Восстановление пароля',
-  'reset-password': 'Сброс пароля',
-  admin: 'Админ панель',
-  'project-management': 'Управление проектами',
-  'project-management-hub': 'Хаб управления',
-  pm: 'Управление проектами',
-  hr: 'HR',
-  crm: 'CRM',
-  kb: 'База знаний',
-  bi: 'Аналитика',
-  tasks: 'Задачи',
-  recruitment: 'Подбор',
-  team: 'Команда',
-  onboarding: 'Онбординг',
-  pipelines: 'Воронки',
-  deals: 'Сделки',
-  documentation: 'Документация',
-  wiki: 'Wiki',
-  files: 'Файлы',
-  reports: 'Отчеты',
-  analytics: 'Аналитика',
-  superadmin: 'Суперадмин',
-  'projects-sandbox': 'Песочница проектов',
-  'staff-management': 'Управление персоналом',
-  freelancers: 'Фрилансерам',
-  'for-freelancers': 'Фрилансерам',
-  outsourcers: 'Аутсорсерам',
-  'for-outsourcers': 'Аутсорсерам',
-  founders: 'Фаундерам',
-  'for-founders': 'Фаундерам',
-  investors: 'Инвесторам',
-  'for-investors': 'Инвесторам',
-  participants: 'Участникам',
-  executors: 'Исполнителям',
-  employees: 'Сотрудникам',
-  terms: 'Условия использования',
-  privacy: 'Политика конфиденциальности',
-  cookies: 'Политика cookies',
-  security: 'Безопасность',
-  'api-docs': 'API документация',
-  'knowledge-base': 'База знаний',
-  contact: 'Контакты',
-  payment: 'Оплата',
-  franchiser: 'Франчайзер',
-  new: 'Создать',
+// Convert URL segment to camelCase for translation keys
+const toCamelCase = (str: string): string => {
+  return str.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
 };
 
 const AppBreadcrumbs: React.FC = () => {
   const location = useLocation();
+  const { t } = useLanguage();
   const pathname = location.pathname.replace(/\/+$/, '');
   const segments = pathname.split('/').filter(Boolean);
 
   const items = [
-    { href: '/', label: titles[''] },
+    { href: '/', label: t('breadcrumb.home') },
     ...segments.map((seg, idx) => {
       const href = '/' + segments.slice(0, idx + 1).join('/');
       const isId = /^[0-9a-fA-F-]{8,}$/.test(seg);
       const key = isId ? segments[idx - 1] || 'project' : seg;
-      const label = isId ? (titles[key] || 'Детали') : (titles[seg] || decodeURIComponent(seg));
+      const translationKey = `breadcrumb.${toCamelCase(isId ? key : seg)}`;
+      const label = isId ? t(translationKey) : (t(translationKey) || decodeURIComponent(seg));
       return { href, label, isLast: idx === segments.length - 1 };
     }),
   ];
