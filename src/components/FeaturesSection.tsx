@@ -12,61 +12,64 @@ import {
   Brain
 } from "lucide-react";
 import featuresImage from "@/assets/features-realistic.jpg";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const FeaturesSection = () => {
+  const { t } = useLanguage();
+  
   const features = [
     {
       icon: Workflow,
-      title: "Адаптивная методология",
-      description: "Progressive Elaboration, Agile, Scrumban и гибридные подходы для различных типов проектов",
+      title: t('features.methodology'),
+      description: t('features.methodologyDesc'),
       color: "text-primary"
     },
     {
       icon: Award,
-      title: "Система аттестации",
-      description: "Многоуровневое тестирование навыков и верификация компетенций с получением сертификатов",
+      title: t('features.certification'),
+      description: t('features.certificationDesc'),
       color: "text-investment-green"
     },
     {
       icon: BarChart3,
-      title: "Инвестиционная биржа",
-      description: "Площадка для размещения проектов, поиска инвесторов и проведения раундов финансирования",
+      title: t('features.investmentExchange'),
+      description: t('features.investmentExchangeDesc'),
       color: "text-fintech-blue"
     },
     {
       icon: Shield,
-      title: "Безопасность данных",
-      description: "Многоуровневая защита, соответствие GDPR и CCPA, шифрование на всех этапах",
+      title: t('features.dataSecurity'),
+      description: t('features.dataSecurityDesc'),
       color: "text-destructive"
     },
     {
       icon: Globe,
-      title: "Международная поддержка",
-      description: "Мультиязычность, различные валюты и интеграция с локальными платежными системами",
+      title: t('features.international'),
+      description: t('features.internationalDesc'),
       color: "text-startup-orange"
     },
     {
       icon: Brain,
-      title: "ИИ рекомендации",
-      description: "Персонализированные предложения проектов и специалистов на основе машинного обучения",
+      title: t('features.aiRecommendations'),
+      description: t('features.aiRecommendationsDesc'),
       color: "text-purple-600"
     },
     {
       icon: CreditCard,
-      title: "Escrow платежи",
-      description: "Безопасное хранение средств с гарантией выплат при выполнении условий проекта",
+      title: t('features.escrowPayments'),
+      description: t('features.escrowPaymentsDesc'),
       color: "text-green-600"
     },
     {
       icon: FileText,
-      title: "База знаний",
-      description: "Юридические шаблоны, регламенты и документы для различных юрисдикций",
+      title: t('features.knowledgeBase'),
+      description: t('features.knowledgeBaseDesc'),
       color: "text-blue-600"
     },
     {
       icon: Users,
-      title: "Единая экосистема",
-      description: "Все участники проектного цикла в одной платформе с персонализированными интерфейсами",
+      title: t('features.ecosystem'),
+      description: t('features.ecosystemDesc'),
       color: "text-indigo-600"
     }
   ];
@@ -83,10 +86,10 @@ const FeaturesSection = () => {
             />
           </div>
           <h2 className="text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            Мощные возможности
+            {t('features.title')}
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Все инструменты для эффективной работы с проектами и инвестициями в одной платформе
+            {t('features.subtitle')}
           </p>
         </div>
 
