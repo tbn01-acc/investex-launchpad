@@ -130,7 +130,7 @@ const Navigation = () => {
   const handleOpenCreate = () => {
     if (!user) {
       toast({
-        title: t('nav.loginRequired'),
+        title: "Войдите на платформу",
         description: "",
         className: "bg-green-500 text-white border-green-600",
         duration: 3000,

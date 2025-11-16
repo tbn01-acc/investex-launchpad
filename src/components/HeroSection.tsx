@@ -4,10 +4,8 @@ import { ArrowRight, TrendingUp, Users, Briefcase, Building } from "lucide-react
 import heroImage from "@/assets/hero-realistic.jpg";
 import collaborationImage from "@/assets/collaboration-realistic.jpg";
 import logoSilver from "@/assets/logo_silver_no_text_trans.png";
-import { useLanguage } from "@/contexts/LanguageContext";
 
 const HeroSection = () => {
-  const { t } = useLanguage();
   return (
     <section className="relative min-h-[70vh] flex items-center justify-center bg-gradient-to-br from-blue-600 via-green-500 to-yellow-400 pt-[5px] pb-12">
       {/* Logo in top left corner - hidden on mobile */}
@@ -24,30 +22,31 @@ const HeroSection = () => {
             <div className="space-y-4">
               <div className="inline-flex items-center gap-2 bg-card border border-border rounded-full px-4 py-2 text-sm font-medium text-foreground">
                 <TrendingUp className="w-4 h-4 text-primary" />
-                {t('hero.platformTag')}
+                Платформа №1 для стартапов и инвестиций
               </div>
 
               <h1 className="text-4xl lg:text-6xl font-bold text-white leading-tight">
-                <span className="block">{t('hero.mainTitle')}</span>
+                <span className="block">Invest-Ex</span>
                 <span className="block text-xl lg:text-2xl font-normal text-gray-200 mt-2">
-                  {t('hero.subtitle')}
+                  Единая инвестиционная платформа стартапов и инвестиций
                 </span>
               </h1>
 
               <p className="text-lg text-orange-300 max-w-full sm:max-w-2xl leading-relaxed px-4 sm:px-0">
-                {t('hero.description')}
+                Объединяем инвесторов, фаундеров, исполнителей, партнеров - всех участников венчурного и инвестиционного
+                рынка в единой платформе. От идеи до реализации проекта и привлечения инвестиций.
               </p>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <Button size="lg" className="text-base px-6 py-3" asChild>
                 <Link to="/auth?mode=signup">
-                  {t('hero.startNow')}
+                  Начать сейчас
                   <ArrowRight className="w-4 h-4" />
                 </Link>
               </Button>
               <Button variant="outline" size="lg" className="text-base px-6 py-3" asChild>
-                <Link to="/about">{t('hero.learnMore')}</Link>
+                <Link to="/about">Узнать больше</Link>
               </Button>
             </div>
 
@@ -55,15 +54,15 @@ const HeroSection = () => {
             <div className="grid grid-cols-3 gap-6 pt-6 border-t border-white/20">
               <div className="text-center lg:text-left">
                 <div className="text-2xl font-bold text-orange-400">10K+</div>
-                <div className="text-sm text-gray-200">{t('hero.activeProjects')}</div>
+                <div className="text-sm text-gray-200">Активных проектов</div>
               </div>
               <div className="text-center lg:text-left">
                 <div className="text-2xl font-bold text-orange-400">$50M+</div>
-                <div className="text-sm text-gray-200">{t('hero.invested')}</div>
+                <div className="text-sm text-gray-200">Инвестировано</div>
               </div>
               <div className="text-center lg:text-left">
                 <div className="text-2xl font-bold text-orange-400">25K+</div>
-                <div className="text-sm text-gray-200">{t('hero.participants')}</div>
+                <div className="text-sm text-gray-200">Участников</div>
               </div>
             </div>
           </div>
