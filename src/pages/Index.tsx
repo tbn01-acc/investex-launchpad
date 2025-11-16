@@ -1,6 +1,8 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import { useSEO, useDevDomainSetter } from '@/hooks/useSEO';
+import { useAuth } from "@/hooks/useAuth";
 import HeroSection from "@/components/HeroSection";
 import InvestCTABanner from "@/components/InvestCTABanner";
 import KeySearchSection from "@/components/KeySearchSection";
@@ -21,9 +23,17 @@ const Index = () => {
   useSEO('/');
   useDevDomainSetter();
   
+  const navigate = useNavigate();
+  const { user } = useAuth();
   const [quizRole, setQuizRole] = useState<string | null>(null);
   const [selectedRole, setSelectedRole] = useState<string | null>(null);
   const rolePathRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (user) {
+      navigate('/dashboard');
+    }
+  }, [user, navigate]);
 
   const handleQuizComplete = (role: string) => {
     setQuizRole(role);
