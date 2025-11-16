@@ -111,6 +111,7 @@ export const useDeviceFingerprint = () => {
       
       // Проверяем и регистрируем устройство
       const { data, error } = await supabase.rpc('check_and_register_device', {
+        p_user_id: user.id,
         p_fingerprint_hash: fingerprint,
         p_device_info: deviceInfo,
         p_browser_info: browserInfo,
