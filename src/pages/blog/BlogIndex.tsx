@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { ArticleCard } from "@/components/blog/ArticleCard";
 import { BlogFilters } from "@/components/blog/BlogFilters";
 import { NewsletterSignup } from "@/components/blog/NewsletterSignup";
-import { roleBlogs, blogCategories } from "@/data/blogData";
+import { roleBlogs, blogCategories, blogArticles } from "@/data/blogData";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
@@ -15,10 +15,21 @@ import { Skeleton } from "@/components/ui/skeleton";
 const BlogIndex = () => {
   useSEO('/blog');
   const [activeFilter, setActiveFilter] = useState('all');
-  const { articles, loading } = useBlogArticles({ 
+  const { articles: dbArticles, loading } = useBlogArticles({ 
     contentType: activeFilter, 
     limit: 6 
   });
+
+  // Используем статические данные если база пустая
+  const articles = useMemo(() => {
+    if (dbArticles.length > 0) return dbArticles;
+    
+    const staticArticles = activeFilter === 'all'
+      ? blogArticles.slice(0, 6)
+      : blogArticles.filter(article => article.contentType === activeFilter).slice(0, 6);
+    
+    return staticArticles;
+  }, [dbArticles, activeFilter]);
 
   return (
     <div className="min-h-screen bg-background">
