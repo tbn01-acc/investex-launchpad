@@ -5,8 +5,11 @@ import Footer from "@/components/Footer";
 import { ArticleCard } from "@/components/blog/ArticleCard";
 import { BlogFilters } from "@/components/blog/BlogFilters";
 import { NewsletterSignup } from "@/components/blog/NewsletterSignup";
-import { blogArticles, roleBlogs } from "@/data/blogData";
+import { roleBlogs } from "@/data/blogData";
 import { useSEO } from "@/hooks/useSEO";
+import { useBlogArticles } from "@/hooks/useBlogArticles";
+import { Card, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const RoleBlog = () => {
   const { roleType } = useParams<{ roleType: string }>();
@@ -16,11 +19,10 @@ const RoleBlog = () => {
 
   const roleBlog = roleBlogs.find(r => r.id === roleType);
   
-  const roleArticles = blogArticles.filter(article => article.roleType === roleType);
-  
-  const filteredArticles = activeFilter === 'all'
-    ? roleArticles
-    : roleArticles.filter(article => article.contentType === activeFilter);
+  const { articles, loading } = useBlogArticles({ 
+    roleType, 
+    contentType: activeFilter 
+  });
 
   if (!roleBlog) {
     return <div>Блог не найден</div>;
@@ -49,11 +51,27 @@ const RoleBlog = () => {
         {/* Articles Grid */}
         <section className="mb-16">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredArticles.map((article) => (
-              <ArticleCard key={article.id} article={article} />
-            ))}
+            {loading ? (
+              <>
+                {[1, 2, 3, 4, 5, 6].map((i) => (
+                  <Card key={i} className="overflow-hidden">
+                    <Skeleton className="aspect-video w-full" />
+                    <CardContent className="p-6">
+                      <Skeleton className="h-4 w-20 mb-3" />
+                      <Skeleton className="h-6 w-full mb-2" />
+                      <Skeleton className="h-6 w-3/4 mb-4" />
+                      <Skeleton className="h-16 w-full" />
+                    </CardContent>
+                  </Card>
+                ))}
+              </>
+            ) : (
+              articles.map((article) => (
+                <ArticleCard key={article.id} article={article} />
+              ))
+            )}
           </div>
-          {filteredArticles.length === 0 && (
+          {!loading && articles.length === 0 && (
             <div className="text-center py-12 text-muted-foreground">
               Статей в этой категории пока нет
             </div>
