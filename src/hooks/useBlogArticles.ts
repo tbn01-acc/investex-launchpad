@@ -75,7 +75,7 @@ export const useBlogArticles = (options: UseBlogArticlesOptions = {}) => {
             )
           `)
           .eq('moderation_status', 'approved')
-          .eq('is_public', true)
+          .or('is_public.eq.true,is_premium.eq.false')
           .order('published_at', { ascending: false });
 
         if (options.roleType) {
