@@ -73,6 +73,12 @@ const titles: Record<string, string> = {
   payment: 'Оплата',
   franchiser: 'Франчайзер',
   new: 'Создать',
+  blog: 'Блог',
+  categories: 'Категории',
+  'angel-investors': 'Бизнес-ангелы',
+  'vc-funds': 'Венчурные фонды',
+  'co-investors': 'Со-инвесторы',
+  experts: 'Эксперты',
 };
 
 const AppBreadcrumbs: React.FC = () => {
