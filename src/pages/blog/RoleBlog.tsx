@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { ArticleCard } from "@/components/blog/ArticleCard";
 import { BlogFilters } from "@/components/blog/BlogFilters";
 import { NewsletterSignup } from "@/components/blog/NewsletterSignup";
-import { roleBlogs } from "@/data/blogData";
+import { roleBlogs, blogArticles } from "@/data/blogData";
 import { useSEO } from "@/hooks/useSEO";
 import { useBlogArticles } from "@/hooks/useBlogArticles";
 import { Card, CardContent } from "@/components/ui/card";
@@ -19,10 +19,22 @@ const RoleBlog = () => {
 
   const roleBlog = roleBlogs.find(r => r.id === roleType);
   
-  const { articles, loading } = useBlogArticles({ 
+  const { articles: dbArticles, loading } = useBlogArticles({ 
     roleType, 
     contentType: activeFilter 
   });
+
+  // Используем статические данные если база пустая
+  const articles = useMemo(() => {
+    if (dbArticles.length > 0) return dbArticles;
+    
+    const roleArticles = blogArticles.filter(article => article.roleType === roleType);
+    const staticArticles = activeFilter === 'all'
+      ? roleArticles
+      : roleArticles.filter(article => article.contentType === activeFilter);
+    
+    return staticArticles;
+  }, [dbArticles, roleType, activeFilter]);
 
   if (!roleBlog) {
     return <div>Блог не найден</div>;

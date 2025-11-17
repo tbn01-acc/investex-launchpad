@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { ArticleCard } from "@/components/blog/ArticleCard";
 import { BlogFilters } from "@/components/blog/BlogFilters";
 import { NewsletterSignup } from "@/components/blog/NewsletterSignup";
-import { blogCategories } from "@/data/blogData";
+import { blogCategories, blogArticles } from "@/data/blogData";
 import { useSEO } from "@/hooks/useSEO";
 import { useBlogArticles } from "@/hooks/useBlogArticles";
 import { Card, CardContent } from "@/components/ui/card";
@@ -19,10 +19,22 @@ const CategoryBlog = () => {
 
   const category = blogCategories.find(c => c.id === categoryId);
   
-  const { articles, loading } = useBlogArticles({ 
+  const { articles: dbArticles, loading } = useBlogArticles({ 
     category: categoryId, 
     contentType: activeFilter 
   });
+
+  // Используем статические данные если база пустая
+  const articles = useMemo(() => {
+    if (dbArticles.length > 0) return dbArticles;
+    
+    const categoryArticles = blogArticles.filter(article => article.category === categoryId);
+    const staticArticles = activeFilter === 'all'
+      ? categoryArticles
+      : categoryArticles.filter(article => article.contentType === activeFilter);
+    
+    return staticArticles;
+  }, [dbArticles, categoryId, activeFilter]);
 
   if (!category) {
     return <div>Категория не найдена</div>;
