@@ -16,14 +16,15 @@ export const BlogModerationPanel = () => {
   const [loading, setLoading] = useState(true);
   const [selectedArticle, setSelectedArticle] = useState<any>(null);
   const [moderationComment, setModerationComment] = useState('');
+  const [statusFilter, setStatusFilter] = useState<string>('all');
 
   useEffect(() => {
     loadPendingArticles();
-  }, []);
+  }, [statusFilter]);
 
   const loadPendingArticles = async () => {
     try {
-      const { data, error } = await supabase
+      let query = supabase
         .from('blog_articles')
         .select(`
           *,
@@ -32,9 +33,13 @@ export const BlogModerationPanel = () => {
             last_name,
             email
           )
-        `)
-        .eq('moderation_status', 'pending')
-        .order('created_at', { ascending: false });
+        `);
+
+      if (statusFilter !== 'all') {
+        query = query.eq('moderation_status', statusFilter);
+      }
+
+      const { data, error } = await query.order('created_at', { ascending: false });
 
       if (error) throw error;
       setArticles(data || []);
@@ -101,7 +106,35 @@ export const BlogModerationPanel = () => {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold">Модерация статей блога</h2>
+      <div className="flex items-center justify-between">
+        <h2 className="text-2xl font-bold">Модерация статей блога</h2>
+        <div className="flex gap-2">
+          <Button
+            variant={statusFilter === 'all' ? 'default' : 'outline'}
+            onClick={() => setStatusFilter('all')}
+          >
+            Все
+          </Button>
+          <Button
+            variant={statusFilter === 'pending' ? 'default' : 'outline'}
+            onClick={() => setStatusFilter('pending')}
+          >
+            На модерации
+          </Button>
+          <Button
+            variant={statusFilter === 'approved' ? 'default' : 'outline'}
+            onClick={() => setStatusFilter('approved')}
+          >
+            Одобренные
+          </Button>
+          <Button
+            variant={statusFilter === 'rejected' ? 'default' : 'outline'}
+            onClick={() => setStatusFilter('rejected')}
+          >
+            Отклоненные
+          </Button>
+        </div>
+      </div>
 
       <div className="grid gap-4">
         {articles.map((article) => (
