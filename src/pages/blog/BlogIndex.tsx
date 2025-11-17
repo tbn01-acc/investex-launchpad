@@ -4,19 +4,21 @@ import Footer from "@/components/Footer";
 import { ArticleCard } from "@/components/blog/ArticleCard";
 import { BlogFilters } from "@/components/blog/BlogFilters";
 import { NewsletterSignup } from "@/components/blog/NewsletterSignup";
-import { blogArticles, roleBlogs, blogCategories } from "@/data/blogData";
+import { roleBlogs, blogCategories } from "@/data/blogData";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { useSEO } from "@/hooks/useSEO";
+import { useBlogArticles } from "@/hooks/useBlogArticles";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const BlogIndex = () => {
   useSEO('/blog');
   const [activeFilter, setActiveFilter] = useState('all');
-
-  const filteredArticles = activeFilter === 'all'
-    ? blogArticles.slice(0, 6)
-    : blogArticles.filter(article => article.contentType === activeFilter).slice(0, 6);
+  const { articles, loading } = useBlogArticles({ 
+    contentType: activeFilter, 
+    limit: 6 
+  });
 
   return (
     <div className="min-h-screen bg-background">
@@ -82,9 +84,25 @@ const BlogIndex = () => {
             <BlogFilters activeFilter={activeFilter} onFilterChange={setActiveFilter} />
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredArticles.map((article) => (
-              <ArticleCard key={article.id} article={article} />
-            ))}
+            {loading ? (
+              <>
+                {[1, 2, 3, 4, 5, 6].map((i) => (
+                  <Card key={i} className="overflow-hidden">
+                    <Skeleton className="aspect-video w-full" />
+                    <CardContent className="p-6">
+                      <Skeleton className="h-4 w-20 mb-3" />
+                      <Skeleton className="h-6 w-full mb-2" />
+                      <Skeleton className="h-6 w-3/4 mb-4" />
+                      <Skeleton className="h-16 w-full" />
+                    </CardContent>
+                  </Card>
+                ))}
+              </>
+            ) : (
+              articles.map((article) => (
+                <ArticleCard key={article.id} article={article} />
+              ))
+            )}
           </div>
         </section>
 
