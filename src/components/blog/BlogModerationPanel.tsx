@@ -177,11 +177,19 @@ export const BlogModerationPanel = () => {
 
                     <div className="flex gap-2">
                       <Button
-                        onClick={() => handleModerate(article.id, 'approved')}
+                        onClick={() => handleModerate(article.id, 'approved', true)}
                         className="flex-1"
                       >
                         <CheckCircle className="mr-2 h-4 w-4" />
-                        Одобрить
+                        Одобрить и опубликовать
+                      </Button>
+                      <Button
+                        onClick={() => handleModerate(article.id, 'approved', false)}
+                        variant="secondary"
+                        className="flex-1"
+                      >
+                        <CheckCircle className="mr-2 h-4 w-4" />
+                        Одобрить (премиум)
                       </Button>
                       <Button
                         onClick={() => handleModerate(article.id, 'rejected')}

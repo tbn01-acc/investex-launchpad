@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { blogArticles } from "@/data/blogData";
+import { useBlogArticles } from "@/hooks/useBlogArticles";
 import { useFavorites } from "@/hooks/useFavorites";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { OptimizedImage } from "@/components/OptimizedImage";
@@ -16,11 +17,41 @@ const BlogSection = () => {
   const [displayCount, setDisplayCount] = useState(3);
   const { isFavorite, toggleFavorite } = useFavorites('article');
 
+  // Данные из БД (если есть) + преобразование к локальному формату
+  const { articles: dbArticles } = useBlogArticles({
+    contentType: activeFilter === 'all' ? undefined : (activeFilter as any)
+  });
+
+  const mapDbToLocal = (a: any) => ({
+    id: a.id,
+    title: a.title,
+    excerpt: a.excerpt,
+    content: a.content,
+    author: {
+      name: `${a.author?.first_name || ''} ${a.author?.last_name || ''}`.trim(),
+      avatar: a.author?.avatar_url || ''
+    },
+    category: a.category,
+    tags: a.tags || [],
+    publishedAt: a.published_at,
+    readTime: a.read_time,
+    image: a.image_url || '/placeholder.svg',
+    roleType: a.role_type,
+    contentType: a.content_type,
+    isPremium: a.is_premium
+  });
+
+  const sourceArticles = useMemo(() => {
+    return (dbArticles && dbArticles.length > 0)
+      ? dbArticles.map(mapDbToLocal)
+      : blogArticles;
+  }, [dbArticles]);
+
   // Собираем все теги и считаем количество статей
   const tagStats = useMemo(() => {
     const tagMap = new Map<string, number>();
-    blogArticles.forEach(article => {
-      article.tags.forEach(tag => {
+    sourceArticles.forEach((article: any) => {
+      (article.tags || []).forEach((tag: string) => {
         tagMap.set(tag, (tagMap.get(tag) || 0) + 1);
       });
     });
@@ -28,25 +59,25 @@ const BlogSection = () => {
       .map(([tag, count]) => ({ tag, count }))
       .sort((a, b) => b.count - a.count)
       .slice(0, 8);
-  }, []);
+  }, [sourceArticles]);
 
   // Фильтруем и выбираем статьи
   const filteredArticles = useMemo(() => {
-    let filtered = blogArticles;
+    let filtered = sourceArticles as any[];
     
     // Filter by content type
     if (activeFilter !== 'all') {
-      filtered = filtered.filter(article => article.contentType === activeFilter);
+      filtered = filtered.filter((article: any) => article.contentType === activeFilter);
     }
     
     // Filter by tags
     if (selectedTags.length > 0) {
-      filtered = filtered.filter(article =>
-        selectedTags.some(tag => article.tags.includes(tag))
+      filtered = filtered.filter((article: any) =>
+        selectedTags.some(tag => (article.tags || []).includes(tag))
       );
     }
     
-    return filtered;
+    return filtered as any[];
   }, [activeFilter, selectedTags]);
 
   const displayedArticles = useMemo(() => {
