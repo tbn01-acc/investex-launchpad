@@ -28,6 +28,7 @@ export const BlogArticleEditor = ({ onSuccess, editingArticle }: BlogArticleEdit
     content_type: editingArticle?.content_type || 'guides',
     tags: editingArticle?.tags?.join(', ') || '',
     is_premium: editingArticle?.is_premium || false,
+    is_public: editingArticle?.is_public ?? true,
     read_time: editingArticle?.read_time || 5,
     image_url: editingArticle?.image_url || ''
   });
@@ -54,6 +55,7 @@ export const BlogArticleEditor = ({ onSuccess, editingArticle }: BlogArticleEdit
         content_type: formData.content_type,
         tags: formData.tags.split(',').map(t => t.trim()).filter(Boolean),
         is_premium: formData.is_premium,
+        is_public: formData.is_public,
         read_time: formData.read_time,
         image_url: formData.image_url,
         moderation_status: 'pending'
@@ -223,6 +225,15 @@ export const BlogArticleEditor = ({ onSuccess, editingArticle }: BlogArticleEdit
           onCheckedChange={(checked) => setFormData({ ...formData, is_premium: checked })}
         />
         <Label htmlFor="is_premium">Премиум статья (требует подписку)</Label>
+      </div>
+
+      <div className="flex items-center space-x-2">
+        <Switch
+          id="is_public"
+          checked={formData.is_public}
+          onCheckedChange={(checked) => setFormData({ ...formData, is_public: checked })}
+        />
+        <Label htmlFor="is_public">Видимая (показывать в списках статей)</Label>
       </div>
 
       <Button type="submit" disabled={loading} className="w-full">

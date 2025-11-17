@@ -46,7 +46,7 @@ export const BlogModerationPanel = () => {
     }
   };
 
-  const handleModerate = async (articleId: string, status: 'approved' | 'rejected', isPublic?: boolean) => {
+  const handleModerate = async (articleId: string, status: 'approved' | 'rejected') => {
     if (!user) return;
 
     try {
@@ -59,9 +59,6 @@ export const BlogModerationPanel = () => {
 
       if (status === 'approved') {
         updateData.published_at = new Date().toISOString();
-        if (isPublic !== undefined) {
-          updateData.is_public = isPublic;
-        }
       }
 
       const { error } = await supabase
@@ -81,20 +78,20 @@ export const BlogModerationPanel = () => {
     }
   };
 
-  const togglePublicAccess = async (articleId: string, isPublic: boolean) => {
+  const togglePremiumStatus = async (articleId: string, isPremium: boolean) => {
     try {
       const { error } = await supabase
         .from('blog_articles')
-        .update({ is_public: isPublic })
+        .update({ is_premium: isPremium })
         .eq('id', articleId);
 
       if (error) throw error;
 
-      toast.success(isPublic ? 'Доступ открыт для всех' : 'Доступ ограничен');
+      toast.success(isPremium ? 'Статья помечена как премиум' : 'Статья доступна всем');
       loadPendingArticles();
     } catch (error) {
-      console.error('Error updating access:', error);
-      toast.error('Ошибка обновления доступа');
+      console.error('Error updating premium status:', error);
+      toast.error('Ошибка обновления статуса');
     }
   };
 
@@ -156,12 +153,12 @@ export const BlogModerationPanel = () => {
                 {article.moderation_status === 'approved' && (
                   <div className="flex items-center space-x-2 p-4 bg-muted rounded-lg">
                     <Switch
-                      id={`public-${article.id}`}
-                      checked={article.is_public}
-                      onCheckedChange={(checked) => togglePublicAccess(article.id, checked)}
+                      id={`premium-${article.id}`}
+                      checked={article.is_premium}
+                      onCheckedChange={(checked) => togglePremiumStatus(article.id, checked)}
                     />
-                    <Label htmlFor={`public-${article.id}`}>
-                      Открыть полный доступ для всех пользователей
+                    <Label htmlFor={`premium-${article.id}`}>
+                      Премиум статья (доступна только платным пользователям)
                     </Label>
                   </div>
                 )}
@@ -177,19 +174,11 @@ export const BlogModerationPanel = () => {
 
                     <div className="flex gap-2">
                       <Button
-                        onClick={() => handleModerate(article.id, 'approved', true)}
+                        onClick={() => handleModerate(article.id, 'approved')}
                         className="flex-1"
                       >
                         <CheckCircle className="mr-2 h-4 w-4" />
-                        Одобрить и опубликовать
-                      </Button>
-                      <Button
-                        onClick={() => handleModerate(article.id, 'approved', false)}
-                        variant="secondary"
-                        className="flex-1"
-                      >
-                        <CheckCircle className="mr-2 h-4 w-4" />
-                        Одобрить (премиум)
+                        Одобрить
                       </Button>
                       <Button
                         onClick={() => handleModerate(article.id, 'rejected')}
