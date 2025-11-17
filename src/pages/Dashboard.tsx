@@ -88,13 +88,20 @@ const Dashboard = () => {
   const handleRoleChange = async (newRole: string) => {
     if (!user) return;
     
+    console.log('Attempting to change role to:', newRole);
+    
     try {
       // Use secure RPC function for role switching
-      const { error } = await (supabase.rpc as any)('switch_user_role', {
+      const { data, error } = await (supabase.rpc as any)('switch_user_role', {
         p_role: newRole
       });
 
-      if (error) throw error;
+      console.log('Role change result:', { data, error });
+
+      if (error) {
+        console.error('Role change error details:', error);
+        throw error;
+      }
 
       setSelectedRole(newRole);
       await refreshProfile();
@@ -107,7 +114,7 @@ const Dashboard = () => {
       console.error('Error updating role:', error);
       toast({
         title: "Ошибка",
-        description: "Не удалось обновить роль",
+        description: error.message || "Не удалось обновить роль",
         variant: "destructive",
       });
     }
