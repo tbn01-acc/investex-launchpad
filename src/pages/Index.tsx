@@ -23,17 +23,10 @@ const Index = () => {
   useSEO('/');
   useDevDomainSetter();
   
-  const navigate = useNavigate();
   const { user } = useAuth();
   const [quizRole, setQuizRole] = useState<string | null>(null);
   const [selectedRole, setSelectedRole] = useState<string | null>(null);
   const rolePathRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (user) {
-      navigate('/dashboard');
-    }
-  }, [user, navigate]);
 
   const handleQuizComplete = (role: string) => {
     setQuizRole(role);
