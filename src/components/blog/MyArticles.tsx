@@ -57,6 +57,23 @@ export const MyArticles = () => {
     }
   };
 
+  const handleTogglePremium = async (articleId: string, currentStatus: boolean) => {
+    try {
+      const { error } = await supabase
+        .from('blog_articles')
+        .update({ is_premium: !currentStatus })
+        .eq('id', articleId);
+
+      if (error) throw error;
+
+      toast.success(currentStatus ? 'Статья стала бесплатной' : 'Статья стала премиум');
+      loadMyArticles();
+    } catch (error) {
+      console.error('Error updating premium status:', error);
+      toast.error('Ошибка при изменении статуса премиум');
+    }
+  };
+
   const handleEdit = (article: any) => {
     setEditingArticle(article);
     setShowEditor(true);
@@ -166,8 +183,19 @@ export const MyArticles = () => {
                         size="sm"
                         onClick={() => handleToggleVisibility(article.id, article.is_public)}
                         disabled={article.moderation_status !== 'approved'}
+                        title={article.is_public ? 'Скрыть статью' : 'Показать статью'}
                       >
                         {article.is_public ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleTogglePremium(article.id, article.is_premium)}
+                        disabled={article.moderation_status !== 'approved'}
+                        title={article.is_premium ? 'Сделать бесплатной' : 'Сделать премиум'}
+                        className={article.is_premium ? 'text-purple-600' : ''}
+                      >
+                        <ThumbsUp className="h-4 w-4" />
                       </Button>
                     </div>
                   </div>
