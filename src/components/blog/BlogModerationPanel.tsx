@@ -33,6 +33,7 @@ export const BlogModerationPanel = () => {
             email
           )
         `)
+        .eq('moderation_status', 'pending')
         .order('created_at', { ascending: false });
 
       if (error) throw error;

@@ -38,10 +38,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { User, Briefcase, DollarSign, Users, Plus, Settings, BarChart3, TrendingUp } from 'lucide-react';
+import { User, Briefcase, DollarSign, Users, Plus, Settings, BarChart3, TrendingUp, FileText } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useToast } from '@/hooks/use-toast';
+import { MyArticles } from '@/components/blog/MyArticles';
 
 const Dashboard = () => {
   const { user, loading, profile, refreshProfile } = useAuth();
@@ -407,10 +408,14 @@ const Dashboard = () => {
 
           {/* Tabs */}
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid w-full grid-cols-4">
+            <TabsList className="grid w-full grid-cols-5">
               <TabsTrigger value="overview">Обзор</TabsTrigger>
               <TabsTrigger value="dashboard">Дашборд</TabsTrigger>
               <TabsTrigger value="analytics">Аналитика</TabsTrigger>
+              <TabsTrigger value="articles">
+                <FileText className="w-4 h-4 mr-2" />
+                Мои статьи
+              </TabsTrigger>
               <TabsTrigger value="settings">Настройки</TabsTrigger>
             </TabsList>
 
@@ -515,6 +520,10 @@ const Dashboard = () => {
 
             <TabsContent value="analytics">
               {renderRoleAnalytics()}
+            </TabsContent>
+
+            <TabsContent value="articles">
+              <MyArticles />
             </TabsContent>
 
             <TabsContent value="settings">
