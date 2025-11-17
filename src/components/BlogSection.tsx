@@ -11,6 +11,9 @@ import { OptimizedImage } from "@/components/OptimizedImage";
 
 const BlogSection = () => {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [activeFilter, setActiveFilter] = useState('all');
+  const [itemsPerPage, setItemsPerPage] = useState(3);
+  const [displayCount, setDisplayCount] = useState(3);
   const { isFavorite, toggleFavorite } = useFavorites('article');
 
   // Собираем все теги и считаем количество статей
@@ -28,18 +31,27 @@ const BlogSection = () => {
   }, []);
 
   // Фильтруем и выбираем статьи
-  const displayedArticles = useMemo(() => {
+  const filteredArticles = useMemo(() => {
     let filtered = blogArticles;
     
+    // Filter by content type
+    if (activeFilter !== 'all') {
+      filtered = filtered.filter(article => article.contentType === activeFilter);
+    }
+    
+    // Filter by tags
     if (selectedTags.length > 0) {
-      filtered = blogArticles.filter(article =>
+      filtered = filtered.filter(article =>
         selectedTags.some(tag => article.tags.includes(tag))
       );
     }
     
-    const shuffled = [...filtered].sort(() => Math.random() - 0.5);
-    return shuffled.slice(0, 3);
-  }, [selectedTags]);
+    return filtered;
+  }, [activeFilter, selectedTags]);
+
+  const displayedArticles = useMemo(() => {
+    return filteredArticles.slice(0, displayCount);
+  }, [filteredArticles, displayCount]);
 
   const toggleTag = (tag: string) => {
     setSelectedTags(prev =>
@@ -48,6 +60,12 @@ const BlogSection = () => {
         : [...prev, tag]
     );
   };
+
+  const handleShowMore = () => {
+    setDisplayCount(prev => prev + itemsPerPage);
+  };
+
+  const hasMore = displayCount < filteredArticles.length;
 
   return (
     <section className="py-20 bg-background">
@@ -59,6 +77,63 @@ const BlogSection = () => {
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Экспертные статьи, гайды и кейсы от профессионалов венчурного рынка
           </p>
+        </div>
+
+        {/* Category Filters */}
+        <div className="flex flex-wrap gap-2 justify-center mb-6">
+          <Button
+            variant={activeFilter === 'all' ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => setActiveFilter('all')}
+          >
+            Все
+          </Button>
+          <Button
+            variant={activeFilter === 'guides' ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => setActiveFilter('guides')}
+          >
+            Гайды
+          </Button>
+          <Button
+            variant={activeFilter === 'cases' ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => setActiveFilter('cases')}
+          >
+            Кейсы
+          </Button>
+          <Button
+            variant={activeFilter === 'analytics' ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => setActiveFilter('analytics')}
+          >
+            Аналитика
+          </Button>
+          <Button
+            variant={activeFilter === 'trends' ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => setActiveFilter('trends')}
+          >
+            Тренды
+          </Button>
+        </div>
+
+        {/* Items Per Page Selector */}
+        <div className="flex justify-center gap-2 mb-6">
+          <span className="text-sm text-muted-foreground self-center">Показывать по:</span>
+          {[0, 3, 6, 9, 12, 15].map((count) => (
+            <Button
+              key={count}
+              variant={itemsPerPage === count ? 'default' : 'outline'}
+              size="sm"
+              onClick={() => {
+                setItemsPerPage(count);
+                setDisplayCount(count === 0 ? filteredArticles.length : count);
+              }}
+            >
+              {count === 0 ? 'Все' : count}
+            </Button>
+          ))}
         </div>
 
         {/* Фильтры по тегам */}
@@ -142,8 +217,17 @@ const BlogSection = () => {
           ))}
         </div>
 
+        {/* Show More Button */}
+        {hasMore && (
+          <div className="text-center mt-8">
+            <Button onClick={handleShowMore} variant="outline">
+              Показать еще
+            </Button>
+          </div>
+        )}
+
         {/* Кнопка "Все статьи" */}
-        <div className="text-center">
+        <div className="text-center mt-12">
           <Link to="/blog">
             <Button size="lg" variant="outline" className="gap-2">
               Все статьи блога <ArrowRight className="h-4 w-4" />

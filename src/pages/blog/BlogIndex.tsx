@@ -6,6 +6,7 @@ import { BlogFilters } from "@/components/blog/BlogFilters";
 import { NewsletterSignup } from "@/components/blog/NewsletterSignup";
 import { roleBlogs, blogCategories, blogArticles } from "@/data/blogData";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { useSEO } from "@/hooks/useSEO";
@@ -15,21 +16,32 @@ import { Skeleton } from "@/components/ui/skeleton";
 const BlogIndex = () => {
   useSEO('/blog');
   const [activeFilter, setActiveFilter] = useState('all');
+  const [itemsPerPage, setItemsPerPage] = useState(6);
+  const [displayCount, setDisplayCount] = useState(6);
   const { articles: dbArticles, loading } = useBlogArticles({ 
-    contentType: activeFilter, 
-    limit: 6 
+    contentType: activeFilter
   });
 
   // Используем статические данные если база пустая
-  const articles = useMemo(() => {
+  const allArticles = useMemo(() => {
     if (dbArticles.length > 0) return dbArticles;
     
     const staticArticles = activeFilter === 'all'
-      ? blogArticles.slice(0, 6)
-      : blogArticles.filter(article => article.contentType === activeFilter).slice(0, 6);
+      ? blogArticles
+      : blogArticles.filter(article => article.contentType === activeFilter);
     
     return staticArticles;
   }, [dbArticles, activeFilter]);
+
+  const displayedArticles = useMemo(() => {
+    return allArticles.slice(0, displayCount);
+  }, [allArticles, displayCount]);
+
+  const handleShowMore = () => {
+    setDisplayCount(prev => prev + itemsPerPage);
+  };
+
+  const hasMore = displayCount < allArticles.length;
 
   return (
     <div className="min-h-screen bg-background">
@@ -94,6 +106,25 @@ const BlogIndex = () => {
             <h2 className="text-3xl font-bold">Последние статьи</h2>
             <BlogFilters activeFilter={activeFilter} onFilterChange={setActiveFilter} />
           </div>
+          
+          {/* Items Per Page Selector */}
+          <div className="flex justify-center gap-2 mb-6">
+            <span className="text-sm text-muted-foreground self-center">Показывать по:</span>
+            {[0, 3, 6, 9, 12, 15].map((count) => (
+              <Button
+                key={count}
+                variant={itemsPerPage === count ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => {
+                  setItemsPerPage(count);
+                  setDisplayCount(count === 0 ? allArticles.length : count);
+                }}
+              >
+                {count === 0 ? 'Все' : count}
+              </Button>
+            ))}
+          </div>
+
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {loading ? (
               <>
@@ -110,11 +141,20 @@ const BlogIndex = () => {
                 ))}
               </>
             ) : (
-              articles.map((article) => (
+              displayedArticles.map((article) => (
                 <ArticleCard key={article.id} article={article} />
               ))
             )}
           </div>
+
+          {/* Show More Button */}
+          {!loading && hasMore && (
+            <div className="text-center mt-8">
+              <Button onClick={handleShowMore} variant="outline">
+                Показать еще
+              </Button>
+            </div>
+          )}
         </section>
 
         {/* Newsletter */}
