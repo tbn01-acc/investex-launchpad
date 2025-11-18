@@ -8,30 +8,54 @@ import { roleBlogs, blogCategories, blogArticles } from "@/data/blogData";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ArrowUpDown } from "lucide-react";
 import { useSEO } from "@/hooks/useSEO";
 import { useBlogArticles } from "@/hooks/useBlogArticles";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const BlogIndex = () => {
   useSEO('/blog');
   const [activeFilter, setActiveFilter] = useState('all');
   const [itemsPerPage, setItemsPerPage] = useState(6);
   const [displayCount, setDisplayCount] = useState(6);
+  const [sortBy, setSortBy] = useState<'title' | 'date' | 'category'>('date');
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
   const { articles: dbArticles, loading } = useBlogArticles({ 
     contentType: activeFilter
   });
 
   // Используем статические данные если база пустая
   const allArticles = useMemo(() => {
-    if (dbArticles.length > 0) return dbArticles;
+    let articles = dbArticles.length > 0 ? dbArticles : (
+      activeFilter === 'all'
+        ? blogArticles
+        : blogArticles.filter(article => article.contentType === activeFilter)
+    );
     
-    const staticArticles = activeFilter === 'all'
-      ? blogArticles
-      : blogArticles.filter(article => article.contentType === activeFilter);
+    // Применяем сортировку
+    const sorted = [...articles].sort((a, b) => {
+      let comparison = 0;
+      
+      switch (sortBy) {
+        case 'title':
+          comparison = a.title.localeCompare(b.title, 'ru');
+          break;
+        case 'date':
+          const dateA = 'created_at' in a ? new Date(a.created_at as string).getTime() : 0;
+          const dateB = 'created_at' in b ? new Date(b.created_at as string).getTime() : 0;
+          comparison = dateA - dateB;
+          break;
+        case 'category':
+          comparison = a.category.localeCompare(b.category, 'ru');
+          break;
+      }
+      
+      return sortDirection === 'asc' ? comparison : -comparison;
+    });
     
-    return staticArticles;
-  }, [dbArticles, activeFilter]);
+    return sorted;
+  }, [dbArticles, activeFilter, sortBy, sortDirection]);
 
   const displayedArticles = useMemo(() => {
     return allArticles.slice(0, displayCount);
@@ -100,11 +124,40 @@ const BlogIndex = () => {
           </div>
         </section>
 
-        {/* Recent Articles with Filters */}
+        {/* Blog Articles with Filters and Sorting */}
         <section className="mb-16">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
-            <h2 className="text-3xl font-bold">Последние статьи</h2>
-            <BlogFilters activeFilter={activeFilter} onFilterChange={setActiveFilter} />
+          <div className="flex flex-col gap-4 mb-8">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+              <h2 className="text-3xl font-bold">Статьи блога</h2>
+              <BlogFilters activeFilter={activeFilter} onFilterChange={setActiveFilter} />
+            </div>
+            
+            {/* Sorting Controls */}
+            <div className="flex flex-wrap items-center gap-4">
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-muted-foreground">Сортировать:</span>
+                <Select value={sortBy} onValueChange={(value: 'title' | 'date' | 'category') => setSortBy(value)}>
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="date">По дате</SelectItem>
+                    <SelectItem value="title">По названию</SelectItem>
+                    <SelectItem value="category">По теме</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc')}
+                className="gap-2"
+              >
+                <ArrowUpDown className="h-4 w-4" />
+                {sortDirection === 'asc' ? 'По возрастанию' : 'По убыванию'}
+              </Button>
+            </div>
           </div>
           
           {/* Items Per Page Selector */}
