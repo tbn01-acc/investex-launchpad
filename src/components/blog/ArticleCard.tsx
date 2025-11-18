@@ -23,22 +23,16 @@ export const ArticleCard = ({ article }: ArticleCardProps) => {
     : article.image;
   
   const authorName = isDB 
-    ? `${article.author?.first_name || ''} ${article.author?.last_name || ''}`.trim()
-    : article.author?.name || '';
+    ? `${article.author?.first_name || ''} ${article.author?.last_name || ''}`.trim() || 'Автор не указан'
+    : article.author?.name || 'Автор не указан';
   
   const authorAvatar = isDB 
     ? (article.author?.avatar_url || '')
     : (article.author?.avatar || '');
   
   const authorRole = isDB 
-    ? (article.author?.role || '')
-    : (article.author?.role || '');
-  
-  // Если нет имени автора, не показываем карточку
-  if (!authorName) {
-    console.error('Article missing author data:', article.id);
-    return null;
-  }
+    ? (article.author?.role || 'Автор')
+    : (article.author?.role || 'Автор');
   
   const category = isDB ? article.category : article.category;
   const contentType = isDB ? article.content_type : article.contentType;
