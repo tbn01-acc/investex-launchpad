@@ -17,8 +17,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 const BlogIndex = () => {
   useSEO('/blog');
   const [activeFilter, setActiveFilter] = useState('all');
-  const [itemsPerPage, setItemsPerPage] = useState(6);
-  const [displayCount, setDisplayCount] = useState(6);
+  const [itemsPerPage, setItemsPerPage] = useState(0);
+  const [displayCount, setDisplayCount] = useState(10000);
   const [sortBy, setSortBy] = useState<'title' | 'date' | 'category'>('date');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
   const { articles: dbArticles, loading } = useBlogArticles({ 
