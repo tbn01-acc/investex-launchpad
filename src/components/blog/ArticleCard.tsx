@@ -23,8 +23,8 @@ export const ArticleCard = ({ article }: ArticleCardProps) => {
     : article.image;
   
   const authorName = isDB 
-    ? `${article.author?.first_name || ''} ${article.author?.last_name || ''}`.trim() || 'Аноним'
-    : article.author?.name || 'Аноним';
+    ? `${article.author?.first_name || ''} ${article.author?.last_name || ''}`.trim()
+    : article.author?.name || '';
   
   const authorAvatar = isDB 
     ? (article.author?.avatar_url || '')
@@ -33,6 +33,12 @@ export const ArticleCard = ({ article }: ArticleCardProps) => {
   const authorRole = isDB 
     ? (article.author?.role || '')
     : (article.author?.role || '');
+  
+  // Если нет имени автора, не показываем карточку
+  if (!authorName) {
+    console.error('Article missing author data:', article.id);
+    return null;
+  }
   
   const category = isDB ? article.category : article.category;
   const contentType = isDB ? article.content_type : article.contentType;
