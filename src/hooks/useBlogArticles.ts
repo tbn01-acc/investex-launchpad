@@ -10,6 +10,7 @@ export interface BlogArticleFromDB {
   category: string;
   tags: string[];
   published_at: string;
+  created_at: string;
   read_time: number;
   image_url: string | null;
   role_type: string;
@@ -57,6 +58,7 @@ export const useBlogArticles = (options: UseBlogArticlesOptions = {}) => {
             category,
             tags,
             published_at,
+            created_at,
             read_time,
             image_url,
             role_type,
