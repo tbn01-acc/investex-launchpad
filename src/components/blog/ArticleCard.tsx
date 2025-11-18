@@ -23,16 +23,16 @@ export const ArticleCard = ({ article }: ArticleCardProps) => {
     : article.image;
   
   const authorName = isDB 
-    ? `${article.author.first_name || ''} ${article.author.last_name || ''}`.trim()
-    : article.author.name;
+    ? `${article.author?.first_name || ''} ${article.author?.last_name || ''}`.trim() || 'Аноним'
+    : article.author?.name || 'Аноним';
   
   const authorAvatar = isDB 
-    ? (article.author.avatar_url || '')
-    : article.author.avatar;
+    ? (article.author?.avatar_url || '')
+    : (article.author?.avatar || '');
   
   const authorRole = isDB 
-    ? (article.author.role || '')
-    : article.author.role;
+    ? (article.author?.role || '')
+    : (article.author?.role || '');
   
   const category = isDB ? article.category : article.category;
   const contentType = isDB ? article.content_type : article.contentType;
@@ -63,7 +63,7 @@ export const ArticleCard = ({ article }: ArticleCardProps) => {
             <div className="flex items-center gap-2">
               <Avatar className="h-8 w-8">
                 <AvatarImage src={authorAvatar} alt={authorName} />
-                <AvatarFallback>{authorName[0]}</AvatarFallback>
+                <AvatarFallback>{authorName[0] || 'A'}</AvatarFallback>
               </Avatar>
               <div className="text-sm">
                 <p className="font-medium">{authorName}</p>
