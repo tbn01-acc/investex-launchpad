@@ -12,7 +12,7 @@ interface ArticleCardProps {
 }
 
 const isDBArticle = (article: BlogArticle | BlogArticleFromDB): article is BlogArticleFromDB => {
-  return 'author' in article && typeof article.author === 'object' && 'user_id' in article.author;
+  return 'author' in article && typeof article.author === 'object' && article.author !== null && 'user_id' in article.author;
 };
 
 export const ArticleCard = ({ article }: ArticleCardProps) => {
