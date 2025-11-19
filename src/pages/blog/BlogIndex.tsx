@@ -23,21 +23,22 @@ const BlogIndex = () => {
     contentType: activeFilter
   });
 
-  // Используем статические данные если база пустая
+  // Объединяем статьи из БД со статическими статьями
   const allArticles = useMemo(() => {
     console.log('dbArticles:', dbArticles.length, dbArticles);
     console.log('activeFilter:', activeFilter);
     
-    let articles = dbArticles.length > 0 ? dbArticles : (
-      activeFilter === 'all'
-        ? blogArticles
-        : blogArticles.filter(article => article.contentType === activeFilter)
-    );
+    // Объединяем статьи из БД и статические
+    const staticArticles = activeFilter === 'all'
+      ? blogArticles
+      : blogArticles.filter(article => article.contentType === activeFilter);
     
-    console.log('articles before sort:', articles.length, articles);
+    const combinedArticles = [...dbArticles, ...staticArticles];
+    
+    console.log('articles before sort:', combinedArticles.length, combinedArticles);
     
     // Применяем сортировку
-    const sorted = [...articles].sort((a, b) => {
+    const sorted = [...combinedArticles].sort((a, b) => {
       let comparison = 0;
       
       switch (sortBy) {
