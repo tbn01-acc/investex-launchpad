@@ -17,8 +17,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 const BlogIndex = () => {
   useSEO('/blog');
   const [activeFilter, setActiveFilter] = useState('all');
-  const [itemsPerPage, setItemsPerPage] = useState(0);
-  const [displayCount, setDisplayCount] = useState(10000);
   const [sortBy, setSortBy] = useState<'title' | 'date' | 'category'>('date');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
   const { articles: dbArticles, loading } = useBlogArticles({ 
@@ -58,14 +56,8 @@ const BlogIndex = () => {
   }, [dbArticles, activeFilter, sortBy, sortDirection]);
 
   const displayedArticles = useMemo(() => {
-    return allArticles.slice(0, displayCount);
-  }, [allArticles, displayCount]);
-
-  const handleShowMore = () => {
-    setDisplayCount(prev => prev + itemsPerPage);
-  };
-
-  const hasMore = displayCount < allArticles.length;
+    return allArticles;
+  }, [allArticles]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -159,24 +151,6 @@ const BlogIndex = () => {
               </Button>
             </div>
           </div>
-          
-          {/* Items Per Page Selector */}
-          <div className="flex justify-center gap-2 mb-6">
-            <span className="text-sm text-muted-foreground self-center">Показывать по:</span>
-            {[0, 3, 6, 9, 12, 15].map((count) => (
-              <Button
-                key={count}
-                variant={itemsPerPage === count ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => {
-                  setItemsPerPage(count);
-                  setDisplayCount(count === 0 ? allArticles.length : count);
-                }}
-              >
-                {count === 0 ? 'Все' : count}
-              </Button>
-            ))}
-          </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {loading ? (
@@ -199,15 +173,6 @@ const BlogIndex = () => {
               ))
             )}
           </div>
-
-          {/* Show More Button */}
-          {!loading && hasMore && (
-            <div className="text-center mt-8">
-              <Button onClick={handleShowMore} variant="outline">
-                Показать еще
-              </Button>
-            </div>
-          )}
         </section>
 
         {/* Newsletter */}
