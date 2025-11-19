@@ -11,6 +11,7 @@ import { Clock, ArrowLeft, Lock } from "lucide-react";
 import { useSEO } from "@/hooks/useSEO";
 import { useSubscription } from "@/hooks/useSubscription";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { blogArticles } from "@/data/blogData";
 
 const ArticleDetail = () => {
   const { articleId } = useParams<{ articleId: string }>();
@@ -23,24 +24,76 @@ const ArticleDetail = () => {
   useEffect(() => {
     const loadArticle = async () => {
       try {
-        const { data, error } = await supabase
-          .from('blog_articles')
-          .select(`
-            *,
-            author:profiles!blog_articles_author_id_fkey(
-              user_id,
-              first_name,
-              last_name,
-              avatar_url,
-              bio,
-              role
-            )
-          `)
-          .eq('id', articleId)
-          .single();
+        // Check if articleId is a UUID (from database) or a slug (static article)
+        const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(articleId || '');
+        
+        if (isUUID) {
+          // Load from database
+          const { data, error } = await supabase
+            .from('blog_articles')
+            .select(`
+              *,
+              author:profiles!blog_articles_author_id_fkey(
+                user_id,
+                first_name,
+                last_name,
+                avatar_url,
+                bio,
+                role
+              )
+            `)
+            .eq('id', articleId)
+            .maybeSingle();
 
-        if (error) throw error;
-        setArticle(data);
+          if (error) throw error;
+          
+          if (data) {
+            // Transform DB article to match component structure
+            setArticle({
+              ...data,
+              author: data.author ? {
+                id: data.author.user_id,
+                name: `${data.author.first_name || ''} ${data.author.last_name || ''}`.trim(),
+                role: data.author.role || '',
+                bio: data.author.bio || '',
+                avatar: data.author.avatar_url || '',
+                articlesCount: 0
+              } : null
+            });
+          } else {
+            // Article not found in DB, try static articles
+            const staticArticle = blogArticles.find(a => a.id === articleId);
+            if (staticArticle) {
+              setArticle({
+                ...staticArticle,
+                image_url: staticArticle.image,
+                is_premium: staticArticle.isPremium,
+                full_content: staticArticle.fullContent,
+                role_type: staticArticle.roleType,
+                content_type: staticArticle.contentType,
+                published_at: staticArticle.publishedAt,
+                read_time: staticArticle.readTime,
+                author_id: staticArticle.author.id
+              });
+            }
+          }
+        } else {
+          // Not a UUID, load from static articles
+          const staticArticle = blogArticles.find(a => a.id === articleId);
+          if (staticArticle) {
+            setArticle({
+              ...staticArticle,
+              image_url: staticArticle.image,
+              is_premium: staticArticle.isPremium,
+              full_content: staticArticle.fullContent,
+              role_type: staticArticle.roleType,
+              content_type: staticArticle.contentType,
+              published_at: staticArticle.publishedAt,
+              read_time: staticArticle.readTime,
+              author_id: staticArticle.author.id
+            });
+          }
+        }
       } catch (error) {
         console.error('Error loading article:', error);
       } finally {
