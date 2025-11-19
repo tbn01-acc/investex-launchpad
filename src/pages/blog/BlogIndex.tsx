@@ -25,11 +25,16 @@ const BlogIndex = () => {
 
   // Используем статические данные если база пустая
   const allArticles = useMemo(() => {
+    console.log('dbArticles:', dbArticles.length, dbArticles);
+    console.log('activeFilter:', activeFilter);
+    
     let articles = dbArticles.length > 0 ? dbArticles : (
       activeFilter === 'all'
         ? blogArticles
         : blogArticles.filter(article => article.contentType === activeFilter)
     );
+    
+    console.log('articles before sort:', articles.length, articles);
     
     // Применяем сортировку
     const sorted = [...articles].sort((a, b) => {
@@ -52,6 +57,7 @@ const BlogIndex = () => {
       return sortDirection === 'asc' ? comparison : -comparison;
     });
     
+    console.log('sorted articles:', sorted.length, sorted);
     return sorted;
   }, [dbArticles, activeFilter, sortBy, sortDirection]);
 
