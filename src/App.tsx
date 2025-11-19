@@ -7,6 +7,7 @@ import { ThemeProvider } from "next-themes";
 import { AuthProvider } from "@/hooks/useAuth";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { DomainProvider } from "@/contexts/DomainContext";
+import { NavigationHistoryProvider } from "@/contexts/NavigationHistoryContext";
 import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
 import ScrollToTop from "@/components/ScrollToTop";
 import GoToTop from "@/components/GoToTop";
@@ -96,7 +97,8 @@ const App = () => (
           <DomainProvider>
             <GoogleAnalytics />
             <LanguageProvider>
-              <AuthProvider>
+              <NavigationHistoryProvider>
+                <AuthProvider>
                 <ScrollToTop />
                 <GoToTop />
                 <Routes>
@@ -196,8 +198,9 @@ const App = () => (
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
-            </AuthProvider>
-          </LanguageProvider>
+                </AuthProvider>
+              </NavigationHistoryProvider>
+            </LanguageProvider>
           </DomainProvider>
         </BrowserRouter>
       </TooltipProvider>
