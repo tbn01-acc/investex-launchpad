@@ -64,6 +64,7 @@ export const BlogModerationPanel = () => {
 
       if (status === 'approved') {
         updateData.published_at = new Date().toISOString();
+        updateData.is_public = true; // Автоматически делаем статью публичной при одобрении
       }
 
       const { error } = await supabase
@@ -73,7 +74,7 @@ export const BlogModerationPanel = () => {
 
       if (error) throw error;
 
-      toast.success(status === 'approved' ? 'Статья одобрена' : 'Статья отклонена');
+      toast.success(status === 'approved' ? 'Статья одобрена и опубликована' : 'Статья отклонена');
       setSelectedArticle(null);
       setModerationComment('');
       loadPendingArticles();
