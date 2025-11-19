@@ -6,7 +6,17 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { toast } from 'sonner';
-import { Edit, EyeOff, Eye, ChevronDown, ThumbsUp, ThumbsDown } from 'lucide-react';
+import { Edit, EyeOff, Eye, ChevronDown, ThumbsUp, ThumbsDown, Trash2 } from 'lucide-react';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { BlogArticleEditor } from './BlogArticleEditor';
 
 export const MyArticles = () => {
@@ -15,6 +25,7 @@ export const MyArticles = () => {
   const [loading, setLoading] = useState(true);
   const [editingArticle, setEditingArticle] = useState<any>(null);
   const [showEditor, setShowEditor] = useState(false);
+  const [deletingArticleId, setDeletingArticleId] = useState<string | null>(null);
 
   useEffect(() => {
     loadMyArticles();
@@ -83,6 +94,24 @@ export const MyArticles = () => {
     setShowEditor(false);
     setEditingArticle(null);
     loadMyArticles();
+  };
+
+  const handleDelete = async (articleId: string) => {
+    try {
+      const { error } = await supabase
+        .from('blog_articles')
+        .delete()
+        .eq('id', articleId);
+
+      if (error) throw error;
+
+      toast.success('Статья удалена');
+      setDeletingArticleId(null);
+      loadMyArticles();
+    } catch (error) {
+      console.error('Error deleting article:', error);
+      toast.error('Ошибка при удалении статьи');
+    }
   };
 
   const getModerationStatusBadge = (status: string) => {
@@ -197,6 +226,15 @@ export const MyArticles = () => {
                       >
                         <ThumbsUp className="h-4 w-4" />
                       </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => setDeletingArticleId(article.id)}
+                        title="Удалить статью"
+                        className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
                     </div>
                   </div>
                 </CardHeader>
@@ -273,6 +311,26 @@ export const MyArticles = () => {
           ))}
         </div>
       )}
+
+      <AlertDialog open={!!deletingArticleId} onOpenChange={() => setDeletingArticleId(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Удалить статью?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Это действие нельзя отменить. Статья будет удалена навсегда.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Отмена</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => deletingArticleId && handleDelete(deletingArticleId)}
+              className="bg-red-600 hover:bg-red-700"
+            >
+              Удалить
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };

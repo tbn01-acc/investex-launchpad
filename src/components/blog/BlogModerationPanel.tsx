@@ -8,7 +8,17 @@ import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
-import { CheckCircle, XCircle, Eye } from 'lucide-react';
+import { CheckCircle, XCircle, Eye, EyeOff, Trash2 } from 'lucide-react';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 export const BlogModerationPanel = () => {
   const { user } = useAuth();
@@ -17,6 +27,7 @@ export const BlogModerationPanel = () => {
   const [selectedArticle, setSelectedArticle] = useState<any>(null);
   const [moderationComment, setModerationComment] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [deletingArticleId, setDeletingArticleId] = useState<string | null>(null);
 
   useEffect(() => {
     loadPendingArticles();
@@ -98,6 +109,41 @@ export const BlogModerationPanel = () => {
     } catch (error) {
       console.error('Error updating premium status:', error);
       toast.error('Ошибка обновления статуса');
+    }
+  };
+
+  const toggleVisibility = async (articleId: string, isPublic: boolean) => {
+    try {
+      const { error } = await supabase
+        .from('blog_articles')
+        .update({ is_public: isPublic })
+        .eq('id', articleId);
+
+      if (error) throw error;
+
+      toast.success(isPublic ? 'Статья видна' : 'Статья скрыта');
+      loadPendingArticles();
+    } catch (error) {
+      console.error('Error updating visibility:', error);
+      toast.error('Ошибка обновления видимости');
+    }
+  };
+
+  const handleDelete = async (articleId: string) => {
+    try {
+      const { error } = await supabase
+        .from('blog_articles')
+        .delete()
+        .eq('id', articleId);
+
+      if (error) throw error;
+
+      toast.success('Статья удалена');
+      setDeletingArticleId(null);
+      loadPendingArticles();
+    } catch (error) {
+      console.error('Error deleting article:', error);
+      toast.error('Ошибка при удалении статьи');
     }
   };
 
@@ -185,16 +231,37 @@ export const BlogModerationPanel = () => {
                 </div>
 
                 {article.moderation_status === 'approved' && (
-                  <div className="flex items-center space-x-2 p-4 bg-muted rounded-lg">
-                    <Switch
-                      id={`premium-${article.id}`}
-                      checked={article.is_premium}
-                      onCheckedChange={(checked) => togglePremiumStatus(article.id, checked)}
-                    />
-                    <Label htmlFor={`premium-${article.id}`}>
-                      Премиум статья (доступна только платным пользователям)
-                    </Label>
-                  </div>
+                  <>
+                    <div className="flex items-center space-x-2 p-4 bg-muted rounded-lg">
+                      <Switch
+                        id={`premium-${article.id}`}
+                        checked={article.is_premium}
+                        onCheckedChange={(checked) => togglePremiumStatus(article.id, checked)}
+                      />
+                      <Label htmlFor={`premium-${article.id}`}>
+                        Премиум статья (доступна только платным пользователям)
+                      </Label>
+                    </div>
+                    
+                    <div className="flex gap-2">
+                      <Button
+                        variant="outline"
+                        onClick={() => toggleVisibility(article.id, !article.is_public)}
+                        className="flex-1"
+                      >
+                        {article.is_public ? <EyeOff className="mr-2 h-4 w-4" /> : <Eye className="mr-2 h-4 w-4" />}
+                        {article.is_public ? 'Скрыть статью' : 'Показать статью'}
+                      </Button>
+                      <Button
+                        variant="destructive"
+                        onClick={() => setDeletingArticleId(article.id)}
+                        className="flex-1"
+                      >
+                        <Trash2 className="mr-2 h-4 w-4" />
+                        Удалить статью
+                      </Button>
+                    </div>
+                  </>
                 )}
 
                 {article.moderation_status === 'pending' && (
@@ -245,6 +312,26 @@ export const BlogModerationPanel = () => {
           </Card>
         )}
       </div>
+
+      <AlertDialog open={!!deletingArticleId} onOpenChange={() => setDeletingArticleId(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Удалить статью?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Это действие нельзя отменить. Статья будет удалена навсегда.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Отмена</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => deletingArticleId && handleDelete(deletingArticleId)}
+              className="bg-red-600 hover:bg-red-700"
+            >
+              Удалить
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };

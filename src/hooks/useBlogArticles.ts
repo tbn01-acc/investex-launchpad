@@ -76,6 +76,7 @@ export const useBlogArticles = (options: UseBlogArticlesOptions = {}) => {
               role
             )
           `)
+          .eq('is_public', true)  // Показываем только видимые статьи
           .order('published_at', { ascending: false });
 
         if (options.roleType) {
