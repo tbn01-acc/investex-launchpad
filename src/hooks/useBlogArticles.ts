@@ -76,7 +76,6 @@ export const useBlogArticles = (options: UseBlogArticlesOptions = {}) => {
               role
             )
           `)
-          .eq('moderation_status', 'approved')
           .order('published_at', { ascending: false });
 
         if (options.roleType) {
