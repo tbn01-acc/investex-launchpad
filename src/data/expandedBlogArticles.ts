@@ -261,7 +261,7 @@ Due diligence — это не просто формальность, а возм
 Помните: лучше пропустить хорошую сделку, чем сделать плохую инвестицию.`,
     author: blogAuthors[0],
     category: 'due-diligence',
-    tags: ['due diligence', 'проверка', 'риски'],
+    tags: ['дью дилидженс', 'проверка', 'риски'],
     publishedAt: '2024-01-10',
     readTime: 18,
     image: dueDiligenceChecklist,
