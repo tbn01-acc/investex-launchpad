@@ -6,6 +6,7 @@ import { Clock } from "lucide-react";
 import { BlogArticle } from "@/data/blogData";
 import { BlogArticleFromDB } from "@/hooks/useBlogArticles";
 import { OptimizedImage } from "@/components/OptimizedImage";
+import { translateCategory, translateContentType } from "@/lib/blogTranslations";
 
 interface ArticleCardProps {
   article: BlogArticle | BlogArticleFromDB;
@@ -48,8 +49,8 @@ export const ArticleCard = ({ article }: ArticleCardProps) => {
         />
         <CardHeader>
           <div className="flex gap-2 mb-2">
-            <Badge variant="secondary">{category}</Badge>
-            <Badge variant="outline">{contentType}</Badge>
+            <Badge variant="secondary">{translateCategory(category)}</Badge>
+            <Badge variant="outline">{translateContentType(contentType)}</Badge>
           </div>
           <CardTitle className="line-clamp-2 hover:text-primary transition-colors">
             {article.title}
